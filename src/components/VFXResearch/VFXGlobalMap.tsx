@@ -1,6 +1,9 @@
 
 import { useState } from 'react';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import auNzMapImage from '/lovable-uploads/18519d06-b0d4-4ebf-a7ca-7436b6748170.png';
+import northAmericaMapImage from '/lovable-uploads/85ee4cc8-9963-49c6-bfbc-0c4246af2318.png';
 import worldMapImage from '/lovable-uploads/943c0b44-9308-4e29-87cd-f790717092c1.png';
 
 interface VFXGlobalMapProps {
@@ -20,53 +23,71 @@ const VFXGlobalMap = ({ activeRegion, setActiveRegion }: VFXGlobalMapProps) => {
     { id: "global", name: "Global Overview", color: "#4CC9F0", headcount: "58,971", x: 50, y: 50 },
   ];
 
+  // Get the appropriate map image based on active region
+  const getRegionMap = () => {
+    switch(activeRegion) {
+      case 'australia-nz':
+        return auNzMapImage;
+      case 'north-america':
+        return northAmericaMapImage;
+      default:
+        return worldMapImage;
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold neon-text-blue">World VFX Hubs</h2>
-        <a 
-          href="#" 
-          className="flex items-center space-x-2 text-secondary hover:text-secondary/80 transition"
+        <h2 className="text-3xl font-bold text-red-500">VFX Industry Hubs</h2>
+        <Button 
+          variant="outline" 
+          className="group border-red-500/30 hover:border-red-500/60 text-red-500"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
           <span className={`transition-transform duration-300 ${isHovering ? 'translate-x-0' : '-translate-x-1'}`}>
             Explore interactive map
           </span>
-          <ExternalLink className={`h-4 w-4 transition-transform duration-300 ${isHovering ? 'translate-x-1' : 'translate-x-0'}`} />
-        </a>
+          <ExternalLink className={`h-4 w-4 ml-2 transition-transform duration-300 ${isHovering ? 'translate-x-1' : 'translate-x-0'}`} />
+        </Button>
       </div>
       
-      <div className="relative glass overflow-hidden rounded-xl aspect-[16/9] w-full">
+      <div className="relative glass overflow-hidden rounded-xl aspect-[16/9] w-full border-2 border-red-500/20">
         <img 
-          src={worldMapImage} 
-          alt="World VFX Hubs Map" 
+          src={getRegionMap()} 
+          alt={`${regions.find(r => r.id === activeRegion)?.name || 'Global'} VFX Hub Map`} 
           className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-300"
         />
         
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-          <p className="text-sm text-white/80">
-            This map shows the global distribution of VFX professionals. Circle size represents relative workforce population.
+          <p className="text-sm text-white/90">
+            {activeRegion === 'australia-nz' ? 
+              'Sydney leads with 1,242 VFX professionals, while Wellington hosts major studios like Weta FX.' : 
+              activeRegion === 'north-america' ? 
+              'Los Angeles, Montreal, Vancouver, and New York serve as the primary VFX hubs in North America.' :
+              'This map shows the global distribution of VFX professionals. Circle size represents relative workforce population.'}
           </p>
         </div>
         
-        {regions.map((region) => (
+        {/* Only show pins for the global view */}
+        {activeRegion === 'global' && regions.filter(r => r.id !== 'global').map((region) => (
           <button
             key={region.id}
             onClick={() => setActiveRegion(region.id)}
-            className={`absolute p-3 rounded-full transition transform hover:scale-110 ${
+            className={`absolute rounded-full transition transform hover:scale-110 flex items-center justify-center ${
               activeRegion === region.id 
                 ? 'ring-2 ring-white ring-offset-2 ring-offset-transparent scale-105' 
                 : 'opacity-80'
             }`}
             style={{ 
-              backgroundColor: region.color,
               left: `${region.x}%`, 
               top: `${region.y}%`,
-              width: region.id === 'global' ? '100px' : '80px',
-              height: region.id === 'global' ? '100px' : '80px',
+              width: '40px',
+              height: '40px',
+              backgroundColor: region.color,
             }}
           >
+            <MapPin className="h-5 w-5 text-white" />
             <span className="sr-only">{region.name}</span>
           </button>
         ))}
@@ -77,8 +98,11 @@ const VFXGlobalMap = ({ activeRegion, setActiveRegion }: VFXGlobalMapProps) => {
           <button
             key={region.id}
             onClick={() => setActiveRegion(region.id)}
-            className={`glass p-4 rounded-lg text-center transition hover:bg-white/10 ${
-              activeRegion === region.id ? 'ring-2 ring-white/50' : ''
+            className={`glass p-4 rounded-lg text-center transition hover:bg-white/5 border ${
+              activeRegion === region.id 
+                ? `border-2 ${region.id === 'australia-nz' ? 'border-red-500/60' : 
+                    region.id === 'north-america' ? 'border-amber-400/60' : 'border-white/30'}` 
+                : 'border-white/10'
             }`}
           >
             <h3 className="font-semibold" style={{ color: region.color }}>
