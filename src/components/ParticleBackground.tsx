@@ -1,7 +1,7 @@
 
 import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { PointMaterial } from '@react-three/drei';
+import { Points } from '@react-three/drei';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -23,65 +23,70 @@ interface ParticlesProps {
 }
 
 function Particles({ count, mouse }: ParticlesProps) {
-  const positions = useMemo(() => {
+  const pointsRef = useRef<THREE.Points>(null);
+  
+  // Create positions and colors for particles
+  const [positions, colors] = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
-    const colorObj = new THREE.Color();
-
+    const color = new THREE.Color();
+    
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 15;  // x
-      positions[i3 + 1] = (Math.random() - 0.5) * 15;  // y
-      positions[i3 + 2] = (Math.random() - 0.5) * 10;  // z
-
-      // Set random color
-      colorObj.set(getRandomColor());
-      colors[i3] = colorObj.r;
-      colors[i3 + 1] = colorObj.g;
-      colors[i3 + 2] = colorObj.b;
+      // Position
+      positions[i3] = (Math.random() - 0.5) * 15;     // x
+      positions[i3 + 1] = (Math.random() - 0.5) * 15; // y
+      positions[i3 + 2] = (Math.random() - 0.5) * 10; // z
+      
+      // Color
+      color.set(getRandomColor());
+      colors[i3] = color.r;
+      colors[i3 + 1] = color.g;
+      colors[i3 + 2] = color.b;
     }
-
-    return { positions, colors };
+    
+    return [positions, colors];
   }, [count]);
-
-  const pointsRef = useRef<THREE.Points>(null);
-  const positionsRef = useRef<THREE.BufferAttribute>(null);
+  
+  // Velocities for animation
   const velocities = useRef<number[]>([]);
-
+  
   useEffect(() => {
     // Initialize velocities
     velocities.current = Array.from({ length: count * 3 }, () => (Math.random() - 0.5) * 0.01);
   }, [count]);
   
-  useFrame((state) => {
-    if (!pointsRef.current || !positionsRef.current) return;
-
-    const positions = positionsRef.current.array as Float32Array;
+  // Update particles on each frame
+  useFrame(() => {
+    if (!pointsRef.current) return;
     
-    // Update positions based on velocities and boundaries
+    const geometry = pointsRef.current.geometry;
+    const positionAttribute = geometry.getAttribute('position') as THREE.BufferAttribute;
+    
+    // Update positions based on velocities
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
       
       // Update positions
-      positions[i3] += velocities.current[i3];
-      positions[i3 + 1] += velocities.current[i3 + 1];
-      positions[i3 + 2] += velocities.current[i3 + 2];
+      positionAttribute.array[i3] += velocities.current[i3];
+      positionAttribute.array[i3 + 1] += velocities.current[i3 + 1];
+      positionAttribute.array[i3 + 2] += velocities.current[i3 + 2];
       
       // Boundary check with wrapping
-      if (positions[i3] < -7.5) positions[i3] = 7.5;
-      if (positions[i3] > 7.5) positions[i3] = -7.5;
-      if (positions[i3 + 1] < -7.5) positions[i3 + 1] = 7.5;
-      if (positions[i3 + 1] > 7.5) positions[i3 + 1] = -7.5;
-      if (positions[i3 + 2] < -5) positions[i3 + 2] = 5;
-      if (positions[i3 + 2] > 5) positions[i3 + 2] = -5;
+      if (positionAttribute.array[i3] < -7.5) positionAttribute.array[i3] = 7.5;
+      if (positionAttribute.array[i3] > 7.5) positionAttribute.array[i3] = -7.5;
+      if (positionAttribute.array[i3 + 1] < -7.5) positionAttribute.array[i3 + 1] = 7.5;
+      if (positionAttribute.array[i3 + 1] > 7.5) positionAttribute.array[i3 + 1] = -7.5;
+      if (positionAttribute.array[i3 + 2] < -5) positionAttribute.array[i3 + 2] = 5;
+      if (positionAttribute.array[i3 + 2] > 5) positionAttribute.array[i3 + 2] = -5;
       
       // Mouse interaction
       if (mouse.current) {
         const mouseX = mouse.current.x;
         const mouseY = mouse.current.y;
         
-        const dx = mouseX - positions[i3];
-        const dy = mouseY - positions[i3 + 1];
+        const dx = mouseX - positionAttribute.array[i3];
+        const dy = mouseY - positionAttribute.array[i3 + 1];
         const dist = Math.sqrt(dx * dx + dy * dy);
         
         if (dist < 1.5) {
@@ -91,34 +96,33 @@ function Particles({ count, mouse }: ParticlesProps) {
       }
     }
     
-    positionsRef.current.needsUpdate = true;
+    positionAttribute.needsUpdate = true;
   });
 
   return (
-    <points ref={pointsRef}>
+    <Points ref={pointsRef}>
       <bufferGeometry>
         <bufferAttribute
-          ref={positionsRef as any}
-          attach="attributes-position"
-          array={positions.positions}
+          attach="position"
           count={count}
+          array={positions}
           itemSize={3}
         />
         <bufferAttribute
-          attach="attributes-color"
-          array={positions.colors}
+          attach="color"
           count={count}
+          array={colors}
           itemSize={3}
         />
       </bufferGeometry>
-      <PointMaterial
+      <pointsMaterial
         size={0.15}
         vertexColors
         transparent
-        sizeAttenuation={true}
+        sizeAttenuation
         depthWrite={false}
       />
-    </points>
+    </Points>
   );
 }
 
