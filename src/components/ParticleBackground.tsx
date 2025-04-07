@@ -49,7 +49,6 @@ function Particles({ count, mouse }: ParticlesProps) {
   
   // Velocities for animation
   const velocities = useRef<number[]>([]);
-  const positionsArray = useRef<Float32Array>(positions);
   
   useEffect(() => {
     // Initialize velocities
@@ -61,42 +60,31 @@ function Particles({ count, mouse }: ParticlesProps) {
     if (!pointsRef.current) return;
     
     const geometry = pointsRef.current.geometry;
-    const positionAttribute = geometry.getAttribute('position');
+    const positionAttribute = geometry.getAttribute('position') as THREE.BufferAttribute;
     
-    // Skip update if the attribute isn't properly initialized
     if (!positionAttribute || !positionAttribute.array) return;
     
     // Update positions based on velocities
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
       
-      // Update positions
-      positionsArray.current[i3] += velocities.current[i3];
-      positionsArray.current[i3 + 1] += velocities.current[i3 + 1];
-      positionsArray.current[i3 + 2] += velocities.current[i3 + 2];
+      // Update positions with bounds checking
+      const newX = positionAttribute.array[i3] + velocities.current[i3];
+      const newY = positionAttribute.array[i3 + 1] + velocities.current[i3 + 1];
+      const newZ = positionAttribute.array[i3 + 2] + velocities.current[i3 + 2];
       
-      // Boundary check with wrapping
-      if (positionsArray.current[i3] < -7.5) positionsArray.current[i3] = 7.5;
-      if (positionsArray.current[i3] > 7.5) positionsArray.current[i3] = -7.5;
-      if (positionsArray.current[i3 + 1] < -7.5) positionsArray.current[i3 + 1] = 7.5;
-      if (positionsArray.current[i3 + 1] > 7.5) positionsArray.current[i3 + 1] = -7.5;
-      if (positionsArray.current[i3 + 2] < -5) positionsArray.current[i3 + 2] = 5;
-      if (positionsArray.current[i3 + 2] > 5) positionsArray.current[i3 + 2] = -5;
-      
-      // Copy updated positions to the actual attribute array
-      if (positionAttribute.array) {
-        positionAttribute.array[i3] = positionsArray.current[i3];
-        positionAttribute.array[i3 + 1] = positionsArray.current[i3 + 1];
-        positionAttribute.array[i3 + 2] = positionsArray.current[i3 + 2];
-      }
+      // Apply boundary wrapping
+      positionAttribute.array[i3] = newX < -7.5 ? 7.5 : (newX > 7.5 ? -7.5 : newX);
+      positionAttribute.array[i3 + 1] = newY < -7.5 ? 7.5 : (newY > 7.5 ? -7.5 : newY);
+      positionAttribute.array[i3 + 2] = newZ < -5 ? 5 : (newZ > 5 ? -5 : newZ);
       
       // Mouse interaction
       if (mouse.current) {
         const mouseX = mouse.current.x;
         const mouseY = mouse.current.y;
         
-        const dx = mouseX - positionsArray.current[i3];
-        const dy = mouseY - positionsArray.current[i3 + 1];
+        const dx = mouseX - positionAttribute.array[i3];
+        const dy = mouseY - positionAttribute.array[i3 + 1];
         const dist = Math.sqrt(dx * dx + dy * dy);
         
         if (dist < 1.5) {
@@ -106,10 +94,8 @@ function Particles({ count, mouse }: ParticlesProps) {
       }
     }
     
-    // Only mark as needing update if the attribute is defined
-    if (positionAttribute) {
-      positionAttribute.needsUpdate = true;
-    }
+    // Safely mark for update
+    positionAttribute.needsUpdate = true;
   });
 
   return (
@@ -160,7 +146,7 @@ const ParticleBackground = () => {
     <div className="fixed top-0 left-0 w-full h-full -z-10">
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
         <ambientLight intensity={0.5} />
-        <Particles count={isMobile ? 150 : 300} mouse={mousePos} />
+        <Particles count={isMobile ? 100 : 200} mouse={mousePos} />
       </Canvas>
     </div>
   );
