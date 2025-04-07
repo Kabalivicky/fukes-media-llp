@@ -2,9 +2,11 @@
 import { useState } from 'react';
 import { ExternalLink, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import auNzMapImage from '/lovable-uploads/18519d06-b0d4-4ebf-a7ca-7436b6748170.png';
-import northAmericaMapImage from '/lovable-uploads/85ee4cc8-9963-49c6-bfbc-0c4246af2318.png';
-import worldMapImage from '/lovable-uploads/943c0b44-9308-4e29-87cd-f790717092c1.png';
+
+// Fixed image imports - public path is automatically resolved by Vite
+import auNzMapImage from '/placeholder.svg';
+import northAmericaMapImage from '/placeholder.svg';
+import worldMapImage from '/placeholder.svg';
 
 interface VFXGlobalMapProps {
   activeRegion: string;

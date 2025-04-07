@@ -1,8 +1,10 @@
 
 import { useState, useEffect } from 'react';
 import { ArrowRight, ExternalLink, MapPin } from 'lucide-react';
-import auNzMapImage from '/lovable-uploads/18519d06-b0d4-4ebf-a7ca-7436b6748170.png';
-import northAmericaMapImage from '/lovable-uploads/85ee4cc8-9963-49c6-bfbc-0c4246af2318.png';
+
+// Fixed image imports
+import auNzMapImage from '/placeholder.svg';
+import northAmericaMapImage from '/placeholder.svg';
 import { Button } from '@/components/ui/button';
 
 interface VFXRegionalSpotlightProps {
@@ -38,7 +40,7 @@ const regionData: Record<string, RegionData> = {
     mapImage: northAmericaMapImage,
     personName: "Joseph Bell",
     personTitle: "VFX Industry Researcher",
-    personImage: "/lovable-uploads/f26d960c-bb81-4fa5-8f55-4dcf0102e774.png",
+    personImage: "/placeholder.svg",
     quote: "Looking at data allows us to gain insights that would not be possible to acquire otherwise.",
     description: [
       "The global VFX industry spans across continents, with major hubs in North America, Europe, India, and Asia-Pacific regions.",
@@ -57,7 +59,7 @@ const regionData: Record<string, RegionData> = {
     mapImage: northAmericaMapImage,
     personName: "Industry Expert",
     personTitle: "VFX Supervisor",
-    personImage: "/lovable-uploads/f26d960c-bb81-4fa5-8f55-4dcf0102e774.png",
+    personImage: "/placeholder.svg",
     quote: "North America continues to be a leader in high-end VFX production for blockbuster films and streaming content.",
     description: [
       "Los Angeles, Vancouver, Montreal, Toronto, and New York serve as the primary VFX hubs in North America.",
@@ -86,7 +88,7 @@ const regionData: Record<string, RegionData> = {
     mapImage: auNzMapImage,
     personName: "Marcus Wells",
     personTitle: "Talent & Recruitment Consultant at PXL Talent",
-    personImage: "/lovable-uploads/afeced82-cbb0-4882-b815-f36755364b69.png",
+    personImage: "/placeholder.svg",
     quote: "VFX companies that have robust support for inbound candidates compete successfully for discerning global talent.",
     description: [
       "Australia and New Zealand have long been regarded as dependable locations for complex and compelling VFX and post-production work.",
@@ -115,7 +117,7 @@ const regionData: Record<string, RegionData> = {
     mapImage: northAmericaMapImage,
     personName: "Neil Hatton",
     personTitle: "CEO, UK Screen Alliance",
-    personImage: "/lovable-uploads/afeced82-cbb0-4882-b815-f36755364b69.png",
+    personImage: "/placeholder.svg",
     quote: "There is light at the end of the tunnel, as in November 2023 an increase in the UK's VFX tax relief was announced.",
     description: [
       "The UK and European VFX industry remains strong with London serving as the primary hub, followed by Paris, Berlin, and Madrid.",
@@ -134,7 +136,7 @@ const regionData: Record<string, RegionData> = {
     mapImage: northAmericaMapImage,
     personName: "Sneha Sharma",
     personTitle: "Research Lead, India",
-    personImage: "/lovable-uploads/4ea8b97d-d1e3-4753-a973-13cc19993e16.png",
+    personImage: "/placeholder.svg",
     quote: "International projects contribute nearly 70% of VFX revenue in India.",
     description: [
       "India has become a global powerhouse in VFX with an estimated 260,000 people working across the animation, VFX, gaming and comics sector.",
@@ -153,7 +155,7 @@ const regionData: Record<string, RegionData> = {
     mapImage: northAmericaMapImage,
     personName: "Wenhui (Cara) Du",
     personTitle: "VFX Producer/Supervisor",
-    personImage: "/lovable-uploads/ca4d5c04-3db4-40de-81a0-0dfe1caedc38.png",
+    personImage: "/placeholder.svg",
     quote: "The Wandering Earth gave China one of its first VFX-driven global blockbusters.",
     description: [
       "China's VFX industry has grown significantly, with an estimated workforce exceeding 10,000 people, primarily concentrated in Beijing and Shanghai.",
