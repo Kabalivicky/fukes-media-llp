@@ -1,8 +1,9 @@
+import { useState } from 'react';
 
-import franceVFXLogo from '/lovable-uploads/19f3fcba-160b-4067-ba35-bc19beda662e.png';
-import accessVFXLogo from '/lovable-uploads/0170f5fc-e804-4c8e-ace6-be9eb71a323f.png';
-import hdrConsultingLogo from '/lovable-uploads/93e47544-34ac-4de3-aca6-25fa73de58f9.png';
-import digikoreVFXLogo from '/lovable-uploads/bdd3b7e9-793d-483f-9598-ec0e4a1cafdb.png';
+import franceVFXLogo from '/placeholder.svg';
+import accessVFXLogo from '/placeholder.svg';
+import hdrConsultingLogo from '/placeholder.svg';
+import digikoreVFXLogo from '/placeholder.svg';
 
 const VFXSponsorsSection = () => {
   const platinumSponsors = [
