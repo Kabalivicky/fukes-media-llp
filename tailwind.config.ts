@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -52,16 +53,6 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,12 +75,31 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				'marquee': {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' }
+        },
+        'marquee2': {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0%)' }
+        },
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'marquee': 'marquee 25s linear infinite',
+        'marquee2': 'marquee2 25s linear infinite',
+			},
+      backgroundImage: {
+        'hero-pattern': 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/public/lovable-uploads/5ad66e50-d398-4c59-b672-b2d75c8149fd.png")',
+        'grid-pattern': 'radial-gradient(rgba(var(--primary), 0.1) 1px, transparent 1px)',
+        'gradient-radial': 'radial-gradient(ellipse at center, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      backgroundSize: {
+        '16': '4rem',
+      },
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
