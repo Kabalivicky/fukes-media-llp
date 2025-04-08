@@ -32,7 +32,7 @@ const VFXResearch = () => {
       <main className="container mx-auto px-4 py-16 z-10 relative">
         <div className="space-y-24">
           <SectionTitle
-            title="VFX World Atlas 2024"
+            title="VFX World Atlas"
             subtitle="Global Analysis of Visual Effects Industry"
             accent="red"
           />
