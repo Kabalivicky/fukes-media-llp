@@ -6,26 +6,30 @@ interface DynamicPriceProps {
   priceUSD: number;
   className?: string;
   showCode?: boolean;
+  minimumFractionDigits?: number;
 }
 
-const DynamicPrice = ({ priceUSD, className = '', showCode = false }: DynamicPriceProps) => {
+const DynamicPrice = ({ 
+  priceUSD, 
+  className = '', 
+  showCode = false,
+  minimumFractionDigits = 2
+}: DynamicPriceProps) => {
   const [formattedPrice, setFormattedPrice] = useState('');
   
   useEffect(() => {
-    const userCurrency = getUserCurrency();
-    const convertedPrice = userCurrency.rate 
-      ? (priceUSD * userCurrency.rate).toFixed(2) 
-      : priceUSD.toFixed(2);
-      
-    setFormattedPrice(
-      showCode 
-        ? `${userCurrency.symbol}${convertedPrice} ${userCurrency.code}` 
-        : `${userCurrency.symbol}${convertedPrice}`
-    );
-  }, [priceUSD, showCode]);
+    // Get formatted price with user's currency
+    const formattedValue = formatPrice(priceUSD, { 
+      showCode, 
+      minimumFractionDigits 
+    });
+    
+    setFormattedPrice(formattedValue);
+    
+  }, [priceUSD, showCode, minimumFractionDigits]);
   
   return (
-    <span className={className}>
+    <span className={`font-medium ${className}`}>
       {formattedPrice}
     </span>
   );
