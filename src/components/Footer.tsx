@@ -6,10 +6,10 @@ import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight } from 'luc
 const Footer = () => {
   return <footer className="bg-card/30 backdrop-blur-md border-t border-border">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 object-contain">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <img src="/lovable-uploads/f26d960c-bb81-4fa5-8f55-4dcf0102e774.png" alt="Fuke's Media Logo" className="h-10" />
+              <img alt="Fuke's Media Logo" className="h-10" src="/lovable-uploads/a0ad627e-2387-4f68-9856-c313d6d46f87.png" />
               
             </Link>
             <p className="text-muted-foreground mb-4">
