@@ -1,14 +1,14 @@
+
 import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from "@/components/ui/theme-provider";
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const {
-    setTheme,
-    theme
-  } = useTheme();
+  const { setTheme, theme } = useTheme();
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -18,27 +18,30 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
   const headerStyle = {
     backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent',
     backdropFilter: isScrolled ? 'blur(10px)' : 'none'
   };
+
   return <header className="fixed top-0 left-0 w-full z-50 transition-all duration-300" style={headerStyle}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
             <Link to="/" className="flex items-center space-x-2">
-              
+              <img 
+                alt="Fuke's Media Logo" 
+                className="h-10" 
+                src="/lovable-uploads/a0ad627e-2387-4f68-9856-c313d6d46f87.png"
+              />
             </Link>
             
+            {/* Navigation Links */}
             <nav className="hidden md:flex space-x-6">
-              <NavLink to="/" className={({
-              isActive
-            }) => `nav-link ${isActive ? 'text-primary' : 'text-white/80 hover:text-white'}`}>
+              <NavLink to="/" className={({isActive}) => `nav-link ${isActive ? 'text-primary' : 'text-white/80 hover:text-white'}`}>
                 Home
               </NavLink>
-              <NavLink to="/vfx-research" className={({
-              isActive
-            }) => `nav-link ${isActive ? 'text-primary' : 'text-white/80 hover:text-white'}`}>
+              <NavLink to="/vfx-research" className={({isActive}) => `nav-link ${isActive ? 'text-primary' : 'text-white/80 hover:text-white'}`}>
                 VFX Research
               </NavLink>
               <a href="#" className="text-white/80 hover:text-white transition">
@@ -66,21 +69,17 @@ const Navbar = () => {
               Get Started
             </button>
           </div>
-          
         </div>
       </div>
       
       {/* Mobile menu */}
-      {isMenuOpen && <div className="md:hidden absolute w-full bg-black/90 backdrop-blur-lg border-b border-white/10">
+      {isMenuOpen && (
+        <div className="md:hidden absolute w-full bg-black/90 backdrop-blur-lg border-b border-white/10">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-3">
-            <NavLink to="/" className={({
-          isActive
-        }) => `${isActive ? 'text-primary' : 'text-white/80'} py-2`} onClick={() => setIsMenuOpen(false)}>
+            <NavLink to="/" className={({isActive}) => `${isActive ? 'text-primary' : 'text-white/80'} py-2`} onClick={() => setIsMenuOpen(false)}>
               Home
             </NavLink>
-            <NavLink to="/vfx-research" className={({
-          isActive
-        }) => `${isActive ? 'text-primary' : 'text-white/80'} py-2`} onClick={() => setIsMenuOpen(false)}>
+            <NavLink to="/vfx-research" className={({isActive}) => `${isActive ? 'text-primary' : 'text-white/80'} py-2`} onClick={() => setIsMenuOpen(false)}>
               VFX Research
             </NavLink>
             <a href="#" className="text-white/80 py-2" onClick={() => setIsMenuOpen(false)}>
@@ -96,7 +95,9 @@ const Navbar = () => {
               Get Started
             </button>
           </nav>
-        </div>}
+        </div>
+      )}
     </header>;
 };
+
 export default Navbar;
