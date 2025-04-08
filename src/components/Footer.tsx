@@ -1,25 +1,16 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight } from 'lucide-react';
-
 const Footer = () => {
-  return (
-    <footer className="bg-card/30 backdrop-blur-md border-t border-border">
+  return <footer className="bg-card/30 backdrop-blur-md border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <img 
-                src="/lovable-uploads/f26d960c-bb81-4fa5-8f55-4dcf0102e774.png" 
-                alt="Fuke's Media Logo" 
-                className="h-10" 
-              />
-              <span className="text-xl font-bold tracking-tight neon-text-purple">
-                FUKE'S MEDIA
-              </span>
+              <img src="/lovable-uploads/f26d960c-bb81-4fa5-8f55-4dcf0102e774.png" alt="Fuke's Media Logo" className="h-10" />
+              
             </Link>
             <p className="text-muted-foreground mb-4">
               Pioneering AI-driven VFX and creative services for the digital media landscape.
@@ -91,10 +82,7 @@ const Footer = () => {
               Subscribe to our newsletter for the latest updates and insights.
             </p>
             <div className="flex space-x-2">
-              <Input 
-                placeholder="Your email address" 
-                className="bg-background border-border"
-              />
+              <Input placeholder="Your email address" className="bg-background border-border" />
               <Button variant="default" className="gradient-button">
                 <ArrowRight className="h-4 w-4" />
               </Button>
@@ -122,8 +110,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
