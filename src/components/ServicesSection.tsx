@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Camera, Palette, Video, MonitorPlay, Code } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import DynamicPrice from './DynamicPrice';
 
 const services = [
   {
@@ -20,7 +22,12 @@ const services = [
       'Digital Set Extensions',
       'AI-enhanced workflows'
     ],
-    image: '/lovable-uploads/9a2e5c45-aeb7-45ad-b39b-514912f1f206.png'
+    image: '/lovable-uploads/9a2e5c45-aeb7-45ad-b39b-514912f1f206.png',
+    pricing: [
+      { name: 'Basic Rotoscoping', price: 30, unit: 'per frame' },
+      { name: '2D Compositing', price: 75, unit: 'per frame' },
+      { name: '3D Integration', price: 250, unit: 'per shot' }
+    ]
   },
   {
     id: 'creative',
@@ -35,7 +42,12 @@ const services = [
       'UI/UX Design for AR/VR',
       'Brand Identity Development'
     ],
-    image: '/lovable-uploads/11a20677-57d8-49be-bcf7-4b2587f38450.png'
+    image: '/lovable-uploads/11a20677-57d8-49be-bcf7-4b2587f38450.png',
+    pricing: [
+      { name: 'Poster Design', price: 5000, unit: 'per poster' },
+      { name: 'Motion Poster', price: 15000, unit: 'per design' },
+      { name: 'Concept Art', price: 8000, unit: 'per piece' }
+    ]
   },
   {
     id: 'di',
@@ -50,7 +62,12 @@ const services = [
       'Final Conforming & Versioning',
       'Deliverable Creation for All Platforms'
     ],
-    image: '/lovable-uploads/6083bf38-2b22-44b8-be5a-40e5463692f2.png'
+    image: '/lovable-uploads/6083bf38-2b22-44b8-be5a-40e5463692f2.png',
+    pricing: [
+      { name: 'Basic Color Grading', price: 25000, unit: 'per minute' },
+      { name: 'Advanced Color Grading', price: 50000, unit: 'per minute' },
+      { name: 'HDR Grading', price: 80000, unit: 'per minute' }
+    ]
   },
   {
     id: 'tech',
@@ -65,12 +82,18 @@ const services = [
       'Real-time Rendering Implementation',
       'Custom Tool Development'
     ],
-    image: '/lovable-uploads/f960e5fd-76d0-443b-aac2-38d463aedb20.png'
+    image: '/lovable-uploads/f960e5fd-76d0-443b-aac2-38d463aedb20.png',
+    pricing: [
+      { name: 'AI Pipeline Integration', price: 100000, unit: 'per project' },
+      { name: 'Virtual Production Setup', price: 250000, unit: 'one-time' },
+      { name: 'Custom Tool Development', price: 75000, unit: 'per tool' }
+    ]
   }
 ];
 
 const ServicesSection = () => {
   const [activeTab, setActiveTab] = useState('vfx');
+  const [expandedAccordion, setExpandedAccordion] = useState<string>('features');
   
   return (
     <section id="services" className="py-20 relative">
@@ -95,7 +118,7 @@ const ServicesSection = () => {
           
           {services.map((service) => (
             <TabsContent key={service.id} value={service.id} className="mt-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <div>
                   <Card className="border border-border bg-card/50 backdrop-blur-sm">
                     <CardHeader>
@@ -105,16 +128,52 @@ const ServicesSection = () => {
                         {service.description}
                       </CardDescription>
                     </CardHeader>
+                    
                     <CardContent>
-                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {service.features.map((feature, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-primary mr-2">•</span>
-                            <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <Accordion 
+                        type="single" 
+                        collapsible 
+                        defaultValue="features"
+                        value={expandedAccordion}
+                        onValueChange={setExpandedAccordion}
+                      >
+                        <AccordionItem value="features">
+                          <AccordionTrigger className="text-lg font-medium">
+                            Key Features
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                              {service.features.map((feature, index) => (
+                                <li key={index} className="flex items-start">
+                                  <span className="text-primary mr-2">•</span>
+                                  <span>{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </AccordionContent>
+                        </AccordionItem>
+                        
+                        <AccordionItem value="pricing">
+                          <AccordionTrigger className="text-lg font-medium">
+                            Sample Pricing
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="space-y-3 mt-2">
+                              {service.pricing.map((item, index) => (
+                                <div key={index} className="flex justify-between items-center border-b border-border pb-2">
+                                  <span>{item.name}</span>
+                                  <span><DynamicPrice priceUSD={item.price} showCode={true} /> {item.unit}</span>
+                                </div>
+                              ))}
+                              <div className="text-sm text-muted-foreground mt-2">
+                                * Prices vary based on project complexity and requirements
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
                     </CardContent>
+                    
                     <CardFooter>
                       <Button variant="default" className="w-full">
                         Learn more about {service.name}
