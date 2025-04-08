@@ -57,45 +57,55 @@ function Particles({ count, mouse }: ParticlesProps) {
   
   // Update particles on each frame
   useFrame(() => {
+    // Safety check for pointsRef
     if (!pointsRef.current) return;
     
-    const geometry = pointsRef.current.geometry;
-    const positionAttribute = geometry.getAttribute('position') as THREE.BufferAttribute;
-    
-    if (!positionAttribute || !positionAttribute.array) return;
-    
-    // Update positions based on velocities
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
+    try {
+      const geometry = pointsRef.current.geometry;
       
-      // Update positions with bounds checking
-      const newX = positionAttribute.array[i3] + velocities.current[i3];
-      const newY = positionAttribute.array[i3 + 1] + velocities.current[i3 + 1];
-      const newZ = positionAttribute.array[i3 + 2] + velocities.current[i3 + 2];
+      // Safety check for position attribute
+      const positionAttribute = geometry.getAttribute('position');
+      if (!positionAttribute || !positionAttribute.array) return;
       
-      // Apply boundary wrapping
-      positionAttribute.array[i3] = newX < -7.5 ? 7.5 : (newX > 7.5 ? -7.5 : newX);
-      positionAttribute.array[i3 + 1] = newY < -7.5 ? 7.5 : (newY > 7.5 ? -7.5 : newY);
-      positionAttribute.array[i3 + 2] = newZ < -5 ? 5 : (newZ > 5 ? -5 : newZ);
+      // Cast to proper type for TypeScript
+      const typedPositions = positionAttribute.array as Float32Array;
       
-      // Mouse interaction
-      if (mouse.current) {
-        const mouseX = mouse.current.x;
-        const mouseY = mouse.current.y;
+      // Update positions based on velocities
+      for (let i = 0; i < count; i++) {
+        const i3 = i * 3;
         
-        const dx = mouseX - positionAttribute.array[i3];
-        const dy = mouseY - positionAttribute.array[i3 + 1];
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        // Update positions with boundary check
+        const newX = typedPositions[i3] + velocities.current[i3];
+        const newY = typedPositions[i3 + 1] + velocities.current[i3 + 1];
+        const newZ = typedPositions[i3 + 2] + velocities.current[i3 + 2];
         
-        if (dist < 1.5) {
-          velocities.current[i3] += dx * 0.001;
-          velocities.current[i3 + 1] += dy * 0.001;
+        // Apply boundary wrapping
+        typedPositions[i3] = newX < -7.5 ? 7.5 : (newX > 7.5 ? -7.5 : newX);
+        typedPositions[i3 + 1] = newY < -7.5 ? 7.5 : (newY > 7.5 ? -7.5 : newY);
+        typedPositions[i3 + 2] = newZ < -5 ? 5 : (newZ > 5 ? -5 : newZ);
+        
+        // Mouse interaction (only if mouse position is available)
+        if (mouse.current) {
+          const mouseX = mouse.current.x;
+          const mouseY = mouse.current.y;
+          
+          const dx = mouseX - typedPositions[i3];
+          const dy = mouseY - typedPositions[i3 + 1];
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < 1.5) {
+            velocities.current[i3] += dx * 0.001;
+            velocities.current[i3 + 1] += dy * 0.001;
+          }
         }
       }
+      
+      // Safely mark the attribute as needing update
+      positionAttribute.needsUpdate = true;
+    } catch (error) {
+      // Silently handle any errors to prevent app crashes
+      console.error("Error updating particles:", error);
     }
-    
-    // Safely mark for update
-    positionAttribute.needsUpdate = true;
   });
 
   return (
@@ -146,7 +156,8 @@ const ParticleBackground = () => {
     <div className="fixed top-0 left-0 w-full h-full -z-10">
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
         <ambientLight intensity={0.5} />
-        <Particles count={isMobile ? 100 : 200} mouse={mousePos} />
+        {/* Reducing particle count for better performance */}
+        <Particles count={isMobile ? 75 : 150} mouse={mousePos} />
       </Canvas>
     </div>
   );
