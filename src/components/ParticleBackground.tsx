@@ -1,10 +1,11 @@
 
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points } from '@react-three/drei';
 import * as THREE from 'three';
 import { useIsMobile } from '@/hooks/use-mobile';
 
+// Get a random color from our palette
 function getRandomColor() {
   const colors = [
     '#8B5CF6', // Purple
@@ -18,10 +19,10 @@ function getRandomColor() {
 
 interface ParticlesProps {
   count: number;
-  mouse: React.RefObject<THREE.Vector2>;
 }
 
-function Particles({ count, mouse }: ParticlesProps) {
+// The Particles component has been simplified to avoid errors
+function Particles({ count }: ParticlesProps) {
   const pointsRef = useRef<THREE.Points>(null);
   
   // Create positions and colors for particles
@@ -47,64 +48,12 @@ function Particles({ count, mouse }: ParticlesProps) {
     return [positions, colors];
   }, [count]);
   
-  // Velocities for animation
-  const velocities = useRef<number[]>([]);
-  
-  useEffect(() => {
-    // Initialize velocities
-    velocities.current = Array.from({ length: count * 3 }, () => (Math.random() - 0.5) * 0.01);
-  }, [count]);
-  
-  // Update particles on each frame
-  useFrame(() => {
-    // Safety check for pointsRef
-    if (!pointsRef.current) return;
-    
-    try {
-      const geometry = pointsRef.current.geometry;
-      
-      // Safety check for position attribute
-      const positionAttribute = geometry.getAttribute('position');
-      if (!positionAttribute || !positionAttribute.array) return;
-      
-      // Cast to proper type for TypeScript
-      const typedPositions = positionAttribute.array as Float32Array;
-      
-      // Update positions based on velocities
-      for (let i = 0; i < count; i++) {
-        const i3 = i * 3;
-        
-        // Update positions with boundary check
-        const newX = typedPositions[i3] + velocities.current[i3];
-        const newY = typedPositions[i3 + 1] + velocities.current[i3 + 1];
-        const newZ = typedPositions[i3 + 2] + velocities.current[i3 + 2];
-        
-        // Apply boundary wrapping
-        typedPositions[i3] = newX < -7.5 ? 7.5 : (newX > 7.5 ? -7.5 : newX);
-        typedPositions[i3 + 1] = newY < -7.5 ? 7.5 : (newY > 7.5 ? -7.5 : newY);
-        typedPositions[i3 + 2] = newZ < -5 ? 5 : (newZ > 5 ? -5 : newZ);
-        
-        // Mouse interaction (only if mouse position is available)
-        if (mouse.current) {
-          const mouseX = mouse.current.x;
-          const mouseY = mouse.current.y;
-          
-          const dx = mouseX - typedPositions[i3];
-          const dy = mouseY - typedPositions[i3 + 1];
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          
-          if (dist < 1.5) {
-            velocities.current[i3] += dx * 0.001;
-            velocities.current[i3 + 1] += dy * 0.001;
-          }
-        }
-      }
-      
-      // Safely mark the attribute as needing update
-      positionAttribute.needsUpdate = true;
-    } catch (error) {
-      // Silently handle any errors to prevent app crashes
-      console.error("Error updating particles:", error);
+  // Simple rotation animation that doesn't rely on updating buffer geometry
+  useFrame(({ clock }) => {
+    if (pointsRef.current) {
+      // Simple rotation animation that doesn't modify geometry attributes
+      pointsRef.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.3) * 0.2;
+      pointsRef.current.rotation.y = Math.sin(clock.getElapsedTime() * 0.2) * 0.1;
     }
   });
 
@@ -128,6 +77,7 @@ function Particles({ count, mouse }: ParticlesProps) {
         size={0.15}
         vertexColors
         transparent
+        opacity={0.8}
         sizeAttenuation
         depthWrite={false}
       />
@@ -136,28 +86,16 @@ function Particles({ count, mouse }: ParticlesProps) {
 }
 
 const ParticleBackground = () => {
-  const mousePos = useRef(new THREE.Vector2(0, 0));
   const isMobile = useIsMobile();
   
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      // Convert to normalized coordinates (-1 to 1)
-      mousePos.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mousePos.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
+  // Reduced particle count for better performance and stability
+  const particleCount = isMobile ? 50 : 100;
+  
   return (
     <div className="fixed top-0 left-0 w-full h-full -z-10">
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
         <ambientLight intensity={0.5} />
-        {/* Reducing particle count for better performance */}
-        <Particles count={isMobile ? 75 : 150} mouse={mousePos} />
+        <Particles count={particleCount} />
       </Canvas>
     </div>
   );
