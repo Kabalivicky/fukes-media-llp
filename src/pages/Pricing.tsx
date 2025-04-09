@@ -183,12 +183,14 @@ const Pricing = () => {
                               <td className="py-3">{item.service}</td>
                               <td className="py-3">
                                 {item.perModel || item.perCharacter ? (
-                                  <DynamicPrice priceUSD={item.lowCost} /> - <DynamicPrice priceUSD={item.highCost} />
-                                  <span className="text-xs text-muted-foreground ml-1">
-                                    {item.perModel ? 'per model' : 'per character'}
-                                  </span>
+                                  <div className="flex items-center">
+                                    <span><DynamicPrice priceUSD={item.lowCost} /> - <DynamicPrice priceUSD={item.highCost} /></span>
+                                    <span className="text-xs text-muted-foreground ml-1">
+                                      {item.perModel ? 'per model' : 'per character'}
+                                    </span>
+                                  </div>
                                 ) : (
-                                  <><DynamicPrice priceUSD={item.lowCost} /> - <DynamicPrice priceUSD={item.highCost} /></>
+                                  <div><DynamicPrice priceUSD={item.lowCost} /> - <DynamicPrice priceUSD={item.highCost} /></div>
                                 )}
                               </td>
                               <td className="py-3">
