@@ -12,7 +12,6 @@ import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 import ScrollToTop from "./components/ScrollToTop";
-import "./App.css";
 
 // Create QueryClient
 const queryClient = new QueryClient({

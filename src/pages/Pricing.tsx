@@ -76,7 +76,24 @@ const Pricing = () => {
   ];
 
   // DI Services Pricing - Updated based on the rate card image
-  const diServices = [
+  // Fixed the TypeScript error by defining specific types for custom and non-custom services
+  type BaseLightDaVinciService = {
+    service: string;
+    baseLight: { min: number; max: number };
+    daVinci: { min: number; max: number };
+    unit: string;
+  }
+  
+  type CustomBaseLightDaVinciService = {
+    service: string;
+    baseLight: { min: number; max: number; custom: boolean };
+    daVinci: { min: number; max: number; custom: boolean };
+    unit: string;
+  }
+  
+  type DIService = BaseLightDaVinciService | CustomBaseLightDaVinciService;
+  
+  const diServices: DIService[] = [
     {
       service: 'Basic Color Grading',
       baseLight: { min: 15000, max: 25000 },
@@ -313,14 +330,14 @@ const Pricing = () => {
                         <tr key={idx} className="border-b">
                           <td className="py-3">{item.service}</td>
                           <td className="py-3">
-                            {item.custom ? (
+                            {'custom' in item.baseLight ? (
                               <span className="text-muted-foreground text-sm">As per client needs (Stock Footage, Plugins, LUTs, etc.)</span>
                             ) : (
                               <><DynamicPrice priceUSD={item.baseLight.min} /> - <DynamicPrice priceUSD={item.baseLight.max} /></>
                             )}
                           </td>
                           <td className="py-3">
-                            {item.custom ? (
+                            {'custom' in item.daVinci ? (
                               <span className="text-muted-foreground text-sm">As per client needs (Stock Footage, Plugins, LUTs, etc.)</span>
                             ) : (
                               <><DynamicPrice priceUSD={item.daVinci.min} /> - <DynamicPrice priceUSD={item.daVinci.max} /></>
