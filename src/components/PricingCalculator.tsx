@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -9,7 +9,9 @@ import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
-import { Check, AlertCircle, Download, Calculator } from 'lucide-react';
+import { Check, AlertCircle, Download, Calculator, ListFilter } from 'lucide-react';
+import DynamicPrice from '@/components/DynamicPrice';
+import { getUserCurrency, setUserCurrency, currencies } from '@/utils/currencyUtils';
 
 type PricingTier = 'standard' | 'premium' | 'outsourced';
 type ServiceType = 'vfx' | 'creative' | 'di' | 'tech';
@@ -27,8 +29,8 @@ interface PricingOption {
 const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = {
   vfx: {
     standard: {
-      name: 'Standard VFX',
-      description: 'In-house low-cost VFX solutions with good quality and turnaround time.',
+      name: 'In-house Low Cost',
+      description: 'In-house VFX solutions with good quality and turnaround time.',
       basePrice: 50000,
       pricePerFrame: 30,
       minimumFrames: 100,
@@ -36,7 +38,7 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
       deliveryTimeInDays: 14
     },
     premium: {
-      name: 'Premium VFX',
+      name: 'High-Budget',
       description: 'High-end VFX with advanced techniques and senior artists for exceptional quality.',
       basePrice: 150000,
       pricePerFrame: 100,
@@ -45,7 +47,7 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
       deliveryTimeInDays: 21
     },
     outsourced: {
-      name: 'Outsourced VFX',
+      name: 'Outsourced',
       description: 'Cost-effective solutions for large volume projects with good quality.',
       basePrice: 25000,
       pricePerFrame: 15,
@@ -56,7 +58,7 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
   },
   creative: {
     standard: {
-      name: 'Standard Creative',
+      name: 'In-house Standard',
       description: 'Essential creative services for projects with moderate complexity.',
       basePrice: 35000,
       pricePerFrame: 20,
@@ -65,7 +67,7 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
       deliveryTimeInDays: 10
     },
     premium: {
-      name: 'Premium Creative',
+      name: 'High-End',
       description: 'Advanced creative solutions with senior designers and directors.',
       basePrice: 120000,
       pricePerFrame: 80,
@@ -74,7 +76,7 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
       deliveryTimeInDays: 18
     },
     outsourced: {
-      name: 'Outsourced Creative',
+      name: 'Outsourced',
       description: 'Cost-effective creative services for projects with standard requirements.',
       basePrice: 20000,
       pricePerFrame: 12,
@@ -85,8 +87,8 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
   },
   di: {
     standard: {
-      name: 'Standard DI',
-      description: 'Color grading and finishing services for standard projects.',
+      name: 'Base Light',
+      description: 'Color grading and finishing services using Base Light.',
       basePrice: 45000,
       pricePerFrame: 10,
       minimumFrames: 100,
@@ -94,8 +96,8 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
       deliveryTimeInDays: 7
     },
     premium: {
-      name: 'Premium DI',
-      description: 'Advanced color grading with senior colorists using top-tier equipment.',
+      name: 'DaVinci Resolve',
+      description: 'Advanced color grading with senior colorists using DaVinci Resolve.',
       basePrice: 100000,
       pricePerFrame: 30,
       minimumFrames: 100,
@@ -103,7 +105,7 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
       deliveryTimeInDays: 14
     },
     outsourced: {
-      name: 'Outsourced DI',
+      name: 'Outsourced',
       description: 'Basic color correction and finishing services at a lower cost.',
       basePrice: 25000,
       pricePerFrame: 5,
@@ -152,6 +154,7 @@ const PricingCalculator = () => {
   const [isCalculating, setIsCalculating] = useState(false);
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
   const [showBreakdown, setShowBreakdown] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState(getUserCurrency().code);
 
   // Update frames when duration changes
   const handleDurationChange = (value: string) => {
@@ -167,6 +170,30 @@ const PricingCalculator = () => {
     const frameCount = value[0];
     setFrames(frameCount);
     setFramesDuration(parseFloat((frameCount / 24).toFixed(2))); // Assuming 24fps
+  };
+
+  const handleCurrencyChange = (currencyCode: string) => {
+    const currencyMap: Record<string, string> = {
+      'USD': 'US',
+      'INR': 'IN',
+      'GBP': 'GB',
+      'EUR': 'EU',
+      'AUD': 'AU',
+      'CAD': 'CA',
+      'JPY': 'JP'
+    };
+
+    if (currencyMap[currencyCode]) {
+      setSelectedCurrency(currencyCode);
+      setUserCurrency(currencyMap[currencyCode]);
+      // Force a recalculation to update the displayed price
+      if (calculatedPrice) {
+        setIsCalculating(true);
+        setTimeout(() => {
+          setIsCalculating(false);
+        }, 500);
+      }
+    }
   };
 
   const calculatePrice = () => {
@@ -205,22 +232,31 @@ const PricingCalculator = () => {
 
   const pricingOption = pricingOptions[serviceType][tier];
 
+  // Currency options for the dropdown
+  const currencyOptions = [
+    { code: 'INR', name: 'Indian Rupee (₹)' },
+    { code: 'USD', name: 'US Dollar ($)' },
+    { code: 'EUR', name: 'Euro (€)' },
+    { code: 'GBP', name: 'British Pound (£)' },
+    { code: 'AUD', name: 'Australian Dollar (A$)' },
+    { code: 'CAD', name: 'Canadian Dollar (C$)' },
+    { code: 'JPY', name: 'Japanese Yen (¥)' }
+  ];
+
   return (
-    <section id="pricing" className="py-20 relative overflow-hidden">
+    <section id="pricing-calculator" className="py-16 relative overflow-hidden">
       <div className="container mx-auto px-4">
         <SectionTitle 
           title="Pricing Calculator" 
           subtitle="Get an instant estimate for your project based on your specific requirements"
         />
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card className="border border-border bg-card/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-2xl md:text-3xl font-bold">
-                <div className="flex items-center">
-                  <Calculator className="mr-2 h-6 w-6 text-primary" />
-                  Project Specifications
-                </div>
+              <CardTitle className="text-2xl font-bold flex items-center">
+                <Calculator className="mr-2 h-6 w-6 text-primary" />
+                Project Specifications
               </CardTitle>
               <CardDescription className="text-base">
                 Fill in your project details to generate a cost estimate
@@ -228,22 +264,43 @@ const PricingCalculator = () => {
             </CardHeader>
             
             <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="service-type">Service Type</Label>
-                <Select
-                  value={serviceType}
-                  onValueChange={(value) => setServiceType(value as ServiceType)}
-                >
-                  <SelectTrigger id="service-type">
-                    <SelectValue placeholder="Select a service" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="vfx">VFX Solutions</SelectItem>
-                    <SelectItem value="creative">Creative Services</SelectItem>
-                    <SelectItem value="di">Digital Intermediate (DI)</SelectItem>
-                    <SelectItem value="tech">Tech Innovation</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="flex flex-col sm:flex-row justify-between gap-4">
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="service-type">Service Type</Label>
+                  <Select
+                    value={serviceType}
+                    onValueChange={(value) => setServiceType(value as ServiceType)}
+                  >
+                    <SelectTrigger id="service-type">
+                      <SelectValue placeholder="Select a service" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="vfx">VFX Solutions</SelectItem>
+                      <SelectItem value="creative">Creative Services</SelectItem>
+                      <SelectItem value="di">Digital Intermediate (DI)</SelectItem>
+                      <SelectItem value="tech">Tech Innovation</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="currency">Currency</Label>
+                  <Select
+                    value={selectedCurrency}
+                    onValueChange={handleCurrencyChange}
+                  >
+                    <SelectTrigger id="currency">
+                      <SelectValue placeholder="Select currency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {currencyOptions.map((currency) => (
+                        <SelectItem key={currency.code} value={currency.code}>
+                          {currency.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
               
               <div className="space-y-2">
@@ -324,7 +381,7 @@ const PricingCalculator = () => {
           
           <Card className="border border-border bg-card/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-2xl md:text-3xl font-bold">
+              <CardTitle className="text-2xl font-bold">
                 Your Estimate
               </CardTitle>
               <CardDescription className="text-base">
@@ -343,7 +400,7 @@ const PricingCalculator = () => {
                   <div>
                     <div className="text-sm text-muted-foreground">Estimated Cost</div>
                     <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary">
-                      ₹{calculatedPrice.toLocaleString()}
+                      <DynamicPrice priceUSD={calculatedPrice} showCode={true} />
                     </div>
                     <div className="mt-2 text-sm text-muted-foreground">
                       For {frames} frames ({framesDuration.toFixed(1)} seconds) across {shots} shots
@@ -370,12 +427,12 @@ const PricingCalculator = () => {
                       <ul className="space-y-1 text-sm text-muted-foreground">
                         <li className="flex justify-between">
                           <span>Base Price:</span>
-                          <span>₹{pricingOption.basePrice.toLocaleString()}</span>
+                          <span><DynamicPrice priceUSD={pricingOption.basePrice} /></span>
                         </li>
                         {pricingOption.pricePerFrame > 0 && (
                           <li className="flex justify-between">
-                            <span>Per-Frame Cost ({frames} @ ₹{pricingOption.pricePerFrame}):</span>
-                            <span>₹{(pricingOption.pricePerFrame * frames).toLocaleString()}</span>
+                            <span>Per-Frame Cost ({frames} @ <DynamicPrice priceUSD={pricingOption.pricePerFrame} />):</span>
+                            <span><DynamicPrice priceUSD={pricingOption.pricePerFrame * frames} /></span>
                           </li>
                         )}
                         <li className="flex justify-between">

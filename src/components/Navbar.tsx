@@ -1,7 +1,9 @@
+
 import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from "@/components/ui/theme-provider";
+import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,12 +20,11 @@ const Navbar = () => {
     };
   }, []);
 
-  const headerStyle = {
-    backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent',
-    backdropFilter: isScrolled ? 'blur(10px)' : 'none'
-  };
+  const headerClasses = isScrolled 
+    ? 'bg-background/80 backdrop-blur-xl shadow-lg'
+    : 'bg-transparent';
 
-  // Navigation links - update to add the VFX Industry Insights
+  // Navigation links
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Services", path: "/#services" },
@@ -36,7 +37,8 @@ const Navbar = () => {
     { name: "Contact", path: "/#contact" }
   ];
 
-  return <header className="fixed top-0 left-0 w-full z-50 transition-all duration-300" style={headerStyle}>
+  return (
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${headerClasses}`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
@@ -49,9 +51,18 @@ const Navbar = () => {
             </Link>
             
             {/* Navigation Links */}
-            <nav className="hidden md:flex space-x-6">
-              {navLinks.map(link => (
-                <NavLink to={link.path} className={({isActive}) => `nav-link ${isActive ? 'text-primary' : 'text-white/80 hover:text-white'}`}>
+            <nav className="hidden lg:flex space-x-4">
+              {navLinks.map((link, index) => (
+                <NavLink 
+                  key={index}
+                  to={link.path} 
+                  className={({isActive}) => 
+                    `px-3 py-2 text-sm font-medium rounded-md transition-colors 
+                     ${isActive 
+                       ? 'text-primary bg-primary/10' 
+                       : 'text-foreground/80 hover:text-foreground hover:bg-muted/30'}`
+                  }
+                >
                   {link.name}
                 </NavLink>
               ))}
@@ -59,37 +70,58 @@ const Navbar = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="p-2 rounded-md hover:bg-white/10 transition">
-              {theme === "dark" ? <Sun className="h-5 w-5 text-white/80" /> : <Moon className="h-5 w-5 text-white/80" />}
-            </button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")} 
+              className="rounded-full"
+            >
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              <span className="sr-only">Toggle theme</span>
+            </Button>
             
-            <button className="md:hidden p-2 text-white/80 hover:text-white transition" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button 
+              className="lg:hidden p-2 rounded-md text-foreground/70 hover:text-foreground hover:bg-muted/30 transition"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
             
-            <button className="gradient-button px-4 py-2 rounded-full text-white/90 hover:text-white hidden md:block">
+            <Button className="gradient-button hidden lg:flex">
               Get Started
-            </button>
+            </Button>
           </div>
         </div>
       </div>
       
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute w-full bg-black/90 backdrop-blur-lg border-b border-white/10">
-          <nav className="container mx-auto px-4 py-4 flex flex-col space-y-3">
-            {navLinks.map(link => (
-              <NavLink to={link.path} className={({isActive}) => `${isActive ? 'text-primary' : 'text-white/80'} py-2`} onClick={() => setIsMenuOpen(false)}>
+        <div className="lg:hidden absolute w-full bg-background/95 backdrop-blur-xl border-b border-border">
+          <nav className="container mx-auto px-4 py-4 flex flex-col space-y-1">
+            {navLinks.map((link, index) => (
+              <NavLink 
+                key={index}
+                to={link.path} 
+                onClick={() => setIsMenuOpen(false)}
+                className={({isActive}) => 
+                  `px-4 py-3 rounded-md transition-colors
+                   ${isActive 
+                     ? 'text-primary bg-primary/10' 
+                     : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'}`
+                }
+              >
                 {link.name}
               </NavLink>
             ))}
-            <button className="gradient-button px-4 py-2 rounded-full text-white/90 hover:text-white">
+            <Button className="gradient-button w-full mt-4">
               Get Started
-            </button>
+            </Button>
           </nav>
         </div>
       )}
-    </header>;
+    </header>
+  );
 };
 
 export default Navbar;

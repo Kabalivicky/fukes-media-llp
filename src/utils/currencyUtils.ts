@@ -37,11 +37,17 @@ export const currencies: CurrencyMap = {
 };
 
 // Default currency if location detection fails
-const defaultCurrency: CurrencyInfo = currencies.US;
+const defaultCurrency: CurrencyInfo = currencies.IN; // Setting default to INR since this is an Indian company
 
 // More comprehensive function to get user's country code based on browser locale
 export const getUserCountry = (): string => {
   try {
+    // Try to use saved preference first
+    const savedCurrency = localStorage.getItem('user_currency');
+    if (savedCurrency && currencies[savedCurrency]) {
+      return savedCurrency;
+    }
+
     // Primary approach: Use navigator.language
     if (navigator.language) {
       const locale = navigator.language;
@@ -120,16 +126,17 @@ export const getUserCountry = (): string => {
       }
     }
     
-    // Fallback: Use IP geolocation via local storage if available (this would be populated by a geolocation service)
-    const savedCountry = localStorage.getItem('user_country');
-    if (savedCountry && currencies[savedCountry]) {
-      return savedCountry;
-    }
-    
-    return 'US'; // Default fallback
+    return 'IN'; // Default to India
   } catch (error) {
     console.error("Error detecting user location:", error);
-    return 'US'; // Default fallback
+    return 'IN'; // Default to India
+  }
+};
+
+// Save user's preferred currency
+export const setUserCurrency = (countryCode: string): void => {
+  if (currencies[countryCode]) {
+    localStorage.setItem('user_currency', countryCode);
   }
 };
 
@@ -177,6 +184,11 @@ export const useCurrency = () => {
         minimumFractionDigits,
         maximumFractionDigits: minimumFractionDigits
       });
+    },
+    // Allow switching currency
+    switchCurrency: (countryCode: string) => {
+      setUserCurrency(countryCode);
+      window.location.reload(); // Refresh to apply changes
     }
   };
 };

@@ -8,6 +8,7 @@ interface DynamicPriceProps {
   showCode?: boolean;
   minimumFractionDigits?: number;
   showOriginal?: boolean;
+  isVisible?: boolean; // For animation purposes
 }
 
 const DynamicPrice = ({ 
@@ -15,7 +16,8 @@ const DynamicPrice = ({
   className = '', 
   showCode = false,
   minimumFractionDigits = 2,
-  showOriginal = false
+  showOriginal = false,
+  isVisible = true
 }: DynamicPriceProps) => {
   const [formattedPrice, setFormattedPrice] = useState('');
   const [originalPrice, setOriginalPrice] = useState('');
@@ -41,7 +43,9 @@ const DynamicPrice = ({
   }, [priceUSD, showCode, minimumFractionDigits, showOriginal]);
   
   return (
-    <span className={`font-medium ${className}`}>
+    <span 
+      className={`font-medium transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'} ${className}`}
+    >
       {formattedPrice}
       {showOriginal && getUserCurrency().code !== 'USD' && (
         <span className="text-muted-foreground text-xs ml-1">

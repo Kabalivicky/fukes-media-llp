@@ -46,6 +46,43 @@
     --radius: 0.5rem;
   }
 
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    
+    --primary: 217 100% 50%;  /* VFX Blue - slightly darkened for light mode */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 262 83% 47%;  /* VFX Purple - slightly darkened for light mode */
+    --secondary-foreground: 0 0% 100%;
+    
+    --accent: 336 100% 45%;  /* VFX Magenta - slightly darkened for light mode */
+    --accent-foreground: 0 0% 100%;
+    
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+
+    --neon-green: 140 70% 40%;
+    --neon-blue: 217 90% 50%;
+    --neon-purple: 262 73% 47%;
+    --neon-pink: 336 90% 45%;
+    --neon-orange: 25 90% 46%;
+    --neon-yellow: 44 90% 47%;
+  }
+
   * {
     @apply border-border;
   }
@@ -75,7 +112,7 @@
 
   /* Custom selection */
   ::selection {
-    @apply bg-primary/30 text-white;
+    @apply bg-primary/30 text-foreground;
   }
 
   /* Custom animations */
@@ -171,6 +208,10 @@
     @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-lg;
   }
 
+  .light .glass {
+    @apply bg-white/60 backdrop-blur-md border border-white/40 shadow-lg;
+  }
+
   /* Gradient button updated with brand colors */
   .gradient-button {
     @apply relative overflow-hidden transition-all duration-300;
@@ -203,5 +244,33 @@
 
   .hover-scale:hover {
     transform: scale(1.03);
+  }
+
+  .price-table {
+    @apply overflow-x-auto w-full max-w-full;
+  }
+  
+  .price-table table {
+    @apply min-w-full table-auto border-collapse;
+  }
+  
+  .price-table th {
+    @apply bg-muted/50 text-foreground font-semibold text-sm p-2 border border-border;
+  }
+  
+  .price-table td {
+    @apply p-2 border border-border text-sm;
+  }
+  
+  /* Responsive tables */
+  @media (max-width: 640px) {
+    .price-table table {
+      @apply text-xs;
+    }
+    
+    .price-table th, 
+    .price-table td {
+      @apply p-1;
+    }
   }
 }

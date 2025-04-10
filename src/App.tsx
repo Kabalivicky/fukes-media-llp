@@ -12,6 +12,7 @@ import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 import ScrollToTop from "./components/ScrollToTop";
+import "./App.css";
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -36,54 +37,58 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="dark">
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTop showBelow={400} />
-          <Routes>
-            <Route 
-              path="/" 
-              element={
-                <ScrollToTopOnNavigate>
-                  <Index />
-                </ScrollToTopOnNavigate>
-              } 
-            />
-            <Route 
-              path="/vfx-research" 
-              element={
-                <ScrollToTopOnNavigate>
-                  <VFXResearch />
-                </ScrollToTopOnNavigate>
-              } 
-            />
-            <Route 
-              path="/vfx-industry-insights" 
-              element={
-                <ScrollToTopOnNavigate>
-                  <VFXIndustryInsights />
-                </ScrollToTopOnNavigate>
-              } 
-            />
-            <Route 
-              path="/pricing" 
-              element={
-                <ScrollToTopOnNavigate>
-                  <Pricing />
-                </ScrollToTopOnNavigate>
-              } 
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route 
-              path="*" 
-              element={
-                <ScrollToTopOnNavigate>
-                  <NotFound />
-                </ScrollToTopOnNavigate>
-              } 
-            />
-          </Routes>
-        </BrowserRouter>
+        <div className="min-h-screen bg-background bg-[url('/lovable-uploads/7aa001b2-00ae-4aed-9551-897de83da325.png')] bg-cover bg-center bg-fixed bg-opacity-20">
+          <div className="min-h-screen bg-background/80 backdrop-blur-sm">
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <ScrollToTop showBelow={400} />
+              <Routes>
+                <Route 
+                  path="/" 
+                  element={
+                    <ScrollToTopOnNavigate>
+                      <Index />
+                    </ScrollToTopOnNavigate>
+                  } 
+                />
+                <Route 
+                  path="/vfx-research" 
+                  element={
+                    <ScrollToTopOnNavigate>
+                      <VFXResearch />
+                    </ScrollToTopOnNavigate>
+                  } 
+                />
+                <Route 
+                  path="/vfx-industry-insights" 
+                  element={
+                    <ScrollToTopOnNavigate>
+                      <VFXIndustryInsights />
+                    </ScrollToTopOnNavigate>
+                  } 
+                />
+                <Route 
+                  path="/pricing" 
+                  element={
+                    <ScrollToTopOnNavigate>
+                      <Pricing />
+                    </ScrollToTopOnNavigate>
+                  } 
+                />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route 
+                  path="*" 
+                  element={
+                    <ScrollToTopOnNavigate>
+                      <NotFound />
+                    </ScrollToTopOnNavigate>
+                  } 
+                />
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </div>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>

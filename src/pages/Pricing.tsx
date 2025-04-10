@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -11,11 +12,12 @@ import {
 } from '@/components/ui/accordion';
 import ExpansibleTab from '@/components/ExpansibleTab';
 import DynamicPrice from '@/components/DynamicPrice';
+import PricingCalculator from '@/components/PricingCalculator';
 
 const Pricing = () => {
   const [activeTab, setActiveTab] = useState('vfx');
 
-  // VFX Services Pricing
+  // VFX Services Pricing - Updated based on the rate card image
   const vfxServices = [
     {
       title: '2D Department',
@@ -24,7 +26,8 @@ const Pricing = () => {
         { service: 'Paint (Clean-Up)', lowCost: 25, highCost: 100, premium: { min: 125, max: 375 }, outsource: { min: 15, max: 60 }, perShot: { min: 1500, max: 5000 } },
         { service: 'Prep (Plate Prep)', lowCost: 25, highCost: 125, premium: { min: 150, max: 500 }, outsource: { min: 20, max: 80 }, perShot: { min: 2000, max: 7000 } },
         { service: '2D Compositing', lowCost: 25, highCost: 75, premium: { min: 100, max: 300 }, outsource: { min: 20, max: 75 }, perShot: { min: 1500, max: 10000 } },
-        { service: '3D Compositing', lowCost: 50, highCost: 150, premium: { min: 250, max: 600 }, outsource: { min: 35, max: 125 }, perShot: { min: 3000, max: 15000 } }
+        { service: '3D Compositing', lowCost: 50, highCost: 150, premium: { min: 250, max: 600 }, outsource: { min: 35, max: 125 }, perShot: { min: 3000, max: 15000 } },
+        { service: 'Digital Matte Painting', lowCost: 15000, highCost: 30000, premium: { min: 50000, max: 100000 }, outsource: { min: 12000, max: 20000 }, perShot: { min: 75000, max: 5000000 }, perFrame: true }
       ]
     },
     {
@@ -34,12 +37,13 @@ const Pricing = () => {
         { service: 'Animation', lowCost: 50, highCost: 200, premium: { min: 250, max: 1250 }, outsource: { min: 40, max: 150 }, perShot: { min: 5000, max: 25000 } },
         { service: 'Rigging', lowCost: 5000, highCost: 20000, premium: { min: 25000, max: 100000 }, outsource: { min: 4000, max: 15000 }, perShot: { min: 15000, max: 75000 }, perCharacter: true },
         { service: 'Matchmove', lowCost: 25, highCost: 75, premium: { min: 150, max: 400 }, outsource: { min: 20, max: 75 }, perShot: { min: 1500, max: 10000 } },
-        { service: 'Simulation & FX', lowCost: 125, highCost: 500, premium: { min: 625, max: 2500 }, outsource: { min: 100, max: 300 }, perShot: { min: 7500, max: 50000 } }
+        { service: 'Simulation & FX', lowCost: 125, highCost: 500, premium: { min: 625, max: 2500 }, outsource: { min: 100, max: 300 }, perShot: { min: 7500, max: 50000 } },
+        { service: 'Lighting & Rendering', lowCost: 50, highCost: 200, premium: { min: 300, max: 1000 }, outsource: { min: 40, max: 150 }, perShot: { min: 3000, max: 15000 } }
       ]
     }
   ];
 
-  // Creative Services Pricing
+  // Creative Services Pricing - Updated based on the rate card image
   const creativeServices = [
     {
       service: 'Poster Design',
@@ -60,7 +64,7 @@ const Pricing = () => {
       inHouse: { min: 5000, max: 20000 },
       premium: { min: 25000, max: 150000 },
       outsource: { min: 4000, max: 12000 },
-      unit: 'per video'
+      unit: 'per video (up to 3 min)'
     },
     {
       service: 'Video Editing',
@@ -71,7 +75,7 @@ const Pricing = () => {
     }
   ];
 
-  // DI Services Pricing
+  // DI Services Pricing - Updated based on the rate card image
   const diServices = [
     {
       service: 'Basic Color Grading',
@@ -102,10 +106,16 @@ const Pricing = () => {
       baseLight: { min: 20000, max: 50000 },
       daVinci: { min: 50000, max: 100000 },
       unit: 'per day'
+    },
+    {
+      service: 'Stock Footage and Additional Tools',
+      baseLight: { min: 0, max: 0, custom: true },
+      daVinci: { min: 0, max: 0, custom: true },
+      unit: 'As per client needs'
     }
   ];
   
-  // Advance Payment Terms
+  // Payment Terms - Updated based on the rate card image
   const paymentTerms = [
     {
       title: "Advance Payment Structure",
@@ -116,7 +126,7 @@ const Pricing = () => {
       ]
     },
     {
-      title: "Remaining Payments",
+      title: "Milestone Payments",
       details: [
         "40% of the total project cost is to be paid during production progress or upon mid-project milestone completion.",
         "A final 30% payment is required before the final delivery of the completed project."
@@ -129,11 +139,18 @@ const Pricing = () => {
         "Creative corrections or minor mistakes will be addressed within the agreed-upon payment.",
         "Any add-ons, additional requirements, or major corrections will incur extra charges, discussed and approved beforehand."
       ]
+    },
+    {
+      title: "Revisions Policy",
+      details: [
+        "Two rounds of revisions are included in the quoted price.",
+        "Additional revisions will be charged at ₹2K-₹5K per hour based on complexity."
+      ]
     }
   ];
 
   return (
-    <div className="min-h-screen text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       
       <main className="pt-20">
@@ -142,6 +159,23 @@ const Pricing = () => {
             title="Our Pricing" 
             subtitle="Transparent pricing options for all your creative and technical needs"
           />
+          
+          {/* Featured Background Image */}
+          <div className="relative w-full h-[250px] mb-10 rounded-xl overflow-hidden">
+            <img 
+              src="/lovable-uploads/7aa001b2-00ae-4aed-9551-897de83da325.png" 
+              alt="Fuke's Media Pricing" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+            <div className="absolute bottom-0 left-0 p-8">
+              <h2 className="text-3xl font-bold text-white">Price Ratecard</h2>
+              <p className="text-white/80">Find the right package for your needs</p>
+            </div>
+          </div>
+          
+          {/* Add Pricing Calculator component */}
+          <PricingCalculator />
           
           <Tabs defaultValue="vfx" value={activeTab} onValueChange={setActiveTab} className="mt-10">
             <TabsList className="grid w-full md:w-fit mx-auto grid-cols-1 md:grid-cols-3 gap-2">
@@ -165,7 +199,7 @@ const Pricing = () => {
                     title={dept.title} 
                     defaultOpen={index === 0}
                   >
-                    <div className="overflow-x-auto">
+                    <div className="price-table">
                       <table className="w-full">
                         <thead>
                           <tr className="border-b">
@@ -181,11 +215,11 @@ const Pricing = () => {
                             <tr key={idx} className="border-b">
                               <td className="py-3">{item.service}</td>
                               <td className="py-3">
-                                {item.perModel || item.perCharacter ? (
+                                {item.perModel || item.perCharacter || item.perFrame ? (
                                   <div>
                                     <DynamicPrice priceUSD={item.lowCost} /> - <DynamicPrice priceUSD={item.highCost} />
                                     <span className="text-xs text-muted-foreground ml-1">
-                                      {item.perModel ? 'per model' : 'per character'}
+                                      {item.perModel ? 'per model' : item.perCharacter ? 'per character' : 'per frame'}
                                     </span>
                                   </div>
                                 ) : (
@@ -222,7 +256,7 @@ const Pricing = () => {
               </div>
               
               <ExpansibleTab title="Creative Services Pricing" defaultOpen={true}>
-                <div className="overflow-x-auto">
+                <div className="price-table">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b">
@@ -264,7 +298,7 @@ const Pricing = () => {
               </div>
               
               <ExpansibleTab title="Digital Intermediate Services" defaultOpen={true}>
-                <div className="overflow-x-auto">
+                <div className="price-table">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b">
@@ -279,10 +313,18 @@ const Pricing = () => {
                         <tr key={idx} className="border-b">
                           <td className="py-3">{item.service}</td>
                           <td className="py-3">
-                            <DynamicPrice priceUSD={item.baseLight.min} /> - <DynamicPrice priceUSD={item.baseLight.max} />
+                            {item.custom ? (
+                              <span className="text-muted-foreground text-sm">As per client needs (Stock Footage, Plugins, LUTs, etc.)</span>
+                            ) : (
+                              <><DynamicPrice priceUSD={item.baseLight.min} /> - <DynamicPrice priceUSD={item.baseLight.max} /></>
+                            )}
                           </td>
                           <td className="py-3">
-                            <DynamicPrice priceUSD={item.daVinci.min} /> - <DynamicPrice priceUSD={item.daVinci.max} />
+                            {item.custom ? (
+                              <span className="text-muted-foreground text-sm">As per client needs (Stock Footage, Plugins, LUTs, etc.)</span>
+                            ) : (
+                              <><DynamicPrice priceUSD={item.daVinci.min} /> - <DynamicPrice priceUSD={item.daVinci.max} /></>
+                            )}
                           </td>
                           <td className="py-3">{item.unit}</td>
                         </tr>
@@ -332,6 +374,27 @@ const Pricing = () => {
                     <li>International payments may incur additional currency exchange fees and processing charges.</li>
                     <li>All payments are subject to applicable GST/VAT as per Indian tax laws or your local tax regulations for international clients.</li>
                   </ul>
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="add-ons">
+                <AccordionTrigger className="text-lg">Add-Ons & Outsourcing</AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground">Additional charges apply for changes in shot length, outsourced work, tools/plugins, and stock assets based on complexity.</p>
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="delivery">
+                <AccordionTrigger className="text-lg">Delivery & Warranty</AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground">Final delivery after full payment clearance, with a 30-day warranty for minor corrections.</p>
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="confidentiality">
+                <AccordionTrigger className="text-lg">Confidentiality & IP</AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground">NDA provided; IP rights transferred upon complete payment, with retained rights for created assets unless otherwise negotiated.</p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
