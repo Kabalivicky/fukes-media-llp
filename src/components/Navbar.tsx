@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
@@ -24,6 +23,19 @@ const Navbar = () => {
     backdropFilter: isScrolled ? 'blur(10px)' : 'none'
   };
 
+  // Navigation links - update to add the VFX Industry Insights
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Services", path: "/#services" },
+    { name: "Portfolio", path: "/#portfolio" },
+    { name: "Team", path: "/#team" },
+    { name: "VFX Research", path: "/vfx-research" },
+    { name: "VFX Industry Insights", path: "/vfx-industry-insights" },
+    { name: "Pricing", path: "/pricing" },
+    { name: "Careers", path: "/#careers" },
+    { name: "Contact", path: "/#contact" }
+  ];
+
   return <header className="fixed top-0 left-0 w-full z-50 transition-all duration-300" style={headerStyle}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
@@ -38,21 +50,11 @@ const Navbar = () => {
             
             {/* Navigation Links */}
             <nav className="hidden md:flex space-x-6">
-              <NavLink to="/" className={({isActive}) => `nav-link ${isActive ? 'text-primary' : 'text-white/80 hover:text-white'}`}>
-                Home
-              </NavLink>
-              <NavLink to="/vfx-research" className={({isActive}) => `nav-link ${isActive ? 'text-primary' : 'text-white/80 hover:text-white'}`}>
-                VFX Research
-              </NavLink>
-              <a href="#" className="text-white/80 hover:text-white transition">
-                Services
-              </a>
-              <a href="#" className="text-white/80 hover:text-white transition">
-                Portfolio
-              </a>
-              <a href="#" className="text-white/80 hover:text-white transition">
-                Contact
-              </a>
+              {navLinks.map(link => (
+                <NavLink to={link.path} className={({isActive}) => `nav-link ${isActive ? 'text-primary' : 'text-white/80 hover:text-white'}`}>
+                  {link.name}
+                </NavLink>
+              ))}
             </nav>
           </div>
           
@@ -76,21 +78,11 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden absolute w-full bg-black/90 backdrop-blur-lg border-b border-white/10">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-3">
-            <NavLink to="/" className={({isActive}) => `${isActive ? 'text-primary' : 'text-white/80'} py-2`} onClick={() => setIsMenuOpen(false)}>
-              Home
-            </NavLink>
-            <NavLink to="/vfx-research" className={({isActive}) => `${isActive ? 'text-primary' : 'text-white/80'} py-2`} onClick={() => setIsMenuOpen(false)}>
-              VFX Research
-            </NavLink>
-            <a href="#" className="text-white/80 py-2" onClick={() => setIsMenuOpen(false)}>
-              Services
-            </a>
-            <a href="#" className="text-white/80 py-2" onClick={() => setIsMenuOpen(false)}>
-              Portfolio
-            </a>
-            <a href="#" className="text-white/80 py-2" onClick={() => setIsMenuOpen(false)}>
-              Contact
-            </a>
+            {navLinks.map(link => (
+              <NavLink to={link.path} className={({isActive}) => `${isActive ? 'text-primary' : 'text-white/80'} py-2`} onClick={() => setIsMenuOpen(false)}>
+                {link.name}
+              </NavLink>
+            ))}
             <button className="gradient-button px-4 py-2 rounded-full text-white/90 hover:text-white">
               Get Started
             </button>

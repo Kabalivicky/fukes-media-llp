@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import Index from "./pages/Index";
 import VFXResearch from "./pages/VFXResearch";
+import VFXIndustryInsights from "./pages/VFXIndustryInsights";
 import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 
@@ -22,6 +23,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/vfx-research" element={<VFXResearch />} />
+            <Route path="/vfx-industry-insights" element={<VFXIndustryInsights />} />
             <Route path="/pricing" element={<Pricing />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
