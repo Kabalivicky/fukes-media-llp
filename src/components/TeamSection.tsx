@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import SectionTitle from '@/components/SectionTitle';
-import { ArrowRight, LinkedIn, Mail, Phone } from 'lucide-react';
+import { ArrowRight, Linkedin, Mail, Phone } from 'lucide-react';
 
 interface TeamMember {
   name: string;
@@ -50,6 +50,37 @@ const TeamSection = () => {
         linkedin: 'https://linkedin.com/in/vignesh',
         email: 'vignesh@company.com'
       }
+    },
+    {
+      name: 'Harshith',
+      role: 'Creative Director',
+      bio: 'Harshith brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, he ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
+      image: '/placeholder.svg',
+      social: {
+        linkedin: 'https://linkedin.com/in/harshith',
+        email: 'harshith@company.com'
+      }
+    },
+    {
+      name: 'Sai Prasad',
+      role: 'Operational Manager',
+      bio: 'Sai Prasad optimizes our workflow processes and resource allocation. His systematic approach to operations ensures smooth collaboration between departments and maximizes productivity across all projects.',
+      image: '/placeholder.svg',
+      social: {
+        linkedin: 'https://linkedin.com/in/saiprasad',
+        email: 'saiprasad@company.com',
+        phone: '+91 97654 32109'
+      }
+    },
+    {
+      name: 'Sandesh',
+      role: 'Accounts & Financial Head',
+      bio: 'Sandesh manages our financial planning and reporting with precision. His expertise in budgeting for VFX productions helps us deliver exceptional results while maintaining financial efficiency.',
+      image: '/placeholder.svg',
+      social: {
+        linkedin: 'https://linkedin.com/in/sandesh',
+        email: 'sandesh@company.com'
+      }
     }
   ];
 
@@ -65,7 +96,7 @@ const TeamSection = () => {
           subtitle="Meet the experts behind our exceptional VFX solutions" 
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {teamMembers.map((member, index) => (
             <div 
               key={index} 
@@ -94,7 +125,7 @@ const TeamSection = () => {
                   <div className="flex justify-center space-x-4 mt-4">
                     {member.social?.linkedin && (
                       <a href={member.social.linkedin} className="text-muted-foreground hover:text-primary transition-colors">
-                        <LinkedIn size={18} />
+                        <Linkedin size={18} />
                       </a>
                     )}
                     {member.social?.email && (

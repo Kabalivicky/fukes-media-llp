@@ -39,7 +39,7 @@ const ExpansibleTab = ({
           </Button>
         </CollapsibleTrigger>
       </div>
-      <CollapsibleContent className="p-4 transition-all duration-300">
+      <CollapsibleContent className="p-4 transition-all duration-300 animate-accordion-down">
         {children}
       </CollapsibleContent>
     </Collapsible>

@@ -11,6 +11,7 @@ import VFXIndustryInsights from "./pages/VFXIndustryInsights";
 import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -23,7 +24,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
+const ScrollToTopOnNavigate = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -38,46 +39,47 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop showBelow={400} />
           <Routes>
             <Route 
               path="/" 
               element={
-                <ScrollToTop>
+                <ScrollToTopOnNavigate>
                   <Index />
-                </ScrollToTop>
+                </ScrollToTopOnNavigate>
               } 
             />
             <Route 
               path="/vfx-research" 
               element={
-                <ScrollToTop>
+                <ScrollToTopOnNavigate>
                   <VFXResearch />
-                </ScrollToTop>
+                </ScrollToTopOnNavigate>
               } 
             />
             <Route 
               path="/vfx-industry-insights" 
               element={
-                <ScrollToTop>
+                <ScrollToTopOnNavigate>
                   <VFXIndustryInsights />
-                </ScrollToTop>
+                </ScrollToTopOnNavigate>
               } 
             />
             <Route 
               path="/pricing" 
               element={
-                <ScrollToTop>
+                <ScrollToTopOnNavigate>
                   <Pricing />
-                </ScrollToTop>
+                </ScrollToTopOnNavigate>
               } 
             />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route 
               path="*" 
               element={
-                <ScrollToTop>
+                <ScrollToTopOnNavigate>
                   <NotFound />
-                </ScrollToTop>
+                </ScrollToTopOnNavigate>
               } 
             />
           </Routes>
