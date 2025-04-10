@@ -10,8 +10,26 @@ import VFXResearch from "./pages/VFXResearch";
 import VFXIndustryInsights from "./pages/VFXIndustryInsights";
 import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
+import { useEffect } from "react";
 
-const queryClient = new QueryClient();
+// Create QueryClient
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    },
+  },
+});
+
+const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
+  return <>{children}</>;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -21,12 +39,47 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/vfx-research" element={<VFXResearch />} />
-            <Route path="/vfx-industry-insights" element={<VFXIndustryInsights />} />
-            <Route path="/pricing" element={<Pricing />} />
+            <Route 
+              path="/" 
+              element={
+                <ScrollToTop>
+                  <Index />
+                </ScrollToTop>
+              } 
+            />
+            <Route 
+              path="/vfx-research" 
+              element={
+                <ScrollToTop>
+                  <VFXResearch />
+                </ScrollToTop>
+              } 
+            />
+            <Route 
+              path="/vfx-industry-insights" 
+              element={
+                <ScrollToTop>
+                  <VFXIndustryInsights />
+                </ScrollToTop>
+              } 
+            />
+            <Route 
+              path="/pricing" 
+              element={
+                <ScrollToTop>
+                  <Pricing />
+                </ScrollToTop>
+              } 
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            <Route 
+              path="*" 
+              element={
+                <ScrollToTop>
+                  <NotFound />
+                </ScrollToTop>
+              } 
+            />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

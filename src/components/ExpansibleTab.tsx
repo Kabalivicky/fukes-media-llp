@@ -26,20 +26,20 @@ const ExpansibleTab = ({
     <Collapsible 
       open={isOpen} 
       onOpenChange={setIsOpen}
-      className={cn("w-full border rounded-lg mb-4 overflow-hidden", className)}
+      className={cn("w-full border rounded-lg mb-4 overflow-hidden transition-all duration-300", className)}
     >
-      <div className="flex items-center justify-between p-4 bg-muted/30">
+      <div className="flex items-center justify-between p-4 bg-muted/30 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
         <h3 className={cn("text-lg font-medium", titleClassName)}>
           {title}
         </h3>
-        <CollapsibleTrigger asChild>
+        <CollapsibleTrigger asChild onClick={(e) => e.stopPropagation()}>
           <Button variant="ghost" size="sm" className="w-9 p-0">
             {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             <span className="sr-only">Toggle</span>
           </Button>
         </CollapsibleTrigger>
       </div>
-      <CollapsibleContent className="p-4">
+      <CollapsibleContent className="p-4 transition-all duration-300">
         {children}
       </CollapsibleContent>
     </Collapsible>

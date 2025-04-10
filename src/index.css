@@ -14,13 +14,16 @@
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 252 87% 67%;  /* Vibrant purple */
+    /* Updated primary to match VFX brand blue */
+    --primary: 217 100% 61%;  /* VFX Blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 196 80% 55%;  /* Bright blue */
+    /* Updated secondary to match VFX brand purple */
+    --secondary: 262 83% 58%;  /* VFX Purple */
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 311 75% 60%;  /* Magenta pink */
+    /* Updated accent to match VFX brand magenta */
+    --accent: 336 100% 50%;  /* VFX Magenta */
     --accent-foreground: 0 0% 100%;
 
     --muted: 240 10% 15%;
@@ -34,10 +37,11 @@
     --ring: 240 4.9% 83.9%;
 
     --neon-green: 140 80% 50%;
-    --neon-blue: 210 100% 60%;
-    --neon-purple: 270 100% 60%;
-    --neon-pink: 325 100% 60%;
-    --neon-orange: 30 100% 60%;
+    --neon-blue: 217 100% 61%;  /* VFX Blue */
+    --neon-purple: 262 83% 58%;  /* VFX Purple */
+    --neon-pink: 336 100% 50%;  /* VFX Magenta */
+    --neon-orange: 25 100% 51%;  /* VFX Orange */
+    --neon-yellow: 44 100% 52%;  /* VFX Yellow */
 
     --radius: 0.5rem;
   }
@@ -119,7 +123,7 @@
     animation: glitch 1s ease-in-out infinite alternate;
   }
 
-  /* Neon text effects */
+  /* Neon text effects with updated colors */
   .neon-text-blue {
     color: rgb(var(--neon-blue));
     text-shadow: 0 0 5px rgb(var(--neon-blue) / 0.5),
@@ -155,18 +159,25 @@
                  0 0 15px rgb(var(--neon-orange) / 0.5);
   }
 
+  .neon-text-yellow {
+    color: rgb(var(--neon-yellow));
+    text-shadow: 0 0 5px rgb(var(--neon-yellow) / 0.5),
+                 0 0 10px rgb(var(--neon-yellow) / 0.5),
+                 0 0 15px rgb(var(--neon-yellow) / 0.5);
+  }
+
   /* Glass morphism effect */
   .glass {
     @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-lg;
   }
 
-  /* Gradient button */
+  /* Gradient button updated with brand colors */
   .gradient-button {
     @apply relative overflow-hidden transition-all duration-300;
     background: linear-gradient(90deg, 
-      rgba(var(--primary) / 1) 0%, 
-      rgba(var(--secondary) / 1) 50%,
-      rgba(var(--accent) / 1) 100%);
+      rgba(58, 134, 255, 1) 0%, /* VFX Blue */
+      rgba(131, 56, 236, 1) 50%, /* VFX Purple */
+      rgba(255, 0, 110, 1) 100% /* VFX Magenta */);
     background-size: 200% auto;
   }
 
@@ -183,5 +194,14 @@
 
   .card-3d:hover {
     transform: rotateY(5deg) rotateX(5deg);
+  }
+
+  /* Added hover scale for better interactivity */
+  .hover-scale {
+    @apply transition-transform duration-300;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.03);
   }
 }

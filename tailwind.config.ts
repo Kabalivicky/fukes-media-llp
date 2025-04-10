@@ -53,6 +53,14 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Custom color extensions for better branding consistency
+				vfx: {
+					blue: '#3a86ff',
+					purple: '#8338ec',
+					magenta: '#ff006e',
+					orange: '#fb5607',
+					yellow: '#ffbe0b'
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
