@@ -71,6 +71,7 @@ const CategoryPage = ({ categoryData }: CategoryPageProps) => {
                 }
                 defaultOpen={idx === 0}
                 className="border-none"
+                titleClassName="" /* Fixed by providing a string type instead of Element */
               >
                 <div className="space-y-2">
                   {section.links?.map((link, linkIdx) => (

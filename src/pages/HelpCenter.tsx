@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button'; // Added Button import
 import HelpCategoryCard from '@/components/HelpCenter/HelpCategoryCard';
 import TopArticles from '@/components/HelpCenter/TopArticles';
 

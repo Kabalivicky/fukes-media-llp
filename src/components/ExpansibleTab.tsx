@@ -6,7 +6,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ExpansibleTabProps {
-  title: string;
+  title: React.ReactNode; // Changed from string to ReactNode to accept both strings and elements
   children: React.ReactNode;
   defaultOpen?: boolean;
   className?: string;
