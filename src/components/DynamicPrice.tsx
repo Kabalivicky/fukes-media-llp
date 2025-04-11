@@ -21,6 +21,7 @@ const DynamicPrice = ({
 }: DynamicPriceProps) => {
   const [formattedPrice, setFormattedPrice] = useState('');
   const [originalPrice, setOriginalPrice] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false);
   
   useEffect(() => {
     // Get formatted price with user's currency
@@ -40,11 +41,13 @@ const DynamicPrice = ({
       setOriginalPrice(usdFormatted);
     }
     
+    // Set loaded state after prices are formatted
+    setIsLoaded(true);
   }, [priceUSD, showCode, minimumFractionDigits, showOriginal]);
   
   return (
     <span 
-      className={`font-medium transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'} ${className}`}
+      className={`font-medium transition-opacity duration-300 ${isVisible && isLoaded ? 'opacity-100' : 'opacity-0'} ${className}`}
     >
       {formattedPrice}
       {showOriginal && getUserCurrency().code !== 'USD' && (
