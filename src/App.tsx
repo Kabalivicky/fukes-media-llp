@@ -12,6 +12,7 @@ import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 import HelpCenter from "./pages/HelpCenter";
 import HelpCenterCategory from "./pages/HelpCenterCategory";
+import ProductionGuidelines from "./pages/ProductionGuidelines";
 import { useEffect } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -90,6 +91,14 @@ const App = () => (
                   element={
                     <ScrollToTopOnNavigate>
                       <HelpCenterCategory />
+                    </ScrollToTopOnNavigate>
+                  } 
+                />
+                <Route 
+                  path="/production-guidelines" 
+                  element={
+                    <ScrollToTopOnNavigate>
+                      <ProductionGuidelines />
                     </ScrollToTopOnNavigate>
                   } 
                 />

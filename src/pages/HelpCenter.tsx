@@ -1,19 +1,26 @@
-
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button'; // Added Button import
+import { Button } from '@/components/ui/button';
 import HelpCategoryCard from '@/components/HelpCenter/HelpCategoryCard';
 import TopArticles from '@/components/HelpCenter/TopArticles';
+import { Link } from 'react-router-dom';
 
 const HelpCenter = () => {
   const [searchQuery, setSearchQuery] = useState('');
   
   // Help center categories with their icons and descriptions
   const categories = [
+    {
+      id: 'production-guidelines',
+      name: 'Production & Post-Production Guidelines',
+      icon: '/lovable-uploads/078b7692-904e-4572-b0ff-9679ba8c0d17.png',
+      description: 'Technical specifications, best practices, and workflow guides for productions',
+      customLink: '/production-guidelines'
+    },
     {
       id: 'imaging',
       name: 'Imaging',
@@ -114,9 +121,9 @@ const HelpCenter = () => {
 
   // Top articles to display in the banner
   const topArticles = [
+    "Production & Post-Production Guidelines",
     "Cameras & Image Capture: Requirements and Best Practices",
     "Backlog Overview - Delivery Page for IMF Deliveries",
-    "Backlog Overview - Delivery Page",
     "Authoring Tool: Dubbed Audio Reference When Updating the As Recorded Dubbing Script",
     "Fuke's Media Confidentiality & NDA Obligations",
     "Fuke's Media Content Security Requirements"
