@@ -263,7 +263,7 @@ const ProductionGuidelines = () => {
               <ol className="list-decimal pl-6 space-y-2">
                 <li>Set Black Level (PLUGE pattern)</li>
                 <li>Set White Level/Peak Luminance (Contrast pattern, check near-white clipping, adjust backlight/contrast)</li>
-                <li>Measure Greyscale (>= 11 steps)</li>
+                <li>Measure Greyscale (≥ 11 steps)</li>
                 <li>Adjust Greyscale (RGB gain/bias) to hit targets</li>
                 <li>Reset White/Black Levels</li>
                 <li>Measure/Adjust RGB Primaries/Ramps</li>
@@ -292,7 +292,7 @@ const ProductionGuidelines = () => {
               
               <h4 className="font-semibold mt-4 mb-2">Needed:</h4>
               <ul className="list-disc pl-6 space-y-1">
-                <li>Professional HDR monitor ( P3 D65, PQ, >=1000 nits)</li>
+                <li>Professional HDR monitor ( P3 D65, PQ, &gt;=1000 nits)</li>
                 <li>Professional SDR monitor (Rec.709, BT.1886, 100 nits)</li>
                 <li>Dolby Vision supported software</li>
                 <li>Dolby Vision license (eCMU or iCMU)</li>
@@ -448,9 +448,9 @@ const ProductionGuidelines = () => {
                 
                 <h4 className="font-semibold mt-3 mb-1">Potential Triggers:</h4>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li>Rapid brightness changes (>3Hz, >25% image - luminance flash)</li>
-                  <li>Rapid transitions to/from saturated red (>3Hz - red flash)</li>
-                  <li>Flashing/strobing patterns continuing >5s (extended flash)</li>
+                  <li>Rapid brightness changes (&gt;3Hz, &gt;25% image - luminance flash)</li>
+                  <li>Rapid transitions to/from saturated red (&gt;3Hz - red flash)</li>
+                  <li>Flashing/strobing patterns continuing &gt;5s (extended flash)</li>
                   <li>Contrasting, tight patterns, especially if moving rapidly (spatial pattern)</li>
                 </ul>
                 
@@ -590,3 +590,4 @@ const ProductionGuidelines = () => {
 };
 
 export default ProductionGuidelines;
+
