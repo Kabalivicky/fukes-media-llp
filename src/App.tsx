@@ -10,6 +10,8 @@ import VFXResearch from "./pages/VFXResearch";
 import VFXIndustryInsights from "./pages/VFXIndustryInsights";
 import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
+import HelpCenter from "./pages/HelpCenter";
+import HelpCenterCategory from "./pages/HelpCenterCategory";
 import { useEffect } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -72,6 +74,22 @@ const App = () => (
                   element={
                     <ScrollToTopOnNavigate>
                       <Pricing />
+                    </ScrollToTopOnNavigate>
+                  } 
+                />
+                <Route 
+                  path="/help-center" 
+                  element={
+                    <ScrollToTopOnNavigate>
+                      <HelpCenter />
+                    </ScrollToTopOnNavigate>
+                  } 
+                />
+                <Route 
+                  path="/help-center/:categoryId" 
+                  element={
+                    <ScrollToTopOnNavigate>
+                      <HelpCenterCategory />
                     </ScrollToTopOnNavigate>
                   } 
                 />

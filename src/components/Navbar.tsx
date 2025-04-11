@@ -32,6 +32,7 @@ const Navbar = () => {
     { name: "Team", path: "/#team" },
     { name: "VFX Research", path: "/vfx-research" },
     { name: "VFX Industry Insights", path: "/vfx-industry-insights" },
+    { name: "Help Center", path: "/help-center" },
     { name: "Pricing", path: "/pricing" },
     { name: "Careers", path: "/#careers" },
     { name: "Contact", path: "/#contact" }
