@@ -24,7 +24,7 @@ const TeamSection = () => {
       name: 'Vikram',
       role: 'Project Management',
       bio: 'With extensive experience in VFX project coordination, Vikram ensures that all our projects are delivered on time and within budget. His exceptional organizational skills and attention to detail help maintain the highest standards of quality.',
-      image: '/placeholder.svg',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram&backgroundColor=b6e3f4,c0aede,d1d4f9',
       social: {
         linkedin: 'https://linkedin.com/in/vikram',
         email: 'vikram@company.com'
@@ -34,7 +34,7 @@ const TeamSection = () => {
       name: 'Arjun',
       role: 'Production Head',
       bio: 'As our Production Head, Arjun oversees all creative and technical aspects of our VFX productions. With his background in both film and technology, he bridges the gap between creative vision and technical execution.',
-      image: '/placeholder.svg',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=b6e3f4,c0aede,d1d4f9',
       social: {
         linkedin: 'https://linkedin.com/in/arjun',
         email: 'arjun@company.com',
@@ -45,7 +45,7 @@ const TeamSection = () => {
       name: 'Vignesh',
       role: 'Business Development',
       bio: 'Vignesh leads our business strategy and client relationships. His understanding of the VFX industry landscape helps us identify opportunities and build lasting partnerships with studios and production houses worldwide.',
-      image: '/placeholder.svg',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vignesh&backgroundColor=b6e3f4,c0aede,d1d4f9',
       social: {
         linkedin: 'https://linkedin.com/in/vignesh',
         email: 'vignesh@company.com'
@@ -55,7 +55,7 @@ const TeamSection = () => {
       name: 'Harshith',
       role: 'Creative Director',
       bio: 'Harshith brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, he ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
-      image: '/placeholder.svg',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=b6e3f4,c0aede,d1d4f9',
       social: {
         linkedin: 'https://linkedin.com/in/harshith',
         email: 'harshith@company.com'
@@ -65,7 +65,7 @@ const TeamSection = () => {
       name: 'Sai Prasad',
       role: 'Operational Manager',
       bio: 'Sai Prasad optimizes our workflow processes and resource allocation. His systematic approach to operations ensures smooth collaboration between departments and maximizes productivity across all projects.',
-      image: '/placeholder.svg',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=b6e3f4,c0aede,d1d4f9',
       social: {
         linkedin: 'https://linkedin.com/in/saiprasad',
         email: 'saiprasad@company.com',
@@ -76,7 +76,7 @@ const TeamSection = () => {
       name: 'Sandesh',
       role: 'Accounts & Financial Head',
       bio: 'Sandesh manages our financial planning and reporting with precision. His expertise in budgeting for VFX productions helps us deliver exceptional results while maintaining financial efficiency.',
-      image: '/placeholder.svg',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=b6e3f4,c0aede,d1d4f9',
       social: {
         linkedin: 'https://linkedin.com/in/sandesh',
         email: 'sandesh@company.com'

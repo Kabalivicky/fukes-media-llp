@@ -21,9 +21,9 @@ const Home = () => {
 
   return (
     <div className="min-h-screen text-foreground">
-      {/* Background Effects */}
+      {/* Enhanced Background Effects */}
       <BackgroundEffect />
-      <div className="fixed inset-0 -z-10 opacity-40">
+      <div className="fixed inset-0 -z-10 opacity-30">
         <ParticleBackground />
       </div>
       

@@ -22,7 +22,7 @@ const services = [
       'Digital Set Extensions',
       'AI-enhanced workflows'
     ],
-    image: '/lovable-uploads/9a2e5c45-aeb7-45ad-b39b-514912f1f206.png',
+    image: 'https://images.unsplash.com/photo-1626428091984-427d4209b3fa?q=80&w=1287&auto=format&fit=crop',
     pricing: [
       { name: 'Basic Rotoscoping', price: 30, unit: 'per frame' },
       { name: '2D Compositing', price: 75, unit: 'per frame' },
@@ -42,7 +42,7 @@ const services = [
       'UI/UX Design for AR/VR',
       'Brand Identity Development'
     ],
-    image: '/lovable-uploads/11a20677-57d8-49be-bcf7-4b2587f38450.png',
+    image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1170&auto=format&fit=crop',
     pricing: [
       { name: 'Poster Design', price: 5000, unit: 'per poster' },
       { name: 'Motion Poster', price: 15000, unit: 'per design' },
@@ -62,7 +62,7 @@ const services = [
       'Final Conforming & Versioning',
       'Deliverable Creation for All Platforms'
     ],
-    image: '/lovable-uploads/6083bf38-2b22-44b8-be5a-40e5463692f2.png',
+    image: 'https://images.unsplash.com/photo-1585314062604-1a357de8b000?q=80&w=1171&auto=format&fit=crop',
     pricing: [
       { name: 'Basic Color Grading', price: 25000, unit: 'per minute' },
       { name: 'Advanced Color Grading', price: 50000, unit: 'per minute' },
@@ -82,7 +82,7 @@ const services = [
       'Real-time Rendering Implementation',
       'Custom Tool Development'
     ],
-    image: '/lovable-uploads/f960e5fd-76d0-443b-aac2-38d463aedb20.png',
+    image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?q=80&w=1170&auto=format&fit=crop',
     pricing: [
       { name: 'AI Pipeline Integration', price: 100000, unit: 'per project' },
       { name: 'Virtual Production Setup', price: 250000, unit: 'one-time' },

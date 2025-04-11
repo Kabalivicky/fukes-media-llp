@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { ExternalLink, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// Fixed image imports - public path is automatically resolved by Vite
-import auNzMapImage from '/placeholder.svg';
-import northAmericaMapImage from '/placeholder.svg';
-import worldMapImage from '/placeholder.svg';
+// Created SVG data URLs for maps - simple but effective
+const worldMapImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23032B43'/%3E%3Cpath d='M100,100 Q250,50 400,200 Q550,350 700,200' stroke='rgba(79, 70, 229, 0.5)' stroke-width='2' fill='none'/%3E%3Cpath d='M150,200 Q300,250 450,150 Q600,50 700,250' stroke='rgba(236, 72, 153, 0.4)' stroke-width='2' fill='none'/%3E%3Ccircle cx='200' cy='150' r='10' fill='rgba(79, 70, 229, 0.6)'/%3E%3Ccircle cx='350' cy='120' r='8' fill='rgba(236, 72, 153, 0.6)'/%3E%3Ccircle cx='500' cy='180' r='12' fill='rgba(79, 70, 229, 0.6)'/%3E%3Ccircle cx='650' cy='140' r='7' fill='rgba(236, 72, 153, 0.6)'/%3E%3Ccircle cx='400' cy='250' r='9' fill='rgba(79, 70, 229, 0.6)'/%3E%3C/svg%3E";
+
+const northAmericaMapImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23032B43'/%3E%3Cpath d='M200,100 Q300,150 400,100 Q500,50 600,150' stroke='%23F9D923' stroke-width='3' fill='none'/%3E%3Ccircle cx='250' cy='120' r='15' fill='rgba(249, 217, 35, 0.7)'/%3E%3Ccircle cx='400' cy='100' r='20' fill='rgba(249, 217, 35, 0.7)'/%3E%3Ccircle cx='550' cy='130' r='18' fill='rgba(249, 217, 35, 0.7)'/%3E%3Ctext x='250' y='190' font-family='Arial' font-size='14' fill='white' text-anchor='middle'%3ELos Angeles%3C/text%3E%3Ctext x='400' y='170' font-family='Arial' font-size='14' fill='white' text-anchor='middle'%3EVancouver%3C/text%3E%3Ctext x='550' y='200' font-family='Arial' font-size='14' fill='white' text-anchor='middle'%3EMontreal%3C/text%3E%3C/svg%3E";
+
+const auNzMapImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23032B43'/%3E%3Cpath d='M300,200 Q400,250 500,200' stroke='%23E63946' stroke-width='3' fill='none'/%3E%3Ccircle cx='300' cy='200' r='20' fill='rgba(230, 57, 70, 0.7)'/%3E%3Ccircle cx='500' cy='200' r='15' fill='rgba(230, 57, 70, 0.7)'/%3E%3Ctext x='300' y='250' font-family='Arial' font-size='14' fill='white' text-anchor='middle'%3ESydney%3C/text%3E%3Ctext x='500' y='250' font-family='Arial' font-size='14' fill='white' text-anchor='middle'%3EWellington%3C/text%3E%3C/svg%3E";
 
 interface VFXGlobalMapProps {
   activeRegion: string;

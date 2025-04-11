@@ -1,9 +1,11 @@
+
 import { useState } from 'react';
 
-import franceVFXLogo from '/placeholder.svg';
-import accessVFXLogo from '/placeholder.svg';
-import hdrConsultingLogo from '/placeholder.svg';
-import digikoreVFXLogo from '/placeholder.svg';
+// Using SVG color blocks with text labels instead of placeholder images
+const franceVFXLogo = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100' viewBox='0 0 200 100'%3E%3Crect width='200' height='100' fill='%232B4590'/%3E%3Ctext x='100' y='55' font-family='Arial' font-size='16' fill='white' text-anchor='middle'%3EFranceVFX%3C/text%3E%3C/svg%3E";
+const accessVFXLogo = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100' viewBox='0 0 200 100'%3E%3Crect width='200' height='100' fill='%23D946EF'/%3E%3Ctext x='100' y='55' font-family='Arial' font-size='16' fill='white' text-anchor='middle'%3EACCESS:VFX%3C/text%3E%3C/svg%3E";
+const hdrConsultingLogo = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100' viewBox='0 0 200 100'%3E%3Crect width='200' height='100' fill='%2300C897'/%3E%3Ctext x='100' y='55' font-family='Arial' font-size='16' fill='white' text-anchor='middle'%3EHDRI Consulting%3C/text%3E%3C/svg%3E";
+const digikoreVFXLogo = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100' viewBox='0 0 200 100'%3E%3Crect width='200' height='100' fill='%230EA5E9'/%3E%3Ctext x='100' y='55' font-family='Arial' font-size='16' fill='white' text-anchor='middle'%3EDigikore Visual Effects%3C/text%3E%3C/svg%3E";
 
 const VFXSponsorsSection = () => {
   const platinumSponsors = [

@@ -14,13 +14,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-// Sample portfolio projects
+// Updated portfolio projects with better images
 const portfolioProjects = [
   {
     id: 1,
     title: 'Cinematic VFX Sequence',
     category: 'vfx',
-    image: '/lovable-uploads/f94709cf-c63e-43f7-a4fb-62a54bb7e25d.png',
+    image: 'https://images.unsplash.com/photo-1626379953822-baec19c3accd?q=80&w=1170&auto=format&fit=crop',
     description: 'Complex visual effects for a feature film including environment creation, character integration, and particle simulations.',
     details: 'This project involved creating a fully digital environment with realistic physics simulations for a major sci-fi feature film. Our team handled everything from pre-visualization to final compositing, working closely with the director to achieve their creative vision.',
     client: 'Major Film Studio',
@@ -30,7 +30,7 @@ const portfolioProjects = [
     id: 2,
     title: 'AR Product Experience',
     category: 'tech',
-    image: '/lovable-uploads/720a1b4f-995d-4e7c-ab53-cbcb0a2ef9f4.png',
+    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1170&auto=format&fit=crop',
     description: 'Augmented reality experience for product visualization with interactive elements and real-time lighting.',
     details: 'We developed a cutting-edge AR application allowing customers to visualize products in their own space with photorealistic rendering. The app features interactive elements, real-time lighting adjustments, and social sharing capabilities.',
     client: 'Consumer Technology Company',
@@ -40,7 +40,7 @@ const portfolioProjects = [
     id: 3,
     title: 'Brand Identity Animation',
     category: 'creative',
-    image: '/lovable-uploads/8b48eccf-03e8-4ce8-a718-45510fdf1b3a.png',
+    image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1064&auto=format&fit=crop',
     description: 'Dynamic motion graphics package for brand identity featuring advanced animation techniques and visual storytelling.',
     details: 'We created a comprehensive motion graphics package that established a distinctive visual language for this emerging brand. The project included animated logos, transitions, lower thirds, and a complete style guide for future video content.',
     client: 'Startup Brand',
@@ -50,7 +50,7 @@ const portfolioProjects = [
     id: 4,
     title: 'Film Color Grading',
     category: 'di',
-    image: '/lovable-uploads/c3e0fc2f-0ae1-496c-8080-866adbd191ee.png',
+    image: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?q=80&w=1169&auto=format&fit=crop',
     description: 'Complete digital intermediate process for a feature film, including color grading, finishing, and deliverable creation.',
     details: 'Our team handled the entire DI process for this award-winning independent film. Working directly with the cinematographer, we developed a distinctive look that enhanced the storytelling while maintaining the natural beauty of the original footage.',
     client: 'Independent Filmmaker',
@@ -60,7 +60,7 @@ const portfolioProjects = [
     id: 5,
     title: 'Virtual Production Setup',
     category: 'tech',
-    image: '/lovable-uploads/f960e5fd-76d0-443b-aac2-38d463aedb20.png',
+    image: 'https://images.unsplash.com/photo-1601850494422-3cf14624b0b3?q=80&w=1170&auto=format&fit=crop',
     description: 'LED wall-based virtual production system with real-time rendering and camera tracking integration.',
     details: 'We designed and implemented a complete virtual production solution using LED walls and real-time rendering engines. The system allowed filmmakers to capture in-camera visual effects with authentic lighting and reflections, significantly reducing post-production time and costs.',
     client: 'Production Studio',
@@ -70,7 +70,7 @@ const portfolioProjects = [
     id: 6,
     title: 'Character Animation',
     category: 'creative',
-    image: '/lovable-uploads/9a2e5c45-aeb7-45ad-b39b-514912f1f206.png',
+    image: 'https://images.unsplash.com/photo-1608501078713-8e445a709b39?q=80&w=1170&auto=format&fit=crop',
     description: 'Full character design, rigging, and animation package for animated series featuring custom rigs and expressive movement.',
     details: 'This project involved creating a cast of characters for an animated streaming series. We handled everything from initial concept design through modeling, rigging, and animation, delivering assets ready for production use with highly optimized performance.',
     client: 'Streaming Platform',
