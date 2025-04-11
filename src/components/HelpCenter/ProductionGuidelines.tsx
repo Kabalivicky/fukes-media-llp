@@ -376,7 +376,7 @@ const ProductionGuidelines = () => {
                 <p className="mb-3">Reference for configuring Resolve in ACES pipeline for Fuke's Media NAM delivery. Recommendations, not requirements.</p>
                 
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Project Settings: Color Management panel: Color Science -> ACEScct (recommended over ACEScc unless specific reason). Use latest ACES version.</li>
+                  <li>Project Settings: Color Management panel: Color Science -&gt; ACEScct (recommended over ACEScc unless specific reason). Use latest ACES version.</li>
                   <li>ACES Output Device Transform (ODT): Match display calibration. SDR: Rec.709. HDR: P3-D65 ST.2084 (PQ) with monitor's nit level (e.g., 1000 nits).</li>
                   <li>For NAM rendering: Turn off ACES Output Transform (set to "No Output Transform"). Format EXR, Codec RGB half (no/lossless compression).</li>
                 </ul>
@@ -448,9 +448,9 @@ const ProductionGuidelines = () => {
                 
                 <h4 className="font-semibold mt-3 mb-1">Potential Triggers:</h4>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li>Rapid brightness changes (&gt;3Hz, &gt;25% image - luminance flash)</li>
-                  <li>Rapid transitions to/from saturated red (&gt;3Hz - red flash)</li>
-                  <li>Flashing/strobing patterns continuing &gt;5s (extended flash)</li>
+                  <li>Rapid brightness changes ({'>'}3Hz, {'>'}25% image - luminance flash)</li>
+                  <li>Rapid transitions to/from saturated red ({'>'}3Hz - red flash)</li>
+                  <li>Flashing/strobing patterns continuing {'>'}5s (extended flash)</li>
                   <li>Contrasting, tight patterns, especially if moving rapidly (spatial pattern)</li>
                 </ul>
                 
@@ -590,3 +590,4 @@ const ProductionGuidelines = () => {
 };
 
 export default ProductionGuidelines;
+
