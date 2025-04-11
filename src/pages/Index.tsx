@@ -21,7 +21,10 @@ const Home = () => {
   return (
     <div className="min-h-screen text-foreground overflow-hidden">
       {/* Background Effects */}
-      <ParticleBackground />
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-grid-pattern bg-16 opacity-10"></div>
+        <ParticleBackground />
+      </div>
       
       {/* Navigation */}
       <Navbar />

@@ -20,7 +20,7 @@ const HelpCategoryCard = ({ category }: HelpCategoryCardProps) => {
   return (
     <Link 
       to={linkPath}
-      className="block p-4 bg-card rounded-lg border border-border hover:border-primary/40 hover:shadow-md transition-all hover:scale-[1.02] group"
+      className="block p-4 bg-card rounded-lg border border-border hover:border-primary/40 hover:shadow-lg transition-all hover:scale-[1.02] group"
     >
       <div className="flex items-center mb-3">
         <div className="w-12 h-12 rounded-md bg-muted flex items-center justify-center shrink-0 mr-3">

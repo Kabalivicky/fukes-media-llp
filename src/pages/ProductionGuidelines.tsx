@@ -2,6 +2,8 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductionGuidelines from '@/components/HelpCenter/ProductionGuidelines';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Link } from 'react-router-dom';
 
 const ProductionGuidelinesPage = () => {
   return (
@@ -11,10 +13,20 @@ const ProductionGuidelinesPage = () => {
       {/* Hero banner */}
       <section className="pt-16 bg-gradient-to-r from-red-600 to-red-700 text-white">
         <div className="container mx-auto px-4 py-12 md:py-16">
-          <div className="flex items-center">
-            <div className="breadcrumbs text-sm mb-4">
-              <span>Fuke's Media | Partner Help Center — Production Guidelines</span>
-            </div>
+          <div className="flex items-center mb-4">
+            <Breadcrumb className="text-sm text-white/80">
+              <BreadcrumbItem>
+                <BreadcrumbLink as={Link} to="/">Fuke's Media</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink as={Link} to="/help-center">Partner Help Center</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <span>Production Guidelines</span>
+              </BreadcrumbItem>
+            </Breadcrumb>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold">Production & Post-Production Guidelines</h1>
           <p className="mt-4 max-w-3xl">
@@ -24,8 +36,12 @@ const ProductionGuidelinesPage = () => {
       </section>
       
       {/* Guidelines content */}
-      <section className="bg-background">
-        <ProductionGuidelines />
+      <section className="bg-background py-8">
+        <div className="container mx-auto">
+          <div className="bg-card shadow-lg rounded-lg overflow-hidden">
+            <ProductionGuidelines />
+          </div>
+        </div>
       </section>
       
       <Footer />

@@ -5,72 +5,33 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --card: 240 10% 5%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    /* Updated primary to match VFX brand blue */
-    --primary: 217 100% 61%;  /* VFX Blue */
-    --primary-foreground: 0 0% 100%;
-
-    /* Updated secondary to match VFX brand purple */
-    --secondary: 262 83% 58%;  /* VFX Purple */
-    --secondary-foreground: 0 0% 100%;
-
-    /* Updated accent to match VFX brand magenta */
-    --accent: 336 100% 50%;  /* VFX Magenta */
-    --accent-foreground: 0 0% 100%;
-
-    --muted: 240 10% 15%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 10% 15%;
-    --input: 240 10% 12%;
-    --ring: 240 4.9% 83.9%;
-
-    --neon-green: 140 80% 50%;
-    --neon-blue: 217 100% 61%;  /* VFX Blue */
-    --neon-purple: 262 83% 58%;  /* VFX Purple */
-    --neon-pink: 336 100% 50%;  /* VFX Magenta */
-    --neon-orange: 25 100% 51%;  /* VFX Orange */
-    --neon-yellow: 44 100% 52%;  /* VFX Yellow */
-
-    --radius: 0.5rem;
-  }
-
-  .light {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
-    
+
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
-    
+
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    
-    --primary: 217 100% 50%;  /* VFX Blue - slightly darkened for light mode */
+
+    /* Brand color - VFX Blue */
+    --primary: 217 80% 50%;
     --primary-foreground: 0 0% 100%;
-    
-    --secondary: 262 83% 47%;  /* VFX Purple - slightly darkened for light mode */
+
+    /* Brand color - VFX Purple */
+    --secondary: 262 70% 50%;
     --secondary-foreground: 0 0% 100%;
-    
-    --accent: 336 100% 45%;  /* VFX Magenta - slightly darkened for light mode */
+
+    /* Brand color - VFX Magenta */
+    --accent: 336 90% 50%;
     --accent-foreground: 0 0% 100%;
-    
+
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    
+
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
@@ -81,6 +42,48 @@
     --neon-pink: 336 90% 45%;
     --neon-orange: 25 90% 46%;
     --neon-yellow: 44 90% 47%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    
+    --card: 240 10% 5%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    
+    /* Brand color - VFX Blue */
+    --primary: 217 100% 61%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Brand color - VFX Purple */
+    --secondary: 262 83% 58%;
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Brand color - VFX Magenta */
+    --accent: 336 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    
+    --muted: 240 10% 15%;
+    --muted-foreground: 240 5% 64.9%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 240 10% 15%;
+    --input: 240 10% 12%;
+    --ring: 240 4.9% 83.9%;
+
+    --neon-green: 140 80% 50%;
+    --neon-blue: 217 100% 61%;
+    --neon-purple: 262 83% 58%;
+    --neon-pink: 336 100% 50%;
+    --neon-orange: 25 100% 51%;
+    --neon-yellow: 44 100% 52%;
   }
 
   * {
@@ -162,45 +165,45 @@
 
   /* Neon text effects with updated colors */
   .neon-text-blue {
-    color: rgb(var(--neon-blue));
-    text-shadow: 0 0 5px rgb(var(--neon-blue) / 0.5),
-                 0 0 10px rgb(var(--neon-blue) / 0.5),
-                 0 0 15px rgb(var(--neon-blue) / 0.5);
+    color: hsl(var(--neon-blue));
+    text-shadow: 0 0 5px hsl(var(--neon-blue) / 0.5),
+                 0 0 10px hsl(var(--neon-blue) / 0.5),
+                 0 0 15px hsl(var(--neon-blue) / 0.5);
   }
 
   .neon-text-purple {
-    color: rgb(var(--neon-purple));
-    text-shadow: 0 0 5px rgb(var(--neon-purple) / 0.5),
-                 0 0 10px rgb(var(--neon-purple) / 0.5),
-                 0 0 15px rgb(var(--neon-purple) / 0.5);
+    color: hsl(var(--neon-purple));
+    text-shadow: 0 0 5px hsl(var(--neon-purple) / 0.5),
+                 0 0 10px hsl(var(--neon-purple) / 0.5),
+                 0 0 15px hsl(var(--neon-purple) / 0.5);
   }
 
   .neon-text-green {
-    color: rgb(var(--neon-green));
-    text-shadow: 0 0 5px rgb(var(--neon-green) / 0.5),
-                 0 0 10px rgb(var(--neon-green) / 0.5),
-                 0 0 15px rgb(var(--neon-green) / 0.5);
+    color: hsl(var(--neon-green));
+    text-shadow: 0 0 5px hsl(var(--neon-green) / 0.5),
+                 0 0 10px hsl(var(--neon-green) / 0.5),
+                 0 0 15px hsl(var(--neon-green) / 0.5);
   }
 
   .neon-text-pink {
-    color: rgb(var(--neon-pink));
-    text-shadow: 0 0 5px rgb(var(--neon-pink) / 0.5),
-                 0 0 10px rgb(var(--neon-pink) / 0.5),
-                 0 0 15px rgb(var(--neon-pink) / 0.5);
+    color: hsl(var(--neon-pink));
+    text-shadow: 0 0 5px hsl(var(--neon-pink) / 0.5),
+                 0 0 10px hsl(var(--neon-pink) / 0.5),
+                 0 0 15px hsl(var(--neon-pink) / 0.5);
   }
 
   .neon-text-orange {
-    color: rgb(var(--neon-orange));
-    text-shadow: 0 0 5px rgb(var(--neon-orange) / 0.5),
-                 0 0 10px rgb(var(--neon-orange) / 0.5),
-                 0 0 15px rgb(var(--neon-orange) / 0.5);
+    color: hsl(var(--neon-orange));
+    text-shadow: 0 0 5px hsl(var(--neon-orange) / 0.5),
+                 0 0 10px hsl(var(--neon-orange) / 0.5),
+                 0 0 15px hsl(var(--neon-orange) / 0.5);
   }
 
   .neon-text-yellow {
-    color: rgb(var(--neon-yellow));
-    text-shadow: 0 0 5px rgb(var(--neon-yellow) / 0.5),
-                 0 0 10px rgb(var(--neon-yellow) / 0.5),
-                 0 0 15px rgb(var(--neon-yellow) / 0.5);
+    color: hsl(var(--neon-yellow));
+    text-shadow: 0 0 5px hsl(var(--neon-yellow) / 0.5),
+                 0 0 10px hsl(var(--neon-yellow) / 0.5),
+                 0 0 15px hsl(var(--neon-yellow) / 0.5);
   }
 
   /* Glass morphism effect */
@@ -208,17 +211,21 @@
     @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-lg;
   }
 
+  .dark .glass {
+    @apply bg-black/30 backdrop-blur-md border border-white/10 shadow-lg;
+  }
+
   .light .glass {
-    @apply bg-white/60 backdrop-blur-md border border-white/40 shadow-lg;
+    @apply bg-white/60 backdrop-blur-md border border-black/10 shadow-lg;
   }
 
   /* Gradient button updated with brand colors */
   .gradient-button {
     @apply relative overflow-hidden transition-all duration-300;
     background: linear-gradient(90deg, 
-      rgba(58, 134, 255, 1) 0%, /* VFX Blue */
-      rgba(131, 56, 236, 1) 50%, /* VFX Purple */
-      rgba(255, 0, 110, 1) 100% /* VFX Magenta */);
+      hsl(var(--neon-blue)) 0%,
+      hsl(var(--neon-purple)) 50%,
+      hsl(var(--neon-pink)) 100%);
     background-size: 200% auto;
   }
 
@@ -246,6 +253,7 @@
     transform: scale(1.03);
   }
 
+  /* Table styles */
   .price-table {
     @apply overflow-x-auto w-full max-w-full;
   }
