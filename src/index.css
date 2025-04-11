@@ -270,6 +270,28 @@
     @apply p-2 border border-border text-sm;
   }
   
+  /* Enhanced card styles */
+  .feature-card {
+    @apply relative overflow-hidden group rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 transition-all duration-300;
+  }
+
+  .feature-card:hover {
+    @apply border-primary/30 shadow-lg shadow-primary/10 transform -translate-y-1;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, hsl(var(--primary)/10%), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .feature-card:hover::before {
+    opacity: 1;
+  }
+
   /* Responsive tables */
   @media (max-width: 640px) {
     .price-table table {

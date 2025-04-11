@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { 
   Camera,
@@ -590,4 +589,3 @@ const ProductionGuidelines = () => {
 };
 
 export default ProductionGuidelines;
-

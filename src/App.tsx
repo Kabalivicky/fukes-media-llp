@@ -13,8 +13,8 @@ import NotFound from "./pages/NotFound";
 import HelpCenter from "./pages/HelpCenter";
 import HelpCenterCategory from "./pages/HelpCenterCategory";
 import ProductionGuidelines from "./pages/ProductionGuidelines";
-import { useEffect } from "react";
 import ScrollToTop from "./components/ScrollToTop";
+import BackgroundEffect from "@/components/BackgroundEffect";
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -27,93 +27,27 @@ const queryClient = new QueryClient({
   },
 });
 
-const ScrollToTopOnNavigate = ({ children }: { children: React.ReactNode }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  
-  return <>{children}</>;
-};
-
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="dark">
       <TooltipProvider>
-        <div className="min-h-screen bg-background bg-[url('/lovable-uploads/7aa001b2-00ae-4aed-9551-897de83da325.png')] bg-cover bg-center bg-fixed bg-opacity-20">
-          <div className="min-h-screen bg-background/80 backdrop-blur-sm">
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <ScrollToTop showBelow={400} />
-              <Routes>
-                <Route 
-                  path="/" 
-                  element={
-                    <ScrollToTopOnNavigate>
-                      <Index />
-                    </ScrollToTopOnNavigate>
-                  } 
-                />
-                <Route 
-                  path="/vfx-research" 
-                  element={
-                    <ScrollToTopOnNavigate>
-                      <VFXResearch />
-                    </ScrollToTopOnNavigate>
-                  } 
-                />
-                <Route 
-                  path="/vfx-industry-insights" 
-                  element={
-                    <ScrollToTopOnNavigate>
-                      <VFXIndustryInsights />
-                    </ScrollToTopOnNavigate>
-                  } 
-                />
-                <Route 
-                  path="/pricing" 
-                  element={
-                    <ScrollToTopOnNavigate>
-                      <Pricing />
-                    </ScrollToTopOnNavigate>
-                  } 
-                />
-                <Route 
-                  path="/help-center" 
-                  element={
-                    <ScrollToTopOnNavigate>
-                      <HelpCenter />
-                    </ScrollToTopOnNavigate>
-                  } 
-                />
-                <Route 
-                  path="/help-center/:categoryId" 
-                  element={
-                    <ScrollToTopOnNavigate>
-                      <HelpCenterCategory />
-                    </ScrollToTopOnNavigate>
-                  } 
-                />
-                <Route 
-                  path="/production-guidelines" 
-                  element={
-                    <ScrollToTopOnNavigate>
-                      <ProductionGuidelines />
-                    </ScrollToTopOnNavigate>
-                  } 
-                />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route 
-                  path="*" 
-                  element={
-                    <ScrollToTopOnNavigate>
-                      <NotFound />
-                    </ScrollToTopOnNavigate>
-                  } 
-                />
-              </Routes>
-            </BrowserRouter>
-          </div>
+        <div className="min-h-screen bg-background">
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop showBelow={400} />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/vfx-research" element={<VFXResearch />} />
+              <Route path="/vfx-industry-insights" element={<VFXIndustryInsights />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/help-center" element={<HelpCenter />} />
+              <Route path="/help-center/:categoryId" element={<HelpCenterCategory />} />
+              <Route path="/production-guidelines" element={<ProductionGuidelines />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
         </div>
       </TooltipProvider>
     </ThemeProvider>

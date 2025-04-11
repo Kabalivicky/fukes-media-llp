@@ -2,7 +2,9 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CategoryPage from '@/components/HelpCenter/CategoryPage';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import BackgroundEffect from '@/components/BackgroundEffect';
 
 const HelpCenterCategory = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
@@ -160,17 +162,33 @@ const HelpCenterCategory = () => {
 
   return (
     <div className="min-h-screen">
+      <BackgroundEffect />
       <Navbar />
       
       {/* Hero banner */}
       <section className="pt-16 bg-gradient-to-r from-red-600 to-red-700 text-white">
         <div className="container mx-auto px-4 py-12 md:py-16">
-          <div className="flex items-center">
-            <div className="breadcrumbs text-sm mb-4">
-              <span>Fuke's Media | Partner Help Center — {categoryData.title}</span>
-            </div>
+          <div className="flex items-center mb-4">
+            <Breadcrumb className="text-sm text-white/80">
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Fuke's Media</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/help-center">Partner Help Center</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <span>{categoryData.title}</span>
+              </BreadcrumbItem>
+            </Breadcrumb>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold">{categoryData.title}</h1>
+          <p className="mt-4 max-w-3xl">{categoryData.description}</p>
         </div>
       </section>
       

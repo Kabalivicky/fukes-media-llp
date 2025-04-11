@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
+import BackgroundEffect from '@/components/BackgroundEffect';
 import ParticleBackground from '@/components/ParticleBackground';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
@@ -19,10 +20,10 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen text-foreground overflow-hidden">
+    <div className="min-h-screen text-foreground">
       {/* Background Effects */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-grid-pattern bg-16 opacity-10"></div>
+      <BackgroundEffect />
+      <div className="fixed inset-0 -z-10 opacity-40">
         <ParticleBackground />
       </div>
       
@@ -30,7 +31,7 @@ const Home = () => {
       <Navbar />
       
       {/* Main Content */}
-      <main>
+      <main className="relative z-10">
         <HeroSection />
         <ServicesSection />
         <PricingCalculator />

@@ -92,18 +92,33 @@ export default {
           '0%': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(0%)' }
         },
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' }
+        },
+        'fade-in-right': {
+          '0%': { opacity: '0', transform: 'translateX(10px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' }
+        },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.8' }
+        },
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'marquee': 'marquee 25s linear infinite',
         'marquee2': 'marquee2 25s linear infinite',
+        'fade-in': 'fade-in 0.5s ease-out',
+        'fade-in-right': 'fade-in-right 0.3s ease-out',
+        'pulse-soft': 'pulse-soft 3s infinite',
 			},
       backgroundImage: {
-        'hero-pattern': 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/public/lovable-uploads/5ad66e50-d398-4c59-b672-b2d75c8149fd.png")',
-        'grid-pattern': 'radial-gradient(rgba(var(--primary), 0.1) 1px, transparent 1px)',
         'gradient-radial': 'radial-gradient(ellipse at center, var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'grid-pattern': 'radial-gradient(rgba(var(--primary), 0.1) 1px, transparent 1px)',
+        'hero-pattern': 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/lovable-uploads/5ad66e50-d398-4c59-b672-b2d75c8149fd.png")',
       },
       backgroundSize: {
         '16': '4rem',

@@ -16,11 +16,15 @@ const ProductionGuidelinesPage = () => {
           <div className="flex items-center mb-4">
             <Breadcrumb className="text-sm text-white/80">
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/">Fuke's Media</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Fuke's Media</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/help-center">Partner Help Center</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/help-center">Partner Help Center</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
