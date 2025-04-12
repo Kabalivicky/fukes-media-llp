@@ -5,85 +5,85 @@
 
 @layer base {
   :root {
+    /* Light mode */
     --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 0 0% 0%;
 
-    /* Brand color - VFX Blue */
-    --primary: 217 80% 50%;
+    /* Blue from Fuke's Media logo */
+    --primary: 214 100% 36%;
     --primary-foreground: 0 0% 100%;
 
-    /* Brand color - VFX Purple */
-    --secondary: 262 70% 50%;
+    /* Red from Fuke's Media logo */
+    --secondary: 345 100% 41%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Brand color - VFX Magenta */
-    --accent: 336 90% 50%;
+    /* Green from Fuke's Media logo */
+    --accent: 142 100% 29%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 40%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 345 100% 41%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 214 100% 36%;
 
-    --neon-green: 140 70% 40%;
-    --neon-blue: 217 90% 50%;
-    --neon-purple: 262 73% 47%;
-    --neon-pink: 336 90% 45%;
-    --neon-orange: 25 90% 46%;
-    --neon-yellow: 44 90% 47%;
+    --neon-green: 142 100% 29%;
+    --neon-blue: 214 100% 36%;
+    --neon-red: 345 100% 41%;
+    --neon-gold: 48 100% 50%;
+    --neon-cyan: 195 100% 50%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Dark mode */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
     
-    --card: 240 10% 5%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
     
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 0 0% 100%;
     
-    /* Brand color - VFX Blue */
-    --primary: 217 100% 61%;
+    /* Blue from Fuke's Media logo */
+    --primary: 214 100% 46%;
     --primary-foreground: 0 0% 100%;
     
-    /* Brand color - VFX Purple */
-    --secondary: 262 83% 58%;
+    /* Red from Fuke's Media logo */
+    --secondary: 345 100% 41%;
     --secondary-foreground: 0 0% 100%;
     
-    /* Brand color - VFX Magenta */
-    --accent: 336 100% 50%;
+    /* Green from Fuke's Media logo */
+    --accent: 142 100% 29%;
     --accent-foreground: 0 0% 100%;
     
-    --muted: 240 10% 15%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
     
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 345 100% 41%;
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 240 10% 15%;
-    --input: 240 10% 12%;
-    --ring: 240 4.9% 83.9%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 214 100% 46%;
 
-    --neon-green: 140 80% 50%;
-    --neon-blue: 217 100% 61%;
-    --neon-purple: 262 83% 58%;
-    --neon-pink: 336 100% 50%;
-    --neon-orange: 25 100% 51%;
-    --neon-yellow: 44 100% 52%;
+    --neon-green: 142 100% 40%;
+    --neon-blue: 214 100% 56%;
+    --neon-red: 345 100% 51%;
+    --neon-gold: 48 100% 60%;
+    --neon-cyan: 195 100% 60%;
   }
 
   * {
@@ -163,7 +163,7 @@
     animation: glitch 1s ease-in-out infinite alternate;
   }
 
-  /* Neon text effects with updated colors */
+  /* Neon text effects with updated Fuke's Media brand colors */
   .neon-text-blue {
     color: hsl(var(--neon-blue));
     text-shadow: 0 0 5px hsl(var(--neon-blue) / 0.5),
@@ -171,11 +171,11 @@
                  0 0 15px hsl(var(--neon-blue) / 0.5);
   }
 
-  .neon-text-purple {
-    color: hsl(var(--neon-purple));
-    text-shadow: 0 0 5px hsl(var(--neon-purple) / 0.5),
-                 0 0 10px hsl(var(--neon-purple) / 0.5),
-                 0 0 15px hsl(var(--neon-purple) / 0.5);
+  .neon-text-red {
+    color: hsl(var(--neon-red));
+    text-shadow: 0 0 5px hsl(var(--neon-red) / 0.5),
+                 0 0 10px hsl(var(--neon-red) / 0.5),
+                 0 0 15px hsl(var(--neon-red) / 0.5);
   }
 
   .neon-text-green {
@@ -185,25 +185,18 @@
                  0 0 15px hsl(var(--neon-green) / 0.5);
   }
 
-  .neon-text-pink {
-    color: hsl(var(--neon-pink));
-    text-shadow: 0 0 5px hsl(var(--neon-pink) / 0.5),
-                 0 0 10px hsl(var(--neon-pink) / 0.5),
-                 0 0 15px hsl(var(--neon-pink) / 0.5);
+  .neon-text-gold {
+    color: hsl(var(--neon-gold));
+    text-shadow: 0 0 5px hsl(var(--neon-gold) / 0.5),
+                 0 0 10px hsl(var(--neon-gold) / 0.5),
+                 0 0 15px hsl(var(--neon-gold) / 0.5);
   }
 
-  .neon-text-orange {
-    color: hsl(var(--neon-orange));
-    text-shadow: 0 0 5px hsl(var(--neon-orange) / 0.5),
-                 0 0 10px hsl(var(--neon-orange) / 0.5),
-                 0 0 15px hsl(var(--neon-orange) / 0.5);
-  }
-
-  .neon-text-yellow {
-    color: hsl(var(--neon-yellow));
-    text-shadow: 0 0 5px hsl(var(--neon-yellow) / 0.5),
-                 0 0 10px hsl(var(--neon-yellow) / 0.5),
-                 0 0 15px hsl(var(--neon-yellow) / 0.5);
+  .neon-text-cyan {
+    color: hsl(var(--neon-cyan));
+    text-shadow: 0 0 5px hsl(var(--neon-cyan) / 0.5),
+                 0 0 10px hsl(var(--neon-cyan) / 0.5),
+                 0 0 15px hsl(var(--neon-cyan) / 0.5);
   }
 
   /* Glass morphism effect */
@@ -219,13 +212,15 @@
     @apply bg-white/60 backdrop-blur-md border border-black/10 shadow-lg;
   }
 
-  /* Gradient button updated with brand colors */
+  /* Fukes Media brand gradient button */
   .gradient-button {
     @apply relative overflow-hidden transition-all duration-300;
     background: linear-gradient(90deg, 
-      hsl(var(--neon-blue)) 0%,
-      hsl(var(--neon-purple)) 50%,
-      hsl(var(--neon-pink)) 100%);
+      #0057B7 0%,
+      #D50032 25%,
+      #009639 50%,
+      #FFCC00 75%,
+      #00BFFF 100%);
     background-size: 200% auto;
   }
 
@@ -251,6 +246,28 @@
 
   .hover-scale:hover {
     transform: scale(1.03);
+  }
+
+  /* Rainbow border - mimics the bottom stripe of the Fuke's Media logo */
+  .rainbow-border {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .rainbow-border::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, 
+      #D50032 0%,
+      #0057B7 20%,
+      #009639 40%,
+      #FFCC00 60%,
+      #00BFFF 80%,
+      #D50032 100%);
   }
 
   /* Table styles */

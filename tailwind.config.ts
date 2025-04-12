@@ -53,13 +53,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Custom color extensions for better branding consistency
-				vfx: {
-					blue: '#3a86ff',
-					purple: '#8338ec',
-					magenta: '#ff006e',
-					orange: '#fb5607',
-					yellow: '#ffbe0b'
+				// Custom color extensions for Fuke's Media branding
+				fukes: {
+					blue: '#0057B7',
+					red: '#D50032',
+					green: '#009639',
+					gold: '#FFCC00',
+					cyan: '#00BFFF',
+					black: '#000000',
+					white: '#FFFFFF'
 				}
 			},
 			borderRadius: {
@@ -101,8 +103,9 @@ export default {
           '100%': { opacity: '1', transform: 'translateX(0)' }
         },
         'pulse-soft': {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.8' }
+          '0%': { opacity: '1' },
+          '50%': { opacity: '0.8' },
+          '100%': { opacity: '1' }
         },
 			},
 			animation: {
@@ -119,6 +122,7 @@ export default {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'grid-pattern': 'radial-gradient(rgba(var(--primary), 0.1) 1px, transparent 1px)',
         'hero-pattern': 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/lovable-uploads/5ad66e50-d398-4c59-b672-b2d75c8149fd.png")',
+        'fukes-gradient': 'linear-gradient(to right, #D50032, #0057B7, #009639, #FFCC00, #00BFFF)',
       },
       backgroundSize: {
         '16': '4rem',

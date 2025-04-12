@@ -39,7 +39,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${headerClasses}`} role="banner">
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 rainbow-border ${headerClasses}`} role="banner">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
@@ -47,7 +47,7 @@ const Navbar = () => {
               <img 
                 alt="Fuke's Media Logo" 
                 className="h-10" 
-                src="/lovable-uploads/a0ad627e-2387-4f68-9856-c313d6d46f87.png"
+                src="/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png"
               />
             </Link>
             

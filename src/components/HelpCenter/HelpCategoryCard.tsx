@@ -15,12 +15,14 @@ interface HelpCategoryCardProps {
 const HelpCategoryCard = ({ category }: HelpCategoryCardProps) => {
   const { id, name, description, customLink } = category;
   
-  // Generate a unique icon SVG based on the category name
+  // Generate a unique icon SVG based on the category name using our brand colors
   const generateIcon = (name: string) => {
-    // Use first letter to get a consistent color based on the category name
-    const hue = name.charCodeAt(0) % 360;
+    // Use first letter to determine which color to use
+    const colorIndex = name.charCodeAt(0) % 5;
+    const colors = ['#0057B7', '#D50032', '#009639', '#FFCC00', '#00BFFF'];
+    const selectedColor = colors[colorIndex];
     
-    return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='hsl(${hue}, 70%25, 60%25)'/%3E%3Ctext x='20' y='25' font-family='Arial' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3E${name.charAt(0)}%3C/text%3E%3C/svg%3E`;
+    return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='${selectedColor.replace('#', '%23')}'/%3E%3Ctext x='20' y='25' font-family='Arial' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3E${name.charAt(0)}%3C/text%3E%3C/svg%3E`;
   };
   
   const linkPath = customLink || `/help-center/${id}`;
