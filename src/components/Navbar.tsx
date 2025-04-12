@@ -63,7 +63,6 @@ const Navbar = () => {
                        ? 'text-primary bg-primary/10' 
                        : 'text-foreground/80 hover:text-foreground hover:bg-muted/30'}`
                   }
-                  aria-current={({isActive}) => isActive ? "page" : undefined}
                 >
                   {link.name}
                 </NavLink>
@@ -120,7 +119,6 @@ const Navbar = () => {
                      ? 'text-primary bg-primary/10' 
                      : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'}`
                 }
-                aria-current={({isActive}) => isActive ? "page" : undefined}
               >
                 {link.name}
               </NavLink>
