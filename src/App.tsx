@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import VFXResearch from "./pages/VFXResearch";
 import VFXIndustryInsights from "./pages/VFXIndustryInsights";
@@ -14,7 +15,6 @@ import HelpCenter from "./pages/HelpCenter";
 import HelpCenterCategory from "./pages/HelpCenterCategory";
 import ProductionGuidelines from "./pages/ProductionGuidelines";
 import ScrollToTop from "./components/ScrollToTop";
-import BackgroundEffect from "@/components/BackgroundEffect";
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -29,28 +29,30 @@ const queryClient = new QueryClient({
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="dark">
-      <TooltipProvider>
-        <div className="min-h-screen bg-background">
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <ScrollToTop showBelow={400} />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/vfx-research" element={<VFXResearch />} />
-              <Route path="/vfx-industry-insights" element={<VFXIndustryInsights />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/help-center" element={<HelpCenter />} />
-              <Route path="/help-center/:categoryId" element={<HelpCenterCategory />} />
-              <Route path="/production-guidelines" element={<ProductionGuidelines />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </div>
-      </TooltipProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider defaultTheme="dark">
+        <TooltipProvider>
+          <div className="min-h-screen bg-background">
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <ScrollToTop showBelow={400} />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/vfx-research" element={<VFXResearch />} />
+                <Route path="/vfx-industry-insights" element={<VFXIndustryInsights />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/help-center" element={<HelpCenter />} />
+                <Route path="/help-center/:categoryId" element={<HelpCenterCategory />} />
+                <Route path="/production-guidelines" element={<ProductionGuidelines />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </TooltipProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   </QueryClientProvider>
 );
 

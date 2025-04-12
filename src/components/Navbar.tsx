@@ -39,11 +39,11 @@ const Navbar = () => {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${headerClasses}`}>
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${headerClasses}`} role="banner">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2" aria-label="Fuke's Media Home">
               <img 
                 alt="Fuke's Media Logo" 
                 className="h-10" 
@@ -52,7 +52,7 @@ const Navbar = () => {
             </Link>
             
             {/* Navigation Links */}
-            <nav className="hidden lg:flex space-x-4">
+            <nav className="hidden lg:flex space-x-4" aria-label="Main navigation">
               {navLinks.map((link, index) => (
                 <NavLink 
                   key={index}
@@ -63,6 +63,7 @@ const Navbar = () => {
                        ? 'text-primary bg-primary/10' 
                        : 'text-foreground/80 hover:text-foreground hover:bg-muted/30'}`
                   }
+                  aria-current={({isActive}) => isActive ? 'page' : undefined}
                 >
                   {link.name}
                 </NavLink>
@@ -76,8 +77,9 @@ const Navbar = () => {
               size="icon" 
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")} 
               className="rounded-full"
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
             >
-              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {theme === "dark" ? <Sun className="h-5 w-5" aria-hidden="true" /> : <Moon className="h-5 w-5" aria-hidden="true" />}
               <span className="sr-only">Toggle theme</span>
             </Button>
             
@@ -85,8 +87,10 @@ const Navbar = () => {
               className="lg:hidden p-2 rounded-md text-foreground/70 hover:text-foreground hover:bg-muted/30 transition"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
             </button>
             
             <Button className="gradient-button hidden lg:flex">
@@ -98,7 +102,12 @@ const Navbar = () => {
       
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="lg:hidden absolute w-full bg-background/95 backdrop-blur-xl border-b border-border">
+        <div 
+          className="lg:hidden absolute w-full bg-background/95 backdrop-blur-xl border-b border-border"
+          id="mobile-menu"
+          role="navigation"
+          aria-label="Mobile navigation"
+        >
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-1">
             {navLinks.map((link, index) => (
               <NavLink 
@@ -111,6 +120,7 @@ const Navbar = () => {
                      ? 'text-primary bg-primary/10' 
                      : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'}`
                 }
+                aria-current={({isActive}) => isActive ? 'page' : undefined}
               >
                 {link.name}
               </NavLink>

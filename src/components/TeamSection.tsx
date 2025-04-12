@@ -89,12 +89,13 @@ const TeamSection = () => {
   };
 
   return (
-    <section id="team" className="py-16">
+    <section id="team" className="py-16" aria-labelledby="team-section-title">
       <div className="container mx-auto px-4">
         <SectionTitle 
           title="Our Team" 
           subtitle="Meet the experts behind our exceptional VFX solutions" 
         />
+        <div id="team-section-title" className="sr-only">Our Team</div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {teamMembers.map((member, index) => (
@@ -104,12 +105,22 @@ const TeamSection = () => {
                 activeIndex === index ? 'scale-105 shadow-lg' : 'hover:scale-102'
               }`}
               onClick={() => handleClick(index)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleClick(index);
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-expanded={activeIndex === index}
+              aria-controls={`member-bio-${index}`}
             >
               <div className="flex flex-col items-center text-center">
                 <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-primary/20">
                   <img 
                     src={member.image} 
-                    alt={member.name} 
+                    alt={`${member.name}, ${member.role}`} 
                     className="w-full h-full object-cover" 
                   />
                 </div>
@@ -117,25 +128,40 @@ const TeamSection = () => {
                 <h3 className="text-xl font-bold">{member.name}</h3>
                 <p className="text-primary font-medium">{member.role}</p>
                 
-                <div className={`mt-4 transition-all duration-300 overflow-hidden ${
-                  activeIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}>
+                <div 
+                  id={`member-bio-${index}`}
+                  className={`mt-4 transition-all duration-300 overflow-hidden ${
+                    activeIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
                   <p className="text-muted-foreground mb-4">{member.bio}</p>
                   
-                  <div className="flex justify-center space-x-4 mt-4">
+                  <div className="flex justify-center space-x-4 mt-4" role="list" aria-label="Contact options">
                     {member.social?.linkedin && (
-                      <a href={member.social.linkedin} className="text-muted-foreground hover:text-primary transition-colors">
-                        <Linkedin size={18} />
+                      <a 
+                        href={member.social.linkedin} 
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                        aria-label={`${member.name}'s LinkedIn profile`}
+                      >
+                        <Linkedin size={18} aria-hidden="true" />
                       </a>
                     )}
                     {member.social?.email && (
-                      <a href={`mailto:${member.social.email}`} className="text-muted-foreground hover:text-primary transition-colors">
-                        <Mail size={18} />
+                      <a 
+                        href={`mailto:${member.social.email}`} 
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                        aria-label={`Email ${member.name}`}
+                      >
+                        <Mail size={18} aria-hidden="true" />
                       </a>
                     )}
                     {member.social?.phone && (
-                      <a href={`tel:${member.social.phone}`} className="text-muted-foreground hover:text-primary transition-colors">
-                        <Phone size={18} />
+                      <a 
+                        href={`tel:${member.social.phone}`} 
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                        aria-label={`Call ${member.name}`}
+                      >
+                        <Phone size={18} aria-hidden="true" />
                       </a>
                     )}
                   </div>
@@ -151,8 +177,9 @@ const TeamSection = () => {
                     e.stopPropagation();
                     handleClick(index);
                   }}
+                  aria-label={`View ${member.name}'s profile`}
                 >
-                  View Profile <ArrowRight className="ml-2 h-4 w-4" />
+                  View Profile <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Button>
               </div>
             </div>

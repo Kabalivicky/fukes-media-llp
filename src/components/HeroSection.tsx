@@ -35,13 +35,17 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      <div className="absolute inset-0 bg-grid-pattern bg-16 opacity-5"></div>
+    <section 
+      ref={heroRef} 
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      aria-labelledby="hero-heading"
+    >
+      <div className="absolute inset-0 bg-grid-pattern bg-16 opacity-5" aria-hidden="true"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div ref={textRef} className="text-center lg:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4">
+            <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4">
               <span className="block">AI-Driven</span>
               <span className="block bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent animate-gradient">
                 VFX & Creative
@@ -72,7 +76,7 @@ const HeroSection = () => {
             </div>
           </div>
           
-          <div className="hidden lg:block relative">
+          <div className="hidden lg:block relative" aria-hidden="true">
             <div className="relative w-full aspect-square animate-float">
               <img 
                 src="/lovable-uploads/a0ad627e-2387-4f68-9856-c313d6d46f87.png"
@@ -94,12 +98,12 @@ const HeroSection = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce">
+      <div className="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce" aria-hidden="true">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-foreground/70">
           <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-    </div>
+    </section>
   );
 };
 
