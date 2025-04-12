@@ -60,8 +60,16 @@ const ContentCarousel = <T extends {}>({
       <div className="relative">
         <Carousel
           className="w-full"
-          setActiveItem={setActiveIndex}
-          activeIndex={activeIndex}
+          opts={{
+            align: "start",
+            loop: true,
+            selected: activeIndex
+          }}
+          onSelect={(api) => {
+            if (api) {
+              setActiveIndex(api.selectedScrollSnap());
+            }
+          }}
         >
           <CarouselContent>
             {items.map((item, index) => (
@@ -104,7 +112,7 @@ const ContentCarousel = <T extends {}>({
               className={`h-1.5 rounded-full transition-all ${idx === activeIndex ? 'w-6 bg-primary' : 'w-1.5 bg-muted'}`}
               onClick={() => setActiveIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              aria-current={idx === activeIndex ? 'true' : 'false'}
+              aria-current={idx === activeIndex}
             />
           ))}
         </div>

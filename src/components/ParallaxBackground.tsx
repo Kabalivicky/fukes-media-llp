@@ -16,6 +16,7 @@ const ParallaxBackground = () => {
       const elements = containerRef.current.querySelectorAll('.parallax-element');
       
       elements.forEach((element, index) => {
+        // Different speeds for different elements to create depth
         const speed = index % 3 === 0 ? 0.05 : index % 3 === 1 ? 0.08 : 0.03;
         const yPos = scrollY * speed;
         
@@ -37,11 +38,13 @@ const ParallaxBackground = () => {
     ];
     
     // Create fewer elements on mobile
-    const count = isMobile ? 5 : 12;
+    const count = isMobile ? 6 : 14;
     
     for (let i = 0; i < count; i++) {
-      const size = Math.floor(Math.random() * 200) + 50;
-      const opacity = (Math.random() * 0.08) + 0.02;
+      // Vary sizes more dramatically
+      const size = Math.floor(Math.random() * 300) + 100;
+      // Use slightly higher opacity for better visibility
+      const opacity = (Math.random() * 0.09) + 0.02;
       const colorClass = colors[i % colors.length];
       
       elements.push(
@@ -69,9 +72,8 @@ const ParallaxBackground = () => {
     <div 
       ref={containerRef} 
       className="fixed inset-0 overflow-hidden pointer-events-none"
-      style={{
-        zIndex: -1
-      }}
+      style={{ zIndex: -1 }}
+      aria-hidden="true"
     >
       {generateParallaxElements()}
     </div>

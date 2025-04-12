@@ -7,6 +7,8 @@ interface FadeInOnScrollProps {
   threshold?: number; // 0 to 1, percentage of element visible to trigger animation
   delay?: number; // ms
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
+  distance?: number; // pixels to travel
+  duration?: number; // ms
 }
 
 const FadeInOnScroll = ({ 
@@ -14,7 +16,9 @@ const FadeInOnScroll = ({
   className = '', 
   threshold = 0.1,
   delay = 0,
-  direction = 'up'
+  direction = 'up',
+  distance = 30,
+  duration = 700
 }: FadeInOnScrollProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -23,12 +27,15 @@ const FadeInOnScroll = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          setTimeout(() => {
+            setIsVisible(true);
+          }, 100); // Small delay before starting animation for smoother scrolling
+          
           // Once visible, no need to observe anymore
           if (ref.current) observer.unobserve(ref.current);
         }
       },
-      { threshold }
+      { threshold, rootMargin: '0px 0px -50px 0px' }
     );
 
     const currentRef = ref.current;
@@ -43,12 +50,12 @@ const FadeInOnScroll = ({
   const getInitialStyles = () => {
     if (!isVisible) {
       switch (direction) {
-        case 'up': return 'opacity-0 translate-y-8';
-        case 'down': return 'opacity-0 -translate-y-8';
-        case 'left': return 'opacity-0 translate-x-8';
-        case 'right': return 'opacity-0 -translate-x-8';
+        case 'up': return `opacity-0 translate-y-[${distance}px]`;
+        case 'down': return `opacity-0 -translate-y-[${distance}px]`;
+        case 'left': return `opacity-0 translate-x-[${distance}px]`;
+        case 'right': return `opacity-0 -translate-x-[${distance}px]`;
         case 'none': return 'opacity-0';
-        default: return 'opacity-0 translate-y-8';
+        default: return `opacity-0 translate-y-[${distance}px]`;
       }
     }
     return 'opacity-100 translate-x-0 translate-y-0';
@@ -57,8 +64,11 @@ const FadeInOnScroll = ({
   return (
     <div 
       ref={ref} 
-      className={`transition-all duration-700 ease-out ${getInitialStyles()} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all ease-out ${getInitialStyles()} ${className}`}
+      style={{ 
+        transitionDelay: `${delay}ms`,
+        transitionDuration: `${duration}ms`
+      }}
     >
       {children}
     </div>
