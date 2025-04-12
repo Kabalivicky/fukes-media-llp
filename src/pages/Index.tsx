@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import BackgroundEffect from '@/components/BackgroundEffect';
 import ParticleBackground from '@/components/ParticleBackground';
+import ParallaxBackground from '@/components/ParallaxBackground';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
 import PricingCalculator from '@/components/PricingCalculator';
@@ -16,6 +17,24 @@ import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
   useEffect(() => {
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        if (!href) return;
+        
+        const targetEl = document.querySelector(href);
+        if (targetEl) {
+          targetEl.scrollIntoView({
+            behavior: 'smooth'
+          });
+          // Update URL without reload
+          window.history.pushState(null, '', href);
+        }
+      });
+    });
+
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, []);
@@ -34,12 +53,13 @@ const Home = () => {
         <link rel="canonical" href="https://fukes-media.com" />
       </Helmet>
 
-      <div className="min-h-screen text-foreground">
+      <div className="min-h-screen text-foreground overflow-x-hidden">
         {/* Enhanced Background Effects */}
         <BackgroundEffect />
         <div className="fixed inset-0 -z-10 opacity-30" aria-hidden="true">
           <ParticleBackground />
         </div>
+        <ParallaxBackground />
         
         {/* Navigation */}
         <Navbar />

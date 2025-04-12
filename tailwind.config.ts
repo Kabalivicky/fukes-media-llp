@@ -107,6 +107,22 @@ export default {
           '50%': { opacity: '0.8' },
           '100%': { opacity: '1' }
         },
+        'scale-up': {
+          '0%': { transform: 'scale(0.95)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' }
+        },
+        'slide-up': {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' }
+        },
+        'slide-down': {
+          '0%': { transform: 'translateY(-20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' }
+        },
+        'shimmer': {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' }
+        }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -116,6 +132,10 @@ export default {
         'fade-in': 'fade-in 0.5s ease-out',
         'fade-in-right': 'fade-in-right 0.3s ease-out',
         'pulse-soft': 'pulse-soft 3s infinite',
+        'scale-up': 'scale-up 0.5s ease-out',
+        'slide-up': 'slide-up 0.5s ease-out',
+        'slide-down': 'slide-down 0.5s ease-out',
+        'shimmer': 'shimmer 2s infinite linear'
 			},
       backgroundImage: {
         'gradient-radial': 'radial-gradient(ellipse at center, var(--tw-gradient-stops))',
@@ -123,10 +143,18 @@ export default {
         'grid-pattern': 'radial-gradient(rgba(var(--primary), 0.1) 1px, transparent 1px)',
         'hero-pattern': 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/lovable-uploads/5ad66e50-d398-4c59-b672-b2d75c8149fd.png")',
         'fukes-gradient': 'linear-gradient(to right, #D50032, #0057B7, #009639, #FFCC00, #00BFFF)',
+        'shimmer-gradient': 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%)'
       },
       backgroundSize: {
         '16': '4rem',
+        'shimmer': '200% 100%'
       },
+      transitionProperty: {
+        'height': 'height',
+        'spacing': 'margin, padding',
+        'width': 'width',
+        'dimensions': 'width, height'
+      }
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
