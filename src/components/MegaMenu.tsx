@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
+import { ChevronRight, Zap, Film, Palette, Code, Award } from 'lucide-react';
 
 const MegaMenu = () => {
   const location = useLocation();
@@ -28,20 +29,40 @@ const MegaMenu = () => {
     
     return location.pathname === path;
   };
+  
+  // Handle clicking anchor links properly when not on home page
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    if (path.startsWith('/#') && location.pathname !== '/') {
+      // Don't prevent default here, let it navigate to home page with anchor
+    } else if (path.startsWith('/#')) {
+      e.preventDefault();
+      const targetId = path.substring(1);
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', path);
+      }
+    }
+  };
 
   return (
     <NavigationMenu className="hidden xl:flex">
       <NavigationMenuList>
         {/* About Dropdown */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger>About</NavigationMenuTrigger>
+          <NavigationMenuTrigger className={cn(
+            isLinkActive('/#team') || isLinkActive('/#investors') || isLinkActive('/#careers') ? "text-primary font-medium" : ""
+          )}>
+            About
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 w-[400px] md:w-[500px] lg:w-[600px] grid-cols-2">
-              <li className="row-span-3">
+            <ul className="grid gap-4 p-6 md:w-[500px] lg:w-[600px] grid-cols-2">
+              <li className="row-span-3 bg-muted/30 rounded-lg overflow-hidden">
                 <NavigationMenuLink asChild>
                   <Link
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md"
                     to="/"
+                    onClick={(e) => handleAnchorClick(e, '/')}
                   >
                     <div className="mb-2 mt-4 text-lg font-medium">
                       Fuke's Media
@@ -52,13 +73,28 @@ const MegaMenu = () => {
                   </Link>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/#team" title="Our Team">
+              <ListItem 
+                href="/#team" 
+                title="Our Team" 
+                icon={<Award className="mr-2 h-4 w-4" />}
+                onClick={(e) => handleAnchorClick(e, '/#team')}
+              >
                 Meet our diverse team of creative professionals and technical experts
               </ListItem>
-              <ListItem href="/#investors" title="Investors">
+              <ListItem 
+                href="/#investors" 
+                title="Investors" 
+                icon={<Zap className="mr-2 h-4 w-4" />}
+                onClick={(e) => handleAnchorClick(e, '/#investors')}
+              >
                 Learn about our investment partners and funding initiatives
               </ListItem>
-              <ListItem href="/#careers" title="Careers">
+              <ListItem 
+                href="/#careers" 
+                title="Careers" 
+                icon={<ChevronRight className="mr-2 h-4 w-4" />}
+                onClick={(e) => handleAnchorClick(e, '/#careers')}
+              >
                 Join our team and become part of the future of VFX
               </ListItem>
             </ul>
@@ -67,19 +103,43 @@ const MegaMenu = () => {
 
         {/* Services Dropdown */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+          <NavigationMenuTrigger className={cn(
+            isLinkActive('/#services') ? "text-primary font-medium" : ""
+          )}>
+            Services
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              <ListItem href="/#services" title="VFX Services">
+            <ul className="grid w-[500px] gap-3 p-6 md:grid-cols-2 lg:w-[600px]">
+              <ListItem 
+                href="/#services" 
+                title="VFX Services" 
+                icon={<Film className="mr-2 h-4 w-4" />}
+                onClick={(e) => handleAnchorClick(e, '/#services')}
+              >
                 Industry-leading visual effects for film, television, and digital media
               </ListItem>
-              <ListItem href="/#services" title="AI Integration">
+              <ListItem 
+                href="/#services" 
+                title="AI Integration" 
+                icon={<Code className="mr-2 h-4 w-4" />}
+                onClick={(e) => handleAnchorClick(e, '/#services')}
+              >
                 Cutting-edge AI solutions for content creation and automation
               </ListItem>
-              <ListItem href="/#services" title="Production Support">
+              <ListItem 
+                href="/#services" 
+                title="Production Support" 
+                icon={<Film className="mr-2 h-4 w-4" />}
+                onClick={(e) => handleAnchorClick(e, '/#services')}
+              >
                 Comprehensive production services from pre to post
               </ListItem>
-              <ListItem href="/#services" title="Creative Direction">
+              <ListItem 
+                href="/#services" 
+                title="Creative Direction" 
+                icon={<Palette className="mr-2 h-4 w-4" />}
+                onClick={(e) => handleAnchorClick(e, '/#services')}
+              >
                 Expert creative guidance to bring your vision to life
               </ListItem>
             </ul>
@@ -88,23 +148,62 @@ const MegaMenu = () => {
 
         {/* Resources Dropdown */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+          <NavigationMenuTrigger className={cn(
+            isLinkActive('/vfx-research') || isLinkActive('/vfx-industry-insights') || 
+            isLinkActive('/help-center') || isLinkActive('/production-guidelines') 
+              ? "text-primary font-medium" : ""
+          )}>
+            Resources
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              <ListItem href="/vfx-research" title="VFX Research">
+            <ul className="grid w-[500px] gap-3 p-6 md:grid-cols-2 lg:w-[600px]">
+              <ListItem 
+                href="/vfx-research" 
+                title="VFX Research"
+                icon={<ChevronRight className="mr-2 h-4 w-4" />}
+              >
                 In-depth analysis of the global VFX industry landscape
               </ListItem>
-              <ListItem href="/vfx-industry-insights" title="Industry Insights">
+              <ListItem 
+                href="/vfx-industry-insights" 
+                title="Industry Insights"
+                icon={<ChevronRight className="mr-2 h-4 w-4" />}
+              >
                 Data-driven insights into VFX industry trends and developments
               </ListItem>
-              <ListItem href="/help-center" title="Help Center">
+              <ListItem 
+                href="/help-center" 
+                title="Help Center"
+                icon={<ChevronRight className="mr-2 h-4 w-4" />}
+              >
                 Resources, guides, and support for partners and clients
               </ListItem>
-              <ListItem href="/production-guidelines" title="Production Guidelines">
+              <ListItem 
+                href="/production-guidelines" 
+                title="Production Guidelines"
+                icon={<ChevronRight className="mr-2 h-4 w-4" />}
+              >
                 Technical specifications and workflow guides for productions
               </ListItem>
             </ul>
           </NavigationMenuContent>
+        </NavigationMenuItem>
+
+        {/* Portfolio */}
+        <NavigationMenuItem>
+          <Button variant="link" className="p-0" asChild>
+            <Link 
+              to="/#portfolio"
+              onClick={(e) => handleAnchorClick(e, '/#portfolio')}
+            >
+              <NavigationMenuLink className={cn(
+                navigationMenuTriggerStyle(),
+                isLinkActive('/#portfolio') ? "text-primary font-medium" : ""
+              )}>
+                Portfolio
+              </NavigationMenuLink>
+            </Link>
+          </Button>
         </NavigationMenuItem>
 
         {/* Direct Links */}
@@ -123,8 +222,14 @@ const MegaMenu = () => {
         
         <NavigationMenuItem>
           <Button variant="link" className="p-0" asChild>
-            <Link to="/#contact">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <Link 
+              to="/#contact"
+              onClick={(e) => handleAnchorClick(e, '/#contact')}
+            >
+              <NavigationMenuLink className={cn(
+                navigationMenuTriggerStyle(),
+                isLinkActive('/#contact') ? "text-primary font-medium" : ""
+              )}>
                 Contact
               </NavigationMenuLink>
             </Link>
@@ -138,10 +243,11 @@ const MegaMenu = () => {
 interface ListItemProps extends React.ComponentPropsWithoutRef<"a"> {
   title: string;
   href: string;
+  icon?: React.ReactNode;
 }
 
 const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
-  ({ className, title, children, href, ...props }, ref) => {
+  ({ className, title, children, href, icon, onClick, ...props }, ref) => {
     return (
       <li>
         <NavigationMenuLink asChild>
@@ -149,12 +255,16 @@ const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
             ref={ref}
             to={href}
             className={cn(
-              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+              "flex select-none flex-col space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
               className
             )}
+            onClick={onClick}
             {...props}
           >
-            <div className="text-sm font-medium leading-none">{title}</div>
+            <div className="flex items-center text-sm font-medium leading-none">
+              {icon}
+              {title}
+            </div>
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
               {children}
             </p>

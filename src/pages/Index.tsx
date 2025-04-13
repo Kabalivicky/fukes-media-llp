@@ -1,5 +1,6 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import BackgroundEffect from '@/components/BackgroundEffect';
 import ParticleBackground from '@/components/ParticleBackground';
@@ -15,7 +16,23 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import { Helmet } from 'react-helmet-async';
 
+// Animation variants for scroll-triggered animations
+const fadeInUpVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }
+};
+
 const Home = () => {
+  // State for scroll progress
+  const [scrollProgress, setScrollProgress] = useState(0);
+  
   // Create refs for the sections to scroll to
   const sectionsRef = useRef<{ [key: string]: HTMLDivElement | null }>({
     services: null,
@@ -25,6 +42,22 @@ const Home = () => {
     investors: null,
     contact: null
   });
+
+  // Handle scroll events to update animation values
+  useEffect(() => {
+    const handleScroll = () => {
+      // Calculate scroll progress for animations (0 to 1)
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
+      setScrollProgress(progress);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     // Smooth scrolling for anchor links
@@ -88,7 +121,7 @@ const Home = () => {
         <link rel="canonical" href="https://fukes-media.com" />
       </Helmet>
 
-      <div className="min-h-screen text-foreground overflow-x-hidden">
+      <div className="relative min-h-screen text-foreground overflow-x-hidden">
         {/* Enhanced Background Effects */}
         <BackgroundEffect />
         <div className="fixed inset-0 -z-10 opacity-30" aria-hidden="true">
@@ -99,27 +132,93 @@ const Home = () => {
         {/* Navigation */}
         <Navbar />
         
-        {/* Main Content */}
+        {/* Main Content with Motion Effects */}
         <main id="main-content" className="relative z-10">
           <HeroSection />
+          
           <div id="services" ref={(el) => sectionsRef.current.services = el}>
-            <ServicesSection />
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <ServicesSection />
+            </motion.div>
           </div>
-          <PricingCalculator />
+          
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUpVariants}
+          >
+            <PricingCalculator />
+          </motion.div>
+          
           <div id="portfolio" ref={(el) => sectionsRef.current.portfolio = el}>
-            <PortfolioSection />
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <PortfolioSection />
+            </motion.div>
           </div>
+          
           <div id="team" ref={(el) => sectionsRef.current.team = el}>
-            <TeamSection />
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <TeamSection />
+            </motion.div>
           </div>
+          
           <div id="careers" ref={(el) => sectionsRef.current.careers = el}>
-            <CareersSection />
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <CareersSection />
+            </motion.div>
           </div>
+          
           <div id="investors" ref={(el) => sectionsRef.current.investors = el}>
-            <InvestorsSection />
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <InvestorsSection />
+            </motion.div>
           </div>
+          
           <div id="contact" ref={(el) => sectionsRef.current.contact = el}>
-            <ContactSection />
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <ContactSection />
+            </motion.div>
+          </div>
+          
+          {/* Floating progress indicator */}
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 hidden md:block">
+            <div className="h-1 w-60 bg-muted rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-fukes-blue via-fukes-red to-fukes-green"
+                style={{ width: `${scrollProgress * 100}%` }}
+              />
+            </div>
           </div>
         </main>
         
