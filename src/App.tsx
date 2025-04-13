@@ -15,6 +15,9 @@ import HelpCenter from "./pages/HelpCenter";
 import HelpCenterCategory from "./pages/HelpCenterCategory";
 import ProductionGuidelines from "./pages/ProductionGuidelines";
 import ScrollToTop from "./components/ScrollToTop";
+import LoadingIntro from "./components/LoadingIntro";
+import EnhancedBackground from "./components/EnhancedBackground";
+import GlowEffect from "./components/GlowEffect";
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -36,6 +39,9 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <LoadingIntro />
+              <EnhancedBackground />
+              <GlowEffect />
               <ScrollToTop showBelow={400} />
               <Routes>
                 <Route path="/" element={<Index />} />

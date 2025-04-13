@@ -1,10 +1,7 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Navbar from '@/components/Navbar';
-import BackgroundEffect from '@/components/BackgroundEffect';
-import ParticleBackground from '@/components/ParticleBackground';
-import ParallaxBackground from '@/components/ParallaxBackground';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
 import PricingCalculator from '@/components/PricingCalculator';
@@ -15,15 +12,16 @@ import InvestorsSection from '@/components/InvestorsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import { Helmet } from 'react-helmet-async';
+import AnimatedLogo from '@/components/AnimatedLogo';
 
 // Animation variants for scroll-triggered animations
 const fadeInUpVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0, 
     transition: { 
-      duration: 0.6,
+      duration: 0.8,
       ease: "easeOut"
     }
   }
@@ -42,6 +40,12 @@ const Home = () => {
     investors: null,
     contact: null
   });
+
+  // Parallax scroll effects
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 1000], [0, -150]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, -50]);
+  const opacity = useTransform(scrollY, [0, 200, 300], [1, 0.5, 0]);
 
   // Handle scroll events to update animation values
   useEffect(() => {
@@ -122,18 +126,43 @@ const Home = () => {
       </Helmet>
 
       <div className="relative min-h-screen text-foreground overflow-x-hidden">
-        {/* Enhanced Background Effects */}
-        <BackgroundEffect />
-        <div className="fixed inset-0 -z-10 opacity-30" aria-hidden="true">
-          <ParticleBackground />
+        {/* Floating elements in background */}
+        <div className="fixed inset-0 -z-10" aria-hidden="true">
+          <motion.div 
+            className="absolute top-1/4 right-[10%] w-64 h-64 rounded-full bg-fukes-blue/10 blur-[100px]"
+            style={{ y: y1 }}
+          />
+          <motion.div 
+            className="absolute top-[60%] left-[5%] w-72 h-72 rounded-full bg-fukes-red/10 blur-[120px]"
+            style={{ y: y2 }}
+          />
+          <motion.div 
+            className="absolute top-[30%] left-[20%] w-48 h-48 rounded-full bg-fukes-green/10 blur-[80px]"
+            animate={{ 
+              x: [0, 30, 0], 
+              y: [0, -20, 0]
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+          />
         </div>
-        <ParallaxBackground />
         
         {/* Navigation */}
         <Navbar />
         
         {/* Main Content with Motion Effects */}
         <main id="main-content" className="relative z-10">
+          {/* Animated logo that follows scroll */}
+          <motion.div 
+            className="hidden md:block fixed top-20 right-[5%] z-10"
+            style={{ opacity, scale: useTransform(scrollY, [0, 300], [1, 0.8]) }}
+          >
+            <AnimatedLogo size="md" />
+          </motion.div>
+
           <HeroSection />
           
           <div id="services" ref={(el) => sectionsRef.current.services = el}>
@@ -211,13 +240,21 @@ const Home = () => {
             </motion.div>
           </div>
           
-          {/* Floating progress indicator */}
+          {/* Enhanced progress indicator */}
           <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 hidden md:block">
             <div className="h-1 w-60 bg-muted rounded-full overflow-hidden">
-              <div 
+              <motion.div 
                 className="h-full bg-gradient-to-r from-fukes-blue via-fukes-red to-fukes-green"
                 style={{ width: `${scrollProgress * 100}%` }}
+                initial={{ width: '0%' }}
+                animate={{ width: `${scrollProgress * 100}%` }}
+                transition={{ type: 'spring', stiffness: 50 }}
               />
+            </div>
+            
+            <div className="flex justify-between mt-2 text-xs text-muted-foreground">
+              <span>Top</span>
+              <span>Bottom</span>
             </div>
           </div>
         </main>
