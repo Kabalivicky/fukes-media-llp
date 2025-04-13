@@ -18,25 +18,50 @@ import { Helmet } from 'react-helmet-async';
 const Home = () => {
   useEffect(() => {
     // Smooth scrolling for anchor links
+    const handleAnchorClick = (e: Event) => {
+      e.preventDefault();
+      const anchor = e.currentTarget as HTMLAnchorElement;
+      const href = anchor.getAttribute('href');
+      if (!href?.startsWith('#')) return;
+      
+      const targetId = href.substring(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({
+          behavior: 'smooth'
+        });
+        // Update URL without reload
+        window.history.pushState(null, '', `/#${targetId}`);
+      }
+    };
+
+    // Add event listeners
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const href = this.getAttribute('href');
-        if (!href) return;
-        
-        const targetEl = document.querySelector(href);
-        if (targetEl) {
-          targetEl.scrollIntoView({
-            behavior: 'smooth'
-          });
-          // Update URL without reload
-          window.history.pushState(null, '', href);
-        }
-      });
+      anchor.addEventListener('click', handleAnchorClick);
     });
 
-    // Scroll to top when component mounts
-    window.scrollTo(0, 0);
+    // Clean up
+    return () => {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.removeEventListener('click', handleAnchorClick);
+      });
+    };
+  }, []);
+
+  // On initial load, check if there's a hash in the URL and scroll to that section
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 500); // Small delay to ensure DOM is fully loaded
+      }
+    } else {
+      // Scroll to top when component mounts with no hash
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   return (

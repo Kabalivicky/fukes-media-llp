@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from "@/components/ui/theme-provider";
 import { Button } from '@/components/ui/button';
+import MegaMenu from './MegaMenu';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,13 +34,18 @@ const Navbar = () => {
   // Navigation links with proper paths
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Services", path: "/#services" },
-    { name: "Portfolio", path: "/#portfolio" },
-    { name: "Team", path: "/#team" },
     { name: "VFX Research", path: "/vfx-research" },
     { name: "VFX Industry Insights", path: "/vfx-industry-insights" },
     { name: "Help Center", path: "/help-center" },
+    { name: "Production Guidelines", path: "/production-guidelines" },
     { name: "Pricing", path: "/pricing" },
+  ];
+
+  // Home page anchor links
+  const homeLinks = [
+    { name: "Services", path: "/#services" },
+    { name: "Portfolio", path: "/#portfolio" },
+    { name: "Team", path: "/#team" },
     { name: "Careers", path: "/#careers" },
     { name: "Contact", path: "/#contact" }
   ];
@@ -61,8 +67,8 @@ const Navbar = () => {
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 rainbow-border ${headerClasses}`} role="banner">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-8">
-            <Link to="/" className="flex items-center space-x-2" aria-label="Fuke's Media Home">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center space-x-2 mr-6" aria-label="Fuke's Media Home">
               <img 
                 alt="Fuke's Media Logo" 
                 className="h-8 md:h-10" 
@@ -70,13 +76,34 @@ const Navbar = () => {
               />
             </Link>
             
-            {/* Navigation Links */}
-            <nav className="hidden lg:flex space-x-2" aria-label="Main navigation">
+            {/* Mega Menu for XL screens */}
+            <MegaMenu />
+            
+            {/* Classic Navigation for lg screens */}
+            <nav className="hidden lg:flex xl:hidden space-x-2" aria-label="Main navigation">
               {navLinks.map((link, index) => {
                 const active = isLinkActive(link.path);
                 return (
                   <NavLink 
                     key={index}
+                    to={link.path} 
+                    className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                      active 
+                        ? 'text-primary bg-primary/10' 
+                        : 'text-foreground/80 hover:text-foreground hover:bg-muted/30'
+                    }`}
+                  >
+                    {link.name}
+                  </NavLink>
+                );
+              })}
+              
+              {/* Only show home page anchor links when on home page */}
+              {location.pathname === '/' && homeLinks.map((link, index) => {
+                const active = isLinkActive(link.path);
+                return (
+                  <NavLink 
+                    key={`home-${index}`}
                     to={link.path} 
                     className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                       active 
@@ -113,8 +140,10 @@ const Navbar = () => {
               {isMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
             </button>
             
-            <Button className="gradient-button hidden lg:flex">
-              Get Started
+            <Button className="gradient-button hidden lg:flex" asChild>
+              <Link to="/#contact">
+                Get Started
+              </Link>
             </Button>
           </div>
         </div>
@@ -123,12 +152,13 @@ const Navbar = () => {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div 
-          className="lg:hidden absolute w-full bg-background/95 backdrop-blur-xl border-b border-border"
+          className="lg:hidden absolute w-full bg-background/95 backdrop-blur-xl border-b border-border max-h-[80vh] overflow-y-auto"
           id="mobile-menu"
           role="navigation"
           aria-label="Mobile navigation"
         >
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-1">
+            {/* Main Navigation Links */}
             {navLinks.map((link, index) => {
               const active = isLinkActive(link.path);
               return (
@@ -145,8 +175,36 @@ const Navbar = () => {
                 </NavLink>
               );
             })}
-            <Button className="gradient-button w-full mt-4">
-              Get Started
+            
+            {/* Home page anchor links */}
+            {location.pathname === '/' && (
+              <>
+                <div className="px-4 py-2 text-sm font-medium text-muted-foreground">
+                  Home Page Sections
+                </div>
+                {homeLinks.map((link, index) => {
+                  const active = isLinkActive(link.path);
+                  return (
+                    <NavLink 
+                      key={`home-mobile-${index}`}
+                      to={link.path} 
+                      className={`px-4 py-3 rounded-md transition-colors ${
+                        active
+                          ? 'text-primary bg-primary/10' 
+                          : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'
+                      }`}
+                    >
+                      {link.name}
+                    </NavLink>
+                  );
+                })}
+              </>
+            )}
+            
+            <Button className="gradient-button w-full mt-4" asChild>
+              <Link to="/#contact">
+                Get Started
+              </Link>
             </Button>
           </nav>
         </div>
