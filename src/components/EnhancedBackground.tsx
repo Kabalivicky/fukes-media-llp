@@ -1,163 +1,170 @@
 
-import { useRef, useEffect } from 'react';
-import { useTheme } from "@/components/ui/theme-provider";
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useTheme } from '@/components/ui/theme-provider';
+
+interface ParticleProps {
+  x: number;
+  y: number;
+  size: number;
+  speed: number;
+  color: string;
+}
 
 const EnhancedBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [particles, setParticles] = useState<ParticleProps[]>([]);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   
+  const { scrollYProgress } = useScroll();
+  const translateY = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const translateX = useTransform(scrollYProgress, [0, 1], [0, 50]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+
+  // Generate random particles
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!containerRef.current) return;
     
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    
-    // Set canvas dimensions
-    const setCanvasSize = () => {
-      if (!canvas) return;
-      
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      
-      ctx.scale(dpr, dpr);
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        setDimensions({ width, height });
+      }
     };
     
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+    };
+  }, []);
+
+  // Create particles once dimensions are available
+  useEffect(() => {
+    if (dimensions.width === 0 || dimensions.height === 0) return;
     
-    // Create particles
-    const particleCount = 100;
-    const particles: Array<{
-      x: number;
-      y: number;
-      radius: number;
-      color: string;
-      vx: number;
-      vy: number;
-      opacity: number;
-    }> = [];
-    
-    // Generate brand colors based on the theme
     const brandColors = [
-      '#0057B7', // fukes-blue
-      '#D50032', // fukes-red
-      '#009639', // fukes-green
-      '#FFCC00', // fukes-gold
-      '#00BFFF'  // fukes-cyan
+      'rgba(0, 87, 183, 0.4)', // blue
+      'rgba(213, 0, 50, 0.4)',  // red
+      'rgba(0, 150, 57, 0.4)',  // green
+      'rgba(255, 204, 0, 0.3)', // gold
     ];
     
-    // Setup particles
-    for (let i = 0; i < particleCount; i++) {
-      const radius = Math.random() * 2 + 1;
-      particles.push({
-        x: Math.random() * canvas.width / window.devicePixelRatio,
-        y: Math.random() * canvas.height / window.devicePixelRatio,
-        radius,
-        color: brandColors[Math.floor(Math.random() * brandColors.length)],
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        opacity: Math.random() * 0.5 + 0.1
-      });
-    }
+    const newParticles = Array(30).fill(null).map(() => ({
+      x: Math.random() * dimensions.width,
+      y: Math.random() * dimensions.height,
+      size: Math.random() * 4 + 1,
+      speed: Math.random() * 1 + 0.5,
+      color: brandColors[Math.floor(Math.random() * brandColors.length)],
+    }));
     
-    // Mouse interaction
-    let mouse = { x: 0, y: 0, radius: 100 };
-    
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-    
-    // Animation loop
-    const animate = () => {
-      if (!ctx || !canvas) return;
-      
-      ctx.clearRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
-      
-      // Draw and update particles
-      particles.forEach(particle => {
-        // Update position
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        
-        // Wrap around screen edges
-        if (particle.x < 0) particle.x = canvas.width / window.devicePixelRatio;
-        if (particle.x > canvas.width / window.devicePixelRatio) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height / window.devicePixelRatio;
-        if (particle.y > canvas.height / window.devicePixelRatio) particle.y = 0;
-        
-        // Calculate distance to mouse for interaction
-        const dx = mouse.x - particle.x;
-        const dy = mouse.y - particle.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        // Mouse repulsion effect
-        if (distance < mouse.radius) {
-          const angle = Math.atan2(dy, dx);
-          const force = (mouse.radius - distance) / mouse.radius;
-          
-          particle.vx -= Math.cos(angle) * force * 0.2;
-          particle.vy -= Math.sin(angle) * force * 0.2;
-        }
-        
-        // Speed limits
-        const maxSpeed = 1;
-        const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
-        if (speed > maxSpeed) {
-          particle.vx = (particle.vx / speed) * maxSpeed;
-          particle.vy = (particle.vy / speed) * maxSpeed;
-        }
-        
-        // Draw particle
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${particle.color}${Math.floor(particle.opacity * 255).toString(16).padStart(2, '0')}`;
-        ctx.fill();
-        
-        // Connection lines between nearby particles
-        particles.forEach(otherParticle => {
-          const dx = particle.x - otherParticle.x;
-          const dy = particle.y - otherParticle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < 100) {
-            ctx.beginPath();
-            ctx.strokeStyle = `${particle.color}${Math.floor((1 - distance / 100) * particle.opacity * 50).toString(16).padStart(2, '0')}`;
-            ctx.lineWidth = 0.5;
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.stroke();
-          }
-        });
-      });
-      
-      requestAnimationFrame(animate);
-    };
-    
-    animate();
-    
-    return () => {
-      window.removeEventListener('resize', setCanvasSize);
-      window.removeEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-      });
-    };
-  }, [theme]);
-  
+    setParticles(newParticles);
+  }, [dimensions]);
+
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 z-[-1] pointer-events-none opacity-50"
-      style={{ 
-        mixBlendMode: theme === 'dark' ? 'screen' : 'multiply',
-      }}
-    />
+    <motion.div 
+      ref={containerRef}
+      className="fixed inset-0 -z-20 overflow-hidden pointer-events-none"
+      style={{ backgroundColor: theme === 'dark' ? '#030711' : '#f8fafc' }}
+    >
+      {/* Floating particles */}
+      {particles.map((particle, index) => (
+        <motion.div
+          key={`particle-${index}`}
+          className="absolute rounded-full blur-md"
+          style={{
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+            backgroundColor: particle.color,
+            x: particle.x,
+            y: particle.y,
+          }}
+          animate={{
+            y: [particle.y, particle.y + 100, particle.y],
+            x: [particle.x, particle.x + (Math.random() * 50 - 25), particle.x],
+            opacity: [0.4, 0.8, 0.4],
+          }}
+          transition={{
+            duration: 10 / particle.speed,
+            ease: "easeInOut",
+            repeat: Infinity,
+            delay: Math.random() * 5,
+          }}
+        />
+      ))}
+      
+      {/* Background gradient effects */}
+      <div className="absolute inset-0">
+        {/* Main background gradient */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br opacity-10"
+          style={{ 
+            backgroundImage: theme === 'dark' 
+              ? 'radial-gradient(circle at 50% 50%, rgba(0, 87, 183, 0.3) 0%, rgba(3, 7, 17, 0) 70%)' 
+              : 'radial-gradient(circle at 50% 50%, rgba(0, 87, 183, 0.1) 0%, rgba(248, 250, 252, 0) 70%)'
+          }}
+          animate={{ 
+            scale: [1, 1.05, 1],
+            opacity: [0.1, 0.15, 0.1],
+          }}
+          transition={{ 
+            duration: 15, 
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+        />
+        
+        {/* Scrolling effect elements */}
+        <motion.div 
+          className="absolute -bottom-[600px] -right-[300px] w-[900px] h-[900px] rounded-full opacity-20 blur-3xl"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(0,87,183,0.3) 0%, rgba(0,87,183,0) 70%)',
+            y: translateY,
+            scale,
+          }}
+        />
+        
+        <motion.div 
+          className="absolute -top-[400px] -left-[200px] w-[700px] h-[700px] rounded-full opacity-15 blur-3xl"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(213,0,50,0.2) 0%, rgba(213,0,50,0) 70%)',
+            y: useTransform(scrollYProgress, [0, 1], [0, 100]),
+            x: translateX,
+          }}
+        />
+        
+        <motion.div 
+          className="absolute top-[20%] right-[10%] w-[500px] h-[500px] rounded-full opacity-10 blur-3xl"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(0,150,57,0.2) 0%, rgba(0,150,57,0) 70%)',
+            y: useTransform(scrollYProgress, [0, 1], [0, -150]),
+            scale: useTransform(scrollYProgress, [0, 1], [1, 0.8]),
+          }}
+        />
+      </div>
+      
+      {/* Grid pattern overlay with parallax */}
+      <motion.div 
+        className="absolute inset-0 bg-repeat opacity-5"
+        style={{
+          backgroundImage: `radial-gradient(${theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'} 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+          y: useTransform(scrollYProgress, [0, 1], [0, 100]),
+        }}
+      />
+      
+      {/* Bottom gradient */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-[200px]"
+        style={{
+          background: theme === 'dark'
+            ? 'linear-gradient(to top, rgba(3,7,17,1), rgba(3,7,17,0))'
+            : 'linear-gradient(to top, rgba(248,250,252,1), rgba(248,250,252,0))'
+        }}
+      />
+    </motion.div>
   );
 };
 

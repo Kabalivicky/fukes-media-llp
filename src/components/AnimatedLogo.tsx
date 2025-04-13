@@ -10,7 +10,7 @@ interface AnimatedLogoProps {
 const AnimatedLogo = ({ className = '', size = 'md' }: AnimatedLogoProps) => {
   const controls = useAnimation();
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, threshold: 0.3 });
+  const isInView = useInView(ref, { once: true });
   
   // Size mapping
   const sizeMap = {
