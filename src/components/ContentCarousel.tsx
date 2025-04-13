@@ -7,7 +7,8 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious
+  CarouselPrevious,
+  type CarouselApi
 } from '@/components/ui/carousel';
 
 interface ContentCarouselProps<T> {
@@ -32,12 +33,32 @@ const ContentCarousel = <T extends {}>({
   interval = 5000
 }: ContentCarouselProps<T>) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Update the active index when the carousel changes
+  useEffect(() => {
+    if (!api) return;
+
+    const handleSelect = () => {
+      setActiveIndex(api.selectedScrollSnap());
+    };
+
+    api.on("select", handleSelect);
+    return () => {
+      api.off("select", handleSelect);
+    };
+  }, [api]);
+
+  // Handle autoplay functionality
   useEffect(() => {
     if (autoplay) {
       timerRef.current = setInterval(() => {
-        setActiveIndex(prev => (prev + 1) % items.length);
+        if (api) {
+          api.scrollNext();
+        } else {
+          setActiveIndex(prev => (prev + 1) % items.length);
+        }
       }, interval);
     }
 
@@ -46,7 +67,7 @@ const ContentCarousel = <T extends {}>({
         clearInterval(timerRef.current);
       }
     };
-  }, [autoplay, interval, items.length]);
+  }, [autoplay, interval, items.length, api]);
 
   return (
     <div className={`w-full ${className}`}>
@@ -63,13 +84,9 @@ const ContentCarousel = <T extends {}>({
           opts={{
             align: "start",
             loop: true,
-            selected: activeIndex
           }}
-          onSelect={(api) => {
-            if (api) {
-              setActiveIndex(api.selectedScrollSnap());
-            }
-          }}
+          setApi={setApi}
+          onSelect={() => {}}
         >
           <CarouselContent>
             {items.map((item, index) => (
@@ -88,7 +105,7 @@ const ContentCarousel = <T extends {}>({
           <Button 
             variant="outline" 
             size="icon" 
-            onClick={() => setActiveIndex(prev => (prev - 1 + items.length) % items.length)}
+            onClick={() => api?.scrollPrev()}
             aria-label="Previous item"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -97,7 +114,7 @@ const ContentCarousel = <T extends {}>({
           <Button 
             variant="outline" 
             size="icon" 
-            onClick={() => setActiveIndex(prev => (prev + 1) % items.length)}
+            onClick={() => api?.scrollNext()}
             aria-label="Next item"
           >
             <ChevronRight className="h-4 w-4" />
@@ -110,7 +127,13 @@ const ContentCarousel = <T extends {}>({
             <button
               key={idx}
               className={`h-1.5 rounded-full transition-all ${idx === activeIndex ? 'w-6 bg-primary' : 'w-1.5 bg-muted'}`}
-              onClick={() => setActiveIndex(idx)}
+              onClick={() => {
+                if (api) {
+                  api.scrollTo(idx);
+                } else {
+                  setActiveIndex(idx);
+                }
+              }}
               aria-label={`Go to slide ${idx + 1}`}
               aria-current={idx === activeIndex}
             />
