@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,8 +11,24 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
+import { Button } from './ui/button';
 
 const MegaMenu = () => {
+  const location = useLocation();
+  
+  // Function to determine if link is active (for highlighting current page)
+  const isLinkActive = (path: string) => {
+    if (path === '/') {
+      return location.pathname === '/' && !location.hash;
+    }
+    
+    if (path.startsWith('/#')) {
+      return location.pathname === '/' && location.hash === path.substring(1);
+    }
+    
+    return location.pathname === path;
+  };
+
   return (
     <NavigationMenu className="hidden xl:flex">
       <NavigationMenuList>
@@ -93,19 +109,26 @@ const MegaMenu = () => {
 
         {/* Direct Links */}
         <NavigationMenuItem>
-          <Link to="/pricing">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Pricing
-            </NavigationMenuLink>
-          </Link>
+          <Button variant="link" className="p-0" asChild>
+            <Link to="/pricing">
+              <NavigationMenuLink className={cn(
+                navigationMenuTriggerStyle(),
+                isLinkActive('/pricing') ? "text-primary font-medium" : ""
+              )}>
+                Pricing
+              </NavigationMenuLink>
+            </Link>
+          </Button>
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Link to="/#contact">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Contact
-            </NavigationMenuLink>
-          </Link>
+          <Button variant="link" className="p-0" asChild>
+            <Link to="/#contact">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Contact
+              </NavigationMenuLink>
+            </Link>
+          </Button>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

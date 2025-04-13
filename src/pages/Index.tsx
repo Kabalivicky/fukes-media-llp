@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import BackgroundEffect from '@/components/BackgroundEffect';
 import ParticleBackground from '@/components/ParticleBackground';
@@ -16,6 +16,16 @@ import Footer from '@/components/Footer';
 import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
+  // Create refs for the sections to scroll to
+  const sectionsRef = useRef<{ [key: string]: HTMLDivElement | null }>({
+    services: null,
+    portfolio: null,
+    team: null,
+    careers: null,
+    investors: null,
+    contact: null
+  });
+
   useEffect(() => {
     // Smooth scrolling for anchor links
     const handleAnchorClick = (e: Event) => {
@@ -92,13 +102,25 @@ const Home = () => {
         {/* Main Content */}
         <main id="main-content" className="relative z-10">
           <HeroSection />
-          <ServicesSection />
+          <div id="services" ref={(el) => sectionsRef.current.services = el}>
+            <ServicesSection />
+          </div>
           <PricingCalculator />
-          <PortfolioSection />
-          <TeamSection />
-          <CareersSection />
-          <InvestorsSection />
-          <ContactSection />
+          <div id="portfolio" ref={(el) => sectionsRef.current.portfolio = el}>
+            <PortfolioSection />
+          </div>
+          <div id="team" ref={(el) => sectionsRef.current.team = el}>
+            <TeamSection />
+          </div>
+          <div id="careers" ref={(el) => sectionsRef.current.careers = el}>
+            <CareersSection />
+          </div>
+          <div id="investors" ref={(el) => sectionsRef.current.investors = el}>
+            <InvestorsSection />
+          </div>
+          <div id="contact" ref={(el) => sectionsRef.current.contact = el}>
+            <ContactSection />
+          </div>
         </main>
         
         {/* Footer */}

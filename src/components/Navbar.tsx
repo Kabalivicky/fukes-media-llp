@@ -53,7 +53,7 @@ const Navbar = () => {
   // Function to determine if a link is active
   const isLinkActive = (path: string) => {
     if (path === '/') {
-      return location.pathname === '/';
+      return location.pathname === '/' && !location.hash;
     }
     
     if (path.startsWith('/#')) {
@@ -61,6 +61,27 @@ const Navbar = () => {
     }
     
     return location.pathname === path;
+  };
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    if (path.startsWith('/#')) {
+      e.preventDefault();
+      const id = path.substring(2);
+      const element = document.getElementById(id);
+      
+      if (location.pathname !== '/') {
+        // If not on home page, navigate there first
+        window.location.href = path;
+        return;
+      }
+      
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', path);
+      }
+    }
+    
+    setIsMenuOpen(false);
   };
 
   return (
@@ -81,40 +102,36 @@ const Navbar = () => {
             
             {/* Classic Navigation for lg screens */}
             <nav className="hidden lg:flex xl:hidden space-x-2" aria-label="Main navigation">
-              {navLinks.map((link, index) => {
-                const active = isLinkActive(link.path);
-                return (
-                  <NavLink 
-                    key={index}
-                    to={link.path} 
-                    className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                      active 
-                        ? 'text-primary bg-primary/10' 
-                        : 'text-foreground/80 hover:text-foreground hover:bg-muted/30'
-                    }`}
-                  >
-                    {link.name}
-                  </NavLink>
-                );
-              })}
+              {navLinks.map((link, index) => (
+                <NavLink 
+                  key={index}
+                  to={link.path} 
+                  className={({ isActive }) => `px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                    isActive 
+                      ? 'text-primary bg-primary/10' 
+                      : 'text-foreground/80 hover:text-foreground hover:bg-muted/30'
+                  }`}
+                  onClick={(e) => handleLinkClick(e, link.path)}
+                >
+                  {link.name}
+                </NavLink>
+              ))}
               
               {/* Only show home page anchor links when on home page */}
-              {location.pathname === '/' && homeLinks.map((link, index) => {
-                const active = isLinkActive(link.path);
-                return (
-                  <NavLink 
-                    key={`home-${index}`}
-                    to={link.path} 
-                    className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                      active 
-                        ? 'text-primary bg-primary/10' 
-                        : 'text-foreground/80 hover:text-foreground hover:bg-muted/30'
-                    }`}
-                  >
-                    {link.name}
-                  </NavLink>
-                );
-              })}
+              {location.pathname === '/' && homeLinks.map((link, index) => (
+                <NavLink 
+                  key={`home-${index}`}
+                  to={link.path} 
+                  className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                    location.hash === link.path.substring(1)
+                      ? 'text-primary bg-primary/10' 
+                      : 'text-foreground/80 hover:text-foreground hover:bg-muted/30'
+                  }`}
+                  onClick={(e) => handleLinkClick(e, link.path)}
+                >
+                  {link.name}
+                </NavLink>
+              ))}
             </nav>
           </div>
           
@@ -141,7 +158,7 @@ const Navbar = () => {
             </button>
             
             <Button className="gradient-button hidden lg:flex" asChild>
-              <Link to="/#contact">
+              <Link to="/#contact" onClick={(e) => handleLinkClick(e, '/#contact')}>
                 Get Started
               </Link>
             </Button>
@@ -159,22 +176,20 @@ const Navbar = () => {
         >
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-1">
             {/* Main Navigation Links */}
-            {navLinks.map((link, index) => {
-              const active = isLinkActive(link.path);
-              return (
-                <NavLink 
-                  key={index}
-                  to={link.path} 
-                  className={`px-4 py-3 rounded-md transition-colors ${
-                    active
-                      ? 'text-primary bg-primary/10' 
-                      : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'
-                  }`}
-                >
-                  {link.name}
-                </NavLink>
-              );
-            })}
+            {navLinks.map((link, index) => (
+              <NavLink 
+                key={index}
+                to={link.path} 
+                className={({ isActive }) => `px-4 py-3 rounded-md transition-colors ${
+                  isActive
+                    ? 'text-primary bg-primary/10' 
+                    : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'
+                }`}
+                onClick={(e) => handleLinkClick(e, link.path)}
+              >
+                {link.name}
+              </NavLink>
+            ))}
             
             {/* Home page anchor links */}
             {location.pathname === '/' && (
@@ -182,27 +197,25 @@ const Navbar = () => {
                 <div className="px-4 py-2 text-sm font-medium text-muted-foreground">
                   Home Page Sections
                 </div>
-                {homeLinks.map((link, index) => {
-                  const active = isLinkActive(link.path);
-                  return (
-                    <NavLink 
-                      key={`home-mobile-${index}`}
-                      to={link.path} 
-                      className={`px-4 py-3 rounded-md transition-colors ${
-                        active
-                          ? 'text-primary bg-primary/10' 
-                          : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'
-                      }`}
-                    >
-                      {link.name}
-                    </NavLink>
-                  );
-                })}
+                {homeLinks.map((link, index) => (
+                  <NavLink 
+                    key={`home-mobile-${index}`}
+                    to={link.path} 
+                    className={`px-4 py-3 rounded-md transition-colors ${
+                      location.hash === link.path.substring(1)
+                        ? 'text-primary bg-primary/10' 
+                        : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'
+                    }`}
+                    onClick={(e) => handleLinkClick(e, link.path)}
+                  >
+                    {link.name}
+                  </NavLink>
+                ))}
               </>
             )}
             
             <Button className="gradient-button w-full mt-4" asChild>
-              <Link to="/#contact">
+              <Link to="/#contact" onClick={(e) => handleLinkClick(e, '/#contact')}>
                 Get Started
               </Link>
             </Button>
