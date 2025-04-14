@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,9 +29,9 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
   vfx: {
     standard: {
       name: 'In-house Low Cost',
-      description: 'In-house VFX solutions with good quality and turnaround time.',
-      basePrice: 50000,
-      pricePerFrame: 30,
+      description: '2D/3D VFX solutions with good quality and turnaround time.',
+      basePrice: 25000,
+      pricePerFrame: 50,
       minimumFrames: 100,
       maximumDiscount: 0.15,
       deliveryTimeInDays: 14
@@ -40,8 +39,8 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
     premium: {
       name: 'High-Budget',
       description: 'High-end VFX with advanced techniques and senior artists for exceptional quality.',
-      basePrice: 150000,
-      pricePerFrame: 100,
+      basePrice: 75000,
+      pricePerFrame: 250,
       minimumFrames: 100,
       maximumDiscount: 0.10,
       deliveryTimeInDays: 21
@@ -49,8 +48,8 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
     outsourced: {
       name: 'Outsourced',
       description: 'Cost-effective solutions for large volume projects with good quality.',
-      basePrice: 25000,
-      pricePerFrame: 15,
+      basePrice: 15000,
+      pricePerFrame: 25,
       minimumFrames: 500,
       maximumDiscount: 0.25,
       deliveryTimeInDays: 30
@@ -60,27 +59,27 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
     standard: {
       name: 'In-house Standard',
       description: 'Essential creative services for projects with moderate complexity.',
-      basePrice: 35000,
-      pricePerFrame: 20,
-      minimumFrames: 100,
+      basePrice: 25000,
+      pricePerFrame: 0,
+      minimumFrames: 0,
       maximumDiscount: 0.15,
       deliveryTimeInDays: 10
     },
     premium: {
       name: 'High-End',
       description: 'Advanced creative solutions with senior designers and directors.',
-      basePrice: 120000,
-      pricePerFrame: 80,
-      minimumFrames: 100,
+      basePrice: 50000,
+      pricePerFrame: 0,
+      minimumFrames: 0,
       maximumDiscount: 0.10,
       deliveryTimeInDays: 18
     },
     outsourced: {
       name: 'Outsourced',
       description: 'Cost-effective creative services for projects with standard requirements.',
-      basePrice: 20000,
-      pricePerFrame: 12,
-      minimumFrames: 300,
+      basePrice: 15000,
+      pricePerFrame: 0,
+      minimumFrames: 0,
       maximumDiscount: 0.20,
       deliveryTimeInDays: 24
     }
@@ -89,27 +88,27 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
     standard: {
       name: 'Base Light',
       description: 'Color grading and finishing services using Base Light.',
-      basePrice: 45000,
-      pricePerFrame: 10,
-      minimumFrames: 100,
+      basePrice: 15000,
+      pricePerFrame: 0,
+      minimumFrames: 0,
       maximumDiscount: 0.15,
       deliveryTimeInDays: 7
     },
     premium: {
       name: 'DaVinci Resolve',
       description: 'Advanced color grading with senior colorists using DaVinci Resolve.',
-      basePrice: 100000,
-      pricePerFrame: 30,
-      minimumFrames: 100,
+      basePrice: 25000,
+      pricePerFrame: 0,
+      minimumFrames: 0,
       maximumDiscount: 0.10,
       deliveryTimeInDays: 14
     },
     outsourced: {
       name: 'Outsourced',
       description: 'Basic color correction and finishing services at a lower cost.',
-      basePrice: 25000,
-      pricePerFrame: 5,
-      minimumFrames: 300,
+      basePrice: 10000,
+      pricePerFrame: 0,
+      minimumFrames: 0,
       maximumDiscount: 0.20,
       deliveryTimeInDays: 10
     }
@@ -118,7 +117,7 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
     standard: {
       name: 'Standard Tech',
       description: 'Basic technology integration and AI solutions for standard projects.',
-      basePrice: 75000,
+      basePrice: 50000,
       pricePerFrame: 0,
       minimumFrames: 0,
       maximumDiscount: 0.10,
@@ -127,7 +126,7 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
     premium: {
       name: 'Premium Tech',
       description: 'Advanced custom technology development and AI integration.',
-      basePrice: 200000,
+      basePrice: 100000,
       pricePerFrame: 0,
       minimumFrames: 0,
       maximumDiscount: 0.05,
@@ -136,7 +135,7 @@ const pricingOptions: Record<ServiceType, Record<PricingTier, PricingOption>> = 
     outsourced: {
       name: 'Outsourced Tech',
       description: 'Cost-effective technology solutions using existing frameworks.',
-      basePrice: 40000,
+      basePrice: 25000,
       pricePerFrame: 0,
       minimumFrames: 0,
       maximumDiscount: 0.15,
@@ -156,7 +155,6 @@ const PricingCalculator = () => {
   const [showBreakdown, setShowBreakdown] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(getUserCurrency().code);
 
-  // Update frames when duration changes
   const handleDurationChange = (value: string) => {
     const duration = parseFloat(value);
     if (!isNaN(duration)) {
@@ -165,7 +163,6 @@ const PricingCalculator = () => {
     }
   };
 
-  // Update duration when frames change
   const handleFramesChange = (value: number[]) => {
     const frameCount = value[0];
     setFrames(frameCount);
@@ -232,7 +229,6 @@ const PricingCalculator = () => {
 
   const pricingOption = pricingOptions[serviceType][tier];
 
-  // Currency options for the dropdown
   const currencyOptions = [
     { code: 'INR', name: 'Indian Rupee (₹)' },
     { code: 'USD', name: 'US Dollar ($)' },

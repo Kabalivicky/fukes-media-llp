@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
@@ -31,11 +30,14 @@ const Navbar = () => {
     ? 'bg-background/90 backdrop-blur-xl shadow-lg'
     : 'bg-transparent';
 
-  // Navigation links with proper paths
+  // Updated navigation links with all required pages
   const navLinks = [
     { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Services", path: "/services" },
     { name: "VFX Research", path: "/vfx-research" },
     { name: "VFX Industry Insights", path: "/vfx-industry-insights" },
+    { name: "Resources", path: "/resources" },
     { name: "Help Center", path: "/help-center" },
     { name: "Production Guidelines", path: "/production-guidelines" },
     { name: "Pricing", path: "/pricing" },

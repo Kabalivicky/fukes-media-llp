@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +17,9 @@ import NotFound from "./pages/NotFound";
 import HelpCenter from "./pages/HelpCenter";
 import HelpCenterCategory from "./pages/HelpCenterCategory";
 import ProductionGuidelines from "./pages/ProductionGuidelines";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Resources from "./pages/Resources";
 
 // Components
 import ScrollToTop from "./components/ScrollToTop";
@@ -120,6 +122,51 @@ const App = () => {
                             className="page-container"
                           >
                             <Index />
+                          </motion.div>
+                        } 
+                      />
+                      <Route 
+                        path="/about" 
+                        element={
+                          <motion.div
+                            key="about"
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            className="page-container"
+                          >
+                            <About />
+                          </motion.div>
+                        } 
+                      />
+                      <Route 
+                        path="/services" 
+                        element={
+                          <motion.div
+                            key="services"
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            className="page-container"
+                          >
+                            <Services />
+                          </motion.div>
+                        } 
+                      />
+                      <Route 
+                        path="/resources" 
+                        element={
+                          <motion.div
+                            key="resources"
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            className="page-container"
+                          >
+                            <Resources />
                           </motion.div>
                         } 
                       />
