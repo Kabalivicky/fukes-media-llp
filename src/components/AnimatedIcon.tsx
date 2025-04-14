@@ -42,28 +42,28 @@ const AnimatedIcon = ({
   // Define animation variants for framer-motion
   const variants = {
     initial: {},
-    pulse: isHovered ? {
-      scale: [1, 1.1, 1],
+    pulse: {
+      scale: isHovered ? [1, 1.1, 1] : 1,
       transition: {
         duration: 0.5,
         ease: "easeInOut",
-        repeat: Infinity,
+        repeat: isHovered ? Infinity : 0,
         repeatType: "reverse" as const
       }
-    } : {},
-    rotate: isHovered ? {
-      rotate: 360,
+    },
+    rotate: {
+      rotate: isHovered ? 360 : 0,
       transition: {
         duration: 0.5,
         ease: "easeInOut"
       }
-    } : {},
-    shake: isHovered ? {
-      x: [0, -2, 3, -3, 2, 0],
+    },
+    shake: {
+      x: isHovered ? [0, -2, 3, -3, 2, 0] : 0,
       transition: {
         duration: 0.4
       }
-    } : {}
+    }
   };
   
   // Determine which animation variant to use

@@ -1,114 +1,148 @@
-
 import { useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 interface CursorOptions {
-  size?: number;
-  color?: string;
-  ringSize?: number;
-  ringColor?: string;
-  springConfig?: {
-    stiffness?: number;
-    damping?: number;
-    mass?: number;
-  };
+  trailLength?: number;
+  trailColor?: string;
+  trailSize?: number;
+  hideNativeCursor?: boolean;
+  blendMode?: string;
+  enabled?: boolean;
 }
 
-const useCursorEffect = (options: CursorOptions = {}) => {
-  const {
-    size = 12,
-    color = 'rgba(255,255,255,0.7)',
-    ringSize = 40,
-    ringColor = 'rgba(255,255,255,0.2)',
-    springConfig = { stiffness: 300, damping: 25, mass: 1 }
-  } = options;
-
-  const [isVisible, setIsVisible] = useState(false);
-  const [isPointer, setIsPointer] = useState(false);
+/**
+ * Custom hook for creating advanced cursor effects
+ */
+const useCursorEffect = ({
+  trailLength = 10,
+  trailColor = 'rgba(255, 255, 255, 0.5)',
+  trailSize = 8, 
+  hideNativeCursor = false,
+  blendMode = 'normal',
+  enabled = true
+}: CursorOptions = {}) => {
+  const [cursorVisible, setCursorVisible] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [cursorHistory, setCursorHistory] = useState<Array<{x: number, y: number}>>([]);
   
-  // Use motion values for smooth tracking
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  // Add springs for smoother motion
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
-  
-  // Ring follows with delay
-  const ringX = useSpring(mouseX, { ...springConfig, stiffness: 200 });
-  const ringY = useSpring(mouseY, { ...springConfig, stiffness: 200 });
-
   useEffect(() => {
+    if (!enabled) return;
+    
+    // Create canvas for the cursor trail
+    const canvas = document.createElement('canvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '9999';
+    document.body.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    
+    if (ctx) {
+      ctx.globalCompositeOperation = blendMode as GlobalCompositeOperation;
+    }
+    
+    // Hide the native cursor if requested
+    if (hideNativeCursor) {
+      document.documentElement.style.cursor = 'none';
+    }
+    
+    // Mouse move handler
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      setPosition({ x: e.clientX, y: e.clientY });
+      setCursorVisible(true);
       
-      if (!isVisible) {
-        setIsVisible(true);
+      // Add current position to history
+      setCursorHistory(prev => {
+        const newHistory = [...prev, { x: e.clientX, y: e.clientY }];
+        // Keep only the latest positions based on trailLength
+        if (newHistory.length > trailLength) {
+          return newHistory.slice(newHistory.length - trailLength);
+        }
+        return newHistory;
+      });
+    };
+    
+    // Mouse leave handler
+    const handleMouseLeave = () => {
+      setCursorVisible(false);
+    };
+    
+    // Window resize handler
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    
+    // Render loop
+    const render = () => {
+      if (!ctx) return;
+      
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Only draw if cursor is visible
+      if (cursorVisible) {
+        // Draw trail
+        cursorHistory.forEach((pos, index) => {
+          // Calculate size based on position in history
+          const size = trailSize * (index / cursorHistory.length);
+          
+          // Calculate opacity based on position in history
+          const opacity = index / cursorHistory.length;
+          
+          ctx.fillStyle = trailColor.replace(')', `, ${opacity})`);
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        
+        // Draw main cursor
+        ctx.fillStyle = trailColor;
+        ctx.beginPath();
+        ctx.arc(position.x, position.y, trailSize, 0, Math.PI * 2);
+        ctx.fill();
       }
       
-      // Check if hovering over clickable elements
-      const target = e.target as HTMLElement;
-      setIsPointer(
-        window.getComputedStyle(target).cursor === 'pointer' || 
-        target.tagName.toLowerCase() === 'a' ||
-        target.tagName.toLowerCase() === 'button' ||
-        target.closest('a') !== null ||
-        target.closest('button') !== null
-      );
+      requestAnimationFrame(render);
     };
     
-    const handleMouseLeave = () => {
-      setIsVisible(false);
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
+    // Register event listeners
+    document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('resize', handleResize);
     
+    // Start render loop
+    const animationId = requestAnimationFrame(render);
+    
+    // Cleanup function
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseleave', handleMouseLeave);
-    };
-  }, [mouseX, mouseY, isVisible]);
-
-  // Render cursor component
-  const CursorComponent = () => (
-    <>
-      {/* Main cursor dot */}
-      <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999]"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          width: isPointer ? size * 1.5 : size,
-          height: isPointer ? size * 1.5 : size,
-          backgroundColor: color,
-          opacity: isVisible ? 1 : 0,
-          transform: 'translate(-50%, -50%)',
-          transition: 'width 0.2s, height 0.2s',
-        }}
-      />
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationId);
+      document.body.removeChild(canvas);
       
-      {/* Ring around cursor */}
-      <motion.div
-        className="fixed top-0 left-0 rounded-full border pointer-events-none z-[9998]"
-        style={{
-          x: ringX,
-          y: ringY,
-          width: isPointer ? ringSize * 1.2 : ringSize,
-          height: isPointer ? ringSize * 1.2 : ringSize,
-          borderColor: ringColor,
-          borderWidth: '1px',
-          opacity: isVisible ? 1 : 0,
-          transform: 'translate(-50%, -50%)',
-          transition: 'width 0.3s, height 0.3s',
-          scale: isPointer ? 1.2 : 1,
-        }}
-      />
-    </>
-  );
-
-  return { CursorComponent, isVisible };
+      if (hideNativeCursor) {
+        document.documentElement.style.cursor = '';
+      }
+    };
+  }, [
+    trailLength, 
+    trailColor, 
+    trailSize, 
+    hideNativeCursor, 
+    blendMode, 
+    enabled
+  ]);
+  
+  return {
+    position,
+    cursorVisible,
+    setCursorVisible
+  };
 };
 
 export default useCursorEffect;
