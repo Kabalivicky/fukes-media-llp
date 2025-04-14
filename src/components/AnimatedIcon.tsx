@@ -39,37 +39,35 @@ const AnimatedIcon = ({
     lg: 'w-8 h-8',
   };
   
-  // Animation variants
-  const pulseAnimation = withPulse ? {
-    animate: {
-      scale: isHovered ? [1, 1.1, 1] : 1,
+  // Define animation variants for framer-motion
+  const variants = {
+    initial: {},
+    pulse: isHovered ? {
+      scale: [1, 1.1, 1],
       transition: {
         duration: 0.5,
         ease: "easeInOut",
-        repeat: isHovered ? Infinity : 0,
-        repeatType: "reverse"
+        repeat: Infinity,
+        repeatType: "reverse" as const
       }
-    }
-  } : {};
-  
-  const rotateAnimation = withRotate ? {
-    animate: {
-      rotate: isHovered ? 360 : 0,
+    } : {},
+    rotate: isHovered ? {
+      rotate: 360,
       transition: {
         duration: 0.5,
-        ease: "easeInOut",
+        ease: "easeInOut"
       }
-    }
-  } : {};
-  
-  const shakeAnimation = withShake ? {
-    animate: isHovered ? {
+    } : {},
+    shake: isHovered ? {
       x: [0, -2, 3, -3, 2, 0],
       transition: {
-        duration: 0.4,
+        duration: 0.4
       }
     } : {}
-  } : {};
+  };
+  
+  // Determine which animation variant to use
+  const animationVariant = withPulse ? "pulse" : withRotate ? "rotate" : withShake ? "shake" : "initial";
   
   return (
     <motion.div
@@ -84,9 +82,8 @@ const AnimatedIcon = ({
       style={{
         color: isHovered ? hoverColor : undefined,
       }}
-      {...pulseAnimation}
-      {...rotateAnimation}
-      {...shakeAnimation}
+      variants={variants}
+      animate={animationVariant}
     >
       {icon}
     </motion.div>
