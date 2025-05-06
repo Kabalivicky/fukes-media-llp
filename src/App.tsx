@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,6 +21,9 @@ import ProductionGuidelines from "./pages/ProductionGuidelines";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Resources from "./pages/Resources";
+import ContractBuilder from "./pages/ContractBuilder";
+import FreelancerPortal from "./pages/FreelancerPortal";
+import Team from "./pages/Team";
 
 // Components
 import ScrollToTop from "./components/ScrollToTop";
@@ -212,6 +216,51 @@ const App = () => {
                             className="page-container"
                           >
                             <Pricing />
+                          </motion.div>
+                        } 
+                      />
+                      <Route 
+                        path="/contract-builder" 
+                        element={
+                          <motion.div
+                            key="contract-builder"
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            className="page-container"
+                          >
+                            <ContractBuilder />
+                          </motion.div>
+                        } 
+                      />
+                      <Route 
+                        path="/freelancer-portal" 
+                        element={
+                          <motion.div
+                            key="freelancer-portal"
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            className="page-container"
+                          >
+                            <FreelancerPortal />
+                          </motion.div>
+                        } 
+                      />
+                      <Route 
+                        path="/team" 
+                        element={
+                          <motion.div
+                            key="team"
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            className="page-container"
+                          >
+                            <Team />
                           </motion.div>
                         } 
                       />

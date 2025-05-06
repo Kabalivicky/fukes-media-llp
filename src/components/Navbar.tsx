@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
@@ -41,6 +42,9 @@ const Navbar = () => {
     { name: "Help Center", path: "/help-center" },
     { name: "Production Guidelines", path: "/production-guidelines" },
     { name: "Pricing", path: "/pricing" },
+    { name: "Contract Builder", path: "/contract-builder" },
+    { name: "Freelancer Portal", path: "/freelancer-portal" },
+    { name: "Team", path: "/team" },
   ];
 
   // Home page anchor links

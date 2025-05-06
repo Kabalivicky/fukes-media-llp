@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
-import { ChevronRight, Zap, Film, Palette, Code, Award } from 'lucide-react';
+import { ChevronRight, Zap, Film, Palette, Code, Award, FileText, User, Users, Home } from 'lucide-react';
 
 const MegaMenu = () => {
   const location = useLocation();
@@ -48,10 +48,25 @@ const MegaMenu = () => {
   return (
     <NavigationMenu className="hidden xl:flex">
       <NavigationMenuList>
+        {/* Home */}
+        <NavigationMenuItem>
+          <Button variant="link" className="p-0" asChild>
+            <Link to="/">
+              <NavigationMenuLink className={cn(
+                navigationMenuTriggerStyle(),
+                isLinkActive('/') ? "text-primary font-medium" : ""
+              )}>
+                <Home className="mr-2 h-4 w-4" />
+                Home
+              </NavigationMenuLink>
+            </Link>
+          </Button>
+        </NavigationMenuItem>
+
         {/* About Dropdown */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className={cn(
-            isLinkActive('/#team') || isLinkActive('/#investors') || isLinkActive('/#careers') ? "text-primary font-medium" : ""
+            isLinkActive('/about') || isLinkActive('/team') || isLinkActive('/#careers') ? "text-primary font-medium" : ""
           )}>
             About
           </NavigationMenuTrigger>
@@ -61,11 +76,10 @@ const MegaMenu = () => {
                 <NavigationMenuLink asChild>
                   <Link
                     className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md"
-                    to="/"
-                    onClick={(e) => handleAnchorClick(e, '/')}
+                    to="/about"
                   >
                     <div className="mb-2 mt-4 text-lg font-medium">
-                      Fuke's Media
+                      About Fuke's Media
                     </div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       AI-Driven VFX & Creative Studio delivering exceptional visual effects and creative solutions
@@ -74,10 +88,9 @@ const MegaMenu = () => {
                 </NavigationMenuLink>
               </li>
               <ListItem 
-                href="/#team" 
+                href="/team" 
                 title="Our Team" 
-                icon={<Award className="mr-2 h-4 w-4" />}
-                onClick={(e) => handleAnchorClick(e, '/#team')}
+                icon={<Users className="mr-2 h-4 w-4" />}
               >
                 Meet our diverse team of creative professionals and technical experts
               </ListItem>
@@ -104,41 +117,37 @@ const MegaMenu = () => {
         {/* Services Dropdown */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className={cn(
-            isLinkActive('/#services') ? "text-primary font-medium" : ""
+            isLinkActive('/services') || isLinkActive('/#services') ? "text-primary font-medium" : ""
           )}>
             Services
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[500px] gap-3 p-6 md:grid-cols-2 lg:w-[600px]">
               <ListItem 
-                href="/#services" 
+                href="/services" 
                 title="VFX Services" 
                 icon={<Film className="mr-2 h-4 w-4" />}
-                onClick={(e) => handleAnchorClick(e, '/#services')}
               >
                 Industry-leading visual effects for film, television, and digital media
               </ListItem>
               <ListItem 
-                href="/#services" 
+                href="/services" 
                 title="AI Integration" 
                 icon={<Code className="mr-2 h-4 w-4" />}
-                onClick={(e) => handleAnchorClick(e, '/#services')}
               >
                 Cutting-edge AI solutions for content creation and automation
               </ListItem>
               <ListItem 
-                href="/#services" 
+                href="/services" 
                 title="Production Support" 
                 icon={<Film className="mr-2 h-4 w-4" />}
-                onClick={(e) => handleAnchorClick(e, '/#services')}
               >
                 Comprehensive production services from pre to post
               </ListItem>
               <ListItem 
-                href="/#services" 
+                href="/services" 
                 title="Creative Direction" 
                 icon={<Palette className="mr-2 h-4 w-4" />}
-                onClick={(e) => handleAnchorClick(e, '/#services')}
               >
                 Expert creative guidance to bring your vision to life
               </ListItem>
@@ -149,7 +158,7 @@ const MegaMenu = () => {
         {/* Resources Dropdown */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className={cn(
-            isLinkActive('/vfx-research') || isLinkActive('/vfx-industry-insights') || 
+            isLinkActive('/resources') || isLinkActive('/vfx-research') || isLinkActive('/vfx-industry-insights') || 
             isLinkActive('/help-center') || isLinkActive('/production-guidelines') 
               ? "text-primary font-medium" : ""
           )}>
@@ -184,6 +193,33 @@ const MegaMenu = () => {
                 icon={<ChevronRight className="mr-2 h-4 w-4" />}
               >
                 Technical specifications and workflow guides for productions
+              </ListItem>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
+        {/* Tools Dropdown */}
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className={cn(
+            isLinkActive('/contract-builder') || isLinkActive('/freelancer-portal') ? "text-primary font-medium" : ""
+          )}>
+            Tools
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-6 md:grid-cols-1 lg:w-[500px]">
+              <ListItem 
+                href="/contract-builder" 
+                title="Contract Builder"
+                icon={<FileText className="mr-2 h-4 w-4" />}
+              >
+                Create customized VFX contracts with our AI-powered builder
+              </ListItem>
+              <ListItem 
+                href="/freelancer-portal" 
+                title="Freelancer Portal"
+                icon={<User className="mr-2 h-4 w-4" />}
+              >
+                Access your freelancer dashboard, projects and payments
               </ListItem>
             </ul>
           </NavigationMenuContent>
