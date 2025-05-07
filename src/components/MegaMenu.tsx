@@ -65,11 +65,21 @@ const MegaMenu = () => {
 
         {/* About Dropdown */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={cn(
-            isLinkActive('/about') || isLinkActive('/team') || isLinkActive('/#careers') ? "text-primary font-medium" : ""
-          )}>
-            About
-          </NavigationMenuTrigger>
+          <div className="flex items-center">
+            <Button variant="link" className="p-0" asChild>
+              <Link to="/about">
+                <NavigationMenuLink className={cn(
+                  "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                  isLinkActive('/about') ? "text-primary font-medium" : ""
+                )}>
+                  About
+                </NavigationMenuLink>
+              </Link>
+            </Button>
+            <NavigationMenuTrigger className="h-10 px-2">
+              <span className="sr-only">About dropdown</span>
+            </NavigationMenuTrigger>
+          </div>
           <NavigationMenuContent>
             <ul className="grid gap-4 p-6 md:w-[500px] lg:w-[600px] grid-cols-2">
               <li className="row-span-3 bg-muted/30 rounded-lg overflow-hidden">
@@ -116,11 +126,21 @@ const MegaMenu = () => {
 
         {/* Services Dropdown */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={cn(
-            isLinkActive('/services') || isLinkActive('/#services') ? "text-primary font-medium" : ""
-          )}>
-            Services
-          </NavigationMenuTrigger>
+          <div className="flex items-center">
+            <Button variant="link" className="p-0" asChild>
+              <Link to="/services">
+                <NavigationMenuLink className={cn(
+                  "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                  isLinkActive('/services') ? "text-primary font-medium" : ""
+                )}>
+                  Services
+                </NavigationMenuLink>
+              </Link>
+            </Button>
+            <NavigationMenuTrigger className="h-10 px-2">
+              <span className="sr-only">Services dropdown</span>
+            </NavigationMenuTrigger>
+          </div>
           <NavigationMenuContent>
             <ul className="grid w-[500px] gap-3 p-6 md:grid-cols-2 lg:w-[600px]">
               <ListItem 
@@ -157,13 +177,21 @@ const MegaMenu = () => {
 
         {/* Resources Dropdown */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={cn(
-            isLinkActive('/resources') || isLinkActive('/vfx-research') || isLinkActive('/vfx-industry-insights') || 
-            isLinkActive('/help-center') || isLinkActive('/production-guidelines') 
-              ? "text-primary font-medium" : ""
-          )}>
-            Resources
-          </NavigationMenuTrigger>
+          <div className="flex items-center">
+            <Button variant="link" className="p-0" asChild>
+              <Link to="/resources">
+                <NavigationMenuLink className={cn(
+                  "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                  isLinkActive('/resources') ? "text-primary font-medium" : ""
+                )}>
+                  Resources
+                </NavigationMenuLink>
+              </Link>
+            </Button>
+            <NavigationMenuTrigger className="h-10 px-2">
+              <span className="sr-only">Resources dropdown</span>
+            </NavigationMenuTrigger>
+          </div>
           <NavigationMenuContent>
             <ul className="grid w-[500px] gap-3 p-6 md:grid-cols-2 lg:w-[600px]">
               <ListItem 
@@ -200,11 +228,21 @@ const MegaMenu = () => {
 
         {/* Tools Dropdown */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={cn(
-            isLinkActive('/contract-builder') || isLinkActive('/freelancer-portal') ? "text-primary font-medium" : ""
-          )}>
-            Tools
-          </NavigationMenuTrigger>
+          <div className="flex items-center">
+            <Button variant="link" className="p-0" asChild>
+              <Link to="/contract-builder">
+                <NavigationMenuLink className={cn(
+                  "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                  isLinkActive('/contract-builder') ? "text-primary font-medium" : ""
+                )}>
+                  Tools
+                </NavigationMenuLink>
+              </Link>
+            </Button>
+            <NavigationMenuTrigger className="h-10 px-2">
+              <span className="sr-only">Tools dropdown</span>
+            </NavigationMenuTrigger>
+          </div>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-6 md:grid-cols-1 lg:w-[500px]">
               <ListItem 
