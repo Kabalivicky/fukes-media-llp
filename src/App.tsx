@@ -3,35 +3,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { HelmetProvider } from "react-helmet-async";
-import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-
-// Pages
-import Index from "./pages/Index";
-import VFXResearch from "./pages/VFXResearch";
-import VFXIndustryInsights from "./pages/VFXIndustryInsights";
-import Pricing from "./pages/Pricing";
-import NotFound from "./pages/NotFound";
-import HelpCenter from "./pages/HelpCenter";
-import HelpCenterCategory from "./pages/HelpCenterCategory";
-import ProductionGuidelines from "./pages/ProductionGuidelines";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import Resources from "./pages/Resources";
-import ContractBuilder from "./pages/ContractBuilder";
-import FreelancerPortal from "./pages/FreelancerPortal";
-import Team from "./pages/Team";
-
-// Components
+import AppRouter from "./components/Layout/AppRouter";
 import ScrollToTop from "./components/ScrollToTop";
 import LoadingIntro from "./components/LoadingIntro";
-import EnhancedBackground from "./components/EnhancedBackground";
-import GlowEffect from "./components/GlowEffect";
-import ParallaxLines from "./components/ParallaxLines";
-import FuturisticBackground from "./components/FuturisticBackground";
 
 // Hooks
 import useCursorEffect from "./hooks/useCursorEffect";
@@ -47,27 +25,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-// Page transition variants
-const pageVariants = {
-  initial: {
-    opacity: 0,
-  },
-  in: {
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-    },
-  },
-  out: {
-    opacity: 0,
-    transition: {
-      duration: 0.3,
-      ease: "easeIn",
-    },
-  },
-};
 
 const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -102,233 +59,11 @@ const App = () => {
                 {/* Loading Intro */}
                 <LoadingIntro />
                 
-                {/* Background Effects */}
-                <FuturisticBackground intensity="medium" />
-                <GlowEffect />
-                <ParallaxLines count={15} opacity={0.03} />
-                
                 {/* Navigation Controls */}
                 <ScrollToTop showBelow={400} />
                 
-                {/* Page Routes with Enhanced Transitions */}
-                <AnimatePresence mode="wait">
-                  {isLoaded && (
-                    <Routes>
-                      <Route 
-                        path="/" 
-                        element={
-                          <motion.div
-                            key="home"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <Index />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/about" 
-                        element={
-                          <motion.div
-                            key="about"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <About />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/services" 
-                        element={
-                          <motion.div
-                            key="services"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <Services />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/resources" 
-                        element={
-                          <motion.div
-                            key="resources"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <Resources />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/vfx-research" 
-                        element={
-                          <motion.div
-                            key="vfx-research"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <VFXResearch />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/vfx-industry-insights" 
-                        element={
-                          <motion.div
-                            key="vfx-industry-insights"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <VFXIndustryInsights />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/pricing" 
-                        element={
-                          <motion.div
-                            key="pricing"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <Pricing />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/contract-builder" 
-                        element={
-                          <motion.div
-                            key="contract-builder"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <ContractBuilder />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/freelancer-portal" 
-                        element={
-                          <motion.div
-                            key="freelancer-portal"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <FreelancerPortal />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/team" 
-                        element={
-                          <motion.div
-                            key="team"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <Team />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/help-center" 
-                        element={
-                          <motion.div
-                            key="help-center"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <HelpCenter />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/help-center/:categoryId" 
-                        element={
-                          <motion.div
-                            key="help-center-category"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <HelpCenterCategory />
-                          </motion.div>
-                        } 
-                      />
-                      <Route 
-                        path="/production-guidelines" 
-                        element={
-                          <motion.div
-                            key="production-guidelines"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <ProductionGuidelines />
-                          </motion.div>
-                        } 
-                      />
-                      
-                      {/* Catch-all route */}
-                      <Route 
-                        path="*" 
-                        element={
-                          <motion.div
-                            key="not-found"
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            className="page-container"
-                          >
-                            <NotFound />
-                          </motion.div>
-                        } 
-                      />
-                    </Routes>
-                  )}
-                </AnimatePresence>
+                {/* Main Application Routes */}
+                {isLoaded && <AppRouter />}
               </BrowserRouter>
             </div>
           </TooltipProvider>

@@ -4,9 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Helmet } from 'react-helmet-async';
 import SectionTitle from '@/components/SectionTitle';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { FileText } from 'lucide-react';
+import ContractForm from './ContractForm';
 
 const ContractBuilderPage = () => {
   return (
@@ -32,56 +30,47 @@ const ContractBuilderPage = () => {
                 accent="primary"
               />
               
-              <div className="max-w-4xl mx-auto mt-12">
-                <Card className="glass-card">
-                  <CardContent className="p-8">
-                    <div className="text-center mb-8">
-                      <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <FileText className="w-8 h-8 text-primary" />
-                      </div>
-                      <h3 className="text-2xl font-bold mb-2">Contract Builder</h3>
-                      <p className="text-muted-foreground">
-                        This feature is coming soon. Our AI-powered contract builder will allow you to:
-                      </p>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                      <div className="bg-muted/20 p-4 rounded-lg">
-                        <h4 className="font-medium mb-2">Customized Templates</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Choose from industry-standard templates tailored for VFX services
-                        </p>
-                      </div>
-                      
-                      <div className="bg-muted/20 p-4 rounded-lg">
-                        <h4 className="font-medium mb-2">Smart Clause Suggestions</h4>
-                        <p className="text-sm text-muted-foreground">
-                          AI-driven suggestions based on your project specifications
-                        </p>
-                      </div>
-                      
-                      <div className="bg-muted/20 p-4 rounded-lg">
-                        <h4 className="font-medium mb-2">E-Signature Integration</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Sign and send contracts electronically with legal validity
-                        </p>
-                      </div>
-                      
-                      <div className="bg-muted/20 p-4 rounded-lg">
-                        <h4 className="font-medium mb-2">Blockchain Verification</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Optional immutable contract storage on blockchain
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex justify-center">
-                      <Button className="gradient-button">
-                        Join Waitlist
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+              <div className="max-w-4xl mx-auto mb-10 text-center">
+                <p className="text-lg text-muted-foreground">
+                  Our intelligent contract system combines industry best practices, legal expertise, 
+                  and AI-driven customization to create comprehensive agreements tailored to your specific needs.
+                </p>
+              </div>
+              
+              <div className="max-w-4xl mx-auto">
+                <ContractForm />
+              </div>
+              
+              <div className="max-w-4xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-muted/20 p-6 rounded-lg text-center">
+                  <div className="bg-primary/10 h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-primary text-xl font-bold">1</span>
+                  </div>
+                  <h3 className="font-medium mb-2">Fill the Form</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Provide details about your project, requirements, and preferences
+                  </p>
+                </div>
+                
+                <div className="bg-muted/20 p-6 rounded-lg text-center">
+                  <div className="bg-primary/10 h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-primary text-xl font-bold">2</span>
+                  </div>
+                  <h3 className="font-medium mb-2">AI Processing</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Our system generates a customized contract based on your inputs
+                  </p>
+                </div>
+                
+                <div className="bg-muted/20 p-6 rounded-lg text-center">
+                  <div className="bg-primary/10 h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-primary text-xl font-bold">3</span>
+                  </div>
+                  <h3 className="font-medium mb-2">Download & Sign</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Review, download and sign your contract electronically
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
