@@ -1,7 +1,8 @@
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import MainLayout from "./MainLayout";
+import { useEffect } from "react";
 
 // Pages
 import Index from "@/pages/Index";
@@ -20,9 +21,19 @@ import FreelancerPortal from "@/pages/FreelancerPortal";
 import Team from "@/pages/Team";
 
 const AppRouter = () => {
+  const location = useLocation();
+
+  // Handle scroll restoration
+  useEffect(() => {
+    // Skip scroll restoration for anchor links
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
+
   return (
     <AnimatePresence mode="wait">
-      <Routes>
+      <Routes location={location} key={location.pathname}>
         <Route path="/" element={<MainLayout pageKey="home"><Index /></MainLayout>} />
         <Route path="/about" element={<MainLayout pageKey="about"><About /></MainLayout>} />
         <Route path="/services" element={<MainLayout pageKey="services"><Services /></MainLayout>} />

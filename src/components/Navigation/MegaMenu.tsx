@@ -11,7 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Home } from 'lucide-react';
-import { handleAnchorClick } from '@/utils/navigationData';
+import { handleAnchorClick, isLinkActive } from '@/utils/navigationData';
 import AboutDropdown from './AboutDropdown';
 import ServicesDropdown from './ServicesDropdown';
 import ResourcesDropdown from './ResourcesDropdown';
@@ -21,29 +21,16 @@ const MegaMenu = () => {
   const location = useLocation();
   const currentPath = location.pathname + location.hash;
   
-  // Function to determine if link is active
-  const isLinkActive = (path: string) => {
-    if (path === '/') {
-      return currentPath === '/' && !currentPath.includes('#');
-    }
-    
-    if (path.startsWith('/#')) {
-      return currentPath === '/' && currentPath.includes(path.substring(1));
-    }
-    
-    return currentPath === path;
-  };
-
   return (
     <NavigationMenu className="hidden xl:flex">
       <NavigationMenuList>
         {/* Home */}
         <NavigationMenuItem>
-          <Button variant="link" className="p-0" asChild>
+          <Button variant="link" className="p-0 w-full" asChild>
             <Link to="/">
               <NavigationMenuLink className={cn(
                 navigationMenuTriggerStyle(),
-                isLinkActive('/') ? "text-primary font-medium" : ""
+                isLinkActive(currentPath, '/') ? "text-primary font-medium" : ""
               )}>
                 <Home className="mr-2 h-4 w-4" />
                 Home
@@ -66,14 +53,14 @@ const MegaMenu = () => {
 
         {/* Portfolio */}
         <NavigationMenuItem>
-          <Button variant="link" className="p-0" asChild>
+          <Button variant="link" className="p-0 w-full" asChild>
             <Link 
               to="/#portfolio"
               onClick={(e) => handleAnchorClick(e, '/#portfolio', currentPath)}
             >
               <NavigationMenuLink className={cn(
                 navigationMenuTriggerStyle(),
-                isLinkActive('/#portfolio') ? "text-primary font-medium" : ""
+                isLinkActive(currentPath, '/#portfolio') ? "text-primary font-medium" : ""
               )}>
                 Portfolio
               </NavigationMenuLink>
@@ -83,11 +70,11 @@ const MegaMenu = () => {
 
         {/* Direct Links */}
         <NavigationMenuItem>
-          <Button variant="link" className="p-0" asChild>
+          <Button variant="link" className="p-0 w-full" asChild>
             <Link to="/pricing">
               <NavigationMenuLink className={cn(
                 navigationMenuTriggerStyle(),
-                isLinkActive('/pricing') ? "text-primary font-medium" : ""
+                isLinkActive(currentPath, '/pricing') ? "text-primary font-medium" : ""
               )}>
                 Pricing
               </NavigationMenuLink>
@@ -96,14 +83,14 @@ const MegaMenu = () => {
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Button variant="link" className="p-0" asChild>
+          <Button variant="link" className="p-0 w-full" asChild>
             <Link 
               to="/#contact"
               onClick={(e) => handleAnchorClick(e, '/#contact', currentPath)}
             >
               <NavigationMenuLink className={cn(
                 navigationMenuTriggerStyle(),
-                isLinkActive('/#contact') ? "text-primary font-medium" : ""
+                isLinkActive(currentPath, '/#contact') ? "text-primary font-medium" : ""
               )}>
                 Contact
               </NavigationMenuLink>

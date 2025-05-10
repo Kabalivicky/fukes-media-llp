@@ -2,17 +2,21 @@
 // Navigation data structure for the entire application
 // This centralizes all navigation links for consistent usage across components
 
+import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home } from 'lucide-react';
+import React from 'react';
+
 export interface NavLink {
   name: string;
   path: string;
   isAnchor?: boolean;
+  icon?: React.ElementType;
 }
 
 export interface DropdownItem {
   title: string;
   href: string;
   description: string;
-  icon?: string;
+  icon?: React.ElementType;
   isAnchor?: boolean;
 }
 
@@ -24,18 +28,18 @@ export interface DropdownSection {
 
 // Main navigation links
 export const mainNavLinks: NavLink[] = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Services", path: "/services" },
-  { name: "VFX Research", path: "/vfx-research" },
-  { name: "VFX Industry Insights", path: "/vfx-industry-insights" },
-  { name: "Resources", path: "/resources" },
-  { name: "Help Center", path: "/help-center" },
-  { name: "Production Guidelines", path: "/production-guidelines" },
-  { name: "Pricing", path: "/pricing" },
-  { name: "Contract Builder", path: "/contract-builder" },
-  { name: "Freelancer Portal", path: "/freelancer-portal" },
-  { name: "Team", path: "/team" },
+  { name: "Home", path: "/", icon: Home },
+  { name: "About", path: "/about", icon: Users },
+  { name: "Services", path: "/services", icon: FilmIcon },
+  { name: "VFX Research", path: "/vfx-research", icon: ChevronRight },
+  { name: "VFX Industry Insights", path: "/vfx-industry-insights", icon: ChevronRight },
+  { name: "Resources", path: "/resources", icon: ChevronRight },
+  { name: "Help Center", path: "/help-center", icon: ChevronRight },
+  { name: "Production Guidelines", path: "/production-guidelines", icon: ChevronRight },
+  { name: "Pricing", path: "/pricing", icon: ChevronRight },
+  { name: "Contract Builder", path: "/contract-builder", icon: FileText },
+  { name: "Freelancer Portal", path: "/freelancer-portal", icon: UserIcon },
+  { name: "Team", path: "/team", icon: Users },
 ];
 
 // Home page anchor links
@@ -44,6 +48,7 @@ export const homeAnchorLinks: NavLink[] = [
   { name: "Portfolio", path: "/#portfolio", isAnchor: true },
   { name: "Team", path: "/#team", isAnchor: true },
   { name: "Careers", path: "/#careers", isAnchor: true },
+  { name: "Investors", path: "/#investors", isAnchor: true },
   { name: "Contact", path: "/#contact", isAnchor: true }
 ];
 
@@ -56,18 +61,21 @@ export const megaMenuSections = {
       {
         title: "Our Team",
         href: "/team",
-        description: "Meet our diverse team of creative professionals and technical experts"
+        description: "Meet our diverse team of creative professionals and technical experts",
+        icon: Users
       },
       {
         title: "Investors",
         href: "/#investors",
         description: "Learn about our investment partners and funding initiatives",
+        icon: Zap,
         isAnchor: true
       },
       {
         title: "Careers",
         href: "/#careers",
         description: "Join our team and become part of the future of VFX",
+        icon: ChevronRight,
         isAnchor: true
       }
     ]
@@ -79,22 +87,26 @@ export const megaMenuSections = {
       {
         title: "VFX Services",
         href: "/services",
-        description: "Industry-leading visual effects for film, television, and digital media"
+        description: "Industry-leading visual effects for film, television, and digital media",
+        icon: FilmIcon
       },
       {
         title: "AI Integration",
         href: "/services",
-        description: "Cutting-edge AI solutions for content creation and automation"
+        description: "Cutting-edge AI solutions for content creation and automation",
+        icon: Code
       },
       {
         title: "Production Support",
         href: "/services",
-        description: "Comprehensive production services from pre to post"
+        description: "Comprehensive production services from pre to post",
+        icon: FilmIcon
       },
       {
         title: "Creative Direction",
         href: "/services",
-        description: "Expert creative guidance to bring your vision to life"
+        description: "Expert creative guidance to bring your vision to life",
+        icon: Palette
       }
     ]
   },
@@ -105,22 +117,26 @@ export const megaMenuSections = {
       {
         title: "VFX Research",
         href: "/vfx-research",
-        description: "In-depth analysis of the global VFX industry landscape"
+        description: "In-depth analysis of the global VFX industry landscape",
+        icon: ChevronRight
       },
       {
         title: "Industry Insights",
         href: "/vfx-industry-insights",
-        description: "Data-driven insights into VFX industry trends and developments"
+        description: "Data-driven insights into VFX industry trends and developments",
+        icon: ChevronRight
       },
       {
         title: "Help Center",
         href: "/help-center",
-        description: "Resources, guides, and support for partners and clients"
+        description: "Resources, guides, and support for partners and clients",
+        icon: ChevronRight
       },
       {
         title: "Production Guidelines",
         href: "/production-guidelines",
-        description: "Technical specifications and workflow guides for productions"
+        description: "Technical specifications and workflow guides for productions",
+        icon: ChevronRight
       }
     ]
   },
@@ -131,12 +147,14 @@ export const megaMenuSections = {
       {
         title: "Contract Builder",
         href: "/contract-builder",
-        description: "Create customized VFX contracts with our AI-powered builder"
+        description: "Create customized VFX contracts with our AI-powered builder",
+        icon: FileText
       },
       {
         title: "Freelancer Portal",
         href: "/freelancer-portal",
-        description: "Access your freelancer dashboard, projects and payments"
+        description: "Access your freelancer dashboard, projects and payments",
+        icon: UserIcon
       }
     ]
   }

@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import AppRouter from "./components/Layout/AppRouter";
 import ScrollToTop from "./components/ScrollToTop";
 import LoadingIntro from "./components/LoadingIntro";
+import ScrollProgressIndicator from "./components/ScrollProgressIndicator";
 
 // Hooks
 import useCursorEffect from "./hooks/useCursorEffect";
@@ -61,6 +62,9 @@ const App = () => {
                 
                 {/* Navigation Controls */}
                 <ScrollToTop showBelow={400} />
+                
+                {/* Scroll Progress Indicator */}
+                <ScrollProgressIndicator />
                 
                 {/* Main Application Routes */}
                 {isLoaded && <AppRouter />}

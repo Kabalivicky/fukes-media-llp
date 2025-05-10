@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { NavigationMenuLink } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface ListItemProps extends React.ComponentPropsWithoutRef<"a"> {
   title: string;
@@ -25,10 +26,14 @@ const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
             onClick={onClick}
             {...props}
           >
-            <div className="flex items-center text-sm font-medium leading-none">
-              {icon}
+            <motion.div 
+              className="flex items-center text-sm font-medium leading-none"
+              whileHover={{ x: 5 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              {icon && <span className="mr-2">{icon}</span>}
               {title}
-            </div>
+            </motion.div>
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
               {children}
             </p>
