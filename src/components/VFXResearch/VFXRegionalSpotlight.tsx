@@ -1,11 +1,11 @@
 
 import { useState, useEffect } from 'react';
 import { ArrowRight, ExternalLink, MapPin } from 'lucide-react';
-
-// Fixed image imports
-import auNzMapImage from '/placeholder.svg';
-import northAmericaMapImage from '/placeholder.svg';
 import { Button } from '@/components/ui/button';
+
+// Using placeholder images that will work reliably
+const mapPlaceholder = 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1374&auto=format&fit=crop';
+const personPlaceholder = 'https://api.dicebear.com/7.x/avataaars/svg?seed=VFXExpert';
 
 interface VFXRegionalSpotlightProps {
   region: string;
@@ -37,10 +37,10 @@ const regionData: Record<string, RegionData> = {
     subtitle: "Overview of the Worldwide VFX Ecosystem",
     color: "#4CC9F0",
     headcount: "100,000+",
-    mapImage: northAmericaMapImage,
+    mapImage: "https://images.unsplash.com/photo-1589519160732-57fc498494f8?q=80&w=1470&auto=format&fit=crop",
     personName: "Joseph Bell",
     personTitle: "VFX Industry Researcher",
-    personImage: "/placeholder.svg",
+    personImage: "https://api.dicebear.com/7.x/avataaars/svg?seed=JosephBell",
     quote: "Looking at data allows us to gain insights that would not be possible to acquire otherwise.",
     description: [
       "The global VFX industry spans across continents, with major hubs in North America, Europe, India, and Asia-Pacific regions.",
@@ -56,10 +56,10 @@ const regionData: Record<string, RegionData> = {
     subtitle: "Established VFX Markets",
     color: "#F9D923",
     headcount: "15,141",
-    mapImage: northAmericaMapImage,
+    mapImage: "https://images.unsplash.com/photo-1569959220744-ff553533f492?q=80&w=1529&auto=format&fit=crop",
     personName: "Industry Expert",
     personTitle: "VFX Supervisor",
-    personImage: "/placeholder.svg",
+    personImage: "https://api.dicebear.com/7.x/avataaars/svg?seed=NAExpert",
     quote: "North America continues to be a leader in high-end VFX production for blockbuster films and streaming content.",
     description: [
       "Los Angeles, Vancouver, Montreal, Toronto, and New York serve as the primary VFX hubs in North America.",
@@ -85,10 +85,10 @@ const regionData: Record<string, RegionData> = {
     subtitle: "Boutique VFX Excellence",
     color: "#E63946",
     headcount: "3,577",
-    mapImage: auNzMapImage,
+    mapImage: "https://images.unsplash.com/photo-1624138784001-279e886eaee4?q=80&w=1466&auto=format&fit=crop",
     personName: "Marcus Wells",
     personTitle: "Talent & Recruitment Consultant at PXL Talent",
-    personImage: "/placeholder.svg",
+    personImage: "https://api.dicebear.com/7.x/avataaars/svg?seed=MarcusWells",
     quote: "VFX companies that have robust support for inbound candidates compete successfully for discerning global talent.",
     description: [
       "Australia and New Zealand have long been regarded as dependable locations for complex and compelling VFX and post-production work.",
@@ -114,10 +114,10 @@ const regionData: Record<string, RegionData> = {
     subtitle: "Traditional VFX Powerhouses",
     color: "#BB86FC",
     headcount: "15,947",
-    mapImage: northAmericaMapImage,
+    mapImage: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1470&auto=format&fit=crop",
     personName: "Neil Hatton",
     personTitle: "CEO, UK Screen Alliance",
-    personImage: "/placeholder.svg",
+    personImage: "https://api.dicebear.com/7.x/avataaars/svg?seed=NeilHatton",
     quote: "There is light at the end of the tunnel, as in November 2023 an increase in the UK's VFX tax relief was announced.",
     description: [
       "The UK and European VFX industry remains strong with London serving as the primary hub, followed by Paris, Berlin, and Madrid.",
@@ -133,10 +133,10 @@ const regionData: Record<string, RegionData> = {
     subtitle: "The Rising VFX Giant",
     color: "#FF7D00",
     headcount: "17,390",
-    mapImage: northAmericaMapImage,
+    mapImage: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=1470&auto=format&fit=crop",
     personName: "Sneha Sharma",
     personTitle: "Research Lead, India",
-    personImage: "/placeholder.svg",
+    personImage: "https://api.dicebear.com/7.x/avataaars/svg?seed=SnehaSharma&gender=female",
     quote: "International projects contribute nearly 70% of VFX revenue in India.",
     description: [
       "India has become a global powerhouse in VFX with an estimated 260,000 people working across the animation, VFX, gaming and comics sector.",
@@ -152,10 +152,10 @@ const regionData: Record<string, RegionData> = {
     subtitle: "Emerging VFX Markets",
     color: "#00C897",
     headcount: "4,916",
-    mapImage: northAmericaMapImage,
+    mapImage: "https://images.unsplash.com/photo-1535139262971-c51845709a48?q=80&w=1470&auto=format&fit=crop",
     personName: "Wenhui (Cara) Du",
     personTitle: "VFX Producer/Supervisor",
-    personImage: "/placeholder.svg",
+    personImage: "https://api.dicebear.com/7.x/avataaars/svg?seed=CaraDu&gender=female",
     quote: "The Wandering Earth gave China one of its first VFX-driven global blockbusters.",
     description: [
       "China's VFX industry has grown significantly, with an estimated workforce exceeding 10,000 people, primarily concentrated in Beijing and Shanghai.",
@@ -200,6 +200,10 @@ const VFXRegionalSpotlight = ({ region }: VFXRegionalSpotlightProps) => {
             src={currentRegion.mapImage} 
             alt={`${currentRegion.title} Map`} 
             className="w-full h-auto object-cover"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = mapPlaceholder;
+            }}
           />
         </div>
         
@@ -214,6 +218,10 @@ const VFXRegionalSpotlight = ({ region }: VFXRegionalSpotlightProps) => {
                   src={currentRegion.personImage} 
                   alt={currentRegion.personName} 
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = personPlaceholder;
+                  }}
                 />
               </div>
               <div>

@@ -1,55 +1,59 @@
 
 import { motion } from 'framer-motion';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { Helmet } from 'react-helmet-async';
 import SectionTitle from '@/components/SectionTitle';
 import TeamMemberCard from './TeamMemberCard';
 
-// Team member data
+// Updated team member data with proper names and images
 const teamMembers = [
   {
-    name: 'Alex Fuke',
+    name: 'Vikram Arjun',
     role: 'Founder & Creative Director',
-    bio: 'With over 15 years in VFX, Alex combines technical expertise with artistic vision to lead our creative direction across all projects.',
+    bio: 'With over 15 years in VFX, Vikram combines technical expertise with artistic vision to lead our creative direction across all projects.',
     skills: ['Creative Direction', 'VFX Supervision', 'AI Integration', 'Team Leadership'],
-    email: 'alex@fukes-media.com',
-    linkedin: 'https://linkedin.com/in/alexfuke'
+    email: 'vikram@fukes-media.com',
+    linkedin: 'https://linkedin.com/in/vikramarjun',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=VikramArjun&backgroundColor=0057B7&clothingColor=D50032'
   },
   {
-    name: 'Samantha Chen',
+    name: 'Harshith',
     role: 'Technical Director',
-    bio: 'Samantha oversees all technical aspects of our productions, ensuring cutting-edge implementation of both traditional and AI-driven VFX solutions.',
+    bio: 'Harshith oversees all technical aspects of our productions, ensuring cutting-edge implementation of both traditional and AI-driven VFX solutions.',
     skills: ['Pipeline Development', 'Technical Direction', 'Programming', 'R&D'],
-    email: 'samantha@fukes-media.com'
+    email: 'harshith@fukes-media.com',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=009639&clothingColor=FFCC00'
   },
   {
-    name: 'Marcus Johnson',
+    name: 'Vignesh',
     role: 'Lead AI Researcher',
-    bio: 'Marcus leads our AI research division, developing proprietary algorithms that power our next-generation visual effects tools.',
+    bio: 'Vignesh leads our AI research division, developing proprietary algorithms that power our next-generation visual effects tools.',
     skills: ['Machine Learning', 'Neural Networks', 'Computer Vision', 'Research'],
-    email: 'marcus@fukes-media.com'
+    email: 'vignesh@fukes-media.com',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vignesh&backgroundColor=D50032&clothingColor=0057B7'
   },
   {
-    name: 'Priya Patel',
+    name: 'Sai Prasad',
     role: 'Production Manager',
-    bio: 'Priya ensures all projects run smoothly from inception to delivery, coordinating resources and maintaining our high quality standards.',
+    bio: 'Sai Prasad ensures all projects run smoothly from inception to delivery, coordinating resources and maintaining our high quality standards.',
     skills: ['Project Management', 'Resource Allocation', 'Client Relations', 'Quality Control'],
-    email: 'priya@fukes-media.com'
+    email: 'saiprasad@fukes-media.com',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF&clothingColor=D50032'
   },
   {
-    name: 'David Kowalski',
+    name: 'Sandesh',
     role: 'Senior VFX Artist',
-    bio: 'David brings over a decade of experience in high-end visual effects for feature films and streaming content.',
+    bio: 'Sandesh brings over a decade of experience in high-end visual effects for feature films and streaming content.',
     skills: ['Compositing', 'Lighting', 'Texturing', 'Simulation'],
-    email: 'david@fukes-media.com'
+    email: 'sandesh@fukes-media.com',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=0057B7&clothingColor=009639'
   },
   {
-    name: 'Jamie Rivera',
+    name: 'Arjun',
     role: 'UI/UX Designer',
-    bio: 'Jamie crafts intuitive user experiences for our software products and client-facing platforms, focusing on accessibility and elegant design.',
+    bio: 'Arjun crafts intuitive user experiences for our software products and client-facing platforms, focusing on accessibility and elegant design.',
     skills: ['Interface Design', 'User Testing', 'Prototyping', 'Visual Design'],
-    email: 'jamie@fukes-media.com'
+    email: 'arjun@fukes-media.com',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=FFCC00&clothingColor=009639'
   }
 ];
 
@@ -75,8 +79,6 @@ const TeamPage = () => {
         <title>Our Team | Fuke's Media - Industry Leaders in AI-Driven VFX</title>
         <meta name="description" content="Meet the creative and technical experts behind Fuke's Media, pushing the boundaries of VFX with artificial intelligence." />
       </Helmet>
-      
-      <Navbar />
       
       <main className="pt-24 pb-16">
         <section className="py-16">
@@ -132,8 +134,6 @@ const TeamPage = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   );
 };

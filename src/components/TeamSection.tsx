@@ -20,7 +20,7 @@ interface TeamMember {
 const TeamSection = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  // Updated team members with more diverse images
+  // Updated team members with correct names and diverse images
   const teamMembers: TeamMember[] = [
     {
       name: 'Vikram',
@@ -33,13 +33,13 @@ const TeamSection = () => {
       }
     },
     {
-      name: 'Priya',
+      name: 'Arjun',
       role: 'Production Head',
-      bio: 'As our Production Head, Priya oversees all creative and technical aspects of our VFX productions. With her background in both film and technology, she bridges the gap between creative vision and technical execution.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya&gender=female&backgroundColor=D50032&clothingColor=0057B7',
+      bio: 'As our Production Head, Arjun oversees all creative and technical aspects of our VFX productions. With his background in both film and technology, he bridges the gap between creative vision and technical execution.',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=D50032&clothingColor=0057B7',
       social: {
-        linkedin: 'https://linkedin.com/in/priya',
-        email: 'priya@company.com',
+        linkedin: 'https://linkedin.com/in/arjun',
+        email: 'arjun@company.com',
         phone: '+91 98765 43210'
       }
     },
@@ -54,23 +54,23 @@ const TeamSection = () => {
       }
     },
     {
-      name: 'Harshitha',
+      name: 'Harshith',
       role: 'Creative Director',
-      bio: 'Harshitha brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, she ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshitha&gender=female&backgroundColor=FFCC00&clothingColor=009639',
+      bio: 'Harshith brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, he ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&gender=female&backgroundColor=FFCC00&clothingColor=009639',
       social: {
-        linkedin: 'https://linkedin.com/in/harshitha',
-        email: 'harshitha@company.com'
+        linkedin: 'https://linkedin.com/in/harshith',
+        email: 'harshith@company.com'
       }
     },
     {
-      name: 'Sai Priya',
+      name: 'Sai Prasad',
       role: 'Operational Manager',
-      bio: 'Sai Priya optimizes our workflow processes and resource allocation. Her systematic approach to operations ensures smooth collaboration between departments and maximizes productivity across all projects.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPriya&gender=female&backgroundColor=00BFFF&clothingColor=D50032',
+      bio: 'Sai Prasad optimizes our workflow processes and resource allocation. His systematic approach to operations ensures smooth collaboration between departments and maximizes productivity across all projects.',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF&clothingColor=D50032',
       social: {
-        linkedin: 'https://linkedin.com/in/saipriya',
-        email: 'saipriya@company.com',
+        linkedin: 'https://linkedin.com/in/saiprasad',
+        email: 'saiprasad@company.com',
         phone: '+91 97654 32109'
       }
     },
