@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import SectionTitle from '@/components/SectionTitle';
 import TeamMemberCard from './TeamMemberCard';
 
-// Updated team member data with proper names and images
+// Updated team member data with proper names and reliable images
 const teamMembers = [
   {
     name: 'Vikram Arjun',
@@ -21,6 +21,7 @@ const teamMembers = [
     bio: 'Harshith oversees all technical aspects of our productions, ensuring cutting-edge implementation of both traditional and AI-driven VFX solutions.',
     skills: ['Pipeline Development', 'Technical Direction', 'Programming', 'R&D'],
     email: 'harshith@fukes-media.com',
+    linkedin: 'https://linkedin.com/in/harshith',
     imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=009639&clothingColor=FFCC00'
   },
   {
@@ -29,6 +30,7 @@ const teamMembers = [
     bio: 'Vignesh leads our AI research division, developing proprietary algorithms that power our next-generation visual effects tools.',
     skills: ['Machine Learning', 'Neural Networks', 'Computer Vision', 'Research'],
     email: 'vignesh@fukes-media.com',
+    linkedin: 'https://linkedin.com/in/vignesh',
     imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vignesh&backgroundColor=D50032&clothingColor=0057B7'
   },
   {
@@ -37,6 +39,7 @@ const teamMembers = [
     bio: 'Sai Prasad ensures all projects run smoothly from inception to delivery, coordinating resources and maintaining our high quality standards.',
     skills: ['Project Management', 'Resource Allocation', 'Client Relations', 'Quality Control'],
     email: 'saiprasad@fukes-media.com',
+    linkedin: 'https://linkedin.com/in/saiprasad',
     imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF&clothingColor=D50032'
   },
   {
@@ -45,6 +48,7 @@ const teamMembers = [
     bio: 'Sandesh brings over a decade of experience in high-end visual effects for feature films and streaming content.',
     skills: ['Compositing', 'Lighting', 'Texturing', 'Simulation'],
     email: 'sandesh@fukes-media.com',
+    linkedin: 'https://linkedin.com/in/sandesh',
     imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=0057B7&clothingColor=009639'
   },
   {
@@ -53,6 +57,7 @@ const teamMembers = [
     bio: 'Arjun crafts intuitive user experiences for our software products and client-facing platforms, focusing on accessibility and elegant design.',
     skills: ['Interface Design', 'User Testing', 'Prototyping', 'Visual Design'],
     email: 'arjun@fukes-media.com',
+    linkedin: 'https://linkedin.com/in/arjun',
     imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=FFCC00&clothingColor=009639'
   }
 ];
