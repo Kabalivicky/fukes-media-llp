@@ -1,11 +1,9 @@
-
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
@@ -13,6 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 import { ChevronRight, Zap, Film, Palette, Code, Award, FileText, User, Users, Home } from 'lucide-react';
+import ListItem from './Navigation/ListItem';
 
 const MegaMenu = () => {
   const location = useLocation();
@@ -85,13 +84,14 @@ const MegaMenu = () => {
               <li className="row-span-3 bg-muted/30 rounded-lg overflow-hidden">
                 <NavigationMenuLink asChild>
                   <Link
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md"
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md relative group"
                     to="/about"
                   >
-                    <div className="mb-2 mt-4 text-lg font-medium">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="mb-2 mt-4 text-lg font-medium relative z-10">
                       About Fuke's Media
                     </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
+                    <p className="text-sm leading-tight text-muted-foreground relative z-10">
                       AI-Driven VFX & Creative Studio delivering exceptional visual effects and creative solutions
                     </p>
                   </Link>
@@ -100,14 +100,14 @@ const MegaMenu = () => {
               <ListItem 
                 href="/team" 
                 title="Our Team" 
-                icon={<Users className="mr-2 h-4 w-4" />}
+                icon={<Users className="h-4 w-4" />}
               >
                 Meet our diverse team of creative professionals and technical experts
               </ListItem>
               <ListItem 
                 href="/#investors" 
                 title="Investors" 
-                icon={<Zap className="mr-2 h-4 w-4" />}
+                icon={<Zap className="h-4 w-4" />}
                 onClick={(e) => handleAnchorClick(e, '/#investors')}
               >
                 Learn about our investment partners and funding initiatives
@@ -115,7 +115,7 @@ const MegaMenu = () => {
               <ListItem 
                 href="/#careers" 
                 title="Careers" 
-                icon={<ChevronRight className="mr-2 h-4 w-4" />}
+                icon={<ChevronRight className="h-4 w-4" />}
                 onClick={(e) => handleAnchorClick(e, '/#careers')}
               >
                 Join our team and become part of the future of VFX

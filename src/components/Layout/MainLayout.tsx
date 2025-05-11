@@ -5,19 +5,22 @@ import ParallaxLines from "@/components/ParallaxLines";
 import FuturisticBackground from "@/components/FuturisticBackground";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ScrollProgressIndicator from "@/components/ScrollProgressIndicator";
 
 interface MainLayoutProps {
   children: React.ReactNode;
   pageKey: string;
 }
 
-// Page transition variants
+// Enhanced page transition variants
 const pageVariants = {
   initial: {
     opacity: 0,
+    y: 20,
   },
   in: {
     opacity: 1,
+    y: 0,
     transition: {
       duration: 0.5,
       ease: "easeOut",
@@ -25,6 +28,7 @@ const pageVariants = {
   },
   out: {
     opacity: 0,
+    y: -20,
     transition: {
       duration: 0.3,
       ease: "easeIn",
@@ -35,10 +39,17 @@ const pageVariants = {
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Background Effects */}
+      {/* Enhanced Background Effects */}
       <FuturisticBackground intensity="medium" />
       <GlowEffect />
       <ParallaxLines count={15} opacity={0.03} />
+      
+      {/* Decorative elements */}
+      <div className="fixed top-[15%] right-[5%] w-64 h-64 rounded-full bg-fukes-blue/5 blur-[80px] animate-pulse-custom" aria-hidden="true"></div>
+      <div className="fixed bottom-[20%] left-[8%] w-96 h-96 rounded-full bg-fukes-red/5 blur-[100px] animate-pulse-custom" style={{ animationDelay: '2s' }} aria-hidden="true"></div>
+      
+      {/* Grid pattern overlay */}
+      <div className="fixed inset-0 bg-grid-pattern bg-32 opacity-[0.03] pointer-events-none" aria-hidden="true"></div>
       
       {/* Navigation */}
       <Navbar />
@@ -54,6 +65,9 @@ const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
       >
         {children}
       </motion.main>
+      
+      {/* Progress Indicator */}
+      <ScrollProgressIndicator />
       
       {/* Footer */}
       <Footer />

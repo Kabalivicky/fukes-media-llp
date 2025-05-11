@@ -1,6 +1,7 @@
 
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 interface HelpCategoryCardProps {
   category: {
@@ -28,27 +29,51 @@ const HelpCategoryCard = ({ category }: HelpCategoryCardProps) => {
   const linkPath = customLink || `/help-center/${id}`;
   
   return (
-    <Link 
-      to={linkPath}
-      className="block p-6 bg-card/80 backdrop-blur-sm rounded-lg border border-border hover:border-primary/40 hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px] group animate-fade-in"
-      aria-labelledby={`category-title-${id}`}
-      role="article"
-      style={{ animationDelay: `${parseInt(id) * 100}ms` }}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: parseInt(id) * 0.1 }}
+      viewport={{ once: true, margin: "-50px" }}
     >
-      <div className="flex items-center mb-4">
-        <div className="w-14 h-14 rounded-md bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center shrink-0 mr-4 border border-primary/10 group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
-          <img src={generateIcon(name)} alt="" className="w-8 h-8 object-contain" />
+      <Link 
+        to={linkPath}
+        className="block p-6 bg-card/80 backdrop-blur-sm rounded-lg border border-border hover:border-primary/40 hover:shadow-lg transition-all duration-300 group relative overflow-hidden"
+        aria-labelledby={`category-title-${id}`}
+        role="article"
+      >
+        {/* Background gradient effect */}
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0"
+          initial={false}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        />
+        
+        <div className="flex items-center mb-4 relative z-10">
+          <motion.div 
+            className="w-14 h-14 rounded-md bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center shrink-0 mr-4 border border-primary/10"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            aria-hidden="true"
+          >
+            <img src={generateIcon(name)} alt="" className="w-8 h-8 object-contain" />
+          </motion.div>
+          <h3 id={`category-title-${id}`} className="text-xl font-medium">{name}</h3>
         </div>
-        <h3 id={`category-title-${id}`} className="text-xl font-medium">{name}</h3>
-      </div>
-      
-      <p className="text-muted-foreground text-base line-clamp-2 mb-4">{description}</p>
-      
-      <div className="flex items-center text-primary text-sm font-medium">
-        <span>View resources</span>
-        <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-2" aria-hidden="true" />
-      </div>
-    </Link>
+        
+        <p className="text-muted-foreground text-base line-clamp-2 mb-4">{description}</p>
+        
+        <div className="flex items-center text-primary text-sm font-medium relative z-10">
+          <span>View resources</span>
+          <motion.div
+            whileHover={{ x: 8 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <ArrowRight className="w-4 h-4 ml-1" aria-hidden="true" />
+          </motion.div>
+        </div>
+      </Link>
+    </motion.div>
   );
 };
 
