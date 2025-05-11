@@ -38,7 +38,7 @@ const pageVariants = {
 
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen relative">
       {/* Enhanced Background Effects */}
       <FuturisticBackground intensity="medium" />
       <GlowEffect />
@@ -61,7 +61,7 @@ const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
         animate="in"
         exit="out"
         variants={pageVariants}
-        className="flex-grow"
+        className="flex-grow relative"
       >
         {children}
       </motion.main>

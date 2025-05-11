@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import AppRouter from "./components/Layout/AppRouter";
 import ScrollToTop from "./components/ScrollToTop";
 import LoadingIntro from "./components/LoadingIntro";
-import ScrollProgressIndicator from "./components/ScrollProgressIndicator";
+// Removed ScrollProgressIndicator import as it's already in MainLayout
 
 // Hooks
 import useCursorEffect from "./hooks/useCursorEffect";
@@ -63,8 +63,7 @@ const App = () => {
                 {/* Navigation Controls */}
                 <ScrollToTop showBelow={400} />
                 
-                {/* Scroll Progress Indicator */}
-                <ScrollProgressIndicator />
+                {/* Removed duplicate ScrollProgressIndicator as it's in MainLayout */}
                 
                 {/* Main Application Routes */}
                 {isLoaded && <AppRouter />}

@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from "@/components/ui/theme-provider";
 import { Button } from '@/components/ui/button';
 import { motion } from "framer-motion";
-import MegaMenu from './MegaMenu';
+import MegaMenu from './Navigation/MegaMenu';
 import MobileNav from './Navigation/MobileNav';
 import ThemeToggle from './Navigation/ThemeToggle';
 import { handleAnchorClick } from '@/utils/navigationData';
@@ -69,7 +69,7 @@ const Header = () => {
               </motion.div>
             </Link>
             
-            {/* Mega Menu for XL screens */}
+            {/* Using the refactored MegaMenu from Navigation folder */}
             <MegaMenu />
           </div>
           

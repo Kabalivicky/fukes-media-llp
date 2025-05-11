@@ -20,7 +20,7 @@ const ScrollProgressIndicator = () => {
   
   return (
     <motion.div 
-      className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 hidden md:block"
+      className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 hidden md:block relative"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
