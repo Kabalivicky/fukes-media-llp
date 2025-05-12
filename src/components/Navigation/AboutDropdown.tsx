@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import ListItem from './ListItem';
-import { megaMenuSections, handleAnchorClick } from '@/utils/navigationData';
+import { handleAnchorClick } from '@/utils/navigationData';
 
 const AboutDropdown = () => {
   const location = useLocation();

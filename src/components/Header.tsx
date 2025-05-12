@@ -10,7 +10,7 @@ import ThemeToggle from './Navigation/ThemeToggle';
 import { handleAnchorClick } from '@/utils/navigationData';
 import AnimatedLogo from './AnimatedLogo';
 import AnimatedIcon from './AnimatedIcon';
-import { Menu, Bell, ChevronDown } from 'lucide-react';
+import { Bell, ChevronDown } from 'lucide-react';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,7 +22,7 @@ const Header = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -53,6 +53,7 @@ const Header = () => {
       initial="hidden"
       animate="visible"
       variants={headerVariants}
+      style={{ willChange: 'transform, opacity' }}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">

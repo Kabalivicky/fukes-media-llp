@@ -44,7 +44,7 @@ const MobileNav = () => {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div 
-          className="lg:hidden absolute w-full bg-background/95 backdrop-blur-xl border-b border-border max-h-[80vh] overflow-y-auto"
+          className="lg:hidden absolute w-full bg-background/95 backdrop-blur-xl border-b border-border max-h-[80vh] overflow-y-auto left-0 top-16"
           id="mobile-menu"
           role="navigation"
           aria-label="Mobile navigation"

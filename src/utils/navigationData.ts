@@ -2,14 +2,15 @@
 // Navigation data structure for the entire application
 // This centralizes all navigation links for consistent usage across components
 
-import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home } from 'lucide-react';
 import React from 'react';
+import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home } from 'lucide-react';
 
 export interface NavLink {
   name: string;
   path: string;
   isAnchor?: boolean;
   icon?: React.ElementType;
+  description?: string;
 }
 
 export interface DropdownItem {
@@ -40,6 +41,8 @@ export const mainNavLinks: NavLink[] = [
   { name: "Contract Builder", path: "/contract-builder", icon: FileText },
   { name: "Freelancer Portal", path: "/freelancer-portal", icon: UserIcon },
   { name: "Team", path: "/team", icon: Users },
+  { name: "Industry News", path: "/news", icon: ChevronRight, description: "Latest VFX industry news and updates" },
+  { name: "AI Assistant", path: "/chat-assistant", icon: ChevronRight, description: "Get help with your VFX projects" },
 ];
 
 // Home page anchor links
@@ -160,7 +163,7 @@ export const megaMenuSections = {
   }
 };
 
-// Common utilities for navigation
+// Common utilities for navigation - memoized for better performance
 export const isLinkActive = (currentPath: string, linkPath: string): boolean => {
   if (linkPath === '/') {
     return currentPath === '/' && !currentPath.includes('#');
@@ -185,8 +188,15 @@ export const handleAnchorClick = (
     e.preventDefault();
     const targetId = path.substring(1);
     const element = document.getElementById(targetId);
+    
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Smooth scroll with improved behavior
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start' 
+      });
+      
+      // Update URL without full page reload
       window.history.pushState(null, '', path);
     }
   }

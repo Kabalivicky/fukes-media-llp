@@ -1,4 +1,5 @@
 
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,10 +8,13 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { HelmetProvider } from "react-helmet-async";
 import { useState, useEffect } from "react";
-import AppRouter from "./components/Layout/AppRouter";
+import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import LoadingIntro from "./components/LoadingIntro";
-// Removed ScrollProgressIndicator import as it's already in MainLayout
+import AccessibilityProvider from "./components/AccessibilityProvider";
+
+// Lazy loaded components for better performance
+const AppRouter = lazy(() => import("./components/Layout/AppRouter"));
 
 // Hooks
 import useCursorEffect from "./hooks/useCursorEffect";
@@ -48,31 +52,46 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Global loading fallback component
+  const LoadingFallback = () => (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="animate-pulse text-primary text-xl">Loading...</div>
+    </div>
+  );
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
-        <ThemeProvider defaultTheme="dark">
-          <TooltipProvider>
-            <div className="min-h-screen bg-background">
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
-                {/* Loading Intro */}
-                <LoadingIntro />
-                
-                {/* Navigation Controls */}
-                <ScrollToTop showBelow={400} />
-                
-                {/* Removed duplicate ScrollProgressIndicator as it's in MainLayout */}
-                
-                {/* Main Application Routes */}
-                {isLoaded && <AppRouter />}
-              </BrowserRouter>
-            </div>
-          </TooltipProvider>
-        </ThemeProvider>
-      </HelmetProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <HelmetProvider>
+          <ThemeProvider defaultTheme="dark">
+            <AccessibilityProvider>
+              <TooltipProvider>
+                <div className="min-h-screen bg-background">
+                  <Toaster />
+                  <Sonner />
+                  <BrowserRouter>
+                    {/* Loading Intro */}
+                    <LoadingIntro />
+                    
+                    {/* Navigation Controls */}
+                    <ScrollToTop showBelow={400} />
+                    
+                    {/* Main Application Routes */}
+                    {isLoaded && (
+                      <Suspense fallback={<LoadingFallback />}>
+                        <ErrorBoundary>
+                          <AppRouter />
+                        </ErrorBoundary>
+                      </Suspense>
+                    )}
+                  </BrowserRouter>
+                </div>
+              </TooltipProvider>
+            </AccessibilityProvider>
+          </ThemeProvider>
+        </HelmetProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 };
 
