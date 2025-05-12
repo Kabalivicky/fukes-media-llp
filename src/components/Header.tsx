@@ -13,7 +13,6 @@ import AnimatedIcon from './AnimatedIcon';
 import { Menu, Bell, ChevronDown } from 'lucide-react';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname + location.hash;
@@ -90,10 +89,8 @@ const Header = () => {
             
             <ThemeToggle />
             
-            <MobileNav 
-              isMenuOpen={isMenuOpen}
-              setIsMenuOpen={setIsMenuOpen}
-            />
+            {/* MobileNav now manages its own state internally */}
+            <MobileNav />
             
             <Button className="gradient-button hidden lg:flex items-center gap-2" asChild>
               <Link to="/#contact" onClick={(e) => handleAnchorClick(e, '/#contact', currentPath)}>
