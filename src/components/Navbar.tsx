@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import AnimatedLogo from './AnimatedLogo';
-import { MobileNav } from './Navigation/MobileNav';
+import MobileNav from './Navigation/MobileNav';
 import { Button } from './ui/button';
 import { Headset } from 'lucide-react';
 

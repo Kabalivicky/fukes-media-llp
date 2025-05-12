@@ -853,4 +853,30 @@ const EnhancedPricingCalculator = () => {
                         
                         {pricingOption.pricePerFrame > 0 && (
                           <li className="flex justify-between">
-                            <span>Per-Frame Cost ({frames} @ <
+                            <span>Per-Frame Cost ({frames} frames):</span>
+                            <span><DynamicPrice priceUSD={pricingOption.pricePerFrame * frames} /></span>
+                          </li>
+                        )}
+                        
+                        {/* Additional pricing factors would be listed here */}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-center space-y-4">
+                  <div className="text-xl font-medium">Enter your project details</div>
+                  <div className="text-muted-foreground">
+                    Fill in the form and click "Calculate Estimate" to see your pricing
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default EnhancedPricingCalculator;

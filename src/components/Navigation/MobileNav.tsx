@@ -6,19 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
-interface MobileNavProps {
-  isMenuOpen: boolean;
-  setIsMenuOpen: (isOpen: boolean) => void;
-}
-
-const MobileNav = ({ isMenuOpen, setIsMenuOpen }: MobileNavProps) => {
+const MobileNav = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname + location.hash;
   
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMenuOpen(false);
-  }, [location.pathname, setIsMenuOpen]);
+  }, [location.pathname]);
   
   // Function to determine if a link is active
   const isLinkActive = (path: string) => {
