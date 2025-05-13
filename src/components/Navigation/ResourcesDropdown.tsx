@@ -1,5 +1,5 @@
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import {
   NavigationMenuContent,
@@ -8,28 +8,31 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import ListItem from './ListItem';
 
 const ResourcesDropdown = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname + location.hash;
   
   const isActive = currentPath === '/resources';
   
+  const handleMainButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/resources');
+  };
+  
   return (
     <NavigationMenuItem>
       <div className="flex items-center">
-        <Button variant="link" className="p-0" asChild>
-          <Link to="/resources">
-            <NavigationMenuLink className={cn(
-              "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-              isActive ? "text-primary font-medium" : ""
-            )}>
-              Resources
-            </NavigationMenuLink>
-          </Link>
+        <Button variant="link" className="p-0" onClick={handleMainButtonClick}>
+          <NavigationMenuLink className={cn(
+            "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+            isActive ? "text-primary font-medium" : ""
+          )}>
+            Resources
+          </NavigationMenuLink>
         </Button>
         <NavigationMenuTrigger className="h-10 px-2">
           <span className="sr-only">Resources dropdown</span>

@@ -1,10 +1,11 @@
 
 import { Link } from 'react-router-dom';
-import Header from './Header';
+import MegaMenu from './Navigation/MegaMenu';
 import AnimatedLogo from './AnimatedLogo';
 import MobileNav from './Navigation/MobileNav';
 import { Button } from './ui/button';
 import { Headset } from 'lucide-react';
+import ThemeToggle from './Navigation/ThemeToggle';
 
 const Navbar = () => {
   return (
@@ -20,11 +21,13 @@ const Navbar = () => {
         
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-6">
-          <Header />
+          <MegaMenu />
         </div>
         
         {/* Action Buttons */}
         <div className="flex items-center gap-4">
+          <ThemeToggle />
+          
           <Link to="/news">
             <Button variant="outline" size="sm" className="hidden sm:flex">
               Industry News

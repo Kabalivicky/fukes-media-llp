@@ -1,5 +1,5 @@
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Film, Code, Palette } from 'lucide-react';
 import {
   NavigationMenuContent,
@@ -8,28 +8,31 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import ListItem from './ListItem';
 
 const ServicesDropdown = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname + location.hash;
   
   const isActive = currentPath === '/services';
   
+  const handleMainButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/services');
+  };
+  
   return (
     <NavigationMenuItem>
       <div className="flex items-center">
-        <Button variant="link" className="p-0" asChild>
-          <Link to="/services">
-            <NavigationMenuLink className={cn(
-              "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-              isActive ? "text-primary font-medium" : ""
-            )}>
-              Services
-            </NavigationMenuLink>
-          </Link>
+        <Button variant="link" className="p-0" onClick={handleMainButtonClick}>
+          <NavigationMenuLink className={cn(
+            "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+            isActive ? "text-primary font-medium" : ""
+          )}>
+            Services
+          </NavigationMenuLink>
         </Button>
         <NavigationMenuTrigger className="h-10 px-2">
           <span className="sr-only">Services dropdown</span>

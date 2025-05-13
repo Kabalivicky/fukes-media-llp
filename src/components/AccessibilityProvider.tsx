@@ -16,10 +16,19 @@ const AccessibilityProvider: React.FC<AccessibilityProviderProps> = ({ children 
     skipLink.href = '#main-content';
     skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:p-4 focus:bg-primary focus:text-primary-foreground focus:z-[100]';
     skipLink.innerText = 'Skip to main content';
+    skipLink.setAttribute('aria-label', 'Skip to main content');
     document.body.insertBefore(skipLink, document.body.firstChild);
 
     // Enhance focus visibility
     document.documentElement.classList.add('focus-visible:outline-primary');
+    
+    // Add role attributes to improve accessibility
+    const main = document.querySelector('main');
+    if (main && !main.getAttribute('role')) {
+      main.setAttribute('role', 'main');
+      main.setAttribute('tabindex', '-1');
+      main.id = 'main-content';
+    }
     
     // Return cleanup function
     return () => {

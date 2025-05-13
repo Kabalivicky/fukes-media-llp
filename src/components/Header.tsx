@@ -1,11 +1,10 @@
 
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from "@/components/ui/theme-provider";
 import { Button } from '@/components/ui/button';
 import { motion } from "framer-motion";
 import MegaMenu from './Navigation/MegaMenu';
-import MobileNav from './Navigation/MobileNav';
 import ThemeToggle from './Navigation/ThemeToggle';
 import { handleAnchorClick } from '@/utils/navigationData';
 import AnimatedLogo from './AnimatedLogo';
@@ -15,6 +14,7 @@ import { Bell, ChevronDown } from 'lucide-react';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname + location.hash;
   const { theme } = useTheme();
 
@@ -45,6 +45,11 @@ const Header = () => {
   const headerClasses = isScrolled 
     ? 'bg-background/90 backdrop-blur-xl shadow-lg'
     : 'bg-transparent';
+    
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleAnchorClick(e, '/#contact', currentPath);
+  };
 
   return (
     <motion.header 
@@ -90,14 +95,12 @@ const Header = () => {
             
             <ThemeToggle />
             
-            {/* MobileNav now manages its own state internally */}
-            <MobileNav />
-            
-            <Button className="gradient-button hidden lg:flex items-center gap-2" asChild>
-              <Link to="/#contact" onClick={(e) => handleAnchorClick(e, '/#contact', currentPath)}>
-                Get Started
-                <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
-              </Link>
+            <Button 
+              className="gradient-button hidden lg:flex items-center gap-2" 
+              onClick={handleContactClick}
+            >
+              Get Started
+              <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
             </Button>
           </div>
         </div>

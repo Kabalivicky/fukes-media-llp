@@ -1,14 +1,14 @@
 
 import { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { mainNavLinks, homeAnchorLinks, handleAnchorClick } from '@/utils/navigationData';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const MobileNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname + location.hash;
   
   // Close mobile menu when route changes
@@ -27,6 +27,18 @@ const MobileNav = () => {
     }
     
     return location.pathname === path;
+  };
+
+  const handleLinkClick = (e: React.MouseEvent, path: string) => {
+    e.preventDefault();
+    
+    if (path.includes('#')) {
+      handleAnchorClick(e, path, currentPath);
+    } else {
+      navigate(path);
+    }
+    
+    setIsMenuOpen(false);
   };
 
   return (
@@ -52,18 +64,18 @@ const MobileNav = () => {
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-1">
             {/* Main Navigation Links */}
             {mainNavLinks.map((link, index) => (
-              <NavLink 
+              <a 
                 key={index}
-                to={link.path} 
-                className={({ isActive }) => `px-4 py-3 rounded-md transition-colors ${
-                  isActive
+                href={link.path}
+                className={`px-4 py-3 rounded-md transition-colors ${
+                  isLinkActive(link.path)
                     ? 'text-primary bg-primary/10' 
                     : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'
                 }`}
-                onClick={(e) => link.path.startsWith('/#') && handleAnchorClick(e, link.path, currentPath)}
+                onClick={(e) => handleLinkClick(e, link.path)}
               >
                 {link.name}
-              </NavLink>
+              </a>
             ))}
             
             {/* Home page anchor links */}
@@ -73,26 +85,27 @@ const MobileNav = () => {
                   Home Page Sections
                 </div>
                 {homeAnchorLinks.map((link, index) => (
-                  <NavLink 
+                  <a 
                     key={`home-mobile-${index}`}
-                    to={link.path} 
+                    href={link.path}
                     className={`px-4 py-3 rounded-md transition-colors ${
                       location.hash === link.path.substring(1)
                         ? 'text-primary bg-primary/10' 
                         : 'text-foreground/70 hover:text-foreground hover:bg-muted/30'
                     }`}
-                    onClick={(e) => handleAnchorClick(e, link.path, currentPath)}
+                    onClick={(e) => handleLinkClick(e, link.path)}
                   >
                     {link.name}
-                  </NavLink>
+                  </a>
                 ))}
               </>
             )}
             
-            <Button className="gradient-button w-full mt-4" asChild>
-              <Link to="/#contact" onClick={(e) => handleAnchorClick(e, '/#contact', currentPath)}>
-                Get Started
-              </Link>
+            <Button 
+              className="gradient-button w-full mt-4" 
+              onClick={(e) => handleLinkClick(e, '/#contact')}
+            >
+              Get Started
             </Button>
           </nav>
         </div>

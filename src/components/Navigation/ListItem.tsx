@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { NavigationMenuLink } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -13,17 +13,40 @@ interface ListItemProps extends React.ComponentPropsWithoutRef<"a"> {
 
 const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
   ({ className, title, children, href, icon, onClick, ...props }, ref) => {
+    const navigate = useNavigate();
+    
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      
+      if (onClick) {
+        onClick(e);
+      } else if (href.startsWith('#') || href.startsWith('/#')) {
+        // For hash links on the same page
+        const hash = href.includes('/#') ? href.substring(1) : href;
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', hash);
+        } else {
+          navigate(href);
+        }
+      } else {
+        // For normal page navigation
+        navigate(href);
+      }
+    };
+
     return (
       <li>
         <NavigationMenuLink asChild>
-          <Link
+          <a
             ref={ref}
-            to={href}
+            href={href}
             className={cn(
               "flex select-none flex-col space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground relative overflow-hidden group",
               className
             )}
-            onClick={onClick}
+            onClick={handleClick}
             {...props}
           >
             {/* Hover background effect */}
@@ -53,7 +76,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground relative z-10">
               {children}
             </p>
-          </Link>
+          </a>
         </NavigationMenuLink>
       </li>
     );

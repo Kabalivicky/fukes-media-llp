@@ -1,5 +1,5 @@
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Users, Zap, ChevronRight } from 'lucide-react';
 import {
   NavigationMenuContent,
@@ -15,22 +15,26 @@ import { handleAnchorClick } from '@/utils/navigationData';
 
 const AboutDropdown = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname + location.hash;
   
   const isActive = currentPath === '/about';
   
+  const handleMainButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/about');
+  };
+  
   return (
     <NavigationMenuItem>
       <div className="flex items-center">
-        <Button variant="link" className="p-0" asChild>
-          <Link to="/about">
-            <NavigationMenuLink className={cn(
-              "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-              isActive ? "text-primary font-medium" : ""
-            )}>
-              About
-            </NavigationMenuLink>
-          </Link>
+        <Button variant="link" className="p-0" onClick={handleMainButtonClick}>
+          <NavigationMenuLink className={cn(
+            "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+            isActive ? "text-primary font-medium" : ""
+          )}>
+            About
+          </NavigationMenuLink>
         </Button>
         <NavigationMenuTrigger className="h-10 px-2">
           <span className="sr-only">About dropdown</span>
@@ -39,19 +43,21 @@ const AboutDropdown = () => {
       <NavigationMenuContent>
         <ul className="grid gap-4 p-6 md:w-[500px] lg:w-[600px] grid-cols-2">
           <li className="row-span-3 bg-muted/30 rounded-lg overflow-hidden">
-            <NavigationMenuLink asChild>
-              <Link
-                className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md"
-                to="/about"
-              >
-                <div className="mb-2 mt-4 text-lg font-medium">
-                  About Fuke's Media
-                </div>
-                <p className="text-sm leading-tight text-muted-foreground">
-                  AI-Driven VFX & Creative Studio delivering exceptional visual effects and creative solutions
-                </p>
-              </Link>
-            </NavigationMenuLink>
+            <a
+              className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md"
+              href="/about"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/about');
+              }}
+            >
+              <div className="mb-2 mt-4 text-lg font-medium">
+                About Fuke's Media
+              </div>
+              <p className="text-sm leading-tight text-muted-foreground">
+                AI-Driven VFX & Creative Studio delivering exceptional visual effects and creative solutions
+              </p>
+            </a>
           </li>
           
           <ListItem 
