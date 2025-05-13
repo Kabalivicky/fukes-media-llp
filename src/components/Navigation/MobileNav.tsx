@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { mainNavLinks, homeAnchorLinks, handleAnchorClick } from '@/utils/navigationData';
+import { mainNavLinks, homeAnchorLinks } from '@/utils/navigationData';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 
@@ -29,11 +29,25 @@ const MobileNav = () => {
     return location.pathname === path;
   };
 
-  const handleLinkClick = (e: React.MouseEvent, path: string) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
     
     if (path.includes('#')) {
-      handleAnchorClick(e, path, currentPath);
+      // For hash links
+      const targetId = path.substring(path.includes('/#') ? 2 : 1);
+      const element = document.getElementById(targetId);
+      
+      if (path.includes('/#') && location.pathname !== '/') {
+        // Navigate to home page first, then scroll to the anchor
+        navigate(path);
+      } else if (element) {
+        // If we're already on the correct page, just scroll to the element
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.history.pushState(null, '', path);
+      } else {
+        // If element doesn't exist, just navigate to the path
+        navigate(path);
+      }
     } else {
       navigate(path);
     }
@@ -103,7 +117,11 @@ const MobileNav = () => {
             
             <Button 
               className="gradient-button w-full mt-4" 
-              onClick={(e) => handleLinkClick(e, '/#contact')}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/#contact');
+                setIsMenuOpen(false);
+              }}
             >
               Get Started
             </Button>

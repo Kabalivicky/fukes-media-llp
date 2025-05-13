@@ -46,9 +46,10 @@ const Header = () => {
     ? 'bg-background/90 backdrop-blur-xl shadow-lg'
     : 'bg-transparent';
     
-  const handleContactClick = (e: React.MouseEvent) => {
+  const handleContactClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    handleAnchorClick(e, '/#contact', currentPath);
+    // Create a mock anchor element event or use a different navigation approach
+    navigate('/#contact');
   };
 
   return (

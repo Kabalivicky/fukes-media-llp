@@ -176,6 +176,7 @@ export const isLinkActive = (currentPath: string, linkPath: string): boolean => 
   return currentPath === linkPath;
 };
 
+// Changed the function signature to accept React.MouseEvent<HTMLAnchorElement>
 export const handleAnchorClick = (
   e: React.MouseEvent<HTMLAnchorElement>, 
   path: string, 
