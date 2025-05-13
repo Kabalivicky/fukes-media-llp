@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Home } from 'lucide-react';
+import { Home, Calculator, MessagesSquare } from 'lucide-react';
 import { handleAnchorClick, isLinkActive } from '@/utils/navigationData';
 import AboutDropdown from './AboutDropdown';
 import ServicesDropdown from './ServicesDropdown';
@@ -25,7 +25,13 @@ const MegaMenu = () => {
     e.preventDefault();
     
     if (path.includes('#')) {
-      handleAnchorClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, path, currentPath);
+      // Create a link-like event that handleAnchorClick can work with
+      const syntheticEvent = {
+        ...e,
+        preventDefault: e.preventDefault,
+      } as unknown as React.MouseEvent<HTMLAnchorElement>;
+      
+      handleAnchorClick(syntheticEvent, path, currentPath);
     } else {
       navigate(path);
     }
@@ -79,22 +85,41 @@ const MegaMenu = () => {
           </Button>
         </NavigationMenuItem>
 
-        {/* Direct Links */}
+        {/* Advanced Pricing */}
         <NavigationMenuItem>
           <Button 
             variant="link" 
             className="p-0 w-full" 
-            onClick={(e) => handleNavigation(e, '/pricing')}
+            onClick={(e) => handleNavigation(e, '/advanced-pricing')}
           >
             <NavigationMenuLink className={cn(
               navigationMenuTriggerStyle(),
-              isLinkActive(currentPath, '/pricing') ? "text-primary font-medium" : ""
+              isLinkActive(currentPath, '/advanced-pricing') ? "text-primary font-medium" : ""
             )}>
-              Pricing
+              <Calculator className="mr-2 h-4 w-4" />
+              Advanced Pricing
             </NavigationMenuLink>
           </Button>
         </NavigationMenuItem>
         
+        {/* AI Assistant */}
+        <NavigationMenuItem>
+          <Button 
+            variant="link" 
+            className="p-0 w-full" 
+            onClick={(e) => handleNavigation(e, '/chat-assistant')}
+          >
+            <NavigationMenuLink className={cn(
+              navigationMenuTriggerStyle(),
+              isLinkActive(currentPath, '/chat-assistant') ? "text-primary font-medium" : ""
+            )}>
+              <MessagesSquare className="mr-2 h-4 w-4" />
+              AI Assistant
+            </NavigationMenuLink>
+          </Button>
+        </NavigationMenuItem>
+        
+        {/* Contact */}
         <NavigationMenuItem>
           <Button 
             variant="link" 

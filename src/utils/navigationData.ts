@@ -3,7 +3,7 @@
 // This centralizes all navigation links for consistent usage across components
 
 import React from 'react';
-import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home } from 'lucide-react';
+import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home, Calculator, MessagesSquare } from 'lucide-react';
 
 export interface NavLink {
   name: string;
@@ -38,11 +38,12 @@ export const mainNavLinks: NavLink[] = [
   { name: "Help Center", path: "/help-center", icon: ChevronRight },
   { name: "Production Guidelines", path: "/production-guidelines", icon: ChevronRight },
   { name: "Pricing", path: "/pricing", icon: ChevronRight },
+  { name: "Advanced Pricing", path: "/advanced-pricing", icon: Calculator, description: "Detailed estimate with advanced options" },
   { name: "Contract Builder", path: "/contract-builder", icon: FileText },
   { name: "Freelancer Portal", path: "/freelancer-portal", icon: UserIcon },
   { name: "Team", path: "/team", icon: Users },
   { name: "Industry News", path: "/news", icon: ChevronRight, description: "Latest VFX industry news and updates" },
-  { name: "AI Assistant", path: "/chat-assistant", icon: ChevronRight, description: "Get help with your VFX projects" },
+  { name: "AI Assistant", path: "/chat-assistant", icon: MessagesSquare, description: "Get help with your VFX projects" },
 ];
 
 // Home page anchor links
@@ -158,6 +159,18 @@ export const megaMenuSections = {
         href: "/freelancer-portal",
         description: "Access your freelancer dashboard, projects and payments",
         icon: UserIcon
+      },
+      {
+        title: "Advanced Pricing Calculator",
+        href: "/advanced-pricing",
+        description: "Get detailed estimates with our comprehensive pricing tool",
+        icon: Calculator
+      },
+      {
+        title: "AI Assistant",
+        href: "/chat-assistant",
+        description: "Get instant answers to your VFX production questions",
+        icon: MessagesSquare
       }
     ]
   }

@@ -5,6 +5,7 @@ import About from '@/pages/About';
 import Services from '@/pages/Services';
 import Team from '@/pages/Team';
 import Pricing from '@/pages/Pricing';
+import AdvancedPricing from '@/pages/AdvancedPricing';
 import Resources from '@/pages/Resources';
 import VFXResearch from '@/pages/VFXResearch';
 import VFXIndustryInsights from '@/pages/VFXIndustryInsights';
@@ -25,6 +26,7 @@ const AppRouter = () => {
       <Route path="/services" element={<Services />} />
       <Route path="/team" element={<Team />} />
       <Route path="/pricing" element={<Pricing />} />
+      <Route path="/advanced-pricing" element={<AdvancedPricing />} />
       <Route path="/resources" element={<Resources />} />
       <Route path="/vfx-research" element={<VFXResearch />} />
       <Route path="/vfx-industry-insights" element={<VFXIndustryInsights />} />
