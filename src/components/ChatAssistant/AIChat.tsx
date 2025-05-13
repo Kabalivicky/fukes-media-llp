@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { Send, Mic, MicOff, X, Loader, User, ArrowDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -211,7 +210,7 @@ const AIChat = () => {
                       {message.role === 'user' ? (
                         <User className="h-4 w-4" />
                       ) : (
-                        <AnimatedLogo size="xs" />
+                        <AnimatedLogo size="sm" />
                       )}
                     </Avatar>
                     
@@ -233,7 +232,7 @@ const AIChat = () => {
                 <div className="flex justify-start">
                   <div className="flex gap-3 max-w-[80%]">
                     <Avatar className="h-8 w-8 bg-primary/20">
-                      <AnimatedLogo size="xs" />
+                      <AnimatedLogo size="sm" />
                     </Avatar>
                     <div className="rounded-lg px-4 py-2 bg-accent text-accent-foreground">
                       <div className="flex items-center">
