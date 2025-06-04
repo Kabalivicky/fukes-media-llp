@@ -6,7 +6,7 @@ import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Users, Mic, Video, Avatar, Headphones, Globe } from 'lucide-react';
+import { Users, Mic, Video, User, Headphones, Globe } from 'lucide-react';
 import SEOHelmet from '@/components/SEOHelmet';
 
 const MetaStudio = () => {
@@ -19,7 +19,7 @@ const MetaStudio = () => {
 
   const features = [
     {
-      icon: <Avatar className="h-6 w-6" />,
+      icon: <User className="h-6 w-6" />,
       title: 'Custom Avatars',
       description: 'Web3-compatible avatars for immersive presentations'
     },

@@ -6,7 +6,7 @@ import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { VrHeadset, Smartphone, Download, Eye, Rotate3D, Hand } from 'lucide-react';
+import { Headset, Smartphone, Download, Eye, Rotate3D, Hand } from 'lucide-react';
 import SEOHelmet from '@/components/SEOHelmet';
 
 const ARVRShowroom = () => {

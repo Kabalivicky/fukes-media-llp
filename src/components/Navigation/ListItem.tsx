@@ -9,10 +9,11 @@ interface ListItemProps extends React.ComponentPropsWithoutRef<"a"> {
   title: string;
   href: string;
   icon?: React.ReactNode;
+  isAnchor?: boolean;
 }
 
 const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
-  ({ className, title, children, href, icon, onClick, ...props }, ref) => {
+  ({ className, title, children, href, icon, isAnchor, onClick, ...props }, ref) => {
     const navigate = useNavigate();
     
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

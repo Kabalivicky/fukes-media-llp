@@ -3,7 +3,7 @@
 // This centralizes all navigation links for consistent usage across components
 
 import React from 'react';
-import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home, Calculator, MessagesSquare, VrHeadset, Monitor, Globe, GitBranch } from 'lucide-react';
+import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home, Calculator, MessagesSquare, Headset, Monitor, Globe, GitBranch } from 'lucide-react';
 
 export interface NavLink {
   name: string;
@@ -45,7 +45,7 @@ export const mainNavLinks: NavLink[] = [
   { name: "Industry News", path: "/news", icon: ChevronRight, description: "Latest VFX industry news and updates" },
   { name: "AI Assistant", path: "/chat-assistant", icon: MessagesSquare, description: "Get help with your VFX projects" },
   { name: "Virtual Production", path: "/virtual-production", icon: Monitor, description: "Real-time filmmaking workflows" },
-  { name: "AR/VR Showroom", path: "/ar-vr-showroom", icon: VrHeadset, description: "Immersive project exploration" },
+  { name: "AR/VR Showroom", path: "/ar-vr-showroom", icon: Headset, description: "Immersive project exploration" },
   { name: "Meta Studio", path: "/meta-studio", icon: Globe, description: "Metaverse presentation space" },
   { name: "Real-time Pipeline", path: "/real-time-pipeline", icon: GitBranch, description: "Live production workflow" },
 ];
@@ -70,7 +70,8 @@ export const megaMenuSections = {
         title: "Our Team",
         href: "/team",
         description: "Meet our diverse team of creative professionals and technical experts",
-        icon: Users
+        icon: Users,
+        isAnchor: false
       },
       {
         title: "Investors",
@@ -96,25 +97,29 @@ export const megaMenuSections = {
         title: "VFX Services",
         href: "/services",
         description: "Industry-leading visual effects for film, television, and digital media",
-        icon: FilmIcon
+        icon: FilmIcon,
+        isAnchor: false
       },
       {
         title: "Virtual Production",
         href: "/virtual-production",
         description: "Real-time filmmaking and LED wall simulation workflows",
-        icon: Monitor
+        icon: Monitor,
+        isAnchor: false
       },
       {
         title: "AI Integration",
         href: "/services",
         description: "Cutting-edge AI solutions for content creation and automation",
-        icon: Code
+        icon: Code,
+        isAnchor: false
       },
       {
         title: "Creative Direction",
         href: "/services",
         description: "Expert creative guidance to bring your vision to life",
-        icon: Palette
+        icon: Palette,
+        isAnchor: false
       }
     ]
   },
@@ -126,25 +131,29 @@ export const megaMenuSections = {
         title: "AR/VR Showroom",
         href: "/ar-vr-showroom",
         description: "Explore our VFX projects in immersive AR and VR environments",
-        icon: VrHeadset
+        icon: Headset,
+        isAnchor: false
       },
       {
         title: "Meta Studio",
         href: "/meta-studio",
         description: "Metaverse presentation studio for client meetings and reviews",
-        icon: Globe
+        icon: Globe,
+        isAnchor: false
       },
       {
         title: "Real-time Pipeline",
         href: "/real-time-pipeline",
         description: "Live workflow visualization with instant previews and collaboration",
-        icon: GitBranch
+        icon: GitBranch,
+        isAnchor: false
       },
       {
         title: "Virtual Production",
         href: "/virtual-production",
         description: "LED wall simulation and green screen workflow demonstrations",
-        icon: Monitor
+        icon: Monitor,
+        isAnchor: false
       }
     ]
   },
@@ -156,25 +165,29 @@ export const megaMenuSections = {
         title: "VFX Research",
         href: "/vfx-research",
         description: "In-depth analysis of the global VFX industry landscape",
-        icon: ChevronRight
+        icon: ChevronRight,
+        isAnchor: false
       },
       {
         title: "Industry Insights",
         href: "/vfx-industry-insights",
         description: "Data-driven insights into VFX industry trends and developments",
-        icon: ChevronRight
+        icon: ChevronRight,
+        isAnchor: false
       },
       {
         title: "Help Center",
         href: "/help-center",
         description: "Resources, guides, and support for partners and clients",
-        icon: ChevronRight
+        icon: ChevronRight,
+        isAnchor: false
       },
       {
         title: "Production Guidelines",
         href: "/production-guidelines",
         description: "Technical specifications and workflow guides for productions",
-        icon: ChevronRight
+        icon: ChevronRight,
+        isAnchor: false
       }
     ]
   },
@@ -186,25 +199,29 @@ export const megaMenuSections = {
         title: "Contract Builder",
         href: "/contract-builder",
         description: "Create customized VFX contracts with our AI-powered builder",
-        icon: FileText
+        icon: FileText,
+        isAnchor: false
       },
       {
         title: "Freelancer Portal",
         href: "/freelancer-portal",
         description: "Access your freelancer dashboard, projects and payments",
-        icon: UserIcon
+        icon: UserIcon,
+        isAnchor: false
       },
       {
         title: "Advanced Pricing Calculator",
         href: "/advanced-pricing",
         description: "Get detailed estimates with our comprehensive pricing tool",
-        icon: Calculator
+        icon: Calculator,
+        isAnchor: false
       },
       {
         title: "AI Assistant",
         href: "/chat-assistant",
         description: "Get instant answers to your VFX production questions",
-        icon: MessagesSquare
+        icon: MessagesSquare,
+        isAnchor: false
       }
     ]
   }
