@@ -118,76 +118,47 @@ const CareersSection = () => {
         />
         
         <div className="mb-12 mt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <Card className="border border-border bg-card/50 backdrop-blur-sm h-full">
-                <CardHeader>
-                  <CardTitle className="text-2xl">Animation Industry Career Map</CardTitle>
-                  <CardDescription>
-                    Explore the various career paths and progression routes in the VFX and animation industry
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="relative overflow-hidden rounded-lg">
-                    <img 
-                      src="/lovable-uploads/f94709cf-c63e-43f7-a4fb-62a54bb7e25d.png" 
-                      alt="Career Map" 
-                      className="w-full h-auto object-cover"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 hover:opacity-100 transition-opacity">
-                      <Button variant="default" className="gradient-button">
-                        View Full Career Map
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <div>
-              <Card className="border border-border bg-card/50 backdrop-blur-sm h-full">
-                <CardHeader>
-                  <CardTitle className="text-2xl">Fuke's Media Approach</CardTitle>
-                  <CardDescription>
-                    Our flexible working models and compensation structure
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <h4 className="font-semibold flex items-center">
-                      <Badge variant="outline" className="mr-2 bg-primary/20 text-primary">Freelancers</Badge>
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      Paid per project or shot (typically ₹30-50 per frame for services like rotoscoping)
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <h4 className="font-semibold flex items-center">
-                      <Badge variant="outline" className="mr-2 bg-secondary/20 text-secondary">Contract Employees</Badge>
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      Fixed monthly salaries ranging from ₹20,000-30,000 based on experience and role
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <h4 className="font-semibold flex items-center">
-                      <Badge variant="outline" className="mr-2 bg-accent/20 text-accent">Part-Time Contributors</Badge>
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      Paid based on hours worked or tasks completed with flexible scheduling
-                    </p>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    Learn More About Working With Us
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
+          <Card className="border border-border bg-card/50 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-2xl">Fuke's Media Approach</CardTitle>
+              <CardDescription>
+                Our flexible working models and compensation structure
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <h4 className="font-semibold flex items-center">
+                  <Badge variant="outline" className="mr-2 bg-primary/20 text-primary">Freelancers</Badge>
+                </h4>
+                <p className="text-sm text-muted-foreground">
+                  Paid per project or shot (typically ₹30-50 per frame for services like rotoscoping)
+                </p>
+              </div>
+              
+              <div className="space-y-2">
+                <h4 className="font-semibold flex items-center">
+                  <Badge variant="outline" className="mr-2 bg-secondary/20 text-secondary">Contract Employees</Badge>
+                </h4>
+                <p className="text-sm text-muted-foreground">
+                  Fixed monthly salaries ranging from ₹20,000-30,000 based on experience and role
+                </p>
+              </div>
+              
+              <div className="space-y-2">
+                <h4 className="font-semibold flex items-center">
+                  <Badge variant="outline" className="mr-2 bg-accent/20 text-accent">Part-Time Contributors</Badge>
+                </h4>
+                <p className="text-sm text-muted-foreground">
+                  Paid based on hours worked or tasks completed with flexible scheduling
+                </p>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button variant="outline" className="w-full">
+                Learn More About Working With Us
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
         
         <div className="mt-12">
