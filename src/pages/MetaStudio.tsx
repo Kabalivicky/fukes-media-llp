@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import MainLayout from '@/components/Layout/MainLayout';
@@ -127,7 +126,7 @@ const MetaStudio = () => {
                               className="w-full"
                               onClick={() => setAvatarSelected(true)}
                             >
-                              <Avatar className="mr-2 h-4 w-4" />
+                              <User className="mr-2 h-4 w-4" />
                               Select Avatar
                             </Button>
                           ) : (

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import MainLayout from '@/components/Layout/MainLayout';
@@ -50,7 +49,7 @@ const ARVRShowroom = () => {
       description: 'View assets in your real environment'
     },
     {
-      icon: <VrHeadset className="h-6 w-6" />,
+      icon: <Headset className="h-6 w-6" />,
       title: 'VR Ready Scenes',
       description: 'WebXR compatible for headset viewing'
     },
@@ -113,7 +112,7 @@ const ARVRShowroom = () => {
                     
                     <div className="aspect-video bg-muted rounded-lg flex items-center justify-center mb-4">
                       <div className="text-center">
-                        <VrHeadset className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                        <Headset className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
                         <h4 className="text-lg font-semibold mb-2">
                           {environments.find(e => e.id === selectedEnvironment)?.title}
                         </h4>
@@ -128,7 +127,7 @@ const ARVRShowroom = () => {
 
                     <div className="flex flex-col sm:flex-row gap-4">
                       <Button className="flex-1">
-                        <VrHeadset className="mr-2 h-4 w-4" />
+                        <Headset className="mr-2 h-4 w-4" />
                         Launch VR Experience
                       </Button>
                       <Button variant="outline" className="flex-1">

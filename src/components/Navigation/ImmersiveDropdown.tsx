@@ -46,7 +46,7 @@ const ImmersiveDropdown = () => {
                 key={item.title}
                 title={item.title}
                 href={item.href}
-                icon={item.icon}
+                icon={item.icon ? <item.icon className="h-4 w-4" /> : undefined}
                 isAnchor={item.isAnchor}
               >
                 {item.description}
