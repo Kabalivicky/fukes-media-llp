@@ -13,6 +13,7 @@ import { Home, Calculator, MessagesSquare } from 'lucide-react';
 import { handleAnchorClick, isLinkActive } from '@/utils/navigationData';
 import AboutDropdown from './AboutDropdown';
 import ServicesDropdown from './ServicesDropdown';
+import ImmersiveDropdown from './ImmersiveDropdown';
 import ResourcesDropdown from './ResourcesDropdown';
 import ToolsDropdown from './ToolsDropdown';
 
@@ -62,6 +63,9 @@ const MegaMenu = () => {
 
         {/* Services Dropdown */}
         <ServicesDropdown />
+
+        {/* Immersive Dropdown */}
+        <ImmersiveDropdown />
 
         {/* Resources Dropdown */}
         <ResourcesDropdown />

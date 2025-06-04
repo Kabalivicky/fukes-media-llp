@@ -17,6 +17,10 @@ import ProductionGuidelines from '@/pages/ProductionGuidelines';
 import NotFound from '@/pages/NotFound';
 import News from '@/pages/News';
 import ChatAssistant from '@/pages/ChatAssistant';
+import VirtualProduction from '@/pages/VirtualProduction';
+import ARVRShowroom from '@/pages/ARVRShowroom';
+import MetaStudio from '@/pages/MetaStudio';
+import RealTimePipeline from '@/pages/RealTimePipeline';
 
 const AppRouter = () => {
   return (
@@ -37,6 +41,10 @@ const AppRouter = () => {
       <Route path="/production-guidelines" element={<ProductionGuidelines />} />
       <Route path="/news" element={<News />} />
       <Route path="/chat-assistant" element={<ChatAssistant />} />
+      <Route path="/virtual-production" element={<VirtualProduction />} />
+      <Route path="/ar-vr-showroom" element={<ARVRShowroom />} />
+      <Route path="/meta-studio" element={<MetaStudio />} />
+      <Route path="/real-time-pipeline" element={<RealTimePipeline />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

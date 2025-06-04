@@ -3,7 +3,7 @@
 // This centralizes all navigation links for consistent usage across components
 
 import React from 'react';
-import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home, Calculator, MessagesSquare } from 'lucide-react';
+import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home, Calculator, MessagesSquare, VrHeadset, Monitor, Globe, GitBranch } from 'lucide-react';
 
 export interface NavLink {
   name: string;
@@ -44,6 +44,10 @@ export const mainNavLinks: NavLink[] = [
   { name: "Team", path: "/team", icon: Users },
   { name: "Industry News", path: "/news", icon: ChevronRight, description: "Latest VFX industry news and updates" },
   { name: "AI Assistant", path: "/chat-assistant", icon: MessagesSquare, description: "Get help with your VFX projects" },
+  { name: "Virtual Production", path: "/virtual-production", icon: Monitor, description: "Real-time filmmaking workflows" },
+  { name: "AR/VR Showroom", path: "/ar-vr-showroom", icon: VrHeadset, description: "Immersive project exploration" },
+  { name: "Meta Studio", path: "/meta-studio", icon: Globe, description: "Metaverse presentation space" },
+  { name: "Real-time Pipeline", path: "/real-time-pipeline", icon: GitBranch, description: "Live production workflow" },
 ];
 
 // Home page anchor links
@@ -95,22 +99,52 @@ export const megaMenuSections = {
         icon: FilmIcon
       },
       {
+        title: "Virtual Production",
+        href: "/virtual-production",
+        description: "Real-time filmmaking and LED wall simulation workflows",
+        icon: Monitor
+      },
+      {
         title: "AI Integration",
         href: "/services",
         description: "Cutting-edge AI solutions for content creation and automation",
         icon: Code
       },
       {
-        title: "Production Support",
-        href: "/services",
-        description: "Comprehensive production services from pre to post",
-        icon: FilmIcon
-      },
-      {
         title: "Creative Direction",
         href: "/services",
         description: "Expert creative guidance to bring your vision to life",
         icon: Palette
+      }
+    ]
+  },
+  immersive: {
+    title: "Immersive",
+    path: "/ar-vr-showroom",
+    items: [
+      {
+        title: "AR/VR Showroom",
+        href: "/ar-vr-showroom",
+        description: "Explore our VFX projects in immersive AR and VR environments",
+        icon: VrHeadset
+      },
+      {
+        title: "Meta Studio",
+        href: "/meta-studio",
+        description: "Metaverse presentation studio for client meetings and reviews",
+        icon: Globe
+      },
+      {
+        title: "Real-time Pipeline",
+        href: "/real-time-pipeline",
+        description: "Live workflow visualization with instant previews and collaboration",
+        icon: GitBranch
+      },
+      {
+        title: "Virtual Production",
+        href: "/virtual-production",
+        description: "LED wall simulation and green screen workflow demonstrations",
+        icon: Monitor
       }
     ]
   },
@@ -189,7 +223,6 @@ export const isLinkActive = (currentPath: string, linkPath: string): boolean => 
   return currentPath === linkPath;
 };
 
-// Changed the function signature to accept React.MouseEvent<HTMLAnchorElement>
 export const handleAnchorClick = (
   e: React.MouseEvent<HTMLAnchorElement>, 
   path: string, 
