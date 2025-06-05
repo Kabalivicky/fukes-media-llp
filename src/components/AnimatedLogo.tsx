@@ -20,7 +20,7 @@ const AnimatedLogo = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const { theme } = useTheme();
-  const [logoSrc, setLogoSrc] = useState('/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png');
+  const [logoSrc, setLogoSrc] = useState('');
   
   // Size mapping
   const sizeMap = {
@@ -32,9 +32,13 @@ const AnimatedLogo = ({
   
   // Update logo based on theme
   useEffect(() => {
-    // Note: In a real implementation, you would have two separate logo images for dark/light themes
-    // For now, we'll just use the same logo with different glow effects
-    setLogoSrc('/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png');
+    if (theme === 'dark') {
+      // Use white logo on dark background
+      setLogoSrc('/lovable-uploads/773570e5-fe9a-45c8-b246-6337fa83b87d.png');
+    } else {
+      // Use dark logo on light background
+      setLogoSrc('/lovable-uploads/41ad67c6-c425-4321-8e0c-110ee43c419c.png');
+    }
   }, [theme]);
   
   useEffect(() => {
