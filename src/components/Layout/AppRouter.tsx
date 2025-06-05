@@ -21,6 +21,7 @@ import VirtualProduction from '@/pages/VirtualProduction';
 import ARVRShowroom from '@/pages/ARVRShowroom';
 import MetaStudio from '@/pages/MetaStudio';
 import RealTimePipeline from '@/pages/RealTimePipeline';
+import AITools from '@/pages/AITools';
 
 const AppRouter = () => {
   return (
@@ -45,6 +46,7 @@ const AppRouter = () => {
       <Route path="/ar-vr-showroom" element={<ARVRShowroom />} />
       <Route path="/meta-studio" element={<MetaStudio />} />
       <Route path="/real-time-pipeline" element={<RealTimePipeline />} />
+      <Route path="/ai-tools" element={<AITools />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

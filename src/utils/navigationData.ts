@@ -1,9 +1,8 @@
-
 // Navigation data structure for the entire application
 // This centralizes all navigation links for consistent usage across components
 
 import React from 'react';
-import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home, Calculator, MessagesSquare, Headset, Monitor, Globe, GitBranch } from 'lucide-react';
+import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home, Calculator, MessagesSquare, Headset, Monitor, Globe, GitBranch, Brain } from 'lucide-react';
 
 export interface NavLink {
   name: string;
@@ -32,6 +31,7 @@ export const mainNavLinks: NavLink[] = [
   { name: "Home", path: "/", icon: Home },
   { name: "About", path: "/about", icon: Users },
   { name: "Services", path: "/services", icon: FilmIcon },
+  { name: "AI Tools", path: "/ai-tools", icon: Brain, description: "AI-powered VFX tools and features" },
   { name: "VFX Research", path: "/vfx-research", icon: ChevronRight },
   { name: "VFX Industry Insights", path: "/vfx-industry-insights", icon: ChevronRight },
   { name: "Resources", path: "/resources", icon: ChevronRight },
@@ -101,17 +101,17 @@ export const megaMenuSections = {
         isAnchor: false
       },
       {
+        title: "AI Tools",
+        href: "/ai-tools",
+        description: "AI-powered visual generation, emotion detection, and smart automation",
+        icon: Brain,
+        isAnchor: false
+      },
+      {
         title: "Virtual Production",
         href: "/virtual-production",
         description: "Real-time filmmaking and LED wall simulation workflows",
         icon: Monitor,
-        isAnchor: false
-      },
-      {
-        title: "AI Integration",
-        href: "/services",
-        description: "Cutting-edge AI solutions for content creation and automation",
-        icon: Code,
         isAnchor: false
       },
       {
@@ -195,6 +195,13 @@ export const megaMenuSections = {
     title: "Tools",
     path: "/contract-builder",
     items: [
+      {
+        title: "AI Tools",
+        href: "/ai-tools",
+        description: "AI visual generation, emotion detection, and 3D asset management",
+        icon: Brain,
+        isAnchor: false
+      },
       {
         title: "Contract Builder",
         href: "/contract-builder",

@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Home, Calculator, MessagesSquare } from 'lucide-react';
+import { Home, Calculator, MessagesSquare, Brain } from 'lucide-react';
 import { handleAnchorClick, isLinkActive } from '@/utils/navigationData';
 import AboutDropdown from './AboutDropdown';
 import ServicesDropdown from './ServicesDropdown';
@@ -63,6 +63,23 @@ const MegaMenu = () => {
 
         {/* Services Dropdown */}
         <ServicesDropdown />
+
+        {/* AI Tools */}
+        <NavigationMenuItem>
+          <Button 
+            variant="link" 
+            className="p-0 w-full" 
+            onClick={(e) => handleNavigation(e, '/ai-tools')}
+          >
+            <NavigationMenuLink className={cn(
+              navigationMenuTriggerStyle(),
+              isLinkActive(currentPath, '/ai-tools') ? "text-primary font-medium" : ""
+            )}>
+              <Brain className="mr-2 h-4 w-4" />
+              AI Tools
+            </NavigationMenuLink>
+          </Button>
+        </NavigationMenuItem>
 
         {/* Immersive Dropdown */}
         <ImmersiveDropdown />
