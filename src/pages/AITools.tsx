@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -8,7 +7,7 @@ import EmotionDetection from '@/components/AI/EmotionDetection';
 import AssetLibrary from '@/components/Interactive/3DAssetLibrary';
 import CaseStudies from '@/components/Content/CaseStudies';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Brain, Wand2, Cube, FileText } from 'lucide-react';
+import { Brain, Wand2, Box, FileText } from 'lucide-react';
 
 const AITools = () => {
   return (
@@ -48,7 +47,7 @@ const AITools = () => {
                   Emotion Detection
                 </TabsTrigger>
                 <TabsTrigger value="asset-library" className="flex items-center gap-2">
-                  <Cube className="h-4 w-4" />
+                  <Box className="h-4 w-4" />
                   3D Assets
                 </TabsTrigger>
                 <TabsTrigger value="case-studies" className="flex items-center gap-2">

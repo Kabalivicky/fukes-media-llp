@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, Download, Eye, Cube, FileImage, Sparkles, Layers } from 'lucide-react';
+import { Search, Download, Eye, Box, FileImage, Sparkles, Layers } from 'lucide-react';
 
 interface Asset {
   id: string;
@@ -26,7 +25,7 @@ const AssetLibrary = () => {
 
   const categories = [
     { id: 'all', name: 'All Assets', icon: Layers },
-    { id: 'characters', name: 'Characters', icon: Cube },
+    { id: 'characters', name: 'Characters', icon: Box },
     { id: 'environments', name: 'Environments', icon: FileImage },
     { id: 'effects', name: 'Effects', icon: Sparkles }
   ];
@@ -211,7 +210,7 @@ const AssetLibrary = () => {
 
       {filteredAssets.length === 0 && (
         <div className="text-center py-12">
-          <Cube className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+          <Box className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
           <h3 className="text-lg font-semibold mb-2">No assets found</h3>
           <p className="text-muted-foreground">Try adjusting your search or filters</p>
         </div>
