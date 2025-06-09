@@ -3,7 +3,6 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RefreshCw, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { useNavigate } from 'react-router-dom';
 
 interface Props {
   children: ReactNode;
@@ -29,7 +28,11 @@ const ErrorFallback = ({
   errorInfo: ErrorInfo | null;
   resetErrorBoundary: () => void;
 }) => {
-  const navigate = useNavigate();
+  
+  const handleGoHome = () => {
+    // Use window.location instead of useNavigate to avoid Router context issues
+    window.location.href = '/';
+  };
   
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] p-6 bg-background/90 backdrop-blur-lg rounded-lg border border-border text-center">
@@ -54,7 +57,7 @@ const ErrorFallback = ({
       <div className="flex gap-3">
         <Button 
           variant="outline" 
-          onClick={() => navigate('/')}
+          onClick={handleGoHome}
           className="flex items-center"
         >
           <ArrowLeft className="mr-2 h-4 w-4" /> Go Home
