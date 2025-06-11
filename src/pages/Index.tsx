@@ -8,7 +8,6 @@ import PricingCalculator from '@/components/PricingCalculator';
 import PortfolioSection from '@/components/PortfolioSection';
 import TeamSection from '@/components/TeamSection';
 import CareersSection from '@/components/CareersSection';
-import InvestorsSection from '@/components/InvestorsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import SEOHelmet from '@/components/SEOHelmet';
@@ -42,7 +41,6 @@ const Home = () => {
     portfolio: null,
     team: null,
     careers: null,
-    investors: null,
     contact: null
   });
 
@@ -203,19 +201,6 @@ const Home = () => {
                 variants={fadeInUpVariants}
               >
                 <CareersSection />
-              </motion.div>
-            </ErrorBoundary>
-          </div>
-          
-          <div id="investors" ref={(el) => sectionsRef.current.investors = el}>
-            <ErrorBoundary>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeInUpVariants}
-              >
-                <InvestorsSection />
               </motion.div>
             </ErrorBoundary>
           </div>

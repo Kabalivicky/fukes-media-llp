@@ -21,6 +21,7 @@ const AnimatedLogo = ({
   const isInView = useInView(ref, { once: true });
   const { theme } = useTheme();
   const [logoSrc, setLogoSrc] = useState('');
+  const [logoError, setLogoError] = useState(false);
   
   // Size mapping
   const sizeMap = {
@@ -32,11 +33,12 @@ const AnimatedLogo = ({
   
   // Update logo based on theme
   useEffect(() => {
+    setLogoError(false);
     if (theme === 'dark') {
-      // Use white logo on dark background
+      // Use the uploaded white logo
       setLogoSrc('/lovable-uploads/773570e5-fe9a-45c8-b246-6337fa83b87d.png');
     } else {
-      // Use dark logo on light background
+      // Use the uploaded dark logo
       setLogoSrc('/lovable-uploads/41ad67c6-c425-4321-8e0c-110ee43c419c.png');
     }
   }, [theme]);
@@ -46,6 +48,17 @@ const AnimatedLogo = ({
       controls.start('visible');
     }
   }, [controls, isInView]);
+
+  const handleImageError = () => {
+    setLogoError(true);
+  };
+  
+  // Fallback logo component
+  const FallbackLogo = () => (
+    <div className={`${sizeMap[size]} flex items-center justify-center bg-gradient-to-br from-fukes-blue to-fukes-red rounded-lg text-white font-bold text-xl`}>
+      FM
+    </div>
+  );
   
   return (
     <motion.div
@@ -60,7 +73,7 @@ const AnimatedLogo = ({
     >
       <div className="relative w-full h-full perspective-1000">
         <motion.div
-          className="absolute inset-0"
+          className="absolute inset-0 flex items-center justify-center"
           initial={{ rotateY: 0 }}
           animate={{ 
             rotateY: [0, 10, -10, 0],
@@ -72,11 +85,17 @@ const AnimatedLogo = ({
             repeat: Infinity,
           }}
         >
-          <img 
-            src={logoSrc}
-            alt="Fuke's Media Logo"
-            className="w-full h-full object-contain"
-          />
+          {logoError ? (
+            <FallbackLogo />
+          ) : (
+            <img 
+              src={logoSrc}
+              alt="Fuke's Media Logo"
+              className="w-full h-full object-contain"
+              onError={handleImageError}
+              onLoad={() => setLogoError(false)}
+            />
+          )}
         </motion.div>
         
         {/* Glowing effects - theme adaptive */}

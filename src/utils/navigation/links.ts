@@ -26,12 +26,11 @@ export const mainNavLinks: NavLink[] = [
   { name: "Real-time Pipeline", path: "/real-time-pipeline", icon: GitBranch, description: "Live production workflow" },
 ];
 
-// Home page anchor links
+// Home page anchor links - removed investors
 export const homeAnchorLinks: NavLink[] = [
   { name: "Services", path: "/#services", isAnchor: true },
   { name: "Portfolio", path: "/#portfolio", isAnchor: true },
   { name: "Team", path: "/#team", isAnchor: true },
   { name: "Careers", path: "/#careers", isAnchor: true },
-  { name: "Investors", path: "/#investors", isAnchor: true },
   { name: "Contact", path: "/#contact", isAnchor: true }
 ];

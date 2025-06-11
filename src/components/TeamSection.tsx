@@ -20,26 +20,26 @@ interface TeamMember {
 const TeamSection = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  // Updated team members with correct names and diverse images
+  // Updated team members with male avatars
   const teamMembers: TeamMember[] = [
     {
       name: 'Vikram',
       role: 'Project Management',
       bio: 'With extensive experience in VFX project coordination, Vikram ensures that all our projects are delivered on time and within budget. His exceptional organizational skills and attention to detail help maintain the highest standards of quality.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram&backgroundColor=0057B7&clothingColor=D50032',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram&backgroundColor=0057B7&clothingColor=D50032&gender=male&hair=short01,short02,short03&facialHair=blank,light&accessories=blank',
       social: {
         linkedin: 'https://linkedin.com/in/vikram',
-        email: 'vikram@company.com'
+        email: 'vikram@fukesmedia.com'
       }
     },
     {
       name: 'Arjun',
       role: 'Production Head',
       bio: 'As our Production Head, Arjun oversees all creative and technical aspects of our VFX productions. With his background in both film and technology, he bridges the gap between creative vision and technical execution.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=D50032&clothingColor=0057B7',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=D50032&clothingColor=0057B7&gender=male&hair=short04,short05,short06&facialHair=blank,light&accessories=blank',
       social: {
         linkedin: 'https://linkedin.com/in/arjun',
-        email: 'arjun@company.com',
+        email: 'arjun@fukesmedia.com',
         phone: '+91 98765 43210'
       }
     },
@@ -47,30 +47,30 @@ const TeamSection = () => {
       name: 'Vignesh',
       role: 'Business Development',
       bio: 'Vignesh leads our business strategy and client relationships. His understanding of the VFX industry landscape helps us identify opportunities and build lasting partnerships with studios and production houses worldwide.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vignesh&backgroundColor=009639&clothingColor=FFCC00',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vignesh&backgroundColor=009639&clothingColor=FFCC00&gender=male&hair=short07,short08,short09&facialHair=blank,light&accessories=blank',
       social: {
         linkedin: 'https://linkedin.com/in/vignesh',
-        email: 'vignesh@company.com'
+        email: 'vignesh@fukesmedia.com'
       }
     },
     {
       name: 'Harshith',
       role: 'Creative Director',
       bio: 'Harshith brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, he ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&gender=female&backgroundColor=FFCC00&clothingColor=009639',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=FFCC00&clothingColor=009639&gender=male&hair=short10,short11,short12&facialHair=blank,light&accessories=blank',
       social: {
         linkedin: 'https://linkedin.com/in/harshith',
-        email: 'harshith@company.com'
+        email: 'harshith@fukesmedia.com'
       }
     },
     {
       name: 'Sai Prasad',
       role: 'Operational Manager',
       bio: 'Sai Prasad optimizes our workflow processes and resource allocation. His systematic approach to operations ensures smooth collaboration between departments and maximizes productivity across all projects.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF&clothingColor=D50032',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF&clothingColor=D50032&gender=male&hair=short13,short14,short15&facialHair=blank,light&accessories=blank',
       social: {
         linkedin: 'https://linkedin.com/in/saiprasad',
-        email: 'saiprasad@company.com',
+        email: 'saiprasad@fukesmedia.com',
         phone: '+91 97654 32109'
       }
     },
@@ -78,10 +78,10 @@ const TeamSection = () => {
       name: 'Sandesh',
       role: 'Accounts & Financial Head',
       bio: 'Sandesh manages our financial planning and reporting with precision. His expertise in budgeting for VFX productions helps us deliver exceptional results while maintaining financial efficiency.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=0057B7&clothingColor=009639',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=0057B7&clothingColor=009639&gender=male&hair=short16,short17,short18&facialHair=blank,light&accessories=blank',
       social: {
         linkedin: 'https://linkedin.com/in/sandesh',
-        email: 'sandesh@company.com'
+        email: 'sandesh@fukesmedia.com'
       }
     }
   ];
@@ -105,7 +105,7 @@ const TeamSection = () => {
           {teamMembers.map((member, index) => (
             <FadeInOnScroll key={index} delay={index * 100}>
               <div 
-                className={`glass rounded-xl p-8 transition-all duration-300 ${
+                className={`glass rounded-xl p-8 transition-all duration-300 cursor-pointer ${
                   activeIndex === index ? 'scale-105 shadow-lg' : 'hover:scale-102'
                 }`}
                 onClick={() => handleClick(index)}
@@ -147,6 +147,8 @@ const TeamSection = () => {
                           href={member.social.linkedin} 
                           className="text-muted-foreground hover:text-primary transition-colors"
                           aria-label={`${member.name}'s LinkedIn profile`}
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
                           <Linkedin size={18} aria-hidden="true" />
                         </a>

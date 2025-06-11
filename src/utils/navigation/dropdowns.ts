@@ -16,13 +16,6 @@ export const megaMenuSections = {
         isAnchor: false
       },
       {
-        title: "Investors",
-        href: "/#investors",
-        description: "Learn about our investment partners and funding initiatives",
-        icon: Zap,
-        isAnchor: true
-      },
-      {
         title: "Careers",
         href: "/#careers",
         description: "Join our team and become part of the future of VFX",
@@ -36,7 +29,7 @@ export const megaMenuSections = {
     path: "/services",
     items: [
       {
-        title: "VFX Services",
+        title: "VFX Solutions",
         href: "/services",
         description: "Industry-leading visual effects for film, television, and digital media",
         icon: FilmIcon,

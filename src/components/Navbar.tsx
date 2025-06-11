@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MegaMenu from './Navigation/MegaMenu';
 import AnimatedLogo from './AnimatedLogo';
 import MobileNav from './Navigation/MobileNav';
@@ -8,13 +8,24 @@ import { Headset } from 'lucide-react';
 import ThemeToggle from './Navigation/ThemeToggle';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleGetStartedClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      navigate('/#contact');
+    }
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/40">
       <div className="container flex items-center justify-between h-16">
         {/* Logo & Branding */}
         <div className="flex items-center gap-2">
-          <Link to="/" className="flex items-center gap-2">
-            <AnimatedLogo size="sm" />
+          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <AnimatedLogo size="sm" showGlow={false} withParticles={false} />
             <span className="font-bold text-xl tracking-tight">Fuke's Media</span>
           </Link>
         </div>
@@ -33,12 +44,22 @@ const Navbar = () => {
               Industry News
             </Button>
           </Link>
+          
           <Link to="/chat-assistant">
             <Button size="sm" className="gradient-button">
               <Headset className="mr-2 h-4 w-4" />
               AI Assistant
             </Button>
           </Link>
+          
+          <Button 
+            size="sm" 
+            className="gradient-button hidden md:flex"
+            onClick={handleGetStartedClick}
+          >
+            Get Started
+          </Button>
+          
           <MobileNav />
         </div>
       </div>

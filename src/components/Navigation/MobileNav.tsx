@@ -31,6 +31,7 @@ const MobileNav = () => {
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
+    setIsMenuOpen(false);
     
     if (path.includes('#')) {
       // For hash links
@@ -51,8 +52,16 @@ const MobileNav = () => {
     } else {
       navigate(path);
     }
-    
+  };
+
+  const handleGetStartedClick = () => {
     setIsMenuOpen(false);
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      navigate('/#contact');
+    }
   };
 
   return (
@@ -76,8 +85,16 @@ const MobileNav = () => {
           aria-label="Mobile navigation"
         >
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-1">
-            {/* Main Navigation Links */}
-            {mainNavLinks.map((link, index) => (
+            {/* Main Navigation Links - Show only most important ones for mobile */}
+            {[
+              { name: "Home", path: "/" },
+              { name: "About", path: "/about" },
+              { name: "Services", path: "/services" },
+              { name: "AI Tools", path: "/ai-tools" },
+              { name: "Team", path: "/team" },
+              { name: "Pricing", path: "/pricing" },
+              { name: "Contact", path: "/#contact" }
+            ].map((link, index) => (
               <a 
                 key={index}
                 href={link.path}
@@ -95,8 +112,8 @@ const MobileNav = () => {
             {/* Home page anchor links */}
             {location.pathname === '/' && (
               <>
-                <div className="px-4 py-2 text-sm font-medium text-muted-foreground">
-                  Home Page Sections
+                <div className="px-4 py-2 text-sm font-medium text-muted-foreground border-t border-border mt-2 pt-4">
+                  Quick Links
                 </div>
                 {homeAnchorLinks.map((link, index) => (
                   <a 
@@ -117,11 +134,7 @@ const MobileNav = () => {
             
             <Button 
               className="gradient-button w-full mt-4" 
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/#contact');
-                setIsMenuOpen(false);
-              }}
+              onClick={handleGetStartedClick}
             >
               Get Started
             </Button>
