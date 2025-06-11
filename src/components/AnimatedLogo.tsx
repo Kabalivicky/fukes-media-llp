@@ -31,15 +31,15 @@ const AnimatedLogo = ({
     xl: 'w-48 h-48',
   };
   
-  // Update logo based on theme
+  // Update logo based on theme using the new uploaded logos
   useEffect(() => {
     setLogoError(false);
     if (theme === 'dark') {
-      // Use the uploaded white logo
-      setLogoSrc('/lovable-uploads/773570e5-fe9a-45c8-b246-6337fa83b87d.png');
+      // Use the white/light logo for dark theme
+      setLogoSrc('/lovable-uploads/b0527de2-ddba-4e23-a8ca-241f0f68d7c3.png');
     } else {
-      // Use the uploaded dark logo
-      setLogoSrc('/lovable-uploads/41ad67c6-c425-4321-8e0c-110ee43c419c.png');
+      // Use the dark logo for light theme
+      setLogoSrc('/lovable-uploads/6f4b1c81-acc3-4ad7-b5bb-fc537f6f91eb.png');
     }
   }, [theme]);
   

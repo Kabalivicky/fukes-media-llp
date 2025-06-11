@@ -3,14 +3,22 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight } from 'lucide-react';
+
 const Footer = () => {
-  return <footer className="bg-card/30 backdrop-blur-md border-t border-border">
+  return (
+    <footer className="bg-card/30 backdrop-blur-md border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 object-cover">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <img alt="Fuke's Media Logo" className="h-10" src="/lovable-uploads/a0ad627e-2387-4f68-9856-c313d6d46f87.png" />
-              
+              <img 
+                alt="Fuke's Media Logo" 
+                className="h-10" 
+                src="/lovable-uploads/6f4b1c81-acc3-4ad7-b5bb-fc537f6f91eb.png" 
+                onError={(e) => {
+                  e.currentTarget.src = '/lovable-uploads/b0527de2-ddba-4e23-a8ca-241f0f68d7c3.png';
+                }}
+              />
             </Link>
             <p className="text-muted-foreground mb-4">
               Pioneering AI-driven VFX and creative services for the digital media landscape.
@@ -110,6 +118,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;
