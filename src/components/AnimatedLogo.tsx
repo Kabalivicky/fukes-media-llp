@@ -30,15 +30,15 @@ const AnimatedLogo = ({
     xl: 'w-48 h-48',
   };
   
-  // Update logo based on theme using the correct logos
+  // Update logo based on theme using the new transparent logos
   useEffect(() => {
     setLogoError(false);
     if (theme === 'dark') {
-      // Use the white/light logo for dark theme
-      setLogoSrc('/lovable-uploads/b0527de2-ddba-4e23-a8ca-241f0f68d7c3.png');
+      // Use the white logo for dark theme
+      setLogoSrc('/lovable-uploads/944a6085-c5b4-40f4-9860-cd0c9bf5f682.png');
     } else {
-      // Use the dark logo for light theme
-      setLogoSrc('/lovable-uploads/6f4b1c81-acc3-4ad7-b5bb-fc537f6f91eb.png');
+      // Use the black logo for light theme
+      setLogoSrc('/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png');
     }
   }, [theme]);
   

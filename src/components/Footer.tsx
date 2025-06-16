@@ -1,10 +1,14 @@
+
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight } from 'lucide-react';
+import { useTheme } from '@/components/ui/theme-provider';
 
 const Footer = () => {
+  const { theme } = useTheme();
+  
   return (
     <footer className="bg-card/30 backdrop-blur-md border-t border-border">
       <div className="container mx-auto px-4 py-12">
@@ -14,10 +18,10 @@ const Footer = () => {
               <img 
                 alt="Fuke's Media Logo" 
                 className="h-10" 
-                src="/lovable-uploads/6f4b1c81-acc3-4ad7-b5bb-fc537f6f91eb.png" 
-                onError={(e) => {
-                  e.currentTarget.src = '/lovable-uploads/b0527de2-ddba-4e23-a8ca-241f0f68d7c3.png';
-                }}
+                src={theme === 'dark' 
+                  ? '/lovable-uploads/944a6085-c5b4-40f4-9860-cd0c9bf5f682.png'
+                  : '/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png'
+                }
               />
             </Link>
             <p className="text-muted-foreground mb-4">
