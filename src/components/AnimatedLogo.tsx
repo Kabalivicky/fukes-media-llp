@@ -1,4 +1,3 @@
-
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { useTheme } from '@/components/ui/theme-provider';
@@ -31,7 +30,7 @@ const AnimatedLogo = ({
     xl: 'w-48 h-48',
   };
   
-  // Update logo based on theme using the new uploaded logos
+  // Update logo based on theme using the correct logos
   useEffect(() => {
     setLogoError(false);
     if (theme === 'dark') {
