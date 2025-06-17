@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Brain, Zap, Eye } from 'lucide-react';
@@ -12,10 +11,9 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background gradient */}
+      {/* ... keep existing code (background gradient and animated elements) */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/50" />
       
-      {/* Animated background elements */}
       <div className="absolute inset-0">
         {[...Array(20)].map((_, i) => (
           <motion.div
@@ -43,7 +41,7 @@ const HeroSection = () => {
 
       <div className="container relative z-10">
         <div className="text-center space-y-8">
-          {/* Logo Animation */}
+          {/* ... keep existing code (logo animation, main heading, AI features highlight, CTA buttons, AI demo section) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -53,7 +51,6 @@ const HeroSection = () => {
             <AnimatedLogo size="xl" />
           </motion.div>
 
-          {/* Main Heading with Gradient Text */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -71,7 +68,6 @@ const HeroSection = () => {
             </p>
           </motion.div>
 
-          {/* AI Features Highlight */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -98,7 +94,6 @@ const HeroSection = () => {
             ))}
           </motion.div>
 
-          {/* Call-to-Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -129,7 +124,6 @@ const HeroSection = () => {
             </Link>
           </motion.div>
 
-          {/* AI Demo Section */}
           {showAIDemo && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
@@ -142,7 +136,7 @@ const HeroSection = () => {
             </motion.div>
           )}
 
-          {/* Trust Indicators */}
+          {/* Trust Indicators - removed studio names */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -167,7 +161,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* ... keep existing code (scroll indicator) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
