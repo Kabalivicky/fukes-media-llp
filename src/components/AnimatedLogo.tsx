@@ -1,4 +1,3 @@
-
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { useTheme } from '@/components/ui/theme-provider';
@@ -37,8 +36,8 @@ const AnimatedLogo = ({
   useEffect(() => {
     setLogoError(false);
     if (theme === 'dark') {
-      // Use the white logo for dark theme
-      setLogoSrc('/lovable-uploads/944a6085-c5b4-40f4-9860-cd0c9bf5f682.png');
+      // Use the new colorful logo for dark theme
+      setLogoSrc('/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png');
     } else {
       // Use the black logo for light theme
       setLogoSrc('/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png');
