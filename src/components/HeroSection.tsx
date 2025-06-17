@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Brain, Zap, Eye } from 'lucide-react';
@@ -38,6 +39,16 @@ const HeroSection = () => {
           />
         ))}
       </div>
+
+      {/* Logo positioned in top-left corner */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, type: "spring" }}
+        className="absolute top-20 left-8 z-20"
+      >
+        <AnimatedLogo size="lg" />
+      </motion.div>
 
       <div className="container relative z-10">
         <div className="text-center space-y-8">
