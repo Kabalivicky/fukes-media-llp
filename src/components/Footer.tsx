@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,14 +14,24 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 object-cover">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <img 
-                alt="Fuke's Media Logo" 
-                className="h-10" 
-                src={theme === 'dark' 
-                  ? '/lovable-uploads/944a6085-c5b4-40f4-9860-cd0c9bf5f682.png'
-                  : '/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png'
-                }
-              />
+              <div className="relative">
+                <img 
+                  alt="Fuke's Media Logo" 
+                  className="h-10" 
+                  src={theme === 'dark' 
+                    ? '/lovable-uploads/944a6085-c5b4-40f4-9860-cd0c9bf5f682.png'
+                    : '/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png'
+                  }
+                />
+                {/* Design strip element */}
+                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3/4 h-0.5">
+                  <img 
+                    src="/lovable-uploads/de05f56b-a2c6-43b6-b516-77732a316239.png"
+                    alt="Design Accent"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </div>
             </Link>
             <p className="text-muted-foreground mb-4">
               Pioneering AI-driven VFX and creative services for the digital media landscape.

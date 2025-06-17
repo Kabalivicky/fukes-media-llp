@@ -1,3 +1,4 @@
+
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { useTheme } from '@/components/ui/theme-provider';
@@ -7,13 +8,15 @@ interface AnimatedLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showGlow?: boolean;
   withParticles?: boolean;
+  showStrip?: boolean;
 }
 
 const AnimatedLogo = ({ 
   className = '', 
   size = 'md', 
   showGlow = true,
-  withParticles = true 
+  withParticles = true,
+  showStrip = true
 }: AnimatedLogoProps) => {
   const controls = useAnimation();
   const ref = useRef(null);
@@ -96,6 +99,22 @@ const AnimatedLogo = ({
             />
           )}
         </motion.div>
+        
+        {/* Design strip element */}
+        {showStrip && (
+          <motion.div
+            className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-1"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          >
+            <img 
+              src="/lovable-uploads/de05f56b-a2c6-43b6-b516-77732a316239.png"
+              alt="Design Accent"
+              className="w-full h-full object-contain"
+            />
+          </motion.div>
+        )}
         
         {/* Glowing effects - theme adaptive */}
         {showGlow && (

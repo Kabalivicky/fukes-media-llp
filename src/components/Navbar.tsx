@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from 'react-router-dom';
 import MegaMenu from './Navigation/MegaMenu';
 import AnimatedLogo from './AnimatedLogo';
@@ -25,7 +24,7 @@ const Navbar = () => {
         {/* Logo & Branding */}
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <AnimatedLogo size="sm" showGlow={false} withParticles={false} />
+            <AnimatedLogo size="sm" showGlow={false} withParticles={false} showStrip />
             <span className="font-bold text-xl tracking-tight">Fuke's Media</span>
           </Link>
         </div>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from "@/components/ui/theme-provider";
@@ -48,7 +47,6 @@ const Header = () => {
     
   const handleContactClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // Create a mock anchor element event or use a different navigation approach
     navigate('/#contact');
   };
 
@@ -65,7 +63,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 mr-6" aria-label="Fuke's Media Home">
-              <AnimatedLogo size="sm" className="mr-2" showGlow withParticles={false} />
+              <AnimatedLogo size="sm" className="mr-2" showGlow withParticles={false} showStrip />
               <motion.div 
                 className="hidden md:block font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-fukes-blue via-fukes-green to-fukes-red"
                 whileHover={{ scale: 1.05 }}
@@ -75,7 +73,6 @@ const Header = () => {
               </motion.div>
             </Link>
             
-            {/* Using the refactored MegaMenu from Navigation folder */}
             <MegaMenu />
           </div>
           
