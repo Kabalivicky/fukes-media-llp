@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -127,12 +126,25 @@ const ContactSection = () => {
                         <MapPin className="h-6 w-6" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-lg mb-1">Our Location</h3>
-                        <p className="text-muted-foreground">
-                          123 Digital Avenue, Tech Hub<br />
-                          Bangalore, Karnataka 560001<br />
-                          India
-                        </p>
+                        <h3 className="font-semibold text-lg mb-1">Our Locations</h3>
+                        <div className="space-y-3">
+                          <div>
+                            <h4 className="font-medium text-sm text-primary mb-1">Register Address:</h4>
+                            <p className="text-muted-foreground text-sm">
+                              #2108, Omkara Nilaya, 7th Main,<br />
+                              Kumaraswamy Layout, 2nd Stage,<br />
+                              Bengaluru, Karnataka - 560078
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-sm text-primary mb-1">Office Address:</h4>
+                            <p className="text-muted-foreground text-sm">
+                              #13, 2nd Floor, 10th Main, 6th Cross,<br />
+                              Kathriguppe IV Phase, Gururaja Layout,<br />
+                              Banashankari, Bengaluru, Karnataka - 560070
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -147,7 +159,7 @@ const ContactSection = () => {
                       <div>
                         <h3 className="font-semibold text-lg mb-1">Email Us</h3>
                         <p className="text-muted-foreground mb-1">
-                          General Inquiries: <a href="mailto:info@fukesmedia.com" className="text-secondary hover:underline">info@fukesmedia.com</a>
+                          General: <a href="mailto:Fukesmedia@gmail.com" className="text-secondary hover:underline">Fukesmedia@gmail.com</a>
                         </p>
                         <p className="text-muted-foreground mb-1">
                           Project Requests: <a href="mailto:projects@fukesmedia.com" className="text-secondary hover:underline">projects@fukesmedia.com</a>
@@ -169,10 +181,13 @@ const ContactSection = () => {
                       <div>
                         <h3 className="font-semibold text-lg mb-1">Call Us</h3>
                         <p className="text-muted-foreground mb-1">
-                          Main Office: <a href="tel:+919876543210" className="text-accent hover:underline">+91 987 654 3210</a>
+                          Main Office: <a href="tel:+916362281003" className="text-accent hover:underline">+91 636 228 1003</a>
+                        </p>
+                        <p className="text-muted-foreground mb-1">
+                          Support: <a href="tel:+919916254096" className="text-accent hover:underline">+91 991 625 4096</a>
                         </p>
                         <p className="text-muted-foreground">
-                          Support: <a href="tel:+919876543211" className="text-accent hover:underline">+91 987 654 3211</a>
+                          Inquiry: <a href="tel:+919663625519" className="text-accent hover:underline">+91 966 362 5519</a>
                         </p>
                       </div>
                     </div>
