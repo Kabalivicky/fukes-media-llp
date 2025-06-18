@@ -12,7 +12,7 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* ... keep existing code (background gradient and animated elements) */}
+      {/* Background gradient and animated elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/50" />
       
       <div className="absolute inset-0">
@@ -40,28 +40,9 @@ const HeroSection = () => {
         ))}
       </div>
 
-      {/* Logo positioned in top-left corner */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, type: "spring" }}
-        className="absolute top-20 left-8 z-20"
-      >
-        <AnimatedLogo size="lg" />
-      </motion.div>
-
       <div className="container relative z-10">
         <div className="text-center space-y-8">
-          {/* ... keep existing code (logo animation, main heading, AI features highlight, CTA buttons, AI demo section) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, type: "spring" }}
-            className="flex justify-center mb-8"
-          >
-            <AnimatedLogo size="xl" />
-          </motion.div>
-
+          {/* Main heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -79,6 +60,7 @@ const HeroSection = () => {
             </p>
           </motion.div>
 
+          {/* AI features highlight */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -105,6 +87,7 @@ const HeroSection = () => {
             ))}
           </motion.div>
 
+          {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -135,6 +118,7 @@ const HeroSection = () => {
             </Link>
           </motion.div>
 
+          {/* AI Demo section */}
           {showAIDemo && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
@@ -146,33 +130,10 @@ const HeroSection = () => {
               <VisualGenerator />
             </motion.div>
           )}
-
-          {/* Trust Indicators - removed studio names */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="pt-12 text-center"
-          >
-            <p className="text-sm text-muted-foreground mb-4">Trusted by leading studios worldwide</p>
-            <div className="flex justify-center items-center gap-8 opacity-60">
-              {["Netflix", "Disney", "Warner Bros", "Sony Pictures", "Universal"].map((studio, index) => (
-                <motion.div
-                  key={studio}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
-                  className="text-sm font-medium"
-                >
-                  {studio}
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
         </div>
       </div>
 
-      {/* ... keep existing code (scroll indicator) */}
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

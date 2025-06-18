@@ -311,6 +311,20 @@
     box-shadow: 0 0 20px rgba(0, 87, 183, 0.6);
   }
 
+  /* CRITICAL FIX: Missing gradient-text class */
+  .gradient-text {
+    background: linear-gradient(90deg, 
+      #0057B7 0%,     /* Fuke's Media Blue */
+      #D50032 30%,    /* Fuke's Media Red */
+      #009639 60%,    /* Fuke's Media Green */
+      #0057B7 100%);  /* Back to Blue */
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 6s ease infinite;
+  }
+
   /* Neon text effects with updated Fuke's Media brand colors */
   .neon-text-blue {
     color: hsl(var(--neon-blue));

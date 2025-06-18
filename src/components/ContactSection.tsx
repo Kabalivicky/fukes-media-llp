@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/components/ui/use-toast';
-import { Mail, Phone, MapPin, MessageSquare } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageSquare, AlertCircle } from 'lucide-react';
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -24,8 +24,8 @@ const ContactSection = () => {
     // Simulate form submission
     setTimeout(() => {
       toast({
-        title: "Message Sent!",
-        description: "Thank you for contacting Fuke's Media. We'll get back to you shortly.",
+        title: "Demo Message Sent!",
+        description: "This is a demo form. For actual inquiries, please email us directly at Fukesmedia@gmail.com",
       });
       setName('');
       setEmail('');
@@ -47,8 +47,9 @@ const ContactSection = () => {
           <Card className="border border-border bg-card/50 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="text-2xl">Send Us a Message</CardTitle>
-              <CardDescription>
-                Fill out the form and we'll get back to you as soon as possible
+              <CardDescription className="flex items-center gap-2">
+                <AlertCircle className="h-4 w-4" />
+                Demo form - For actual inquiries, please email us directly
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -105,7 +106,7 @@ const ContactSection = () => {
                   className="w-full gradient-button"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {isSubmitting ? 'Sending...' : 'Send Demo Message'}
                 </Button>
               </form>
             </CardContent>
