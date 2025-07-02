@@ -10,6 +10,7 @@ interface TeamMember {
   role: string;
   bio: string;
   image: string;
+  brandColor: string;
   social?: {
     linkedin?: string;
     email?: string;
@@ -20,13 +21,14 @@ interface TeamMember {
 const TeamSection = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  // Updated team members with male avatars
+  // Updated team members with Vignesh removed and brand colors added
   const teamMembers: TeamMember[] = [
     {
       name: 'Vikram',
       role: 'Project Management',
       bio: 'With extensive experience in VFX project coordination, Vikram ensures that all our projects are delivered on time and within budget. His exceptional organizational skills and attention to detail help maintain the highest standards of quality.',
       image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram&backgroundColor=0057B7&clothingColor=D50032&gender=male&hair=short01,short02,short03&facialHair=blank,light&accessories=blank',
+      brandColor: 'bg-[#0057B7]',
       social: {
         linkedin: 'https://linkedin.com/in/vikram',
         email: 'vikram@fukesmedia.com'
@@ -37,6 +39,7 @@ const TeamSection = () => {
       role: 'Production Head',
       bio: 'As our Production Head, Arjun oversees all creative and technical aspects of our VFX productions. With his background in both film and technology, he bridges the gap between creative vision and technical execution.',
       image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=D50032&clothingColor=0057B7&gender=male&hair=short04,short05,short06&facialHair=blank,light&accessories=blank',
+      brandColor: 'bg-[#D50032]',
       social: {
         linkedin: 'https://linkedin.com/in/arjun',
         email: 'arjun@fukesmedia.com',
@@ -44,20 +47,11 @@ const TeamSection = () => {
       }
     },
     {
-      name: 'Vignesh',
-      role: 'Business Development',
-      bio: 'Vignesh leads our business strategy and client relationships. His understanding of the VFX industry landscape helps us identify opportunities and build lasting partnerships with studios and production houses worldwide.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vignesh&backgroundColor=009639&clothingColor=FFCC00&gender=male&hair=short07,short08,short09&facialHair=blank,light&accessories=blank',
-      social: {
-        linkedin: 'https://linkedin.com/in/vignesh',
-        email: 'vignesh@fukesmedia.com'
-      }
-    },
-    {
       name: 'Harshith',
       role: 'Creative Director',
       bio: 'Harshith brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, he ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=FFCC00&clothingColor=009639&gender=male&hair=short10,short11,short12&facialHair=blank,light&accessories=blank',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=009639&clothingColor=FFCC00&gender=male&hair=short10,short11,short12&facialHair=blank,light&accessories=blank',
+      brandColor: 'bg-[#009639]',
       social: {
         linkedin: 'https://linkedin.com/in/harshith',
         email: 'harshith@fukesmedia.com'
@@ -68,6 +62,7 @@ const TeamSection = () => {
       role: 'Operational Manager',
       bio: 'Sai Prasad optimizes our workflow processes and resource allocation. His systematic approach to operations ensures smooth collaboration between departments and maximizes productivity across all projects.',
       image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF&clothingColor=D50032&gender=male&hair=short13,short14,short15&facialHair=blank,light&accessories=blank',
+      brandColor: 'bg-[#00BFFF]',
       social: {
         linkedin: 'https://linkedin.com/in/saiprasad',
         email: 'saiprasad@fukesmedia.com',
@@ -78,7 +73,8 @@ const TeamSection = () => {
       name: 'Sandesh',
       role: 'Accounts & Financial Head',
       bio: 'Sandesh manages our financial planning and reporting with precision. His expertise in budgeting for VFX productions helps us deliver exceptional results while maintaining financial efficiency.',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=0057B7&clothingColor=009639&gender=male&hair=short16,short17,short18&facialHair=blank,light&accessories=blank',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=FFCC00&clothingColor=009639&gender=male&hair=short16,short17,short18&facialHair=blank,light&accessories=blank',
+      brandColor: 'bg-[#FFCC00]',
       social: {
         linkedin: 'https://linkedin.com/in/sandesh',
         email: 'sandesh@fukesmedia.com'
@@ -121,13 +117,14 @@ const TeamSection = () => {
                 aria-controls={`member-bio-${index}`}
               >
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-primary/20 shadow-lg">
+                  <div className={`w-32 h-32 rounded-full overflow-hidden mb-6 border-4 ${member.brandColor} border-opacity-30 shadow-lg relative`}>
                     <img 
                       src={member.image} 
                       alt={`${member.name}, ${member.role}`} 
                       className="w-full h-full object-cover"
                       loading="lazy" 
                     />
+                    <div className={`absolute inset-0 ${member.brandColor} opacity-10 rounded-full`}></div>
                   </div>
                   
                   <h3 className="text-xl font-bold mb-1">{member.name}</h3>

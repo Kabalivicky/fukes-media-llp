@@ -11,9 +11,10 @@ interface TeamMemberProps {
   skills?: string[];
   email?: string;
   linkedin?: string;
+  brandColor?: string;
 }
 
-const TeamMemberCard = ({ name, role, bio, imageUrl, skills = [], email, linkedin }: TeamMemberProps) => {
+const TeamMemberCard = ({ name, role, bio, imageUrl, skills = [], email, linkedin, brandColor }: TeamMemberProps) => {
   const initials = name
     .split(' ')
     .map(n => n[0])
@@ -28,11 +29,14 @@ const TeamMemberCard = ({ name, role, bio, imageUrl, skills = [], email, linkedi
       <Card className="h-full glass-card overflow-hidden">
         <CardContent className="p-6 flex flex-col h-full">
           <div className="flex items-center space-x-4 mb-4">
-            <Avatar className="h-16 w-16 border-2 border-primary/20">
+            <Avatar className="h-16 w-16 border-2" style={{ borderColor: brandColor || '#0057B7' }}>
               {imageUrl ? (
                 <AvatarImage src={imageUrl} alt={name} />
               ) : (
-                <AvatarFallback className="bg-primary/10 text-primary">
+                <AvatarFallback 
+                  className="text-white font-bold"
+                  style={{ backgroundColor: brandColor || '#0057B7' }}
+                >
                   {initials}
                 </AvatarFallback>
               )}
@@ -52,7 +56,8 @@ const TeamMemberCard = ({ name, role, bio, imageUrl, skills = [], email, linkedi
                 {skills.map((skill, idx) => (
                   <span 
                     key={idx} 
-                    className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary"
+                    className="text-xs px-2 py-1 rounded-full text-white"
+                    style={{ backgroundColor: brandColor || '#0057B7' }}
                   >
                     {skill}
                   </span>

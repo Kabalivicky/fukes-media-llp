@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import SectionTitle from '@/components/SectionTitle';
 import TeamMemberCard from './TeamMemberCard';
 
-// Updated team member data with proper names and reliable images
+// Updated team member data with Vignesh removed and brand colors added
 const teamMembers = [
   {
     name: 'Vikram Arjun',
@@ -13,7 +13,8 @@ const teamMembers = [
     skills: ['Creative Direction', 'VFX Supervision', 'AI Integration', 'Team Leadership'],
     email: 'vikram@fukes-media.com',
     linkedin: 'https://linkedin.com/in/vikramarjun',
-    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=VikramArjun&backgroundColor=0057B7&clothingColor=D50032'
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=VikramArjun&backgroundColor=0057B7&clothingColor=D50032',
+    brandColor: '#0057B7'
   },
   {
     name: 'Harshith',
@@ -22,16 +23,8 @@ const teamMembers = [
     skills: ['Pipeline Development', 'Technical Direction', 'Programming', 'R&D'],
     email: 'harshith@fukes-media.com',
     linkedin: 'https://linkedin.com/in/harshith',
-    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=009639&clothingColor=FFCC00'
-  },
-  {
-    name: 'Vignesh',
-    role: 'Lead AI Researcher',
-    bio: 'Vignesh leads our AI research division, developing proprietary algorithms that power our next-generation visual effects tools.',
-    skills: ['Machine Learning', 'Neural Networks', 'Computer Vision', 'Research'],
-    email: 'vignesh@fukes-media.com',
-    linkedin: 'https://linkedin.com/in/vignesh',
-    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vignesh&backgroundColor=D50032&clothingColor=0057B7'
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=009639&clothingColor=FFCC00',
+    brandColor: '#009639'
   },
   {
     name: 'Sai Prasad',
@@ -40,7 +33,8 @@ const teamMembers = [
     skills: ['Project Management', 'Resource Allocation', 'Client Relations', 'Quality Control'],
     email: 'saiprasad@fukes-media.com',
     linkedin: 'https://linkedin.com/in/saiprasad',
-    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF&clothingColor=D50032'
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF&clothingColor=D50032',
+    brandColor: '#00BFFF'
   },
   {
     name: 'Sandesh',
@@ -49,7 +43,8 @@ const teamMembers = [
     skills: ['Compositing', 'Lighting', 'Texturing', 'Simulation'],
     email: 'sandesh@fukes-media.com',
     linkedin: 'https://linkedin.com/in/sandesh',
-    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=0057B7&clothingColor=009639'
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=FFCC00&clothingColor=009639',
+    brandColor: '#FFCC00'
   },
   {
     name: 'Arjun',
@@ -58,7 +53,8 @@ const teamMembers = [
     skills: ['Interface Design', 'User Testing', 'Prototyping', 'Visual Design'],
     email: 'arjun@fukes-media.com',
     linkedin: 'https://linkedin.com/in/arjun',
-    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=FFCC00&clothingColor=009639'
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=D50032&clothingColor=009639',
+    brandColor: '#D50032'
   }
 ];
 

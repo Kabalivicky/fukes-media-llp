@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from "@/components/ui/theme-provider";
@@ -5,10 +6,11 @@ import { Button } from '@/components/ui/button';
 import { motion } from "framer-motion";
 import MegaMenu from './Navigation/MegaMenu';
 import ThemeToggle from './Navigation/ThemeToggle';
+import MobileNav from './Navigation/MobileNav';
 import { handleAnchorClick } from '@/utils/navigationData';
 import AnimatedLogo from './AnimatedLogo';
 import AnimatedIcon from './AnimatedIcon';
-import { Bell, ChevronDown } from 'lucide-react';
+import { Bell, ChevronDown, Headset } from 'lucide-react';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,6 +52,15 @@ const Header = () => {
     navigate('/#contact');
   };
 
+  const handleGetStartedClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      navigate('/#contact');
+    }
+  };
+
   return (
     <motion.header 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 rainbow-border ${headerClasses}`} 
@@ -61,6 +72,7 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
+          {/* Logo & Branding */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 mr-6" aria-label="Fuke's Media Home">
               <AnimatedLogo size="sm" className="mr-2" showGlow withParticles={false} showStrip />
@@ -73,12 +85,16 @@ const Header = () => {
               </motion.div>
             </Link>
             
-            <MegaMenu />
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex">
+              <MegaMenu />
+            </div>
           </div>
           
-          <div className="flex items-center space-x-4">
+          {/* Action Buttons */}
+          <div className="flex items-center space-x-2">
             <motion.div 
-              className="hidden md:flex items-center mr-2"
+              className="hidden md:flex items-center"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
@@ -93,13 +109,31 @@ const Header = () => {
             
             <ThemeToggle />
             
+            <Link to="/news" className="hidden sm:block">
+              <Button variant="outline" size="sm">
+                Industry News
+              </Button>
+            </Link>
+            
+            <Link to="/chat-assistant">
+              <Button size="sm" className="gradient-button">
+                <Headset className="mr-2 h-4 w-4" />
+                <span className="hidden sm:inline">AI Assistant</span>
+              </Button>
+            </Link>
+            
             <Button 
               className="gradient-button hidden lg:flex items-center gap-2" 
-              onClick={handleContactClick}
+              onClick={handleGetStartedClick}
             >
               Get Started
               <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
             </Button>
+
+            {/* Mobile Navigation */}
+            <div className="lg:hidden">
+              <MobileNav />
+            </div>
           </div>
         </div>
       </div>
