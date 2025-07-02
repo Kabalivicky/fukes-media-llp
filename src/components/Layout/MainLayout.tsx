@@ -7,7 +7,12 @@ import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
 import { Toaster } from '@/components/ui/toaster';
 import { useTheme } from '@/components/ui/theme-provider';
 
-const MainLayout = () => {
+interface MainLayoutProps {
+  children?: React.ReactNode;
+  pageKey?: string;
+}
+
+const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   const { theme } = useTheme();
 
   return (
@@ -15,7 +20,7 @@ const MainLayout = () => {
       <ScrollProgressIndicator />
       <Header />
       <main className="flex-1 pt-16">
-        <Outlet />
+        {children || <Outlet />}
       </main>
       <Footer />
       <ScrollToTop />
