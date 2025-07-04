@@ -72,12 +72,12 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo & Branding */}
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2 mr-6" aria-label="Fuke's Media Home">
-              <AnimatedLogo size="sm" className="mr-2" showGlow withParticles={false} showStrip />
+          {/* Logo & Branding - Fixed alignment */}
+          <div className="flex items-center space-x-4">
+            <Link to="/" className="flex items-center space-x-3" aria-label="Fuke's Media Home">
+              <AnimatedLogo size="sm" className="flex-shrink-0" showGlow withParticles={false} showStrip />
               <motion.div 
-                className="hidden md:block font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-fukes-blue via-fukes-green to-fukes-red"
+                className="hidden md:block font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-fukes-blue via-fukes-green to-fukes-red whitespace-nowrap"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
@@ -85,14 +85,14 @@ const Header = () => {
               </motion.div>
             </Link>
             
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex">
+            {/* Desktop Navigation - Better spacing */}
+            <div className="hidden xl:flex ml-8">
               <MegaMenu />
             </div>
           </div>
           
-          {/* Action Buttons */}
-          <div className="flex items-center space-x-2">
+          {/* Action Buttons - Fixed alignment and spacing */}
+          <div className="flex items-center space-x-3">
             <motion.div 
               className="hidden md:flex items-center"
               initial={{ opacity: 0, x: 20 }}
@@ -110,28 +110,30 @@ const Header = () => {
             <ThemeToggle />
             
             <Link to="/news" className="hidden sm:block">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="whitespace-nowrap">
                 Industry News
               </Button>
             </Link>
             
             <Link to="/chat-assistant">
-              <Button size="sm" className="gradient-button">
+              <Button size="sm" className="gradient-button whitespace-nowrap">
                 <Headset className="mr-2 h-4 w-4" />
                 <span className="hidden sm:inline">AI Assistant</span>
+                <span className="sm:hidden">AI</span>
               </Button>
             </Link>
             
             <Button 
-              className="gradient-button hidden lg:flex items-center gap-2" 
+              className="gradient-button hidden lg:flex items-center gap-2 whitespace-nowrap" 
               onClick={handleGetStartedClick}
+              size="sm"
             >
               Get Started
               <ChevronDown className="h-4 w-4 rotate-[-90deg]" />
             </Button>
 
             {/* Mobile Navigation */}
-            <div className="lg:hidden">
+            <div className="xl:hidden">
               <MobileNav />
             </div>
           </div>

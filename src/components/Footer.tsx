@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,13 +12,14 @@ const Footer = () => {
   return (
     <footer className="bg-card/30 backdrop-blur-md border-t border-border">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 object-cover">
-          <div className="md:col-span-1">
-            <Link to="/" className="flex items-center space-x-2 mb-4">
-              <div className="relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Brand Section - Fixed alignment */}
+          <div className="lg:col-span-1 space-y-4">
+            <Link to="/" className="flex items-center space-x-3 mb-4">
+              <div className="relative flex-shrink-0">
                 <img 
                   alt="Fuke's Media Logo" 
-                  className="h-10" 
+                  className="h-10 w-auto" 
                   src={theme === 'dark' 
                     ? '/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png'
                     : '/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png'
@@ -32,79 +34,78 @@ const Footer = () => {
                   />
                 </div>
               </div>
+              <span className="font-bold text-lg">Fuke's Media</span>
             </Link>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               Pioneering AI-driven VFX and creative services for the digital media landscape.
             </p>
-            <div className="flex space-x-3">
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
-                <Facebook className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
-                <Twitter className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
-                <Instagram className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
-                <Linkedin className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
-                <Youtube className="h-4 w-4" />
-              </Button>
+            <div className="flex space-x-2">
+              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, index) => (
+                <Button key={index} variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-primary/10">
+                  <Icon className="h-4 w-4" />
+                </Button>
+              ))}
             </div>
           </div>
           
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Services</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/services/vfx" className="text-muted-foreground hover:text-foreground transition-colors">VFX Solutions</Link>
-              </li>
-              <li>
-                <Link to="/services/creative" className="text-muted-foreground hover:text-foreground transition-colors">Creative Services</Link>
-              </li>
-              <li>
-                <Link to="/services/di" className="text-muted-foreground hover:text-foreground transition-colors">Digital Intermediate</Link>
-              </li>
-              <li>
-                <Link to="/services/tech" className="text-muted-foreground hover:text-foreground transition-colors">Tech Innovation</Link>
-              </li>
-              <li>
-                <Link to="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
-              </li>
+          {/* Services Section */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Services</h3>
+            <ul className="space-y-3">
+              {[
+                { name: 'VFX Solutions', path: '/services/vfx' },
+                { name: 'Creative Services', path: '/services/creative' },
+                { name: 'Digital Intermediate', path: '/services/di' },
+                { name: 'Tech Innovation', path: '/services/tech' },
+                { name: 'Pricing', path: '/pricing' }
+              ].map((item, index) => (
+                <li key={index}>
+                  <Link 
+                    to={item.path} 
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Company</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">About Us</Link>
-              </li>
-              <li>
-                <Link to="/portfolio" className="text-muted-foreground hover:text-foreground transition-colors">Portfolio</Link>
-              </li>
-              <li>
-                <Link to="/careers" className="text-muted-foreground hover:text-foreground transition-colors">Careers</Link>
-              </li>
-              <li>
-                <Link to="/investors" className="text-muted-foreground hover:text-foreground transition-colors">Investors</Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
-              </li>
+          {/* Company Section */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Company</h3>
+            <ul className="space-y-3">
+              {[
+                { name: 'About Us', path: '/about' },
+                { name: 'Portfolio', path: '/portfolio' },
+                { name: 'Careers', path: '/careers' },
+                { name: 'Investors', path: '/investors' },
+                { name: 'Contact', path: '/contact' }
+              ].map((item, index) => (
+                <li key={index}>
+                  <Link 
+                    to={item.path} 
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Stay Connected</h3>
-            <p className="text-muted-foreground mb-4">
+          {/* Newsletter Section - Fixed alignment */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Stay Connected</h3>
+            <p className="text-muted-foreground text-sm leading-relaxed">
               Subscribe to our newsletter for the latest updates and insights.
             </p>
-            <div className="flex space-x-2">
-              <Input placeholder="Your email address" className="bg-background border-border" />
-              <Button variant="default" className="gradient-button">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Input 
+                placeholder="Your email address" 
+                className="bg-background border-border flex-1" 
+              />
+              <Button variant="default" className="gradient-button px-3 sm:px-4">
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
@@ -113,21 +114,26 @@ const Footer = () => {
         
         <Separator className="my-8 bg-border" />
         
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <div className="text-muted-foreground text-sm mb-4 md:mb-0">
+        {/* Bottom section - Fixed alignment */}
+        <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+          <div className="text-muted-foreground text-sm text-center md:text-left">
             &copy; {new Date().getFullYear()} Fuke's Media LLP. All rights reserved.
           </div>
           
-          <div className="flex space-x-4 text-sm">
-            <Link to="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-              Privacy Policy
-            </Link>
-            <Link to="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-              Terms of Service
-            </Link>
-            <Link to="/legal" className="text-muted-foreground hover:text-foreground transition-colors">
-              Legal
-            </Link>
+          <div className="flex flex-wrap justify-center md:justify-end space-x-6 text-sm">
+            {[
+              { name: 'Privacy Policy', path: '/privacy' },
+              { name: 'Terms of Service', path: '/terms' },
+              { name: 'Legal', path: '/legal' }
+            ].map((item, index) => (
+              <Link 
+                key={index}
+                to={item.path} 
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
