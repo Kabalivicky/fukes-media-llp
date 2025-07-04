@@ -1,7 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
 import PricingCalculator from '@/components/PricingCalculator';
@@ -9,7 +8,6 @@ import PortfolioSection from '@/components/PortfolioSection';
 import TeamSection from '@/components/TeamSection';
 import CareersSection from '@/components/CareersSection';
 import ContactSection from '@/components/ContactSection';
-import Footer from '@/components/Footer';
 import SEOHelmet from '@/components/SEOHelmet';
 import AnimatedLogo from '@/components/AnimatedLogo';
 import ErrorBoundary from '@/components/ErrorBoundary';
@@ -118,11 +116,6 @@ const Home = () => {
             style={{ willChange: 'transform' }}
           />
         </div>
-        
-        {/* Navigation */}
-        <ErrorBoundary>
-          <Navbar />
-        </ErrorBoundary>
         
         {/* Main Content with Motion Effects */}
         <main id="main-content" className="relative z-10">
@@ -236,11 +229,6 @@ const Home = () => {
             </div>
           </div>
         </main>
-        
-        {/* Footer */}
-        <ErrorBoundary>
-          <Footer />
-        </ErrorBoundary>
       </div>
     </>
   );

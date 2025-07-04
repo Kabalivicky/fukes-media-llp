@@ -1,7 +1,7 @@
 
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { User } from 'lucide-react';
 
 interface TeamMemberProps {
   name: string;
@@ -14,7 +14,7 @@ interface TeamMemberProps {
   brandColor?: string;
 }
 
-const TeamMemberCard = ({ name, role, bio, imageUrl, skills = [], email, linkedin, brandColor }: TeamMemberProps) => {
+const TeamMemberCard = ({ name, role, bio, skills = [], email, linkedin, brandColor = '#0057B7' }: TeamMemberProps) => {
   const initials = name
     .split(' ')
     .map(n => n[0])
@@ -29,25 +29,22 @@ const TeamMemberCard = ({ name, role, bio, imageUrl, skills = [], email, linkedi
       <Card className="h-full glass-card overflow-hidden">
         <CardContent className="p-6 flex flex-col h-full">
           <div className="flex items-center space-x-4 mb-4">
-            <Avatar className="h-16 w-16 border-2" style={{ borderColor: brandColor || '#0057B7' }}>
-              {imageUrl ? (
-                <AvatarImage src={imageUrl} alt={name} />
-              ) : (
-                <AvatarFallback 
-                  className="text-white font-bold"
-                  style={{ backgroundColor: brandColor || '#0057B7' }}
-                >
-                  {initials}
-                </AvatarFallback>
-              )}
-            </Avatar>
+            <div 
+              className="h-16 w-16 rounded-full flex items-center justify-center text-white font-bold relative"
+              style={{ backgroundColor: brandColor }}
+            >
+              <User className="h-8 w-8" />
+              <div className="absolute bottom-0 right-0 text-xs font-bold bg-white text-black rounded-full w-6 h-6 flex items-center justify-center">
+                {initials}
+              </div>
+            </div>
             <div>
               <h3 className="text-lg font-semibold">{name}</h3>
               <p className="text-sm text-muted-foreground">{role}</p>
             </div>
           </div>
           
-          <p className="text-sm text-muted-foreground mb-4">{bio}</p>
+          <p className="text-sm text-muted-foreground mb-4 flex-grow">{bio}</p>
           
           {skills.length > 0 && (
             <div className="mt-auto">
@@ -57,7 +54,7 @@ const TeamMemberCard = ({ name, role, bio, imageUrl, skills = [], email, linkedi
                   <span 
                     key={idx} 
                     className="text-xs px-2 py-1 rounded-full text-white"
-                    style={{ backgroundColor: brandColor || '#0057B7' }}
+                    style={{ backgroundColor: brandColor }}
                   >
                     {skill}
                   </span>
