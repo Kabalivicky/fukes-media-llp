@@ -1,6 +1,6 @@
 
 import { Outlet } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
@@ -15,7 +15,7 @@ const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
       <ScrollProgressIndicator />
-      <Navbar />
+      <Header />
       <main className="flex-1 pt-16">
         {children || <Outlet />}
       </main>

@@ -72,8 +72,8 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo & Branding - Fixed alignment */}
-          <div className="flex items-center space-x-4">
+          {/* Logo & Branding - Left Section */}
+          <div className="flex items-center space-x-4 flex-shrink-0">
             <Link to="/" className="flex items-center space-x-3" aria-label="Fuke's Media Home">
               <AnimatedLogo size="sm" className="flex-shrink-0" showGlow withParticles={false} showStrip />
               <motion.div 
@@ -84,15 +84,15 @@ const Header = () => {
                 Fuke's Media
               </motion.div>
             </Link>
-            
-            {/* Desktop Navigation - Better spacing */}
-            <div className="hidden xl:flex ml-8">
-              <MegaMenu />
-            </div>
           </div>
           
-          {/* Action Buttons - Fixed alignment and spacing */}
-          <div className="flex items-center space-x-3">
+          {/* Desktop Navigation - Center Section */}
+          <div className="hidden xl:flex flex-1 justify-center max-w-2xl mx-8">
+            <MegaMenu />
+          </div>
+          
+          {/* Action Buttons - Right Section */}
+          <div className="flex items-center space-x-3 flex-shrink-0">
             <motion.div 
               className="hidden md:flex items-center"
               initial={{ opacity: 0, x: 20 }}
