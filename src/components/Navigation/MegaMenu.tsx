@@ -8,7 +8,6 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Home, Calculator, MessagesSquare, Brain } from 'lucide-react';
 import { handleAnchorClick, isLinkActive } from '@/utils/navigationData';
 import AboutDropdown from './AboutDropdown';
@@ -22,17 +21,13 @@ const MegaMenu = () => {
   const navigate = useNavigate();
   const currentPath = location.pathname + location.hash;
   
-  const handleNavigation = (e: React.MouseEvent<HTMLButtonElement>, path: string) => {
-    e.preventDefault();
-    
+  const handleNavigation = (path: string) => {
     if (path.includes('#')) {
-      // Create a link-like event that handleAnchorClick can work with
-      const syntheticEvent = {
-        ...e,
-        preventDefault: e.preventDefault,
-      } as unknown as React.MouseEvent<HTMLAnchorElement>;
-      
-      handleAnchorClick(syntheticEvent, path, currentPath);
+      handleAnchorClick(
+        { preventDefault: () => {} } as any,
+        path,
+        currentPath
+      );
     } else {
       navigate(path);
     }
@@ -43,19 +38,17 @@ const MegaMenu = () => {
       <NavigationMenuList>
         {/* Home */}
         <NavigationMenuItem>
-          <Button 
-            variant="link" 
-            className="p-0 w-full" 
-            onClick={(e) => handleNavigation(e, '/')}
-          >
-            <NavigationMenuLink className={cn(
+          <NavigationMenuLink 
+            className={cn(
               navigationMenuTriggerStyle(),
+              "cursor-pointer",
               isLinkActive(currentPath, '/') ? "text-primary font-medium" : ""
-            )}>
-              <Home className="mr-2 h-4 w-4" />
-              Home
-            </NavigationMenuLink>
-          </Button>
+            )}
+            onClick={() => handleNavigation('/')}
+          >
+            <Home className="mr-2 h-4 w-4" />
+            Home
+          </NavigationMenuLink>
         </NavigationMenuItem>
 
         {/* About Dropdown */}
@@ -66,19 +59,17 @@ const MegaMenu = () => {
 
         {/* AI Tools */}
         <NavigationMenuItem>
-          <Button 
-            variant="link" 
-            className="p-0 w-full" 
-            onClick={(e) => handleNavigation(e, '/ai-tools')}
-          >
-            <NavigationMenuLink className={cn(
+          <NavigationMenuLink 
+            className={cn(
               navigationMenuTriggerStyle(),
+              "cursor-pointer",
               isLinkActive(currentPath, '/ai-tools') ? "text-primary font-medium" : ""
-            )}>
-              <Brain className="mr-2 h-4 w-4" />
-              AI Tools
-            </NavigationMenuLink>
-          </Button>
+            )}
+            onClick={() => handleNavigation('/ai-tools')}
+          >
+            <Brain className="mr-2 h-4 w-4" />
+            AI Tools
+          </NavigationMenuLink>
         </NavigationMenuItem>
 
         {/* Immersive Dropdown */}
@@ -92,68 +83,60 @@ const MegaMenu = () => {
 
         {/* Portfolio */}
         <NavigationMenuItem>
-          <Button 
-            variant="link" 
-            className="p-0 w-full" 
-            onClick={(e) => handleNavigation(e, '/#portfolio')}
-          >
-            <NavigationMenuLink className={cn(
+          <NavigationMenuLink 
+            className={cn(
               navigationMenuTriggerStyle(),
+              "cursor-pointer",
               isLinkActive(currentPath, '/#portfolio') ? "text-primary font-medium" : ""
-            )}>
-              Portfolio
-            </NavigationMenuLink>
-          </Button>
+            )}
+            onClick={() => handleNavigation('/#portfolio')}
+          >
+            Portfolio
+          </NavigationMenuLink>
         </NavigationMenuItem>
 
         {/* Advanced Pricing */}
         <NavigationMenuItem>
-          <Button 
-            variant="link" 
-            className="p-0 w-full" 
-            onClick={(e) => handleNavigation(e, '/advanced-pricing')}
-          >
-            <NavigationMenuLink className={cn(
+          <NavigationMenuLink 
+            className={cn(
               navigationMenuTriggerStyle(),
+              "cursor-pointer",
               isLinkActive(currentPath, '/advanced-pricing') ? "text-primary font-medium" : ""
-            )}>
-              <Calculator className="mr-2 h-4 w-4" />
-              Advanced Pricing
-            </NavigationMenuLink>
-          </Button>
+            )}
+            onClick={() => handleNavigation('/advanced-pricing')}
+          >
+            <Calculator className="mr-2 h-4 w-4" />
+            Advanced Pricing
+          </NavigationMenuLink>
         </NavigationMenuItem>
         
         {/* AI Assistant */}
         <NavigationMenuItem>
-          <Button 
-            variant="link" 
-            className="p-0 w-full" 
-            onClick={(e) => handleNavigation(e, '/chat-assistant')}
-          >
-            <NavigationMenuLink className={cn(
+          <NavigationMenuLink 
+            className={cn(
               navigationMenuTriggerStyle(),
+              "cursor-pointer",
               isLinkActive(currentPath, '/chat-assistant') ? "text-primary font-medium" : ""
-            )}>
-              <MessagesSquare className="mr-2 h-4 w-4" />
-              AI Assistant
-            </NavigationMenuLink>
-          </Button>
+            )}
+            onClick={() => handleNavigation('/chat-assistant')}
+          >
+            <MessagesSquare className="mr-2 h-4 w-4" />
+            AI Assistant
+          </NavigationMenuLink>
         </NavigationMenuItem>
         
         {/* Contact */}
         <NavigationMenuItem>
-          <Button 
-            variant="link" 
-            className="p-0 w-full" 
-            onClick={(e) => handleNavigation(e, '/#contact')}
-          >
-            <NavigationMenuLink className={cn(
+          <NavigationMenuLink 
+            className={cn(
               navigationMenuTriggerStyle(),
+              "cursor-pointer",
               isLinkActive(currentPath, '/#contact') ? "text-primary font-medium" : ""
-            )}>
-              Contact
-            </NavigationMenuLink>
-          </Button>
+            )}
+            onClick={() => handleNavigation('/#contact')}
+          >
+            Contact
+          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import MegaMenu from './Navigation/MegaMenu';
 import ThemeToggle from './Navigation/ThemeToggle';
 import MobileNav from './Navigation/MobileNav';
-import { handleAnchorClick } from '@/utils/navigationData';
 import AnimatedLogo from './AnimatedLogo';
 import AnimatedIcon from './AnimatedIcon';
 import { Bell, ChevronDown, Headset } from 'lucide-react';
@@ -16,7 +15,6 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const currentPath = location.pathname + location.hash;
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -46,11 +44,6 @@ const Header = () => {
   const headerClasses = isScrolled 
     ? 'bg-background/90 backdrop-blur-xl shadow-lg'
     : 'bg-transparent';
-    
-  const handleContactClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    navigate('/#contact');
-  };
 
   const handleGetStartedClick = () => {
     const contactSection = document.getElementById('contact');

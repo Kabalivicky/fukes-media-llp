@@ -1,4 +1,3 @@
-
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -32,7 +31,7 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isAppReady, setIsAppReady] = useState(false);
   
   // Enable custom cursor effect
   useCursorEffect({
@@ -43,14 +42,36 @@ const App = () => {
     enabled: true
   });
   
-  // After a short delay, mark as loaded to allow animations to start
+  // Check if intro has been seen and set app ready state
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 500);
+    const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
     
-    return () => clearTimeout(timer);
+    if (hasSeenIntro === 'true') {
+      // If intro was already seen, mark app as ready immediately
+      setIsAppReady(true);
+    } else {
+      // Otherwise, wait for a brief moment then mark as ready
+      // The LoadingIntro will handle its own visibility
+      const timer = setTimeout(() => {
+        setIsAppReady(true);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
   }, []);
+
+  // Listen for intro completion
+  useEffect(() => {
+    const checkIntroStatus = () => {
+      const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+      if (hasSeenIntro === 'true' && !isAppReady) {
+        setIsAppReady(true);
+      }
+    };
+    
+    const interval = setInterval(checkIntroStatus, 100);
+    return () => clearInterval(interval);
+  }, [isAppReady]);
 
   // Global loading fallback component
   const LoadingFallback = () => (
@@ -70,14 +91,14 @@ const App = () => {
                   <Toaster />
                   <Sonner />
                   <BrowserRouter>
-                    {/* Loading Intro */}
+                    {/* Loading Intro - Always render but handles its own visibility */}
                     <LoadingIntro />
                     
                     {/* Navigation Controls */}
                     <ScrollToTop showBelow={400} />
                     
-                    {/* Main Application Routes */}
-                    {isLoaded && (
+                    {/* Main Application Routes - Always render when app is ready */}
+                    {isAppReady && (
                       <Suspense fallback={<LoadingFallback />}>
                         <ErrorBoundary>
                           <AppRouter />
