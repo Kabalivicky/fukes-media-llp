@@ -1,61 +1,70 @@
 
-import { useLocation, useNavigate } from 'react-router-dom';
-import { FileText, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import {
-  NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuTrigger,
+  NavigationMenuContent,
 } from '@/components/ui/navigation-menu';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import ListItem from './ListItem';
+import { Calculator, FileVideo, FileImage, FileAudio, FileText, Code, Palette, Zap } from 'lucide-react';
 
 const ToolsDropdown = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const currentPath = location.pathname + location.hash;
-  
-  const isActive = currentPath === '/contract-builder';
-  
-  const handleMainButtonClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate('/contract-builder');
-  };
-  
   return (
     <NavigationMenuItem>
-      <div className="flex items-center">
-        <Button variant="link" className="p-0" onClick={handleMainButtonClick}>
-          <NavigationMenuLink className={cn(
-            "group inline-flex h-10 mr-1 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-            isActive ? "text-primary font-medium" : ""
-          )}>
-            Tools
-          </NavigationMenuLink>
-        </Button>
-        <NavigationMenuTrigger className="h-10 px-2">
-          <span className="sr-only">Tools dropdown</span>
-        </NavigationMenuTrigger>
-      </div>
+      <NavigationMenuTrigger className="cursor-pointer">
+        <Zap className="mr-2 h-4 w-4" />
+        Tools
+      </NavigationMenuTrigger>
       <NavigationMenuContent>
-        <ul className="grid w-[400px] gap-3 p-6 md:grid-cols-1 lg:w-[500px]">
-          <ListItem 
-            href="/contract-builder" 
-            title="Contract Builder"
-            icon={<FileText className="mr-2 h-4 w-4" />}
-          >
-            Create customized VFX contracts with our AI-powered builder
-          </ListItem>
+        <div className="grid gap-3 p-6 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
+          <div className="space-y-3">
+            <h4 className="text-sm font-medium leading-none text-muted-foreground">Pricing & Calculators</h4>
+            <ListItem href="/advanced-pricing" title="Advanced Pricing Calculator">
+              <Calculator className="mr-2 h-4 w-4" />
+              Professional project estimation tool
+            </ListItem>
+            <ListItem href="/pricing" title="Basic Pricing">
+              <Calculator className="mr-2 h-4 w-4" />
+              Quick pricing estimates
+            </ListItem>
+            
+            <h4 className="text-sm font-medium leading-none text-muted-foreground mt-4">Format Converters</h4>
+            <ListItem href="/tools/video-converter" title="Video Converter">
+              <FileVideo className="mr-2 h-4 w-4" />
+              Convert between video formats
+            </ListItem>
+            <ListItem href="/tools/image-converter" title="Image Converter">
+              <FileImage className="mr-2 h-4 w-4" />
+              Convert and optimize images
+            </ListItem>
+            <ListItem href="/tools/audio-converter" title="Audio Converter">
+              <FileAudio className="mr-2 h-4 w-4" />
+              Convert audio files and formats
+            </ListItem>
+          </div>
           
-          <ListItem 
-            href="/freelancer-portal" 
-            title="Freelancer Portal"
-            icon={<User className="mr-2 h-4 w-4" />}
-          >
-            Access your freelancer dashboard, projects and payments
-          </ListItem>
-        </ul>
+          <div className="space-y-3">
+            <h4 className="text-sm font-medium leading-none text-muted-foreground">Development Tools</h4>
+            <ListItem href="/tools/code-converter" title="Code Converter">
+              <Code className="mr-2 h-4 w-4" />
+              Convert between programming languages
+            </ListItem>
+            <ListItem href="/tools/color-converter" title="Color Converter">
+              <Palette className="mr-2 h-4 w-4" />
+              Convert color formats (HEX, RGB, HSL)
+            </ListItem>
+            <ListItem href="/tools/text-converter" title="Text Converter">
+              <FileText className="mr-2 h-4 w-4" />
+              Convert text formats and encoding
+            </ListItem>
+            
+            <h4 className="text-sm font-medium leading-none text-muted-foreground mt-4">AI Tools</h4>
+            <ListItem href="/ai-tools" title="AI Tools Suite">
+              <Zap className="mr-2 h-4 w-4" />
+              Complete AI toolkit for creators
+            </ListItem>
+          </div>
+        </div>
       </NavigationMenuContent>
     </NavigationMenuItem>
   );
