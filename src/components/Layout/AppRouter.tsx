@@ -22,6 +22,12 @@ import ARVRShowroom from '@/pages/ARVRShowroom';
 import MetaStudio from '@/pages/MetaStudio';
 import RealTimePipeline from '@/pages/RealTimePipeline';
 import AITools from '@/pages/AITools';
+import VideoConverter from '@/pages/tools/VideoConverter';
+import ImageConverter from '@/pages/tools/ImageConverter';
+import AudioConverter from '@/pages/tools/AudioConverter';
+import CodeConverter from '@/pages/tools/CodeConverter';
+import ColorConverter from '@/pages/tools/ColorConverter';
+import TextConverter from '@/pages/tools/TextConverter';
 
 const AppRouter = () => {
   return (
@@ -47,6 +53,12 @@ const AppRouter = () => {
       <Route path="/meta-studio" element={<MetaStudio />} />
       <Route path="/real-time-pipeline" element={<RealTimePipeline />} />
       <Route path="/ai-tools" element={<AITools />} />
+      <Route path="/tools/video-converter" element={<VideoConverter />} />
+      <Route path="/tools/image-converter" element={<ImageConverter />} />
+      <Route path="/tools/audio-converter" element={<AudioConverter />} />
+      <Route path="/tools/code-converter" element={<CodeConverter />} />
+      <Route path="/tools/color-converter" element={<ColorConverter />} />
+      <Route path="/tools/text-converter" element={<TextConverter />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -6,7 +6,7 @@ import {
   NavigationMenuContent,
 } from '@/components/ui/navigation-menu';
 import ListItem from './ListItem';
-import { Calculator, FileVideo, FileImage, FileAudio, FileText, Code, Palette, Zap } from 'lucide-react';
+import { Calculator, FileVideo, FileImage, FileAudio, FileText, Code, Palette, Zap, Brain } from 'lucide-react';
 
 const ToolsDropdown = () => {
   return (
@@ -18,7 +18,11 @@ const ToolsDropdown = () => {
       <NavigationMenuContent>
         <div className="grid gap-3 p-6 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
           <div className="space-y-3">
-            <h4 className="text-sm font-medium leading-none text-muted-foreground">Pricing & Calculators</h4>
+            <h4 className="text-sm font-medium leading-none text-muted-foreground">AI & Pricing Tools</h4>
+            <ListItem href="/ai-tools" title="AI Tools Suite">
+              <Brain className="mr-2 h-4 w-4" />
+              Complete AI toolkit for creators
+            </ListItem>
             <ListItem href="/advanced-pricing" title="Advanced Pricing Calculator">
               <Calculator className="mr-2 h-4 w-4" />
               Professional project estimation tool
@@ -28,7 +32,7 @@ const ToolsDropdown = () => {
               Quick pricing estimates
             </ListItem>
             
-            <h4 className="text-sm font-medium leading-none text-muted-foreground mt-4">Format Converters</h4>
+            <h4 className="text-sm font-medium leading-none text-muted-foreground mt-4">Media Converters</h4>
             <ListItem href="/tools/video-converter" title="Video Converter">
               <FileVideo className="mr-2 h-4 w-4" />
               Convert between video formats
@@ -56,12 +60,6 @@ const ToolsDropdown = () => {
             <ListItem href="/tools/text-converter" title="Text Converter">
               <FileText className="mr-2 h-4 w-4" />
               Convert text formats and encoding
-            </ListItem>
-            
-            <h4 className="text-sm font-medium leading-none text-muted-foreground mt-4">AI Tools</h4>
-            <ListItem href="/ai-tools" title="AI Tools Suite">
-              <Zap className="mr-2 h-4 w-4" />
-              Complete AI toolkit for creators
             </ListItem>
           </div>
         </div>

@@ -8,11 +8,10 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
-import { Home, Calculator, MessagesSquare, Brain } from 'lucide-react';
+import { Home, Calculator, Palette, FileText, Users } from 'lucide-react';
 import { handleAnchorClick, isLinkActive } from '@/utils/navigationData';
 import AboutDropdown from './AboutDropdown';
 import ServicesDropdown from './ServicesDropdown';
-import ImmersiveDropdown from './ImmersiveDropdown';
 import ResourcesDropdown from './ResourcesDropdown';
 import ToolsDropdown from './ToolsDropdown';
 
@@ -34,7 +33,7 @@ const MegaMenu = () => {
   };
   
   return (
-    <NavigationMenu className="hidden xl:flex">
+    <NavigationMenu className="hidden lg:flex">
       <NavigationMenuList>
         {/* Home */}
         <NavigationMenuItem>
@@ -57,24 +56,6 @@ const MegaMenu = () => {
         {/* Services Dropdown */}
         <ServicesDropdown />
 
-        {/* AI Tools */}
-        <NavigationMenuItem>
-          <NavigationMenuLink 
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "cursor-pointer",
-              isLinkActive(currentPath, '/ai-tools') ? "text-primary font-medium" : ""
-            )}
-            onClick={() => handleNavigation('/ai-tools')}
-          >
-            <Brain className="mr-2 h-4 w-4" />
-            AI Tools
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-
-        {/* Immersive Dropdown */}
-        <ImmersiveDropdown />
-
         {/* Resources Dropdown */}
         <ResourcesDropdown />
 
@@ -91,37 +72,23 @@ const MegaMenu = () => {
             )}
             onClick={() => handleNavigation('/#portfolio')}
           >
+            <Palette className="mr-2 h-4 w-4" />
             Portfolio
           </NavigationMenuLink>
         </NavigationMenuItem>
 
-        {/* Advanced Pricing */}
+        {/* Pricing */}
         <NavigationMenuItem>
           <NavigationMenuLink 
             className={cn(
               navigationMenuTriggerStyle(),
               "cursor-pointer",
-              isLinkActive(currentPath, '/advanced-pricing') ? "text-primary font-medium" : ""
+              isLinkActive(currentPath, '/pricing') ? "text-primary font-medium" : ""
             )}
-            onClick={() => handleNavigation('/advanced-pricing')}
+            onClick={() => handleNavigation('/pricing')}
           >
             <Calculator className="mr-2 h-4 w-4" />
-            Advanced Pricing
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        
-        {/* AI Assistant */}
-        <NavigationMenuItem>
-          <NavigationMenuLink 
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "cursor-pointer",
-              isLinkActive(currentPath, '/chat-assistant') ? "text-primary font-medium" : ""
-            )}
-            onClick={() => handleNavigation('/chat-assistant')}
-          >
-            <MessagesSquare className="mr-2 h-4 w-4" />
-            AI Assistant
+            Pricing
           </NavigationMenuLink>
         </NavigationMenuItem>
         
@@ -135,6 +102,7 @@ const MegaMenu = () => {
             )}
             onClick={() => handleNavigation('/#contact')}
           >
+            <Users className="mr-2 h-4 w-4" />
             Contact
           </NavigationMenuLink>
         </NavigationMenuItem>
