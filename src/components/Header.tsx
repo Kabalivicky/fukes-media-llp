@@ -42,8 +42,8 @@ const Header = () => {
   };
 
   const headerClasses = isScrolled 
-    ? 'bg-background/90 backdrop-blur-xl shadow-lg'
-    : 'bg-transparent';
+    ? 'bg-background/95 backdrop-blur-xl shadow-lg border-b border-border/50'
+    : 'bg-background/80 backdrop-blur-lg border-b border-border/20';
 
   const handleGetStartedClick = () => {
     const contactSection = document.getElementById('contact');
@@ -56,7 +56,7 @@ const Header = () => {
 
   return (
     <motion.header 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 rainbow-border ${headerClasses}`} 
+      className={`fixed top-0 left-0 w-full z-[9999] transition-all duration-300 ${headerClasses}`} 
       role="banner"
       initial="hidden"
       animate="visible"

@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -36,7 +35,7 @@ const LoadingIntro = () => {
         setShouldShow(false);
         sessionStorage.setItem('hasSeenIntro', 'true');
       }, 800);
-    }, 4500); // Reduced from 6000 to 4500ms
+    }, 3000); // Reduced from 4500 to 3000ms for faster dismissal
     
     return () => {
       clearTimeout(timer);
@@ -73,10 +72,12 @@ const LoadingIntro = () => {
     <AnimatePresence mode="wait">
       {shouldShow && (
         <motion.div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black w-screen h-screen"
+          className={`fixed inset-0 flex items-center justify-center bg-black w-screen h-screen ${
+            isLoading ? 'z-[10000]' : 'z-0'
+          }`}
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
+          exit={{ opacity: 0, scale: 0.95, zIndex: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           <div className="relative w-full h-full overflow-hidden">
