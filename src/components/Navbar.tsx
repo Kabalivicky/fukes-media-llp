@@ -26,10 +26,11 @@ const Navbar = () => {
           {/* Logo & Branding - Left aligned */}
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <AnimatedLogo size="sm" showGlow={false} withParticles={false} showStrip />
-              <span className="font-bold text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-fukes-blue via-fukes-green to-fukes-red">
-                Fuke's Media
-              </span>
+              <img 
+                src="/lovable-uploads/98a66a3b-d5b0-4b14-891c-e5ee0f6dcbc3.png" 
+                alt="Fuke's Media Logo" 
+                className="h-8 w-auto"
+              />
             </Link>
           </div>
           

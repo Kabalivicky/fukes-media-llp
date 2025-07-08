@@ -144,7 +144,7 @@ const LoadingIntro = () => {
               transition={{ duration: 0.8 }}
             >
               <motion.img 
-                src="/lovable-uploads/773570e5-fe9a-45c8-b246-6337fa83b87d.png"
+                src="/lovable-uploads/98a66a3b-d5b0-4b14-891c-e5ee0f6dcbc3.png"
                 alt="Fuke's Media"
                 className="w-64 h-auto mb-8"
                 initial={{ scale: 0.5, opacity: 0, rotateY: -30 }}
