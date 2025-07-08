@@ -61,6 +61,10 @@ const ToolsDropdown = () => {
               <FileText className="mr-2 h-4 w-4" />
               Convert text formats and encoding
             </ListItem>
+            <ListItem href="/tools/document-converter" title="Document Converter">
+              <FileText className="mr-2 h-4 w-4" />
+              Convert documents (PDF, Word, Excel, etc.)
+            </ListItem>
           </div>
         </div>
       </NavigationMenuContent>

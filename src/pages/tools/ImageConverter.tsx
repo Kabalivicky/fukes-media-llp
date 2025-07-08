@@ -19,12 +19,30 @@ const ImageConverter = () => {
   const [height, setHeight] = useState('');
 
   const imageFormats = [
-    { value: 'jpg', label: 'JPEG' },
-    { value: 'png', label: 'PNG' },
-    { value: 'webp', label: 'WebP' },
-    { value: 'gif', label: 'GIF' },
-    { value: 'bmp', label: 'BMP' },
-    { value: 'tiff', label: 'TIFF' },
+    { value: 'jpg', label: 'JPEG (Joint Photographic Experts Group)' },
+    { value: 'png', label: 'PNG (Portable Network Graphics)' },
+    { value: 'webp', label: 'WebP (Google Web Picture)' },
+    { value: 'gif', label: 'GIF (Graphics Interchange Format)' },
+    { value: 'bmp', label: 'BMP (Bitmap)' },
+    { value: 'tiff', label: 'TIFF (Tagged Image File Format)' },
+    { value: 'svg', label: 'SVG (Scalable Vector Graphics)' },
+    { value: 'ico', label: 'ICO (Icon)' },
+    { value: 'heic', label: 'HEIC (High Efficiency Image Container)' },
+    { value: 'avif', label: 'AVIF (AV1 Image File Format)' },
+    { value: 'jxl', label: 'JPEG XL' },
+    { value: 'psd', label: 'PSD (Photoshop Document)' },
+    { value: 'ai', label: 'AI (Adobe Illustrator)' },
+    { value: 'eps', label: 'EPS (Encapsulated PostScript)' },
+    { value: 'raw', label: 'RAW (Camera Raw)' },
+    { value: 'cr2', label: 'CR2 (Canon Raw)' },
+    { value: 'nef', label: 'NEF (Nikon Electronic Format)' },
+    { value: 'arw', label: 'ARW (Sony Raw)' },
+    { value: 'dng', label: 'DNG (Digital Negative)' },
+    { value: 'jp2', label: 'JPEG 2000' },
+    { value: 'pcx', label: 'PCX (Picture Exchange)' },
+    { value: 'tga', label: 'TGA (Truevision Graphics Adapter)' },
+    { value: 'exr', label: 'EXR (OpenEXR)' },
+    { value: 'hdr', label: 'HDR (High Dynamic Range)' },
   ];
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {

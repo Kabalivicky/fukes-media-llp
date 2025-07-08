@@ -29,6 +29,7 @@ import AudioConverter from '@/pages/tools/AudioConverter';
 import CodeConverter from '@/pages/tools/CodeConverter';
 import ColorConverter from '@/pages/tools/ColorConverter';
 import TextConverter from '@/pages/tools/TextConverter';
+import DocumentConverter from '@/pages/tools/DocumentConverter';
 
 const AppRouter = () => {
   return (
@@ -60,6 +61,7 @@ const AppRouter = () => {
       <Route path="/tools/code-converter" element={<MainLayout><CodeConverter /></MainLayout>} />
       <Route path="/tools/color-converter" element={<MainLayout><ColorConverter /></MainLayout>} />
       <Route path="/tools/text-converter" element={<MainLayout><TextConverter /></MainLayout>} />
+      <Route path="/tools/document-converter" element={<MainLayout><DocumentConverter /></MainLayout>} />
       <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
     </Routes>
   );

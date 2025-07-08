@@ -15,12 +15,30 @@ const AudioConverter = () => {
   const [bitrate, setBitrate] = useState('320');
 
   const audioFormats = [
-    { value: 'mp3', label: 'MP3' },
-    { value: 'wav', label: 'WAV' },
-    { value: 'flac', label: 'FLAC' },
-    { value: 'aac', label: 'AAC' },
-    { value: 'ogg', label: 'OGG' },
-    { value: 'm4a', label: 'M4A' },
+    { value: 'mp3', label: 'MP3 (MPEG Audio Layer III)' },
+    { value: 'wav', label: 'WAV (Waveform Audio File Format)' },
+    { value: 'flac', label: 'FLAC (Free Lossless Audio Codec)' },
+    { value: 'aac', label: 'AAC (Advanced Audio Coding)' },
+    { value: 'ogg', label: 'OGG (Ogg Vorbis)' },
+    { value: 'm4a', label: 'M4A (MPEG-4 Audio)' },
+    { value: 'wma', label: 'WMA (Windows Media Audio)' },
+    { value: 'aiff', label: 'AIFF (Audio Interchange File Format)' },
+    { value: 'au', label: 'AU (Audio File Format)' },
+    { value: 'ra', label: 'RA (RealAudio)' },
+    { value: 'ac3', label: 'AC3 (Audio Codec 3)' },
+    { value: 'dts', label: 'DTS (Digital Theater Systems)' },
+    { value: 'ape', label: 'APE (Monkey\'s Audio)' },
+    { value: 'alac', label: 'ALAC (Apple Lossless)' },
+    { value: 'opus', label: 'Opus (Internet Audio Codec)' },
+    { value: 'amr', label: 'AMR (Adaptive Multi-Rate)' },
+    { value: 'gsm', label: 'GSM (Global System for Mobile)' },
+    { value: 'adpcm', label: 'ADPCM (Adaptive PCM)' },
+    { value: 'pcm', label: 'PCM (Pulse Code Modulation)' },
+    { value: 'mp2', label: 'MP2 (MPEG Audio Layer II)' },
+    { value: 'mp1', label: 'MP1 (MPEG Audio Layer I)' },
+    { value: '3gp', label: '3GP Audio' },
+    { value: 'mka', label: 'MKA (Matroska Audio)' },
+    { value: 'caf', label: 'CAF (Core Audio Format)' },
   ];
 
   const bitrateOptions = [

@@ -20,10 +20,42 @@ const TextConverter = () => {
     camelCase: inputText.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => 
       index === 0 ? word.toLowerCase() : word.toUpperCase()
     ).replace(/\s+/g, ''),
+    pascalCase: inputText.replace(/(?:^\w|[A-Z]|\b\w)/g, (word) => 
+      word.toUpperCase()
+    ).replace(/\s+/g, ''),
     kebabCase: inputText.toLowerCase().replace(/\s+/g, '-'),
     snakeCase: inputText.toLowerCase().replace(/\s+/g, '_'),
+    constantCase: inputText.toUpperCase().replace(/\s+/g, '_'),
     reverse: inputText.split('').reverse().join(''),
     removeSpaces: inputText.replace(/\s+/g, ''),
+    removeSpecialChars: inputText.replace(/[^\w\s]/gi, ''),
+    base64Encode: btoa(inputText),
+    base64Decode: (() => {
+      try {
+        return atob(inputText);
+      } catch {
+        return 'Invalid Base64';
+      }
+    })(),
+    urlEncode: encodeURIComponent(inputText),
+    urlDecode: (() => {
+      try {
+        return decodeURIComponent(inputText);
+      } catch {
+        return 'Invalid URL encoding';
+      }
+    })(),
+    htmlEntities: inputText
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;'),
+    extractNumbers: inputText.replace(/\D/g, ''),
+    extractLetters: inputText.replace(/[^a-zA-Z]/g, ''),
+    wordCount: inputText.split(/\s+/).filter(Boolean).length.toString(),
+    characterCount: inputText.length.toString(),
+    sentenceCount: inputText.split(/[.!?]+/).filter(Boolean).length.toString(),
   };
 
   const copyToClipboard = (text: string) => {

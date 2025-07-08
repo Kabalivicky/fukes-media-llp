@@ -1,4 +1,3 @@
-
 import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,12 +5,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
-import { Upload, Download, FileVideo, Settings, X, PlayCircle } from 'lucide-react';
+import { Upload, Download, FileText, Settings, X, File } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
 
-const VideoConverter = () => {
+const DocumentConverter = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [outputFormat, setOutputFormat] = useState('');
   const [quality, setQuality] = useState('high');
@@ -21,33 +20,29 @@ const VideoConverter = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  const videoFormats = [
-    { value: 'mp4', label: 'MP4 (MPEG-4)' },
-    { value: 'avi', label: 'AVI (Audio Video Interleave)' },
-    { value: 'mov', label: 'MOV (QuickTime)' },
-    { value: 'wmv', label: 'WMV (Windows Media Video)' },
-    { value: 'webm', label: 'WebM' },
-    { value: 'mkv', label: 'MKV (Matroska)' },
-    { value: 'flv', label: 'FLV (Flash Video)' },
-    { value: '3gp', label: '3GP (3GPP)' },
-    { value: 'asf', label: 'ASF (Advanced Systems Format)' },
-    { value: 'f4v', label: 'F4V (Flash MP4)' },
-    { value: 'm4v', label: 'M4V (iTunes Video)' },
-    { value: 'mpg', label: 'MPG (MPEG-1)' },
-    { value: 'mpeg', label: 'MPEG (Motion Picture Experts Group)' },
-    { value: 'ts', label: 'TS (Transport Stream)' },
-    { value: 'vob', label: 'VOB (Video Object)' },
-    { value: 'ogv', label: 'OGV (Ogg Video)' },
-    { value: 'divx', label: 'DivX' },
-    { value: 'xvid', label: 'Xvid' },
-    { value: 'rm', label: 'RM (RealMedia)' },
-    { value: 'rmvb', label: 'RMVB (RealMedia Variable Bitrate)' },
-    { value: 'mts', label: 'MTS (AVCHD)' },
-    { value: 'm2ts', label: 'M2TS (Blu-ray)' },
-    { value: 'dv', label: 'DV (Digital Video)' },
-    { value: 'mxf', label: 'MXF (Material Exchange Format)' },
-    { value: 'prores', label: 'ProRes' },
-    { value: 'dnxhd', label: 'DNxHD' },
+  const documentFormats = [
+    { value: 'pdf', label: 'PDF (Portable Document Format)' },
+    { value: 'docx', label: 'DOCX (Microsoft Word)' },
+    { value: 'doc', label: 'DOC (Microsoft Word Legacy)' },
+    { value: 'txt', label: 'TXT (Plain Text)' },
+    { value: 'rtf', label: 'RTF (Rich Text Format)' },
+    { value: 'odt', label: 'ODT (OpenDocument Text)' },
+    { value: 'html', label: 'HTML (HyperText Markup Language)' },
+    { value: 'epub', label: 'EPUB (Electronic Publication)' },
+    { value: 'mobi', label: 'MOBI (Mobipocket eBook)' },
+    { value: 'azw3', label: 'AZW3 (Amazon Kindle)' },
+    { value: 'fb2', label: 'FB2 (FictionBook)' },
+    { value: 'pptx', label: 'PPTX (Microsoft PowerPoint)' },
+    { value: 'ppt', label: 'PPT (Microsoft PowerPoint Legacy)' },
+    { value: 'odp', label: 'ODP (OpenDocument Presentation)' },
+    { value: 'xlsx', label: 'XLSX (Microsoft Excel)' },
+    { value: 'xls', label: 'XLS (Microsoft Excel Legacy)' },
+    { value: 'ods', label: 'ODS (OpenDocument Spreadsheet)' },
+    { value: 'csv', label: 'CSV (Comma-Separated Values)' },
+    { value: 'md', label: 'MD (Markdown)' },
+    { value: 'tex', label: 'TEX (LaTeX)' },
+    { value: 'ps', label: 'PS (PostScript)' },
+    { value: 'eps', label: 'EPS (Encapsulated PostScript)' },
   ];
 
   const handleDrag = useCallback((e: React.DragEvent) => {
@@ -69,8 +64,8 @@ const VideoConverter = () => {
       const droppedFiles = Array.from(e.dataTransfer.files);
       setSelectedFiles(prev => [...prev, ...droppedFiles]);
       toast({
-        title: "Videos added",
-        description: `${droppedFiles.length} video(s) added for conversion`,
+        title: "Files added",
+        description: `${droppedFiles.length} file(s) added for conversion`,
       });
     }
   }, [toast]);
@@ -81,8 +76,8 @@ const VideoConverter = () => {
       const newFiles = Array.from(files);
       setSelectedFiles(prev => [...prev, ...newFiles]);
       toast({
-        title: "Videos selected",
-        description: `${newFiles.length} video(s) selected for conversion`,
+        title: "Files selected",
+        description: `${newFiles.length} file(s) selected for conversion`,
       });
     }
   };
@@ -95,7 +90,7 @@ const VideoConverter = () => {
     if (selectedFiles.length === 0 || !outputFormat) {
       toast({
         title: "Missing information",
-        description: "Please select videos and output format",
+        description: "Please select files and output format",
         variant: "destructive",
       });
       return;
@@ -112,7 +107,7 @@ const VideoConverter = () => {
 
     toast({
       title: "Conversion completed",
-      description: `${selectedFiles.length} video(s) converted to ${outputFormat.toUpperCase()}`,
+      description: `${selectedFiles.length} file(s) converted to ${outputFormat.toUpperCase()}`,
     });
 
     setIsConverting(false);
@@ -130,29 +125,29 @@ const VideoConverter = () => {
   return (
     <MainLayout>
       <SEOHelmet 
-        title="Video Converter - Fuke's Media"
-        description="Convert video files between different formats with high quality preservation"
+        title="Document Converter - Fuke's Media"
+        description="Convert documents between different formats including PDF, Word, Excel, PowerPoint and more"
       />
       
       <div className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-fukes-blue via-fukes-green to-fukes-red">
-              Video Converter
+              Document Converter
             </h1>
             <p className="text-xl text-muted-foreground">
-              Convert your video files to any format with professional quality
+              Convert documents between different formats with professional quality
             </p>
           </div>
 
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <FileVideo className="h-5 w-5" />
-                Upload Video File
+                <FileText className="h-5 w-5" />
+                Upload Documents
               </CardTitle>
               <CardDescription>
-                Select a video file to convert to your desired format
+                Drag and drop documents or click to select files for conversion
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -171,25 +166,25 @@ const VideoConverter = () => {
                   ref={fileInputRef}
                   type="file"
                   multiple
-                  accept="video/*"
+                  accept=".pdf,.doc,.docx,.txt,.rtf,.odt,.html,.epub,.mobi,.pptx,.ppt,.xlsx,.xls,.csv,.md"
                   onChange={handleFileSelect}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
                 <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                <p className="text-lg font-medium">Drop videos here or click to browse</p>
+                <p className="text-lg font-medium">Drop documents here or click to browse</p>
                 <p className="text-sm text-muted-foreground mt-2">
-                  Supports MP4, AVI, MOV, WebM, MKV, and 20+ more formats
+                  Supports PDF, Word, Excel, PowerPoint, and many more formats
                 </p>
               </div>
 
               {/* Selected Files */}
               {selectedFiles.length > 0 && (
                 <div className="space-y-3">
-                  <Label>Selected Videos ({selectedFiles.length})</Label>
+                  <Label>Selected Files ({selectedFiles.length})</Label>
                   <div className="max-h-48 overflow-y-auto space-y-2">
                     {selectedFiles.map((file, index) => (
                       <div key={index} className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-                        <PlayCircle className="h-5 w-5 text-muted-foreground" />
+                        <File className="h-5 w-5 text-muted-foreground" />
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium truncate">{file.name}</p>
                           <p className="text-xs text-muted-foreground">{formatFileSize(file.size)}</p>
@@ -207,17 +202,6 @@ const VideoConverter = () => {
                 </div>
               )}
 
-              {/* Progress Bar */}
-              {isConverting && (
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Converting...</span>
-                    <span>{progress}%</span>
-                  </div>
-                  <Progress value={progress} className="w-full" />
-                </div>
-              )}
-
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Output Format</Label>
@@ -226,7 +210,7 @@ const VideoConverter = () => {
                       <SelectValue placeholder="Select output format" />
                     </SelectTrigger>
                     <SelectContent>
-                      {videoFormats.map((format) => (
+                      {documentFormats.map((format) => (
                         <SelectItem key={format.value} value={format.value}>
                           {format.label}
                         </SelectItem>
@@ -242,14 +226,25 @@ const VideoConverter = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="low">Low (Fast)</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
+                      <SelectItem value="low">Low (Fast, Smaller Size)</SelectItem>
+                      <SelectItem value="medium">Medium (Balanced)</SelectItem>
                       <SelectItem value="high">High (Recommended)</SelectItem>
-                      <SelectItem value="ultra">Ultra (Slow)</SelectItem>
+                      <SelectItem value="ultra">Ultra (Best Quality)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
+
+              {/* Progress Bar */}
+              {isConverting && (
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Converting...</span>
+                    <span>{progress}%</span>
+                  </div>
+                  <Progress value={progress} className="w-full" />
+                </div>
+              )}
 
               <div className="flex gap-4">
                 <Button 
@@ -258,7 +253,7 @@ const VideoConverter = () => {
                   className="gradient-button flex-1"
                 >
                   <Settings className="mr-2 h-4 w-4" />
-                  {isConverting ? 'Converting...' : 'Convert Videos'}
+                  {isConverting ? 'Converting...' : 'Convert Documents'}
                 </Button>
                 <Button variant="outline" disabled={progress !== 100}>
                   <Download className="mr-2 h-4 w-4" />
@@ -271,22 +266,11 @@ const VideoConverter = () => {
           <div className="grid md:grid-cols-3 gap-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">25+ Video Formats</CardTitle>
+                <CardTitle className="text-lg">50+ Formats</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  Support for MP4, AVI, MOV, WebM, MKV, ProRes, DNxHD and many professional formats
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">High Quality</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Preserve video quality with advanced compression algorithms
+                  Support for PDF, Word, Excel, PowerPoint, eBooks, and many more document formats
                 </p>
               </CardContent>
             </Card>
@@ -297,7 +281,18 @@ const VideoConverter = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  Convert multiple videos at once with drag-and-drop support
+                  Convert multiple documents at once with drag-and-drop support
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Quality Preservation</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Maintain document formatting, images, and layout during conversion
                 </p>
               </CardContent>
             </Card>
@@ -308,4 +303,4 @@ const VideoConverter = () => {
   );
 };
 
-export default VideoConverter;
+export default DocumentConverter;
