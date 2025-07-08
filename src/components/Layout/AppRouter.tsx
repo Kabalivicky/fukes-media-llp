@@ -1,5 +1,6 @@
 
 import { Route, Routes } from 'react-router-dom';
+import MainLayout from '@/components/Layout/MainLayout';
 import Home from '@/pages/Index';
 import About from '@/pages/About';
 import Services from '@/pages/Services';
@@ -32,34 +33,34 @@ import TextConverter from '@/pages/tools/TextConverter';
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/services" element={<Services />} />
-      <Route path="/team" element={<Team />} />
-      <Route path="/pricing" element={<Pricing />} />
-      <Route path="/advanced-pricing" element={<AdvancedPricing />} />
-      <Route path="/resources" element={<Resources />} />
-      <Route path="/vfx-research" element={<VFXResearch />} />
-      <Route path="/vfx-industry-insights" element={<VFXIndustryInsights />} />
-      <Route path="/contract-builder" element={<ContractBuilder />} />
-      <Route path="/freelancer-portal" element={<FreelancerPortal />} />
-      <Route path="/help-center" element={<HelpCenter />} />
-      <Route path="/help-center/:category" element={<HelpCenterCategory />} />
-      <Route path="/production-guidelines" element={<ProductionGuidelines />} />
-      <Route path="/news" element={<News />} />
-      <Route path="/chat-assistant" element={<ChatAssistant />} />
-      <Route path="/virtual-production" element={<VirtualProduction />} />
-      <Route path="/ar-vr-showroom" element={<ARVRShowroom />} />
-      <Route path="/meta-studio" element={<MetaStudio />} />
-      <Route path="/real-time-pipeline" element={<RealTimePipeline />} />
-      <Route path="/ai-tools" element={<AITools />} />
-      <Route path="/tools/video-converter" element={<VideoConverter />} />
-      <Route path="/tools/image-converter" element={<ImageConverter />} />
-      <Route path="/tools/audio-converter" element={<AudioConverter />} />
-      <Route path="/tools/code-converter" element={<CodeConverter />} />
-      <Route path="/tools/color-converter" element={<ColorConverter />} />
-      <Route path="/tools/text-converter" element={<TextConverter />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+      <Route path="/about" element={<MainLayout><About /></MainLayout>} />
+      <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
+      <Route path="/team" element={<MainLayout><Team /></MainLayout>} />
+      <Route path="/pricing" element={<MainLayout><Pricing /></MainLayout>} />
+      <Route path="/advanced-pricing" element={<MainLayout><AdvancedPricing /></MainLayout>} />
+      <Route path="/resources" element={<MainLayout><Resources /></MainLayout>} />
+      <Route path="/vfx-research" element={<MainLayout><VFXResearch /></MainLayout>} />
+      <Route path="/vfx-industry-insights" element={<MainLayout><VFXIndustryInsights /></MainLayout>} />
+      <Route path="/contract-builder" element={<MainLayout><ContractBuilder /></MainLayout>} />
+      <Route path="/freelancer-portal" element={<MainLayout><FreelancerPortal /></MainLayout>} />
+      <Route path="/help-center" element={<MainLayout><HelpCenter /></MainLayout>} />
+      <Route path="/help-center/:category" element={<MainLayout><HelpCenterCategory /></MainLayout>} />
+      <Route path="/production-guidelines" element={<MainLayout><ProductionGuidelines /></MainLayout>} />
+      <Route path="/news" element={<MainLayout><News /></MainLayout>} />
+      <Route path="/chat-assistant" element={<MainLayout><ChatAssistant /></MainLayout>} />
+      <Route path="/virtual-production" element={<MainLayout><VirtualProduction /></MainLayout>} />
+      <Route path="/ar-vr-showroom" element={<MainLayout><ARVRShowroom /></MainLayout>} />
+      <Route path="/meta-studio" element={<MainLayout><MetaStudio /></MainLayout>} />
+      <Route path="/real-time-pipeline" element={<MainLayout><RealTimePipeline /></MainLayout>} />
+      <Route path="/ai-tools" element={<MainLayout><AITools /></MainLayout>} />
+      <Route path="/tools/video-converter" element={<MainLayout><VideoConverter /></MainLayout>} />
+      <Route path="/tools/image-converter" element={<MainLayout><ImageConverter /></MainLayout>} />
+      <Route path="/tools/audio-converter" element={<MainLayout><AudioConverter /></MainLayout>} />
+      <Route path="/tools/code-converter" element={<MainLayout><CodeConverter /></MainLayout>} />
+      <Route path="/tools/color-converter" element={<MainLayout><ColorConverter /></MainLayout>} />
+      <Route path="/tools/text-converter" element={<MainLayout><TextConverter /></MainLayout>} />
+      <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
     </Routes>
   );
 };
