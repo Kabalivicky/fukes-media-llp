@@ -91,9 +91,9 @@ const Home = () => {
         structuredData={structuredData}
       />
 
-      <div className="relative min-h-screen text-foreground overflow-x-hidden">
+      <div className="relative min-h-screen w-full text-foreground overflow-x-hidden">
         {/* Floating elements in background with will-change for better performance */}
-        <div className="fixed inset-0 -z-10" aria-hidden="true">
+        <div className="fixed inset-0 -z-10 w-full" aria-hidden="true">
           <motion.div 
             className="absolute top-1/4 right-[10%] w-64 h-64 rounded-full bg-fukes-blue/10 blur-[100px]"
             style={{ y: y1, willChange: 'transform' }}

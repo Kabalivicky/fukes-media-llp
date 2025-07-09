@@ -11,9 +11,9 @@ const HeroSection = () => {
   const [showAIDemo, setShowAIDemo] = useState(false);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-16">
       {/* Background gradient and animated elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/50" />
+      <div className="absolute inset-0 w-full bg-gradient-to-br from-background via-background to-muted/50" />
       
       <div className="absolute inset-0">
         {[...Array(20)].map((_, i) => (
@@ -40,8 +40,8 @@ const HeroSection = () => {
         ))}
       </div>
 
-      <div className="container relative z-10 px-4">
-        <div className="text-center space-y-12 max-w-6xl mx-auto">
+      <div className="container relative z-10 px-4 mx-auto w-full">
+        <div className="text-center space-y-12 max-w-6xl mx-auto w-full">
           {/* Main heading - Fixed alignment */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -53,7 +53,7 @@ const HeroSection = () => {
               <span className="gradient-text block">AI-Driven VFX</span>
               <span className="text-foreground block">& Creative Studio</span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4">
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4 text-center">
               Where artificial intelligence meets creative excellence. We're revolutionizing 
               visual effects with cutting-edge AI technology and emotion-driven storytelling.
             </p>
@@ -64,7 +64,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto w-full px-4"
           >
             {[
               { icon: Brain, label: "AI Visual Generation", desc: "Create stunning visuals with AI" },
@@ -77,7 +77,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border hover:bg-card/70 transition-colors text-center"
+                className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border hover:bg-card/70 transition-colors text-center w-full"
               >
                 <feature.icon className="h-8 w-8 mx-auto mb-3 text-primary" />
                 <h3 className="font-semibold text-sm mb-2">{feature.label}</h3>
@@ -91,7 +91,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4"
           >
             <Link to="/#contact">
               <Button size="lg" className="gradient-button text-lg px-8 py-4 w-full sm:w-auto">

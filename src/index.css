@@ -617,6 +617,146 @@
     opacity: 1;
   }
 
+  /* Global alignment and positioning fixes */
+  .section-container {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .content-wrapper {
+    @apply w-full max-w-none;
+  }
+
+  .centered-content {
+    @apply flex items-center justify-center text-center;
+  }
+
+  .full-width-section {
+    @apply w-full overflow-x-hidden;
+  }
+
+  /* Grid fixes */
+  .responsive-grid {
+    @apply grid gap-4 sm:gap-6 lg:gap-8 w-full;
+  }
+
+  .responsive-grid-1 {
+    @apply grid-cols-1;
+  }
+
+  .responsive-grid-2 {
+    @apply grid-cols-1 sm:grid-cols-2;
+  }
+
+  .responsive-grid-3 {
+    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .responsive-grid-4 {
+    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
+  }
+
+  /* Flex fixes */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-start {
+    @apply flex items-start justify-start;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .flex-col-center {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  /* Container fixes */
+  .page-wrapper {
+    @apply min-h-screen w-full overflow-x-hidden;
+  }
+
+  .section-padding {
+    @apply py-12 sm:py-16 lg:py-24;
+  }
+
+  .section-padding-sm {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+
+  /* Text alignment fixes */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Button alignment fixes */
+  .button-group {
+    @apply flex flex-col sm:flex-row gap-4 items-center justify-center w-full;
+  }
+
+  .button-group-start {
+    @apply flex flex-col sm:flex-row gap-4 items-start justify-start w-full;
+  }
+
+  /* Card alignment fixes */
+  .card-grid {
+    @apply grid gap-6 w-full;
+  }
+
+  .card-item {
+    @apply w-full max-w-full;
+  }
+
+  /* Form alignment fixes */
+  .form-container {
+    @apply w-full max-w-2xl mx-auto;
+  }
+
+  .form-group {
+    @apply space-y-4 w-full;
+  }
+
+  /* Header and navigation fixes */
+  .nav-container {
+    @apply w-full max-w-7xl mx-auto px-4;
+  }
+
+  .nav-content {
+    @apply flex items-center justify-between w-full;
+  }
+
+  /* Footer fixes */
+  .footer-container {
+    @apply w-full max-w-7xl mx-auto px-4;
+  }
+
+  .footer-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full;
+  }
+
+  /* Image alignment fixes */
+  .image-container {
+    @apply w-full overflow-hidden;
+  }
+
+  .image-responsive {
+    @apply w-full h-auto object-cover;
+  }
+
+  /* Typography alignment fixes */
+  .heading-container {
+    @apply text-center space-y-4 mb-12;
+  }
+
+  .heading-left {
+    @apply text-left space-y-4 mb-8;
+  }
+
   /* Responsive tables */
   @media (max-width: 640px) {
     .price-table table {
@@ -626,6 +766,23 @@
     .price-table th, 
     .price-table td {
       @apply p-1;
+    }
+
+    /* Mobile alignment fixes */
+    .section-container {
+      @apply px-2;
+    }
+
+    .responsive-grid {
+      @apply gap-3;
+    }
+
+    .section-padding {
+      @apply py-8;
+    }
+
+    .button-group {
+      @apply flex-col gap-3;
     }
   }
 }
