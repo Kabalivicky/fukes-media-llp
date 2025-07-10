@@ -5,10 +5,14 @@ import { ArrowRight, Sparkles, Brain, Zap, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AnimatedLogo from './AnimatedLogo';
 import VisualGenerator from './AI/VisualGenerator';
+import MagneticButton from './MagneticButton';
+import MorphingText from './MorphingText';
 import { useState } from 'react';
 
 const HeroSection = () => {
   const [showAIDemo, setShowAIDemo] = useState(false);
+  
+  const aiTerms = ['AI-Driven VFX', 'Neural Rendering', 'Smart Automation', 'Computer Vision', 'Machine Learning', 'Deep Learning'];
 
   return (
     <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-16">
@@ -50,7 +54,9 @@ const HeroSection = () => {
             className="space-y-6"
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
-              <span className="gradient-text block">AI-Driven VFX</span>
+              <span className="gradient-text block">
+                <MorphingText words={aiTerms} className="inline-block" />
+              </span>
               <span className="text-foreground block">& Creative Studio</span>
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4 text-center">
@@ -94,13 +100,13 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4"
           >
             <Link to="/#contact">
-              <Button size="lg" className="gradient-button text-lg px-8 py-4 w-full sm:w-auto">
+              <MagneticButton size="lg" className="gradient-button text-lg px-8 py-4 w-full sm:w-auto">
                 Start Your Project
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              </MagneticButton>
             </Link>
             
-            <Button 
+            <MagneticButton 
               size="lg" 
               variant="outline" 
               className="text-lg px-8 py-4 w-full sm:w-auto"
@@ -108,12 +114,12 @@ const HeroSection = () => {
             >
               <Sparkles className="mr-2 h-5 w-5" />
               Try AI Demo
-            </Button>
+            </MagneticButton>
             
             <Link to="/advanced-pricing">
-              <Button size="lg" variant="ghost" className="text-lg px-8 py-4 w-full sm:w-auto">
+              <MagneticButton size="lg" variant="ghost" className="text-lg px-8 py-4 w-full sm:w-auto">
                 View Pricing
-              </Button>
+              </MagneticButton>
             </Link>
           </motion.div>
 

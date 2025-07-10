@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
 import FloatingThemeToggle from '@/components/FloatingThemeToggle';
+import EnhancedCursor from '@/components/EnhancedCursor';
 import { Toaster } from '@/components/ui/toaster';
 
 interface MainLayoutProps {
@@ -15,6 +16,7 @@ interface MainLayoutProps {
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col w-full">
+      <EnhancedCursor />
       <ScrollProgressIndicator />
       <Header />
       <main className="flex-1 pt-16 w-full">
