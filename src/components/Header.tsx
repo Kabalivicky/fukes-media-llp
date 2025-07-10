@@ -40,7 +40,7 @@ const Header = () => {
   return (
     <div className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${headerClasses}`}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 gap-4 lg:gap-6">
           {/* Logo & Branding - Left aligned */}
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
