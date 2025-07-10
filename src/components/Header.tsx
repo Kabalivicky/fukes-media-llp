@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from "@/components/ui/theme-provider";
 import { Button } from '@/components/ui/button';
 import MegaMenu from './Navigation/MegaMenu';
-import ThemeToggle from './Navigation/ThemeToggle';
 import MobileNav from './Navigation/MobileNav';
 import AnimatedLogo from './AnimatedLogo';
 import { Headset } from 'lucide-react';
@@ -55,8 +54,6 @@ const Header = () => {
           
           {/* Action Buttons - Right aligned */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <ThemeToggle />
-            
             <Link to="/news" className="hidden sm:block">
               <Button variant="outline" size="sm">
                 Industry News

@@ -33,7 +33,7 @@ const ScrollToTop = ({ showBelow = 300 }: ScrollToTopProps) => {
     <Button
       variant="outline"
       size="icon"
-      className={`fixed bottom-8 right-8 z-50 rounded-full bg-primary/70 hover:bg-primary text-white border-none shadow-lg transition-all duration-300 ${
+      className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 rounded-full bg-primary/70 hover:bg-primary text-white border-none shadow-lg transition-all duration-300 ${
         show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
       }`}
       onClick={handleClick}

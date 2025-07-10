@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
+import FloatingThemeToggle from '@/components/FloatingThemeToggle';
 import { Toaster } from '@/components/ui/toaster';
 
 interface MainLayoutProps {
@@ -23,6 +24,7 @@ const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
       </main>
       <Footer />
       <ScrollToTop />
+      <FloatingThemeToggle />
       <Toaster />
     </div>
   );
