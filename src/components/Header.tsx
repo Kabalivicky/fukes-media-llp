@@ -54,7 +54,7 @@ const Header = () => {
           </div>
           
           {/* Action Buttons - Right aligned */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
             
             <Link to="/news" className="hidden sm:block">
