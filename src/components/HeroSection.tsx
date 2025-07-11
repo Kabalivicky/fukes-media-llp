@@ -7,6 +7,9 @@ import AnimatedLogo from './AnimatedLogo';
 import VisualGenerator from './AI/VisualGenerator';
 import MagneticButton from './MagneticButton';
 import MorphingText from './MorphingText';
+import GlitchText from './GlitchText';
+import AnimatedTextReveal from './AnimatedTextReveal';
+import ThreeDFloatingElements from './ThreeDFloatingElements';
 import { useState } from 'react';
 
 const HeroSection = () => {
@@ -16,6 +19,9 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-16">
+      {/* 3D Floating Elements */}
+      <ThreeDFloatingElements />
+      
       {/* Background gradient and animated elements */}
       <div className="absolute inset-0 w-full bg-gradient-to-br from-background via-background to-muted/50" />
       
@@ -55,14 +61,21 @@ const HeroSection = () => {
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
               <span className="gradient-text block">
-                <MorphingText words={aiTerms} className="inline-block" />
+                <GlitchText 
+                  text="AI-Driven VFX"
+                  className="inline-block"
+                  intensity="medium"
+                />
               </span>
               <span className="text-foreground block">& Creative Studio</span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4 text-center">
-              Where artificial intelligence meets creative excellence. We're revolutionizing 
-              visual effects with cutting-edge AI technology and emotion-driven storytelling.
-            </p>
+            <AnimatedTextReveal
+              text="Where artificial intelligence meets creative excellence. We're revolutionizing visual effects with cutting-edge AI technology and emotion-driven storytelling."
+              className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4 text-center"
+              type="words"
+              stagger={0.05}
+              delay={0.5}
+            />
           </motion.div>
 
           {/* AI features highlight - Fixed grid alignment */}

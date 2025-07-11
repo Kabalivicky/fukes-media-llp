@@ -6,6 +6,10 @@ import ScrollToTop from '@/components/ScrollToTop';
 import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
 import FloatingThemeToggle from '@/components/FloatingThemeToggle';
 import EnhancedCursor from '@/components/EnhancedCursor';
+import WebGLParticleBackground from '@/components/WebGLParticleBackground';
+import ShaderBackground from '@/components/ShaderBackground';
+import AdaptiveColorScheme from '@/components/AdaptiveColorScheme';
+import PageTransition from '@/components/PageTransition';
 import { Toaster } from '@/components/ui/toaster';
 
 interface MainLayoutProps {
@@ -15,20 +19,26 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col w-full">
-      <EnhancedCursor />
-      <ScrollProgressIndicator />
-      <Header />
-      <main className="flex-1 pt-16 w-full">
-        <div className="w-full max-w-none">
-          {children || <Outlet />}
-        </div>
-      </main>
-      <Footer />
-      <ScrollToTop />
-      <FloatingThemeToggle />
-      <Toaster />
-    </div>
+    <AdaptiveColorScheme>
+      <div className="min-h-screen flex flex-col w-full relative">
+        <ShaderBackground />
+        <WebGLParticleBackground />
+        <EnhancedCursor />
+        <ScrollProgressIndicator />
+        <Header />
+        <main className="flex-1 pt-16 w-full relative z-10">
+          <div className="w-full max-w-none">
+            <PageTransition>
+              {children || <Outlet />}
+            </PageTransition>
+          </div>
+        </main>
+        <Footer />
+        <ScrollToTop />
+        <FloatingThemeToggle />
+        <Toaster />
+      </div>
+    </AdaptiveColorScheme>
   );
 };
 

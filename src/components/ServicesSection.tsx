@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Camera, Palette, Video, MonitorPlay, Code } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import DynamicPrice from './DynamicPrice';
+import TypewriterText from './TypewriterText';
+import Enhanced3DHoverCards from './Enhanced3DHoverCards';
 
 const services = [
   {
@@ -120,14 +122,19 @@ const ServicesSection = () => {
             <TabsContent key={service.id} value={service.id} className="mt-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <div>
-                  <Card className="border border-border bg-card/50 backdrop-blur-sm">
-                    <CardHeader>
-                      <div className="mb-4">{service.icon}</div>
-                      <CardTitle className="text-2xl md:text-3xl font-bold">{service.name}</CardTitle>
-                      <CardDescription className="text-muted-foreground text-base">
-                        {service.description}
-                      </CardDescription>
-                    </CardHeader>
+                  <Enhanced3DHoverCards intensity={0.8} glowColor={service.id === 'vfx' ? 'hsl(var(--primary))' : service.id === 'creative' ? 'hsl(var(--secondary))' : service.id === 'di' ? 'hsl(var(--accent))' : 'hsl(var(--neon-green))'}>
+                    <Card className="border border-border bg-card/50 backdrop-blur-sm">
+                      <CardHeader>
+                        <div className="mb-4">{service.icon}</div>
+                        <CardTitle className="text-2xl md:text-3xl font-bold">{service.name}</CardTitle>
+                        <CardDescription className="text-muted-foreground text-base">
+                          <TypewriterText 
+                            text={service.description}
+                            delay={500}
+                            speed={30}
+                          />
+                        </CardDescription>
+                      </CardHeader>
                     
                     <CardContent>
                       <Accordion 
@@ -180,7 +187,8 @@ const ServicesSection = () => {
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </CardFooter>
-                  </Card>
+                    </Card>
+                  </Enhanced3DHoverCards>
                 </div>
                 
                 <div className="relative">
