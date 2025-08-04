@@ -1,230 +1,274 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import MainLayout from '@/components/Layout/MainLayout';
-import SectionTitle from '@/components/SectionTitle';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState, useRef, Suspense } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, PerspectiveCamera, Environment, Text3D, Html } from '@react-three/drei';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Headset, Smartphone, Download, Eye, Rotate3D, Hand } from 'lucide-react';
-import SEOHelmet from '@/components/SEOHelmet';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Headset, Camera, Play, Maximize, RotateCcw } from 'lucide-react';
+import { Mesh } from 'three';
+
+interface ShowroomItemProps {
+  position: [number, number, number];
+  title: string;
+  description: string;
+  onSelect: () => void;
+  isSelected: boolean;
+}
+
+const ShowroomItem = ({ position, title, description, onSelect, isSelected }: ShowroomItemProps) => {
+  const meshRef = useRef<Mesh>(null);
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.3;
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime) * 0.2;
+    }
+  });
+
+  return (
+    <group position={position}>
+      <mesh
+        ref={meshRef}
+        onClick={onSelect}
+        scale={isSelected ? 1.2 : 1}
+      >
+        <boxGeometry args={[2, 2, 2]} />
+        <meshStandardMaterial 
+          color={isSelected ? '#0057B7' : '#4A90E2'} 
+          transparent 
+          opacity={0.8}
+          wireframe={!isSelected}
+        />
+      </mesh>
+      
+      <Html distanceFactor={10} position={[0, 2, 0]}>
+        <div className="bg-background/90 backdrop-blur-sm p-3 rounded-lg border min-w-[200px] text-center">
+          <h3 className="font-semibold text-sm mb-1">{title}</h3>
+          <p className="text-xs text-muted-foreground">{description}</p>
+          {isSelected && (
+            <Button size="sm" className="mt-2">
+              Enter Scene
+            </Button>
+          )}
+        </div>
+      </Html>
+    </group>
+  );
+};
+
+const VirtualStudio = () => {
+  return (
+    <group>
+      {/* LED Wall */}
+      <mesh position={[0, 2, -8]} rotation={[0, 0, 0]}>
+        <planeGeometry args={[16, 8]} />
+        <meshBasicMaterial color="#1a1a2e" opacity={0.8} transparent />
+      </mesh>
+      
+      {/* Studio Floor */}
+      <mesh position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[20, 20]} />
+        <meshStandardMaterial color="#2a2a2a" />
+      </mesh>
+      
+      {/* Lighting Rigs */}
+      {Array.from({ length: 6 }).map((_, i) => (
+        <mesh
+          key={i}
+          position={[
+            Math.cos((i / 6) * Math.PI * 2) * 8,
+            4,
+            Math.sin((i / 6) * Math.PI * 2) * 8
+          ]}
+        >
+          <cylinderGeometry args={[0.2, 0.2, 1]} />
+          <meshStandardMaterial color="#ffff80" emissive="#ffff40" />
+        </mesh>
+      ))}
+    </group>
+  );
+};
 
 const ARVRShowroom = () => {
-  const [selectedEnvironment, setSelectedEnvironment] = useState('studio');
-  const [viewMode, setViewMode] = useState<'ar' | 'vr' | '360'>('360');
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'3d' | 'vr' | '360'>('3d');
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const environments = [
+  const showroomItems = [
     {
-      id: 'studio',
-      title: 'Virtual Studio',
-      description: 'Interactive VFX studio environment',
-      type: 'Interior'
+      id: 'led-studio',
+      title: 'LED Wall Studio',
+      description: 'Virtual production environment with real-time backgrounds',
+      position: [-6, 0, 0] as [number, number, number]
     },
     {
-      id: 'outdoor',
-      title: 'Outdoor Scene',
-      description: 'Natural environment with dynamic lighting',
-      type: 'Exterior'
+      id: 'vr-stage',
+      title: 'VR Capture Stage',
+      description: 'Motion capture and VR content creation space',
+      position: [0, 0, 0] as [number, number, number]
     },
     {
-      id: 'futuristic',
-      title: 'Sci-Fi Environment',
-      description: 'Futuristic cityscape with neon effects',
-      type: 'Concept'
+      id: 'rendering-farm',
+      title: 'Render Farm',
+      description: 'High-performance computing cluster visualization',
+      position: [6, 0, 0] as [number, number, number]
     }
   ];
 
-  const features = [
-    {
-      icon: <Rotate3D className="h-6 w-6" />,
-      title: '360° Interactive Scenes',
-      description: 'Fully immersive environments you can explore'
-    },
-    {
-      icon: <Smartphone className="h-6 w-6" />,
-      title: 'AR Mobile Viewer',
-      description: 'View assets in your real environment'
-    },
-    {
-      icon: <Headset className="h-6 w-6" />,
-      title: 'VR Ready Scenes',
-      description: 'WebXR compatible for headset viewing'
-    },
-    {
-      icon: <Hand className="h-6 w-6" />,
-      title: 'Gesture Controls',
-      description: 'Intuitive hand tracking and interactions'
-    }
-  ];
+  const handleItemSelect = (id: string) => {
+    setSelectedItem(selectedItem === id ? null : id);
+  };
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "AR/VR Showroom",
-    "description": "WebXR-powered viewer for exploring VFX environments in AR and VR",
-    "applicationCategory": "MultimediaApplication"
+  const enterVRMode = () => {
+    setIsLoading(true);
+    setViewMode('vr');
+    // Simulate VR initialization
+    setTimeout(() => setIsLoading(false), 2000);
   };
 
   return (
-    <>
-      <SEOHelmet
-        title="AR/VR Showroom - Fuke's Media"
-        description="Explore our VFX projects in immersive AR and VR environments. WebXR-powered viewer with 360° interactive scenes."
-        keywords="AR, VR, WebXR, virtual reality, augmented reality, 360 video, immersive experiences"
-        canonical="https://fukes-media.com/ar-vr-showroom"
-        structuredData={structuredData}
-      />
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="container mx-auto px-4 py-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-8"
+        >
+          <h1 className="text-4xl font-bold mb-4">AR/VR Showroom</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Take a virtual tour of our state-of-the-art facilities and explore our production environments in immersive 3D.
+          </p>
+        </motion.div>
 
-      <MainLayout pageKey="ar-vr-showroom">
-        <section className="py-20 px-4">
-          <div className="container mx-auto">
+        {/* Controls */}
+        <div className="flex justify-center gap-4 mb-8">
+          <Button
+            variant={viewMode === '3d' ? 'default' : 'outline'}
+            onClick={() => setViewMode('3d')}
+          >
+            <Camera className="w-4 h-4 mr-2" />
+            3D View
+          </Button>
+          <Button
+            variant={viewMode === 'vr' ? 'default' : 'outline'}
+            onClick={enterVRMode}
+            disabled={isLoading}
+          >
+            <Headset className="w-4 h-4 mr-2" />
+            {isLoading ? 'Initializing...' : 'VR Mode'}
+          </Button>
+          <Button
+            variant={viewMode === '360' ? 'default' : 'outline'}
+            onClick={() => setViewMode('360')}
+          >
+            <RotateCcw className="w-4 h-4 mr-2" />
+            360° Tour
+          </Button>
+        </div>
+
+        {/* 3D Showroom */}
+        <div className="h-[600px] rounded-lg overflow-hidden border bg-muted/5">
+          <Canvas shadows>
+            <PerspectiveCamera makeDefault position={[0, 5, 15]} />
+            
+            <OrbitControls
+              enablePan={true}
+              enableZoom={true}
+              enableRotate={true}
+              minDistance={5}
+              maxDistance={25}
+            />
+            
+            <ambientLight intensity={0.3} />
+            <directionalLight
+              position={[10, 10, 5]}
+              intensity={1}
+              castShadow
+              shadow-mapSize-width={2048}
+              shadow-mapSize-height={2048}
+            />
+            <pointLight position={[-10, -10, -5]} intensity={0.5} />
+            
+            <Suspense fallback={null}>
+              <Environment preset="studio" />
+              
+              {/* Virtual Studio Environment */}
+              <VirtualStudio />
+              
+              {/* Showroom Items */}
+              {showroomItems.map((item) => (
+                <ShowroomItem
+                  key={item.id}
+                  position={item.position}
+                  title={item.title}
+                  description={item.description}
+                  onSelect={() => handleItemSelect(item.id)}
+                  isSelected={selectedItem === item.id}
+                />
+              ))}
+            </Suspense>
+          </Canvas>
+        </div>
+
+        {/* Information Panel */}
+        <AnimatePresence>
+          {selectedItem && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="mt-8"
             >
-              <SectionTitle
-                title="AR/VR Showroom"
-                subtitle="Immersive exploration of our VFX environments and projects"
-              />
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-16">
-                <div className="lg:col-span-2">
-                  <div className="bg-card/50 backdrop-blur-sm rounded-lg p-6 border">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xl font-semibold">Environment Viewer</h3>
-                      <div className="flex gap-2">
-                        {(['360', 'ar', 'vr'] as const).map((mode) => (
-                          <Button
-                            key={mode}
-                            variant={viewMode === mode ? 'default' : 'outline'}
-                            size="sm"
-                            onClick={() => setViewMode(mode)}
-                          >
-                            {mode.toUpperCase()}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="aspect-video bg-muted rounded-lg flex items-center justify-center mb-4">
-                      <div className="text-center">
-                        <Headset className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                        <h4 className="text-lg font-semibold mb-2">
-                          {environments.find(e => e.id === selectedEnvironment)?.title}
-                        </h4>
-                        <p className="text-muted-foreground mb-4">
-                          Viewing in {viewMode.toUpperCase()} mode
-                        </p>
-                        <Badge variant="outline">
-                          WebXR Experience Loading...
-                        </Badge>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <Button className="flex-1">
-                        <Headset className="mr-2 h-4 w-4" />
-                        Launch VR Experience
-                      </Button>
-                      <Button variant="outline" className="flex-1">
-                        <Smartphone className="mr-2 h-4 w-4" />
-                        Open in AR
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Available Environments</h3>
-                  <div className="space-y-3">
-                    {environments.map((env) => (
-                      <Card
-                        key={env.id}
-                        className={`cursor-pointer transition-all hover:shadow-lg ${
-                          selectedEnvironment === env.id ? 'ring-2 ring-primary' : ''
-                        }`}
-                        onClick={() => setSelectedEnvironment(env.id)}
-                      >
-                        <CardHeader className="pb-3">
-                          <div className="flex items-center justify-between">
-                            <CardTitle className="text-sm">{env.title}</CardTitle>
-                            <Badge variant="secondary" className="text-xs">
-                              {env.type}
-                            </Badge>
-                          </div>
-                          <CardDescription className="text-xs">
-                            {env.description}
-                          </CardDescription>
-                        </CardHeader>
-                      </Card>
-                    ))}
-                  </div>
-
-                  <div className="mt-6">
-                    <h4 className="font-semibold mb-3">AR Markers</h4>
-                    <Card>
-                      <CardContent className="pt-4">
-                        <p className="text-sm text-muted-foreground mb-3">
-                          Download AR markers to view assets on your mobile device
-                        </p>
-                        <Button variant="outline" size="sm" className="w-full">
-                          <Download className="mr-2 h-4 w-4" />
-                          Download Markers
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-20">
-                <h3 className="text-2xl font-bold text-center mb-12">WebXR Features</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {features.map((feature, index) => (
-                    <motion.div
-                      key={feature.title}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1, duration: 0.5 }}
-                    >
-                      <Card className="text-center hover:shadow-lg transition-all">
-                        <CardHeader>
-                          <div className="mx-auto p-3 bg-primary/10 rounded-full w-fit">
-                            {feature.icon}
-                          </div>
-                          <CardTitle className="text-lg">{feature.title}</CardTitle>
-                          <CardDescription>{feature.description}</CardDescription>
-                        </CardHeader>
-                      </Card>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-20 text-center">
-                <Card className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-500/20">
-                  <CardContent className="pt-6">
-                    <Eye className="h-12 w-12 mx-auto mb-4 text-purple-500" />
-                    <h3 className="text-2xl font-bold mb-4">Experience the Future</h3>
-                    <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                      Step into our virtual worlds and see your projects come to life in ways never before possible.
-                      Compatible with all major VR headsets and mobile AR devices.
-                    </p>
-                    <Button size="lg" className="gradient-button">
-                      Start Exploring
+              <Card className="max-w-2xl mx-auto">
+                <CardHeader>
+                  <CardTitle>
+                    {showroomItems.find(item => item.id === selectedItem)?.title}
+                  </CardTitle>
+                  <CardDescription>
+                    {showroomItems.find(item => item.id === selectedItem)?.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    <Button className="w-full">
+                      <Play className="w-4 h-4 mr-2" />
+                      Start Tour
                     </Button>
-                  </CardContent>
-                </Card>
+                    <Button variant="outline" className="w-full">
+                      <Maximize className="w-4 h-4 mr-2" />
+                      Fullscreen
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Loading Overlay */}
+        <AnimatePresence>
+          {isLoading && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center"
+            >
+              <div className="text-center">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"
+                />
+                <p className="text-lg font-medium">Initializing VR Experience...</p>
+                <p className="text-sm text-muted-foreground">Please put on your VR headset</p>
               </div>
             </motion.div>
-          </div>
-        </section>
-      </MainLayout>
-    </>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
   );
 };
 

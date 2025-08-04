@@ -11,6 +11,7 @@ import ContactSection from '@/components/ContactSection';
 import SEOHelmet from '@/components/SEOHelmet';
 import AnimatedLogo from '@/components/AnimatedLogo';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import ExpandableInfoModules from '@/components/ExpandableInfoModules';
 import useScrollSync from '@/hooks/useScrollSync';
 
 // Animation variants for scroll-triggered animations
@@ -147,6 +148,17 @@ const Home = () => {
               </motion.div>
             </ErrorBoundary>
           </div>
+          
+          <ErrorBoundary>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <ExpandableInfoModules />
+            </motion.div>
+          </ErrorBoundary>
           
           <ErrorBoundary>
             <motion.div

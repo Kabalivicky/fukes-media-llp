@@ -30,6 +30,8 @@ import CodeConverter from '@/pages/tools/CodeConverter';
 import ColorConverter from '@/pages/tools/ColorConverter';
 import TextConverter from '@/pages/tools/TextConverter';
 import DocumentConverter from '@/pages/tools/DocumentConverter';
+import BlockchainIntegration from '@/components/BlockchainIntegration';
+import GamifiedLearning from '@/components/GamifiedLearning';
 
 const AppRouter = () => {
   return (
@@ -62,6 +64,8 @@ const AppRouter = () => {
       <Route path="/tools/color-converter" element={<MainLayout><ColorConverter /></MainLayout>} />
       <Route path="/tools/text-converter" element={<MainLayout><TextConverter /></MainLayout>} />
       <Route path="/tools/document-converter" element={<MainLayout><DocumentConverter /></MainLayout>} />
+      <Route path="/blockchain" element={<MainLayout><BlockchainIntegration /></MainLayout>} />
+      <Route path="/learning" element={<MainLayout><GamifiedLearning /></MainLayout>} />
       <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
     </Routes>
   );
