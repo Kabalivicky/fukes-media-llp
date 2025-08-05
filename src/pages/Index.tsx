@@ -11,7 +11,7 @@ import ContactSection from '@/components/ContactSection';
 import SEOHelmet from '@/components/SEOHelmet';
 import AnimatedLogo from '@/components/AnimatedLogo';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import ExpandableInfoModules from '@/components/ExpandableInfoModules';
+import EnhancedModularInfo from '@/components/EnhancedModularInfo';
 import useScrollSync from '@/hooks/useScrollSync';
 
 // Animation variants for scroll-triggered animations
@@ -156,7 +156,7 @@ const Home = () => {
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeInUpVariants}
             >
-              <ExpandableInfoModules />
+              <EnhancedModularInfo />
             </motion.div>
           </ErrorBoundary>
           

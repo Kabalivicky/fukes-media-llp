@@ -7,9 +7,10 @@ import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
 import FloatingThemeToggle from '@/components/FloatingThemeToggle';
 import EnhancedCursor from '@/components/EnhancedCursor';
 import SpaceBackground from '@/components/SpaceBackground';
-import CinematicPageTransition from '@/components/CinematicPageTransition';
+import EnhancedWorldTransitions from '@/components/EnhancedWorldTransitions';
 import EmotionDrivenUI from '@/components/EmotionDrivenUI';
 import VoiceGestureNavigation from '@/components/VoiceGestureNavigation';
+import ImmersiveNavigation from '@/components/ImmersiveNavigation';
 import { Toaster } from '@/components/ui/toaster';
 
 interface MainLayoutProps {
@@ -27,14 +28,15 @@ const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
         <Header />
         <main className="flex-1 pt-16 w-full relative z-10">
           <div className="w-full max-w-none">
-            <CinematicPageTransition>
+            <EnhancedWorldTransitions>
               {children || <Outlet />}
-            </CinematicPageTransition>
+            </EnhancedWorldTransitions>
           </div>
         </main>
         <Footer />
         <ScrollToTop />
         <FloatingThemeToggle />
+        <ImmersiveNavigation />
         <VoiceGestureNavigation />
         <Toaster />
       </div>
