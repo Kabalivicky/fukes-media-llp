@@ -23,41 +23,11 @@ const AINeuraGlow = ({ intensity = 1 }: { intensity?: number }) => {
     }
   });
 
-  const points = useMemo(() => {
-    const pts = [];
-    for (let i = 0; i < 50; i++) {
-      pts.push(new Vector3(
-        (Math.random() - 0.5) * viewport.width * 2,
-        (Math.random() - 0.5) * viewport.height * 2,
-        (Math.random() - 0.5) * 20
-      ));
-    }
-    return pts;
-  }, [viewport]);
-
   return (
     <group>
-      {/* Neural Network Connections */}
-      {points.map((point, i) => (
-        <line key={i}>
-          <bufferGeometry>
-            <bufferAttribute
-              attach="attributes-position"
-              count={2}
-              array={new Float32Array([
-                0, 0, 0,
-                point.x * 0.1, point.y * 0.1, point.z * 0.1
-              ])}
-              itemSize={3}
-            />
-          </bufferGeometry>
-          <lineBasicMaterial color="#0057B7" transparent opacity={0.3} />
-        </line>
-      ))}
-      
       {/* AI Data Pulses */}
       <mesh ref={meshRef}>
-        <torusGeometry args={[viewport.width * 0.5, 0.1, 16, 100]} />
+        <torusGeometry args={[8, 0.1, 16, 100]} />
         <meshBasicMaterial 
           color="#00FF88" 
           transparent 
@@ -65,6 +35,25 @@ const AINeuraGlow = ({ intensity = 1 }: { intensity?: number }) => {
           blending={AdditiveBlending}
         />
       </mesh>
+      
+      {/* Neural Network Particles */}
+      {Array.from({ length: 20 }).map((_, i) => (
+        <mesh
+          key={i}
+          position={[
+            Math.sin(i * 0.5) * 15,
+            Math.cos(i * 0.3) * 10,
+            Math.sin(i * 0.7) * 5
+          ]}
+        >
+          <sphereGeometry args={[0.1, 8, 8]} />
+          <meshBasicMaterial 
+            color="#0057B7" 
+            transparent 
+            opacity={0.6}
+          />
+        </mesh>
+      ))}
     </group>
   );
 };
@@ -239,8 +228,11 @@ const Enhanced3DEnvironments = ({ type, intensity = 1 }: EnvironmentProps) => {
       <Canvas
         camera={{ position: [0, 0, 10], fov: 75 }}
         style={{ background: 'transparent' }}
+        gl={{ antialias: false, alpha: true }}
+        dpr={Math.min(window.devicePixelRatio, 2)}
       >
-        <AINeuraGlow intensity={intensity} />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} />
         {renderEnvironment()}
       </Canvas>
     </motion.div>

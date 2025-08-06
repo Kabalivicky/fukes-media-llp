@@ -170,16 +170,7 @@ const EnhancedWorldTransitions = ({ children }: WorldTransitionProps) => {
         <Enhanced3DEnvironments type={currentWorld as any} intensity={1.2} />
       </motion.div>
 
-      {/* World Portal System */}
-      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -1 }}>
-        <Canvas camera={{ position: getCameraPosition(location.pathname) }}>
-          <CameraFlight targetPosition={getCameraPosition(location.pathname)} />
-          <WorldPortal isActive={currentWorld === 'studio'} type="services" />
-          <WorldPortal isActive={currentWorld === 'gallery'} type="portfolio" />
-          <WorldPortal isActive={currentWorld === 'pods'} type="team" />
-          <WorldPortal isActive={currentWorld === 'holographic'} type="contact" />
-        </Canvas>
-      </div>
+      {/* World Portal System - Removed to prevent Canvas conflicts */}
 
       {/* World Transition Overlay */}
       <AnimatePresence mode="wait">
