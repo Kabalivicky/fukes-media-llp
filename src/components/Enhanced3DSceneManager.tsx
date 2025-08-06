@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
+import { Canvas as R3FCanvas } from '@react-three/fiber';
 import { useLocation } from 'react-router-dom';
 import Enhanced3DEnvironments from './Enhanced3DEnvironments';
 
@@ -36,7 +36,7 @@ const Enhanced3DSceneManager = ({ children }: SceneManagerProps) => {
         className="fixed inset-0 pointer-events-none"
         style={{ zIndex: -1 }}
       >
-        <Canvas
+        <R3FCanvas
           camera={{ position: [0, 0, 10], fov: 75 }}
           style={{ background: 'transparent' }}
           gl={{ 
@@ -49,10 +49,12 @@ const Enhanced3DSceneManager = ({ children }: SceneManagerProps) => {
             gl.shadowMap.enabled = false;
           }}
         >
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={0.8} />
-          <Enhanced3DEnvironments type={currentEnvironment} intensity={1.2} />
-        </Canvas>
+          <Suspense fallback={null}>
+            <ambientLight intensity={0.5} />
+            <pointLight position={[10, 10, 10]} intensity={0.8} />
+            <Enhanced3DEnvironments type={currentEnvironment} intensity={1.2} />
+          </Suspense>
+        </R3FCanvas>
       </motion.div>
 
       {/* Content Layer */}
