@@ -86,25 +86,15 @@ const ParticleConnections = ({ activeItem }: { activeItem: NavigationItem | null
     <group ref={groupRef}>
       {navigationItems
         .filter(item => item.id !== activeItem.id)
-        .map((item, index) => (
-          <line key={item.id}>
-            <bufferGeometry>
-              <bufferAttribute
-                attach="attributes-position"
-                count={2}
-                array={new Float32Array([
-                  ...activeItem.position,
-                  ...item.position
-                ])}
-                itemSize={3}
-              />
-            </bufferGeometry>
-            <lineBasicMaterial 
+        .map((item) => (
+          <mesh key={item.id} position={[(activeItem.position[0] + item.position[0]) / 2, (activeItem.position[1] + item.position[1]) / 2, (activeItem.position[2] + item.position[2]) / 2]}>
+            <sphereGeometry args={[0.05, 4, 4]} />
+            <meshBasicMaterial 
               color={activeItem.color} 
               transparent 
-              opacity={0.3}
+              opacity={0.6}
             />
-          </line>
+          </mesh>
         ))
       }
     </group>

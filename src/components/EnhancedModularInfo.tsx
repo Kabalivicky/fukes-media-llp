@@ -246,12 +246,19 @@ const EnhancedModularInfo = () => {
                 onClick={() => handleModuleClick(module.id)}
                 style={{ transformStyle: 'preserve-3d' }}
               >
-                {/* 3D Background Element */}
-                <div className="absolute inset-0 pointer-events-none opacity-20">
-                  <Canvas camera={{ position: [0, 0, 5] }}>
-                    <FloatingElement isActive={activeModule === module.id} />
-                  </Canvas>
-                </div>
+                {/* 3D Background Element - Simplified to avoid Canvas conflicts */}
+                <motion.div 
+                  className="absolute inset-0 pointer-events-none opacity-20 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl"
+                  animate={{
+                    scale: activeModule === module.id ? [1, 1.05, 1] : 1,
+                    rotate: activeModule === module.id ? [0, 5, 0] : 0
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: activeModule === module.id ? Infinity : 0,
+                    repeatType: "reverse"
+                  }}
+                />
 
                 <motion.div
                   style={{ color: module.color }}
