@@ -1,8 +1,6 @@
-import React, { useRef, useMemo, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { motion } from 'framer-motion';
-import { Mesh, Vector3, Color, AdditiveBlending } from 'three';
-import { useInView } from 'framer-motion';
+import React, { useRef } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { Mesh, AdditiveBlending } from 'three';
 
 interface EnvironmentProps {
   type: 'studio' | 'gallery' | 'pods' | 'holographic' | 'neural';
@@ -197,9 +195,6 @@ const HolographicEnvironment = () => {
 };
 
 const Enhanced3DEnvironments = ({ type, intensity = 1 }: EnvironmentProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref);
-
   const renderEnvironment = () => {
     switch (type) {
       case 'studio':
@@ -216,27 +211,7 @@ const Enhanced3DEnvironments = ({ type, intensity = 1 }: EnvironmentProps) => {
     }
   };
 
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isInView ? 1 : 0 }}
-      transition={{ duration: 2 }}
-      className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: -1 }}
-    >
-      <Canvas
-        camera={{ position: [0, 0, 10], fov: 75 }}
-        style={{ background: 'transparent' }}
-        gl={{ antialias: false, alpha: true }}
-        dpr={Math.min(window.devicePixelRatio, 2)}
-      >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} />
-        {renderEnvironment()}
-      </Canvas>
-    </motion.div>
-  );
+  return <>{renderEnvironment()}</>;
 };
 
 export default Enhanced3DEnvironments;
