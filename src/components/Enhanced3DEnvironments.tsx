@@ -15,8 +15,9 @@ const AINeuraGlow = ({ intensity = 1 }: { intensity?: number }) => {
     if (meshRef.current) {
       meshRef.current.rotation.z = state.clock.elapsedTime * 0.1;
       const material = meshRef.current.material as any;
-      if (material.opacity !== undefined) {
+      if (material && material.opacity !== undefined) {
         material.opacity = 0.3 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
+        material.needsUpdate = true;
       }
     }
   });

@@ -1,5 +1,6 @@
 
 import { cn } from '@/lib/utils';
+// Force TypeScript to refresh interface
 
 interface SectionTitleProps {
   title: string;
