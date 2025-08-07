@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertCircle } from 'lucide-react';
-import { getUserCurrency, setUserCurrency } from '@/utils/currencyUtils';
+import { getUserCurrency } from '@/utils/currencyUtils';
 import ProjectSpecification from './ProjectSpecification';
 import EstimateResults from './EstimateResults';
 import ErrorBoundary from '@/components/ErrorBoundary';
@@ -205,7 +205,7 @@ const AdvancedPricingCalculator = () => {
 
     if (currencyMap[currencyCode]) {
       setSelectedCurrency(currencyCode);
-      setUserCurrency(currencyMap[currencyCode]);
+      localStorage.setItem('user_currency', currencyMap[currencyCode]);
       // Force a recalculation to update the displayed price
       if (calculatedPrice) {
         setIsCalculating(true);

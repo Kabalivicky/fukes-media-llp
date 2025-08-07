@@ -1,90 +1,19 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import { ReactNode, useRef, useEffect, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Mesh } from 'three';
 import gsap from 'gsap';
-import Enhanced3DEnvironments from './Enhanced3DEnvironments';
 
 interface WorldTransitionProps {
   children: ReactNode;
 }
 
-const CameraFlight = ({ targetPosition }: { targetPosition: [number, number, number] }) => {
-  const cameraRef = useRef<any>(null);
-
-  useFrame((state, delta) => {
-    if (cameraRef.current) {
-      const [x, y, z] = targetPosition;
-      cameraRef.current.position.lerp({ x, y, z }, delta * 2);
-      cameraRef.current.lookAt(0, 0, 0);
-    }
-  });
-
-  return <perspectiveCamera ref={cameraRef} />;
-};
-
-const WorldPortal = ({ isActive, type }: { isActive: boolean; type: string }) => {
-  const meshRef = useRef<Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current && isActive) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.3;
-      meshRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2) * 0.1);
-    }
-  });
-
-  const getPortalColor = () => {
-    switch (type) {
-      case 'services': return '#0057B7';
-      case 'portfolio': return '#D50032';
-      case 'team': return '#009639';
-      case 'contact': return '#00FF88';
-      default: return '#0057B7';
-    }
-  };
-
-  return (
-    <mesh ref={meshRef} visible={isActive}>
-      <torusGeometry args={[3, 0.5, 16, 100]} />
-      <meshBasicMaterial 
-        color={getPortalColor()} 
-        transparent 
-        opacity={0.6}
-        wireframe 
-      />
-    </mesh>
-  );
-};
 
 const EnhancedWorldTransitions = ({ children }: WorldTransitionProps) => {
   const location = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [currentWorld, setCurrentWorld] = useState('neural');
   const { scrollY } = useScroll();
 
-  // Enhanced camera positions for different sections
-  const getCameraPosition = (path: string): [number, number, number] => {
-    switch (path) {
-      case '/services': return [15, 5, 15];
-      case '/portfolio': return [-15, 8, 20];
-      case '/team': return [0, 15, 25];
-      case '/contact': return [10, -5, 30];
-      default: return [0, 0, 10];
-    }
-  };
-
-  const getEnvironmentType = (path: string) => {
-    if (path.includes('services')) return 'studio';
-    if (path.includes('portfolio')) return 'gallery';
-    if (path.includes('team')) return 'pods';
-    if (path.includes('contact')) return 'holographic';
-    return 'neural';
-  };
-
   useEffect(() => {
-    const newWorld = getEnvironmentType(location.pathname);
-    setCurrentWorld(newWorld);
 
     // Enhanced GSAP transition with 3D camera movement
     if (containerRef.current) {
@@ -105,8 +34,6 @@ const EnhancedWorldTransitions = ({ children }: WorldTransitionProps) => {
   }, [location.pathname]);
 
   // Advanced parallax effects
-  const backgroundY = useTransform(scrollY, [0, 1000], [0, -300]);
-  const environmentY = useTransform(scrollY, [0, 1000], [0, -150]);
   const contentScale = useTransform(scrollY, [0, 200], [1, 0.95]);
 
   const pageVariants = {
@@ -162,15 +89,7 @@ const EnhancedWorldTransitions = ({ children }: WorldTransitionProps) => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Enhanced Environment Layer */}
-      <motion.div
-        style={{ y: environmentY, zIndex: -2 }}
-        className="fixed inset-0"
-      >
-        <Enhanced3DEnvironments type={currentWorld as any} intensity={1.2} />
-      </motion.div>
-
-      {/* World Portal System - Removed to prevent Canvas conflicts */}
+      {/* Enhanced Environment Layer - Now handled in Enhanced3DSceneManager */}
 
       {/* World Transition Overlay */}
       <AnimatePresence mode="wait">
@@ -247,11 +166,11 @@ const EnhancedWorldTransitions = ({ children }: WorldTransitionProps) => {
       >
         <div className="flex items-center space-x-3 bg-black/20 backdrop-blur-md rounded-full px-6 py-3">
           <div className="text-xs text-white/80 font-mono">
-            WORLD: {currentWorld.toUpperCase()}
+            ROUTE: {location.pathname === '/' ? 'HOME' : location.pathname.slice(1).toUpperCase()}
           </div>
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           <div className="text-xs text-white/60">
-            {location.pathname === '/' ? 'NEURAL_NET' : location.pathname.slice(1).toUpperCase()}
+            TRANSITION_ACTIVE
           </div>
         </div>
       </motion.div>

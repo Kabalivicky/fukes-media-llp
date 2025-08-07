@@ -14,7 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import DynamicPrice from '@/components/DynamicPrice';
-import { getUserCurrency, setUserCurrency, currencies } from '@/utils/currencyUtils';
+import { getUserCurrency, currencies } from '@/utils/currencyUtils';
 import { toast } from '@/hooks/use-toast';
 
 type PricingTier = 'standard' | 'premium' | 'outsourced';
@@ -245,7 +245,7 @@ const EnhancedPricingCalculator = () => {
 
     if (currencyMap[currencyCode]) {
       setSelectedCurrency(currencyCode);
-      setUserCurrency(currencyMap[currencyCode]);
+      localStorage.setItem('user_currency', currencyMap[currencyCode]);
       // Force a recalculation to update the displayed price
       if (calculatedPrice) {
         setIsCalculating(true);
