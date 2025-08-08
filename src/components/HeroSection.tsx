@@ -59,23 +59,45 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="space-y-6"
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight leading-tight">
               <span className="gradient-text block">
                 <GlitchText 
-                  text="AI-Driven VFX"
+                  text="FUKE'S MEDIA"
                   className="inline-block"
                   intensity="medium"
                 />
               </span>
-              <span className="text-foreground block">& Creative Studio</span>
+              <span className="text-foreground block font-body">Where Innovation Meets Storytelling</span>
             </h1>
             <AnimatedTextReveal
-              text="Where artificial intelligence meets creative excellence. We're revolutionizing visual effects with cutting-edge AI technology and emotion-driven storytelling."
-              className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4 text-center"
+              text="Award-caliber VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects that push the boundaries of what's possible."
+              className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4 text-center font-body"
               type="words"
               stagger={0.05}
               delay={0.5}
             />
+            
+            {/* Video Showreel Teaser */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="mt-8 max-w-4xl mx-auto"
+            >
+              <div className="relative aspect-video rounded-2xl overflow-hidden bg-card/20 backdrop-blur-sm border border-primary/20 group">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-0 h-0 border-l-[12px] border-l-white border-y-[8px] border-y-transparent ml-1" />
+                    </div>
+                    <p className="text-white font-medium">6-Second Showreel Teaser</p>
+                    <p className="text-white/70 text-sm">Pure Visual Excellence</p>
+                  </div>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent" />
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* AI features highlight - Fixed grid alignment */}
@@ -112,9 +134,9 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4"
           >
-            <Link to="/#contact">
-              <MagneticButton size="lg" className="gradient-button text-lg px-8 py-4 w-full sm:w-auto">
-                Start Your Project
+            <Link to="/contact">
+              <MagneticButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4 w-full sm:w-auto font-medium">
+                Work With Us
                 <ArrowRight className="ml-2 h-5 w-5" />
               </MagneticButton>
             </Link>

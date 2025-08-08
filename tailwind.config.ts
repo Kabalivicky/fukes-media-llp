@@ -19,6 +19,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'display': ['Orbitron', 'system-ui', 'sans-serif'],
+				'body': ['Inter', 'system-ui', 'sans-serif']
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -53,15 +57,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Custom color extensions for Fuke's Media branding
+				// Fuke's Media Award-Caliber Brand Colors
 				fukes: {
-					blue: '#0057B7',
-					red: '#D50032',
-					green: '#009639',
-					gold: '#FFCC00',
-					cyan: '#00BFFF',
-					black: '#000000',
-					white: '#FFFFFF'
+					red: '#FF0000',      /* Pure Brand Red */
+					blue: '#0000FF',     /* Pure Brand Blue */
+					green: '#00FF00',    /* Pure Brand Green */
+					black: '#000000',    /* Pure Black */
+					white: '#FFFFFF'     /* Pure White */
 				}
 			},
 			borderRadius: {

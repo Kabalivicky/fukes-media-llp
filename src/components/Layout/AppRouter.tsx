@@ -31,13 +31,17 @@ import TextConverter from '@/pages/tools/TextConverter';
 import DocumentConverter from '@/pages/tools/DocumentConverter';
 import BlockchainIntegration from '@/components/BlockchainIntegration';
 import GamifiedLearning from '@/components/GamifiedLearning';
+import Portfolio from '@/pages/Portfolio';
+import Showreel from '@/pages/Showreel';
+import Contact from '@/pages/Contact';
 
 const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-      <Route path="/portfolio" element={<MainLayout><Services /></MainLayout>} />
-      <Route path="/showreel" element={<MainLayout><Services /></MainLayout>} />
+      <Route path="/portfolio" element={<MainLayout><Portfolio /></MainLayout>} />
+      <Route path="/showreel" element={<MainLayout><Showreel /></MainLayout>} />
+      <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
       <Route path="/about" element={<MainLayout><About /></MainLayout>} />
       <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
       <Route path="/team" element={<MainLayout><Team /></MainLayout>} />
