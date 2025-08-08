@@ -12,13 +12,17 @@ const AINeuraGlow = ({ intensity = 1 }: { intensity?: number }) => {
   const { viewport } = useThree();
 
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.z = state.clock.elapsedTime * 0.1;
-      const material = meshRef.current.material as any;
-      if (material && material.opacity !== undefined) {
-        material.opacity = 0.3 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
-        material.needsUpdate = true;
+    try {
+      if (meshRef.current && meshRef.current.material) {
+        meshRef.current.rotation.z = state.clock.elapsedTime * 0.1;
+        const material = meshRef.current.material as any;
+        if (material && typeof material.opacity !== 'undefined' && material.needsUpdate !== undefined) {
+          material.opacity = 0.3 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
+          material.needsUpdate = true;
+        }
       }
+    } catch (error) {
+      console.warn('3D animation error:', error);
     }
   });
 

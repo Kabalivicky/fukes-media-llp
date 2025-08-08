@@ -1,4 +1,3 @@
-
 import { Route, Routes } from 'react-router-dom';
 import MainLayout from '@/components/Layout/MainLayout';
 import Home from '@/pages/Index';
@@ -37,6 +36,8 @@ const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+      <Route path="/portfolio" element={<MainLayout><Services /></MainLayout>} />
+      <Route path="/showreel" element={<MainLayout><Services /></MainLayout>} />
       <Route path="/about" element={<MainLayout><About /></MainLayout>} />
       <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
       <Route path="/team" element={<MainLayout><Team /></MainLayout>} />

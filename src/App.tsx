@@ -47,31 +47,24 @@ const App = () => {
     const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
     
     if (hasSeenIntro === 'true') {
-      // If intro was already seen, mark app as ready immediately
       setIsAppReady(true);
     } else {
-      // Otherwise, wait for a brief moment then mark as ready
-      // The LoadingIntro will handle its own visibility
-      const timer = setTimeout(() => {
+      // Set a timeout as fallback to ensure app loads even if intro fails
+      const fallbackTimer = setTimeout(() => {
+        setIsAppReady(true);
+        sessionStorage.setItem('hasSeenIntro', 'true');
+      }, 8000); // 8 second fallback
+      
+      const quickTimer = setTimeout(() => {
         setIsAppReady(true);
       }, 100);
       
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(fallbackTimer);
+        clearTimeout(quickTimer);
+      };
     }
   }, []);
-
-  // Listen for intro completion
-  useEffect(() => {
-    const checkIntroStatus = () => {
-      const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
-      if (hasSeenIntro === 'true' && !isAppReady) {
-        setIsAppReady(true);
-      }
-    };
-    
-    const interval = setInterval(checkIntroStatus, 100);
-    return () => clearInterval(interval);
-  }, [isAppReady]);
 
   // Global loading fallback component
   const LoadingFallback = () => (

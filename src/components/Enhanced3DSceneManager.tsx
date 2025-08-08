@@ -42,12 +42,17 @@ const Enhanced3DSceneManager = ({ children }: SceneManagerProps) => {
           gl={{ 
             antialias: false, 
             alpha: true,
-            powerPreference: 'high-performance'
+            powerPreference: 'high-performance',
+            preserveDrawingBuffer: false,
+            failIfMajorPerformanceCaveat: false,
           }}
           dpr={Math.min(window.devicePixelRatio, 2)}
-          onCreated={({ gl }) => {
+          onCreated={({ gl, scene }) => {
             gl.shadowMap.enabled = false;
+            gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            scene.matrixAutoUpdate = false;
           }}
+          performance={{ min: 0.1, max: 1, debounce: 200 }}
         >
           <Suspense fallback={null}>
             <ambientLight intensity={0.5} />

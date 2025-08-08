@@ -12,6 +12,7 @@ import Enhanced3DSceneManager from '@/components/Enhanced3DSceneManager';
 import EmotionDrivenUI from '@/components/EmotionDrivenUI';
 import VoiceGestureNavigation from '@/components/VoiceGestureNavigation';
 import ImmersiveNavigation from '@/components/ImmersiveNavigation';
+import ThreeDErrorBoundary from '@/components/ThreeDErrorBoundary';
 import { Toaster } from '@/components/ui/toaster';
 
 interface MainLayoutProps {
@@ -22,27 +23,29 @@ interface MainLayoutProps {
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   return (
     <EmotionDrivenUI>
-      <Enhanced3DSceneManager>
-        <div className="min-h-screen flex flex-col w-full relative">
-          <SpaceBackground />
-          <EnhancedCursor />
-          <ScrollProgressIndicator />
-          <Header />
-          <main className="flex-1 pt-16 w-full relative z-10">
-            <div className="w-full max-w-none">
-              <EnhancedWorldTransitions>
-                {children || <Outlet />}
-              </EnhancedWorldTransitions>
-            </div>
-          </main>
-          <Footer />
-          <ScrollToTop />
-          <FloatingThemeToggle />
-          <ImmersiveNavigation />
-          <VoiceGestureNavigation />
-          <Toaster />
-        </div>
-      </Enhanced3DSceneManager>
+      <ThreeDErrorBoundary>
+        <Enhanced3DSceneManager>
+          <div className="min-h-screen flex flex-col w-full relative">
+            <SpaceBackground />
+            <EnhancedCursor />
+            <ScrollProgressIndicator />
+            <Header />
+            <main className="flex-1 pt-16 w-full relative z-10" id="main-content">
+              <div className="w-full max-w-none">
+                <EnhancedWorldTransitions>
+                  {children || <Outlet />}
+                </EnhancedWorldTransitions>
+              </div>
+            </main>
+            <Footer />
+            <ScrollToTop />
+            <FloatingThemeToggle />
+            <ImmersiveNavigation />
+            <VoiceGestureNavigation />
+            <Toaster />
+          </div>
+        </Enhanced3DSceneManager>
+      </ThreeDErrorBoundary>
     </EmotionDrivenUI>
   );
 };
