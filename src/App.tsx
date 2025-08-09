@@ -35,11 +35,11 @@ const App = () => {
   
   // Enable custom cursor effect
   useCursorEffect({
-    trailLength: 8,
-    trailColor: 'rgba(0, 87, 183, 0.4)',
-    trailSize: 6,
+    trailLength: 0,
+    trailColor: 'rgba(0, 87, 183, 0.0)',
+    trailSize: 0,
     hideNativeCursor: false,
-    enabled: true
+    enabled: false
   });
   
   // Check if intro has been seen and set app ready state

@@ -6,7 +6,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
 import FloatingThemeToggle from '@/components/FloatingThemeToggle';
 import EnhancedCursor from '@/components/EnhancedCursor';
-import SpaceBackground from '@/components/SpaceBackground';
+
 import EnhancedWorldTransitions from '@/components/EnhancedWorldTransitions';
 import Enhanced3DSceneManager from '@/components/Enhanced3DSceneManager';
 import EmotionDrivenUI from '@/components/EmotionDrivenUI';
@@ -26,7 +26,7 @@ const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
       <ThreeDErrorBoundary>
         <Enhanced3DSceneManager>
           <div className="min-h-screen flex flex-col w-full relative">
-            <SpaceBackground />
+            
             <EnhancedCursor />
             <ScrollProgressIndicator />
             <Header />

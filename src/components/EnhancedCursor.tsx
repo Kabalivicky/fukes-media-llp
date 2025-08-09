@@ -30,26 +30,15 @@ const EnhancedCursor = () => {
       cursorY.set(e.clientY);
       setIsVisible(true);
 
-      // Create particle trail
-      const newParticle: Particle = {
-        id: Date.now() + Math.random(),
-        x: e.clientX,
-        y: e.clientY,
-        opacity: 1,
-        size: Math.random() * 4 + 2,
-        color: theme === 'dark' ? 
-          `hsl(${210 + Math.random() * 30}, ${70 + Math.random() * 30}%, ${60 + Math.random() * 20}%)` :
-          `hsl(${210 + Math.random() * 30}, ${60 + Math.random() * 20}%, ${40 + Math.random() * 20}%)`
-      };
-
-      setParticles(prev => [...prev.slice(-15), newParticle]);
+      // Particle trail disabled for performance
+      // setParticles(prev => prev);
     };
 
     const handleMouseEnter = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.matches('button, a, [role="button"], .cursor-pointer')) {
-        setIsHovering(true);
-      }
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      const el = t.closest('button, a, [role="button"], .cursor-pointer');
+      setIsHovering(!!el);
     };
 
     const handleMouseLeave = () => {

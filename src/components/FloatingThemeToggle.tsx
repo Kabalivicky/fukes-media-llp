@@ -111,10 +111,9 @@ const FloatingThemeToggle = () => {
             
             {/* Magnetic hover effect indicator */}
             <motion.div
-              className="absolute inset-0 rounded-full border-2 border-primary/0 group-hover:border-primary/30"
-              animate={{
-                borderColor: isHovered ? "hsl(var(--primary) / 0.3)" : "hsl(var(--primary) / 0)",
-              }}
+              className="absolute inset-0 rounded-full border-2"
+              style={{ borderColor: 'hsl(var(--primary))' }}
+              animate={{ opacity: isHovered ? 0.3 : 0 }}
               transition={{ duration: 0.3 }}
             />
           </Button>

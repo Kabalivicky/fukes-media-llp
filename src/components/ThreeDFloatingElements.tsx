@@ -103,7 +103,7 @@ const ThreeDFloatingElements = () => {
           />
         ))}
         
-        <ParticleField />
+        
       </Canvas>
     </motion.div>
   );
