@@ -11,6 +11,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import LoadingIntro from "./components/LoadingIntro";
 import AccessibilityProvider from "./components/AccessibilityProvider";
+import { MotionConfig } from "framer-motion";
 
 // Lazy loaded components for better performance
 const AppRouter = lazy(() => import("./components/Layout/AppRouter"));
@@ -80,7 +81,7 @@ const App = () => {
           <ThemeProvider defaultTheme="dark">
             <AccessibilityProvider>
               <TooltipProvider>
-                <div className="min-h-screen bg-background">
+                <MotionConfig reducedMotion="always" transition={{ duration: 0 }}><div className="min-h-screen bg-background">
                   <Toaster />
                   <Sonner />
                   <BrowserRouter>
@@ -99,7 +100,7 @@ const App = () => {
                       </Suspense>
                     )}
                   </BrowserRouter>
-                </div>
+                </div></MotionConfig>
               </TooltipProvider>
             </AccessibilityProvider>
           </ThemeProvider>

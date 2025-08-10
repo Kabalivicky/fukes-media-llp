@@ -1,197 +1,85 @@
-
-import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles, Brain, Zap, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import AnimatedLogo from './AnimatedLogo';
-import VisualGenerator from './AI/VisualGenerator';
-import MagneticButton from './MagneticButton';
-import MorphingText from './MorphingText';
-import GlitchText from './GlitchText';
-import AnimatedTextReveal from './AnimatedTextReveal';
-import ThreeDFloatingElements from './ThreeDFloatingElements';
 import { useState } from 'react';
+import VisualGenerator from './AI/VisualGenerator';
 
 const HeroSection = () => {
   const [showAIDemo, setShowAIDemo] = useState(false);
-  
-  const aiTerms = ['AI-Driven VFX', 'Neural Rendering', 'Smart Automation', 'Computer Vision', 'Machine Learning', 'Deep Learning'];
 
   return (
     <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-16">
-      {/* 3D Floating Elements */}
-      <ThreeDFloatingElements />
-      
-      {/* Background gradient and animated elements */}
-      <div className="absolute inset-0 w-full bg-gradient-to-br from-background via-background to-muted/50" />
-      
-      <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-primary/10 blur-xl"
-            style={{
-              width: Math.random() * 400 + 100,
-              height: Math.random() * 400 + 100,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
-              scale: [1, Math.random() * 0.5 + 0.5],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 10,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          />
-        ))}
-      </div>
+      <div className="absolute inset-0 w-full bg-background" />
 
       <div className="container relative z-10 px-4 mx-auto w-full">
-        <div className="text-center space-y-12 max-w-6xl mx-auto w-full">
-          {/* Main heading - Fixed alignment */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6"
-          >
+        <div className="text-center space-y-10 max-w-5xl mx-auto w-full">
+          <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight leading-tight">
-              <span className="gradient-text block">
-                <GlitchText 
-                  text="FUKE'S MEDIA"
-                  className="inline-block"
-                  intensity="medium"
-                />
-              </span>
-              <span className="text-foreground block font-body">Where Innovation Meets Storytelling</span>
+              FUKE'S MEDIA
             </h1>
-            <AnimatedTextReveal
-              text="Award-caliber VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects that push the boundaries of what's possible."
-              className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4 text-center font-body"
-              type="words"
-              stagger={0.05}
-              delay={0.5}
-            />
-            
-            {/* Video Showreel Teaser */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="mt-8 max-w-4xl mx-auto"
-            >
-              <div className="relative aspect-video rounded-2xl overflow-hidden bg-card/20 backdrop-blur-sm border border-primary/20 group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                      <div className="w-0 h-0 border-l-[12px] border-l-white border-y-[8px] border-y-transparent ml-1" />
-                    </div>
-                    <p className="text-white font-medium">6-Second Showreel Teaser</p>
-                    <p className="text-white/70 text-sm">Pure Visual Excellence</p>
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 text-center font-body">
+              Award-caliber VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects that push the boundaries of what's possible.
+            </p>
+          </div>
+
+          <div className="mt-4 max-w-4xl mx-auto">
+            <div className="relative aspect-video rounded-2xl overflow-hidden bg-card/20 backdrop-blur-sm border border-border">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center mb-4 mx-auto">
+                    <div className="w-0 h-0 border-l-[12px] border-l-white border-y-[8px] border-y-transparent ml-1" />
                   </div>
+                  <p className="text-primary-foreground font-medium">6-Second Showreel Teaser</p>
+                  <p className="text-primary-foreground/70 text-sm">Pure Visual Excellence</p>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent" />
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          {/* AI features highlight - Fixed grid alignment */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto w-full px-4"
-          >
-            {[
-              { icon: Brain, label: "AI Visual Generation", desc: "Create stunning visuals with AI" },
-              { icon: Eye, label: "Emotion Detection", desc: "Real-time facial analysis" },
-              { icon: Sparkles, label: "Neural Rendering", desc: "AI-optimized rendering" },
-              { icon: Zap, label: "Smart Automation", desc: "Intelligent workflow automation" }
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border hover:bg-card/70 transition-colors text-center w-full"
-              >
-                <feature.icon className="h-8 w-8 mx-auto mb-3 text-primary" />
-                <h3 className="font-semibold text-sm mb-2">{feature.label}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto w-full px-4">
+            <div className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full">
+              <h3 className="font-semibold text-sm mb-2">AI Visual Generation</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">Create stunning visuals with AI</p>
+            </div>
+            <div className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full">
+              <h3 className="font-semibold text-sm mb-2">Emotion Detection</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">Real-time facial analysis</p>
+            </div>
+            <div className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full">
+              <h3 className="font-semibold text-sm mb-2">Neural Rendering</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">AI-optimized rendering</p>
+            </div>
+          </div>
 
-          {/* CTA buttons - Fixed alignment and spacing */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4"
-          >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4">
             <Link to="/contact">
-              <MagneticButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4 w-full sm:w-auto font-medium">
+              <Button size="lg" className="text-lg px-8 py-4 w-full sm:w-auto">
                 Work With Us
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </MagneticButton>
+              </Button>
             </Link>
-            
-            <MagneticButton 
+
+            <Button 
               size="lg" 
               variant="outline" 
               className="text-lg px-8 py-4 w-full sm:w-auto"
               onClick={() => setShowAIDemo(!showAIDemo)}
             >
-              <Sparkles className="mr-2 h-5 w-5" />
               Try AI Demo
-            </MagneticButton>
-            
-            <Link to="/advanced-pricing">
-              <MagneticButton size="lg" variant="ghost" className="text-lg px-8 py-4 w-full sm:w-auto">
-                View Pricing
-              </MagneticButton>
-            </Link>
-          </motion.div>
+            </Button>
 
-          {/* AI Demo section - Fixed container alignment */}
+            <Link to="/advanced-pricing">
+              <Button size="lg" variant="ghost" className="text-lg px-8 py-4 w-full sm:w-auto">
+                View Pricing
+              </Button>
+            </Link>
+          </div>
+
           {showAIDemo && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mt-12 w-full max-w-6xl mx-auto"
-            >
+            <div className="mt-12 w-full max-w-6xl mx-auto">
               <VisualGenerator />
-            </motion.div>
+            </div>
           )}
         </div>
       </div>
-
-      {/* Scroll indicator - Fixed positioning */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-3 bg-muted-foreground rounded-full mt-2"
-          />
-        </motion.div>
-      </motion.div>
     </section>
   );
 };

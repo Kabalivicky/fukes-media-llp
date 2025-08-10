@@ -21,6 +21,7 @@ const AccessibilityProvider: React.FC<AccessibilityProviderProps> = ({ children 
 
     // Enhance focus visibility
     document.documentElement.classList.add('focus-visible:outline-primary');
+    document.documentElement.classList.add('no-animations');
     
     // Add role attributes to improve accessibility
     const main = document.querySelector('main');
@@ -36,6 +37,7 @@ const AccessibilityProvider: React.FC<AccessibilityProviderProps> = ({ children 
         document.body.removeChild(skipLink);
       }
       document.documentElement.classList.remove('focus-visible:outline-primary');
+      document.documentElement.classList.remove('no-animations');
     };
   }, []);
 

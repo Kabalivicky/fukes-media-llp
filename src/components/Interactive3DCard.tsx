@@ -1,7 +1,5 @@
 import { useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Mesh } from 'three';
 
 interface Interactive3DCardProps {
   children: React.ReactNode;
@@ -9,28 +7,7 @@ interface Interactive3DCardProps {
   intensity?: number;
 }
 
-const RotatingCube = ({ mouseX, mouseY }: { mouseX: number; mouseY: number }) => {
-  const meshRef = useRef<Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = mouseY * 0.5 + state.clock.elapsedTime * 0.2;
-      meshRef.current.rotation.y = mouseX * 0.5 + state.clock.elapsedTime * 0.3;
-    }
-  });
-
-  return (
-    <mesh ref={meshRef}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial 
-        color="#0057B7" 
-        transparent 
-        opacity={0.8}
-        wireframe
-      />
-    </mesh>
-  );
-};
+// 3D RotatingCube removed to disable WebGL and animations
 
 const Interactive3DCard = ({ 
   children, 
@@ -84,22 +61,7 @@ const Interactive3DCard = ({
       }}
       className={`relative ${className}`}
     >
-      {/* 3D Background Canvas */}
-      {isHovered && (
-        <div className="absolute inset-0 pointer-events-none rounded-lg overflow-hidden">
-          <Canvas
-            camera={{ position: [0, 0, 3], fov: 50 }}
-            style={{ background: 'transparent' }}
-          >
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} intensity={1} />
-            <RotatingCube 
-              mouseX={mouseXSpring.get()} 
-              mouseY={mouseYSpring.get()} 
-            />
-          </Canvas>
-        </div>
-      )}
+      {/* 3D Background Canvas removed to disable animations */}
 
       {/* Glow effect */}
       <motion.div

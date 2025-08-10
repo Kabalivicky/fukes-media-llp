@@ -781,4 +781,13 @@
       @apply flex-col gap-3;
     }
   }
+
+  /* Global animation kill switch */
+  .no-animations *,
+  .no-animations *::before,
+  .no-animations *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
+
