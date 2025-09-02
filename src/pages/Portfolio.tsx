@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Play, Eye, Award, Filter } from 'lucide-react';
 import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
+import AnimatedProjectsSection from '@/components/AnimatedProjectsSection';
 import SEOHelmet from '@/components/SEOHelmet';
 
 const Portfolio = () => {
@@ -132,10 +133,13 @@ const Portfolio = () => {
       />
 
       <MainLayout pageKey="portfolio">
+        {/* Featured Projects with Animations */}
+        <AnimatedProjectsSection />
+        
         <section className="py-20 px-4">
           <SectionTitle
-            title="Portfolio & Showreel"
-            subtitle="Award-winning projects that showcase our creative excellence and technical innovation"
+            title="Technical Showcase & Archive"
+            subtitle="Detailed breakdown of our technical expertise and production capabilities"
           />
 
           {/* Main Showreel Video */}
