@@ -1,39 +1,52 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { toast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 import { Lock, Mail } from 'lucide-react';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { user, signIn } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // If user is already logged in, show welcome message
+  if (user) {
+    return (
+      <Card className="w-full max-w-md mx-auto glass-card">
+        <CardContent className="p-6 text-center space-y-4">
+          <h3 className="text-xl font-semibold">Welcome back!</h3>
+          <p className="text-muted-foreground">
+            You are already signed in as {user.email}
+          </p>
+          <Button 
+            onClick={() => navigate('/auth')}
+            variant="outline"
+            className="w-full"
+          >
+            Manage Account
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      
-      // This is a mock login - in a real app, this would validate against an API
-      if (email && password) {
-        toast({
-          title: "Login successful",
-          description: "Welcome to the Freelancer Portal",
-        });
-      } else {
-        toast({
-          title: "Login failed",
-          description: "Please check your credentials and try again",
-          variant: "destructive",
-        });
-      }
-    }, 1500);
+    const { error } = await signIn(email, password);
+    
+    if (!error) {
+      // User will be redirected by the auth context
+    }
+    
+    setIsLoading(false);
   };
 
   return (
@@ -84,7 +97,13 @@ const LoginForm = () => {
           
           <div className="text-center text-sm">
             <span className="text-muted-foreground">Don't have an account? </span>
-            <Button variant="link" className="p-0">Apply to join</Button>
+            <Button 
+              variant="link" 
+              className="p-0"
+              onClick={() => navigate('/auth?tab=signup')}
+            >
+              Apply to join
+            </Button>
           </div>
         </form>
       </CardContent>

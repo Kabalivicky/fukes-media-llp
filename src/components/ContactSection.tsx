@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/components/ui/use-toast';
 import { Mail, Phone, MapPin, MessageSquare, AlertCircle } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -17,22 +18,51 @@ const ContactSection = () => {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert({
+          name,
+          email,
+          phone: phone || null,
+          message,
+          inquiry_type: 'general'
+        });
+
+      if (error) {
+        console.error('Error saving contact submission:', error);
+        toast({
+          title: "Error sending message",
+          description: "Please try again or contact us directly at Fukesmedia@gmail.com",
+          variant: "destructive",
+        });
+        return;
+      }
+
       toast({
-        title: "Demo Message Sent!",
-        description: "This is a demo form. For actual inquiries, please email us directly at Fukesmedia@gmail.com",
+        title: "Message sent successfully!",
+        description: "Thank you for your message. We'll get back to you within 24 hours.",
       });
+      
+      // Reset form
       setName('');
       setEmail('');
       setPhone('');
       setMessage('');
+    } catch (error) {
+      console.error('Error saving contact submission:', error);
+      toast({
+        title: "Error sending message",
+        description: "Please try again or contact us directly at Fukesmedia@gmail.com",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -47,9 +77,8 @@ const ContactSection = () => {
           <Card className="border border-border bg-card/50 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="text-2xl">Send Us a Message</CardTitle>
-              <CardDescription className="flex items-center gap-2">
-                <AlertCircle className="h-4 w-4" />
-                Demo form - For actual inquiries, please email us directly
+              <CardDescription>
+                Get in touch with our team for project inquiries or support
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -106,7 +135,7 @@ const ContactSection = () => {
                   className="w-full gradient-button"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Demo Message'}
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
             </CardContent>

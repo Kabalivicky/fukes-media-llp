@@ -14,7 +14,315 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contact_submissions: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          inquiry_type: string | null
+          message: string
+          name: string
+          phone: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          inquiry_type?: string | null
+          message: string
+          name: string
+          phone?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          inquiry_type?: string | null
+          message?: string
+          name?: string
+          phone?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      contracts: {
+        Row: {
+          client_email: string
+          client_name: string
+          contract_file_url: string | null
+          contract_terms: string | null
+          created_at: string
+          currency: string | null
+          deliverables: string[] | null
+          end_date: string | null
+          id: string
+          ip_rights: string | null
+          milestones: Json | null
+          payment_terms: string | null
+          project_description: string | null
+          project_name: string
+          project_type: string
+          revision_rounds: number | null
+          signed_at: string | null
+          special_clauses: string[] | null
+          start_date: string | null
+          status: string | null
+          total_amount: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          client_email: string
+          client_name: string
+          contract_file_url?: string | null
+          contract_terms?: string | null
+          created_at?: string
+          currency?: string | null
+          deliverables?: string[] | null
+          end_date?: string | null
+          id?: string
+          ip_rights?: string | null
+          milestones?: Json | null
+          payment_terms?: string | null
+          project_description?: string | null
+          project_name: string
+          project_type: string
+          revision_rounds?: number | null
+          signed_at?: string | null
+          special_clauses?: string[] | null
+          start_date?: string | null
+          status?: string | null
+          total_amount: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          client_email?: string
+          client_name?: string
+          contract_file_url?: string | null
+          contract_terms?: string | null
+          created_at?: string
+          currency?: string | null
+          deliverables?: string[] | null
+          end_date?: string | null
+          id?: string
+          ip_rights?: string | null
+          milestones?: Json | null
+          payment_terms?: string | null
+          project_description?: string | null
+          project_name?: string
+          project_type?: string
+          revision_rounds?: number | null
+          signed_at?: string | null
+          special_clauses?: string[] | null
+          start_date?: string | null
+          status?: string | null
+          total_amount?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      pricing_quotes: {
+        Row: {
+          client_email: string | null
+          client_name: string | null
+          complexity_level: string | null
+          created_at: string
+          currency: string | null
+          estimated_cost: number
+          frame_count: number | null
+          id: string
+          pricing_tier: string
+          project_duration: number | null
+          project_name: string
+          project_type: string
+          service_type: string
+          specifications: Json | null
+          status: string | null
+          updated_at: string
+          user_id: string | null
+          valid_until: string | null
+        }
+        Insert: {
+          client_email?: string | null
+          client_name?: string | null
+          complexity_level?: string | null
+          created_at?: string
+          currency?: string | null
+          estimated_cost: number
+          frame_count?: number | null
+          id?: string
+          pricing_tier: string
+          project_duration?: number | null
+          project_name: string
+          project_type: string
+          service_type: string
+          specifications?: Json | null
+          status?: string | null
+          updated_at?: string
+          user_id?: string | null
+          valid_until?: string | null
+        }
+        Update: {
+          client_email?: string | null
+          client_name?: string | null
+          complexity_level?: string | null
+          created_at?: string
+          currency?: string | null
+          estimated_cost?: number
+          frame_count?: number | null
+          id?: string
+          pricing_tier?: string
+          project_duration?: number | null
+          project_name?: string
+          project_type?: string
+          service_type?: string
+          specifications?: Json | null
+          status?: string | null
+          updated_at?: string
+          user_id?: string | null
+          valid_until?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          availability: string | null
+          bio: string | null
+          company: string | null
+          created_at: string
+          display_name: string | null
+          hourly_rate: number | null
+          id: string
+          linkedin_url: string | null
+          phone: string | null
+          portfolio_url: string | null
+          skills: string[] | null
+          updated_at: string
+          user_id: string
+          years_experience: number | null
+        }
+        Insert: {
+          availability?: string | null
+          bio?: string | null
+          company?: string | null
+          created_at?: string
+          display_name?: string | null
+          hourly_rate?: number | null
+          id?: string
+          linkedin_url?: string | null
+          phone?: string | null
+          portfolio_url?: string | null
+          skills?: string[] | null
+          updated_at?: string
+          user_id: string
+          years_experience?: number | null
+        }
+        Update: {
+          availability?: string | null
+          bio?: string | null
+          company?: string | null
+          created_at?: string
+          display_name?: string | null
+          hourly_rate?: number | null
+          id?: string
+          linkedin_url?: string | null
+          phone?: string | null
+          portfolio_url?: string | null
+          skills?: string[] | null
+          updated_at?: string
+          user_id?: string
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          budget_range: string | null
+          case_study_url: string | null
+          category: string | null
+          challenges: string[] | null
+          client: string | null
+          created_at: string
+          description: string | null
+          duration_months: number | null
+          featured: boolean | null
+          id: string
+          image_url: string | null
+          results: string[] | null
+          services: string[] | null
+          solutions: string[] | null
+          status: string | null
+          team_size: number | null
+          technologies: string[] | null
+          testimonial: string | null
+          testimonial_author: string | null
+          title: string
+          updated_at: string
+          video_url: string | null
+          year: number | null
+        }
+        Insert: {
+          budget_range?: string | null
+          case_study_url?: string | null
+          category?: string | null
+          challenges?: string[] | null
+          client?: string | null
+          created_at?: string
+          description?: string | null
+          duration_months?: number | null
+          featured?: boolean | null
+          id?: string
+          image_url?: string | null
+          results?: string[] | null
+          services?: string[] | null
+          solutions?: string[] | null
+          status?: string | null
+          team_size?: number | null
+          technologies?: string[] | null
+          testimonial?: string | null
+          testimonial_author?: string | null
+          title: string
+          updated_at?: string
+          video_url?: string | null
+          year?: number | null
+        }
+        Update: {
+          budget_range?: string | null
+          case_study_url?: string | null
+          category?: string | null
+          challenges?: string[] | null
+          client?: string | null
+          created_at?: string
+          description?: string | null
+          duration_months?: number | null
+          featured?: boolean | null
+          id?: string
+          image_url?: string | null
+          results?: string[] | null
+          services?: string[] | null
+          solutions?: string[] | null
+          status?: string | null
+          team_size?: number | null
+          technologies?: string[] | null
+          testimonial?: string | null
+          testimonial_author?: string | null
+          title?: string
+          updated_at?: string
+          video_url?: string | null
+          year?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

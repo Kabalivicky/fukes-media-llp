@@ -11,6 +11,7 @@ import VFXResearch from '@/pages/VFXResearch';
 import VFXIndustryInsights from '@/pages/VFXIndustryInsights';
 import ContractBuilder from '@/pages/ContractBuilder';
 import FreelancerPortal from '@/pages/FreelancerPortal';
+import Auth from '@/pages/Auth';
 import HelpCenter from '@/pages/HelpCenter';
 import HelpCenterCategory from '@/pages/HelpCenterCategory';
 import ProductionGuidelines from '@/pages/ProductionGuidelines';
@@ -52,6 +53,7 @@ const AppRouter = () => {
       <Route path="/vfx-industry-insights" element={<MainLayout><VFXIndustryInsights /></MainLayout>} />
       <Route path="/contract-builder" element={<MainLayout><ContractBuilder /></MainLayout>} />
       <Route path="/freelancer-portal" element={<MainLayout><FreelancerPortal /></MainLayout>} />
+      <Route path="/auth" element={<Auth />} />
       <Route path="/help-center" element={<MainLayout><HelpCenter /></MainLayout>} />
       <Route path="/help-center/:category" element={<MainLayout><HelpCenterCategory /></MainLayout>} />
       <Route path="/production-guidelines" element={<MainLayout><ProductionGuidelines /></MainLayout>} />

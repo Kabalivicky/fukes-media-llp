@@ -1,14 +1,22 @@
-
 import { Link, useNavigate } from 'react-router-dom';
 import MegaMenu from './Navigation/MegaMenu';
 import AnimatedLogo from './AnimatedLogo';
 import MobileNav from './Navigation/MobileNav';
 import { Button } from './ui/button';
-import { Headset } from 'lucide-react';
+import { Headset, User, LogOut } from 'lucide-react';
 import ThemeToggle from './Navigation/ThemeToggle';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   const handleGetStartedClick = () => {
     const contactSection = document.getElementById('contact');
@@ -17,6 +25,11 @@ const Navbar = () => {
     } else {
       navigate('/#contact');
     }
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
   };
 
   return (
@@ -52,6 +65,40 @@ const Navbar = () => {
                 <span className="sm:hidden">AI</span>
               </Button>
             </Link>
+            
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    <span className="hidden sm:inline">
+                      {user.user_metadata?.display_name || user.email?.split('@')[0] || 'Account'}
+                    </span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem onClick={() => navigate('/freelancer-portal')}>
+                    <User className="mr-2 h-4 w-4" />
+                    Freelancer Portal
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate('/contract-builder')}>
+                    Contract Builder
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/auth">
+                <Button size="sm" variant="outline">
+                  <User className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">Sign In</span>
+                </Button>
+              </Link>
+            )}
             
             <Button 
               size="sm" 
