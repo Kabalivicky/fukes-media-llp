@@ -40,7 +40,7 @@ const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-      <Route path="/portfolio" element={<MainLayout><Portfolio /></MainLayout>} />
+      <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/showreel" element={<MainLayout><Showreel /></MainLayout>} />
       <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
       <Route path="/about" element={<MainLayout><About /></MainLayout>} />
