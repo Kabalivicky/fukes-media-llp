@@ -323,6 +323,45 @@ export type Database = {
         }
         Relationships: []
       }
+      tool_usage: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          file_size: number | null
+          id: string
+          input_format: string | null
+          output_format: string | null
+          processing_time: number | null
+          success: boolean | null
+          tool_name: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          file_size?: number | null
+          id?: string
+          input_format?: string | null
+          output_format?: string | null
+          processing_time?: number | null
+          success?: boolean | null
+          tool_name: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          file_size?: number | null
+          id?: string
+          input_format?: string | null
+          output_format?: string | null
+          processing_time?: number | null
+          success?: boolean | null
+          tool_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

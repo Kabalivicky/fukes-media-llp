@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Sparkles, Zap, Brain, PlayCircle } from 'lucide-react';
 import VisualGenerator from './AI/VisualGenerator';
 
 const HeroSection = () => {
@@ -25,8 +26,8 @@ const HeroSection = () => {
             <div className="relative aspect-video rounded-2xl overflow-hidden bg-card/20 backdrop-blur-sm border border-border">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center mb-4 mx-auto">
-                    <div className="w-0 h-0 border-l-[12px] border-l-white border-y-[8px] border-y-transparent ml-1" />
+                  <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center mb-4 mx-auto hover:bg-primary transition-colors cursor-pointer">
+                    <PlayCircle className="w-8 h-8 text-white" />
                   </div>
                   <p className="text-primary-foreground font-medium">6-Second Showreel Teaser</p>
                   <p className="text-primary-foreground/70 text-sm">Pure Visual Excellence</p>
@@ -37,14 +38,17 @@ const HeroSection = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto w-full px-4">
             <div className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full">
+              <Sparkles className="w-6 h-6 mx-auto mb-3 text-primary" />
               <h3 className="font-semibold text-sm mb-2">AI Visual Generation</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">Create stunning visuals with AI</p>
             </div>
             <div className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full">
+              <Brain className="w-6 h-6 mx-auto mb-3 text-primary" />
               <h3 className="font-semibold text-sm mb-2">Emotion Detection</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">Real-time facial analysis</p>
             </div>
             <div className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full">
+              <Zap className="w-6 h-6 mx-auto mb-3 text-primary" />
               <h3 className="font-semibold text-sm mb-2">Neural Rendering</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">AI-optimized rendering</p>
             </div>

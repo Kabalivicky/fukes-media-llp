@@ -6,10 +6,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
-import { Upload, Download, FileVideo, Settings, X, PlayCircle } from 'lucide-react';
+import { Upload, Download, FileVideo, Settings, X, PlayCircle, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
+import { mockVideoConversion, formatFileSize, validateFileType } from '@/utils/toolsHelper';
 
 const VideoConverter = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -18,8 +19,11 @@ const VideoConverter = () => {
   const [isConverting, setIsConverting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [dragActive, setDragActive] = useState(false);
+  const [conversionComplete, setConversionComplete] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  const allowedVideoTypes = ['mp4', 'avi', 'mov', 'wmv', 'webm', 'mkv', 'flv', '3gp', 'asf', 'f4v', 'm4v', 'mpg', 'mpeg', 'ts', 'vob', 'ogv', 'divx', 'xvid', 'rm', 'rmvb', 'mts', 'm2ts', 'dv', 'mxf'];
 
   const videoFormats = [
     { value: 'mp4', label: 'MP4 (MPEG-4)' },
@@ -67,13 +71,27 @@ const VideoConverter = () => {
 
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const droppedFiles = Array.from(e.dataTransfer.files);
-      setSelectedFiles(prev => [...prev, ...droppedFiles]);
-      toast({
-        title: "Videos added",
-        description: `${droppedFiles.length} video(s) added for conversion`,
-      });
+      const validFiles = droppedFiles.filter(file => 
+        validateFileType(file, allowedVideoTypes)
+      );
+      
+      if (validFiles.length !== droppedFiles.length) {
+        toast({
+          title: "Some files skipped",
+          description: "Only video files are supported",
+          variant: "destructive",
+        });
+      }
+      
+      if (validFiles.length > 0) {
+        setSelectedFiles(prev => [...prev, ...validFiles]);
+        toast({
+          title: "Videos added",
+          description: `${validFiles.length} video(s) added for conversion`,
+        });
+      }
     }
-  }, [toast]);
+  }, [toast, allowedVideoTypes]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -103,20 +121,35 @@ const VideoConverter = () => {
 
     setIsConverting(true);
     setProgress(0);
+    setConversionComplete(false);
 
-    // Simulate conversion process
-    for (let i = 0; i <= 100; i += 5) {
-      setProgress(i);
-      await new Promise(resolve => setTimeout(resolve, 100));
+    try {
+      const result = await mockVideoConversion(
+        selectedFiles,
+        outputFormat,
+        quality,
+        (progress) => setProgress(progress)
+      );
+
+      if (result.success) {
+        setConversionComplete(true);
+        toast({
+          title: "Conversion completed successfully!",
+          description: `${selectedFiles.length} video(s) converted to ${outputFormat.toUpperCase()}`,
+        });
+      } else {
+        throw new Error(result.error);
+      }
+    } catch (error) {
+      toast({
+        title: "Conversion failed",
+        description: error instanceof Error ? error.message : "An unexpected error occurred",
+        variant: "destructive",
+      });
+      setProgress(0);
+    } finally {
+      setIsConverting(false);
     }
-
-    toast({
-      title: "Conversion completed",
-      description: `${selectedFiles.length} video(s) converted to ${outputFormat.toUpperCase()}`,
-    });
-
-    setIsConverting(false);
-    setProgress(100);
   };
 
   const formatFileSize = (bytes: number) => {
@@ -211,10 +244,20 @@ const VideoConverter = () => {
               {isConverting && (
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Converting...</span>
-                    <span>{progress}%</span>
+                    <span>Converting videos...</span>
+                    <span>{Math.round(progress)}%</span>
                   </div>
                   <Progress value={progress} className="w-full" />
+                </div>
+              )}
+
+              {/* Success Message */}
+              {conversionComplete && !isConverting && (
+                <div className="flex items-center gap-2 p-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg">
+                  <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <span className="text-green-800 dark:text-green-200 font-medium">
+                    Conversion completed successfully! Your videos are ready to download.
+                  </span>
                 </div>
               )}
 
@@ -260,7 +303,7 @@ const VideoConverter = () => {
                   <Settings className="mr-2 h-4 w-4" />
                   {isConverting ? 'Converting...' : 'Convert Videos'}
                 </Button>
-                <Button variant="outline" disabled={progress !== 100}>
+                <Button variant="outline" disabled={!conversionComplete}>
                   <Download className="mr-2 h-4 w-4" />
                   Download All
                 </Button>
