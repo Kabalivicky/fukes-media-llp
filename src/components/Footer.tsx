@@ -40,11 +40,56 @@ const Footer = () => {
               Pioneering AI-driven VFX and creative services for the digital media landscape.
             </p>
             <div className="flex space-x-2">
-              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, index) => (
-                <Button key={index} variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-primary/10">
-                  <Icon className="h-4 w-4" />
-                </Button>
-              ))}
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 rounded-full hover:bg-primary/10"
+                asChild
+              >
+                <a href="https://www.facebook.com/profile.php?viewas=100000686899395&id=61575800197616" target="_blank" rel="noopener noreferrer">
+                  <Facebook className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 rounded-full hover:bg-primary/10"
+                asChild
+              >
+                <a href="https://x.com/FukesMedia" target="_blank" rel="noopener noreferrer">
+                  <Twitter className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 rounded-full hover:bg-primary/10"
+                asChild
+              >
+                <a href="https://www.instagram.com/fukes_media/" target="_blank" rel="noopener noreferrer">
+                  <Instagram className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 rounded-full hover:bg-primary/10"
+                asChild
+              >
+                <a href="https://www.linkedin.com/company/fukesmedia/" target="_blank" rel="noopener noreferrer">
+                  <Linkedin className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 rounded-full hover:bg-primary/10"
+                asChild
+              >
+                <a href="https://www.youtube.com/@FukesMedia" target="_blank" rel="noopener noreferrer">
+                  <Youtube className="h-4 w-4" />
+                </a>
+              </Button>
             </div>
           </div>
           
