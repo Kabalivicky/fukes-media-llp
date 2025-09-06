@@ -1,9 +1,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
+import PricingTable from '@/components/EnhancedPricingCalculator/PricingTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Accordion,
@@ -17,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import ExpansibleTab from '@/components/ExpansibleTab';
 import DynamicPrice from '@/components/DynamicPrice';
 import PricingCalculator from '@/components/PricingCalculator';
-import { Helmet } from 'react-helmet-async';
+import SEOHelmet from '@/components/SEOHelmet';
 
 // Animation variants
 const containerVariants = {
@@ -254,14 +254,28 @@ const Pricing = () => {
     }
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "VFX & Creative Services Pricing",
+    "provider": {
+      "@type": "Organization",
+      "name": "Fuke's Media",
+      "url": "https://fukes-media.com"
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Helmet>
-        <title>Pricing | Fuke's Media - AI-Driven VFX & Creative Studio</title>
-        <meta name="description" content="Transparent pricing options for all your creative and technical VFX needs. From 2D/3D compositing to digital intermediate services." />
-      </Helmet>
-      
-      <Navbar />
+    <>
+      <SEOHelmet
+        title="Pricing - Transparent VFX & Creative Services Rates"
+        description="Transparent pricing for VFX, 3D, compositing, and creative services. From ₹25/frame to premium packages. Free quotes available."
+        keywords="VFX pricing, 3D animation rates, compositing costs, visual effects pricing, creative services cost"
+        canonical="https://fukes-media.com/pricing"
+        structuredData={structuredData}
+      />
+
+      <MainLayout pageKey="pricing">
       
       {/* Hero Section with parallax effect */}
       <div 
@@ -386,8 +400,8 @@ const Pricing = () => {
           </div>
         </section>
         
-        {/* Pricing Calculator */}
-        <section id="pricing-calculator" className="py-16 px-4 bg-gradient-to-b from-background/95 to-background">
+        {/* Enhanced Pricing Table */}
+        <section id="pricing-calculator" className="py-20 px-4">
           <div className="container mx-auto">
             <motion.div 
               initial={{ opacity: 0 }}
@@ -395,11 +409,7 @@ const Pricing = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <SectionTitle 
-                title="Pricing Calculator" 
-                subtitle="Estimate the cost of your next project with our interactive calculator"
-              />
-              <PricingCalculator />
+              <PricingTable />
             </motion.div>
           </div>
         </section>
@@ -769,9 +779,8 @@ const Pricing = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
-    </div>
+      </MainLayout>
+    </>
   );
 };
 

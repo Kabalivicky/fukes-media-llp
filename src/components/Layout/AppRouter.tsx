@@ -35,6 +35,11 @@ import GamifiedLearning from '@/components/GamifiedLearning';
 import Portfolio from '@/pages/Portfolio';
 import Showreel from '@/pages/Showreel';
 import Contact from '@/pages/Contact';
+import Privacy from '@/pages/Privacy';
+import Terms from '@/pages/Terms';
+import Legal from '@/pages/Legal';
+import Careers from '@/pages/Careers';
+import Investors from '@/pages/Investors';
 
 const AppRouter = () => {
   return (
@@ -73,6 +78,11 @@ const AppRouter = () => {
       <Route path="/tools/document-converter" element={<MainLayout><DocumentConverter /></MainLayout>} />
       <Route path="/blockchain" element={<MainLayout><BlockchainIntegration /></MainLayout>} />
       <Route path="/learning" element={<MainLayout><GamifiedLearning /></MainLayout>} />
+      <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />
+      <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
+      <Route path="/legal" element={<MainLayout><Legal /></MainLayout>} />
+      <Route path="/careers" element={<MainLayout><Careers /></MainLayout>} />
+      <Route path="/investors" element={<MainLayout><Investors /></MainLayout>} />
       <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
     </Routes>
   );

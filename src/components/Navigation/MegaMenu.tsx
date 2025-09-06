@@ -68,9 +68,9 @@ const MegaMenu = () => {
             className={cn(
               navigationMenuTriggerStyle(),
               "cursor-pointer",
-              isLinkActive(currentPath, '/#portfolio') ? "text-primary font-medium" : ""
+              isLinkActive(currentPath, '/portfolio') ? "text-primary font-medium" : ""
             )}
-            onClick={() => handleNavigation('/#portfolio')}
+            onClick={() => handleNavigation('/portfolio')}
           >
             <Palette className="mr-2 h-4 w-4" />
             Portfolio
