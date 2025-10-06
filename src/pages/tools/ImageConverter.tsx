@@ -57,7 +57,7 @@ const ImageConverter = () => {
       alert('Please select a file and output format');
       return;
     }
-    console.log('Converting:', selectedFile.name, 'to', outputFormat);
+    // Image conversion logic here
   };
 
   return (

@@ -422,8 +422,7 @@ const EnhancedPricingCalculator = () => {
           description: "You can now share it with your team or clients",
         });
       })
-      .catch((err) => {
-        console.error('Failed to copy quote: ', err);
+      .catch(() => {
         toast({
           title: "Failed to copy quote",
           description: "Please try again or download the PDF",

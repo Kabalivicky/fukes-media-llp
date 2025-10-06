@@ -55,7 +55,7 @@ const AdminDashboard = () => {
         .maybeSingle();
 
       if (error) {
-        console.error('Error checking admin status:', error);
+        // Admin status check failed
         setIsAdmin(false);
         setLoading(false);
         return;
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.error('Error in admin check:', error);
+      // Admin check failed
       setIsAdmin(false);
       setLoading(false);
     }
@@ -88,7 +88,7 @@ const AdminDashboard = () => {
       setToolUsage(data || []);
       calculateStats(data || []);
     } catch (error) {
-      console.error('Error fetching tool usage:', error);
+      // Error fetching tool usage data
     } finally {
       setLoading(false);
     }

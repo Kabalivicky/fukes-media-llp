@@ -5,10 +5,14 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
+    // Log 404 error for analytics (if Google Analytics is configured)
+    // @ts-ignore - gtag is loaded by Google Analytics script
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      // @ts-ignore
+      window.gtag('event', 'page_not_found', {
+        page_path: location.pathname
+      });
+    }
   }, [location.pathname]);
 
   return (

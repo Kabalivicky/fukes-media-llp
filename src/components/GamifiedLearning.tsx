@@ -178,8 +178,8 @@ const GamifiedLearning = () => {
   };
 
   const startModule = (moduleId: string) => {
-    // Simulate starting a learning module
-    console.log(`Starting module: ${moduleId}`);
+    // Start learning module
+    // TODO: Implement module navigation
   };
 
   return (

@@ -28,10 +28,10 @@ export const logToolUsage = async (usage: ToolUsageData) => {
       });
 
     if (error) {
-      console.error('Error logging tool usage:', error);
+      // Failed to log tool usage
     }
   } catch (error) {
-    console.error('Error logging tool usage:', error);
+    // Failed to log tool usage
   }
 };
 

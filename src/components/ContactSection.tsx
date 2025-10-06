@@ -51,7 +51,6 @@ const ContactSection = () => {
         });
 
       if (error) {
-        console.error('Error saving contact submission:', error);
         toast({
           title: "Error sending message",
           description: "Please try again or contact us directly at Fukesmedia@gmail.com",
@@ -80,7 +79,6 @@ const ContactSection = () => {
           variant: "destructive",
         });
       } else {
-        console.error('Error saving contact submission:', error);
         toast({
           title: "Error sending message",
           description: "Please try again or contact us directly at Fukesmedia@gmail.com",
