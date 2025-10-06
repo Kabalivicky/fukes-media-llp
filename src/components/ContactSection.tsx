@@ -9,6 +9,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/components/ui/use-toast';
 import { Mail, Phone, MapPin, MessageSquare, AlertCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { z } from 'zod';
+
+// Contact form validation schema
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().trim().max(20, "Phone must be less than 20 characters").optional().or(z.literal('')),
+  message: z.string().trim().min(10, "Message must be at least 10 characters").max(2000, "Message must be less than 2000 characters")
+});
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -23,13 +32,21 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
+      // Validate form data
+      const validatedData = contactSchema.parse({
+        name,
+        email,
+        phone,
+        message
+      });
+
       const { error } = await supabase
         .from('contact_submissions')
         .insert({
-          name,
-          email,
-          phone: phone || null,
-          message,
+          name: validatedData.name,
+          email: validatedData.email,
+          phone: validatedData.phone || null,
+          message: validatedData.message,
           inquiry_type: 'general'
         });
 
@@ -54,12 +71,22 @@ const ContactSection = () => {
       setPhone('');
       setMessage('');
     } catch (error) {
-      console.error('Error saving contact submission:', error);
-      toast({
-        title: "Error sending message",
-        description: "Please try again or contact us directly at Fukesmedia@gmail.com",
-        variant: "destructive",
-      });
+      if (error instanceof z.ZodError) {
+        // Display validation errors
+        const firstError = error.errors[0];
+        toast({
+          title: "Validation Error",
+          description: firstError.message,
+          variant: "destructive",
+        });
+      } else {
+        console.error('Error saving contact submission:', error);
+        toast({
+          title: "Error sending message",
+          description: "Please try again or contact us directly at Fukesmedia@gmail.com",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
