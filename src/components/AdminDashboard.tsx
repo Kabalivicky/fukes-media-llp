@@ -21,6 +21,7 @@ const AdminDashboard = () => {
   const { user } = useAuth();
   const [toolUsage, setToolUsage] = useState<ToolUsage[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [stats, setStats] = useState({
     totalConversions: 0,
     successRate: 0,
@@ -30,8 +31,49 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    fetchToolUsage();
-  }, []);
+    if (user) {
+      checkAdminStatus();
+    } else {
+      setIsAdmin(false);
+      setLoading(false);
+    }
+  }, [user]);
+
+  const checkAdminStatus = async () => {
+    if (!user) {
+      setIsAdmin(false);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error checking admin status:', error);
+        setIsAdmin(false);
+        setLoading(false);
+        return;
+      }
+
+      setIsAdmin(!!data);
+      
+      if (data) {
+        fetchToolUsage();
+      } else {
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error in admin check:', error);
+      setIsAdmin(false);
+      setLoading(false);
+    }
+  };
 
   const fetchToolUsage = async () => {
     try {
@@ -108,13 +150,26 @@ const AdminDashboard = () => {
     return <Icon className="w-4 h-4" />;
   };
 
-  if (!user) {
+  if (loading || isAdmin === null) {
+    return (
+      <div className="container mx-auto px-4 py-12">
+        <Card>
+          <CardHeader>
+            <CardTitle>Loading...</CardTitle>
+            <CardDescription>Verifying admin access...</CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!user || !isAdmin) {
     return (
       <div className="container mx-auto px-4 py-12">
         <Card>
           <CardHeader>
             <CardTitle>Access Denied</CardTitle>
-            <CardDescription>Please log in to view the admin dashboard</CardDescription>
+            <CardDescription>You must be an administrator to access this dashboard</CardDescription>
           </CardHeader>
         </Card>
       </div>
