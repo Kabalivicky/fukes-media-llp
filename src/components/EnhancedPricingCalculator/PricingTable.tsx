@@ -119,10 +119,10 @@ const PricingTable = () => {
       className="border-b border-border/50 hover:bg-muted/30 transition-colors"
     >
       <td className="py-4 px-6 font-medium">{service.service}</td>
-      <td className="py-4 px-6 text-green-600 font-medium">{service.lowCost}</td>
-      <td className="py-4 px-6 text-blue-600 font-medium">{service.mediumCost}</td>
-      <td className="py-4 px-6 text-orange-600 font-medium">{service.highCost}</td>
-      <td className="py-4 px-6 text-purple-600 font-medium">{service.pricePerShot}</td>
+      <td className="py-4 px-6 text-accent font-medium">{service.lowCost}</td>
+      <td className="py-4 px-6 text-secondary font-medium">{service.mediumCost}</td>
+      <td className="py-4 px-6 text-primary font-medium">{service.highCost}</td>
+      <td className="py-4 px-6 text-foreground font-medium">{service.pricePerShot}</td>
     </motion.tr>
   );
 

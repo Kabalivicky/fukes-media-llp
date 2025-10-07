@@ -622,7 +622,7 @@ const EnhancedPricingCalculator = () => {
                               <Badge className="ml-1 bg-amber-500">+25%</Badge>
                             }
                             {speed === 'rush' && 
-                              <Badge className="ml-1 bg-red-500">+50%</Badge>
+                              <Badge className="ml-1 bg-destructive">+50%</Badge>
                             }
                           </Button>
                         ))}

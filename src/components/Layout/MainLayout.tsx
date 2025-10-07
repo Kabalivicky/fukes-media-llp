@@ -1,6 +1,6 @@
 
 import { Outlet } from 'react-router-dom';
-import Header from '@/components/Header';
+import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import FloatingThemeToggle from '@/components/FloatingThemeToggle';
@@ -14,7 +14,7 @@ interface MainLayoutProps {
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col w-full relative">
-      <Header />
+      <Navbar />
       <main className="flex-1 pt-16 w-full relative z-10" id="main-content">
         <div className="w-full max-w-none">
           {children || <Outlet />}

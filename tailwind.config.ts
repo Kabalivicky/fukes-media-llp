@@ -56,15 +56,15 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
-				},
-				// Fuke's Media Award-Caliber Brand Colors
-				fukes: {
-					red: '#FF0000',      /* Pure Brand Red */
-					blue: '#0000FF',     /* Pure Brand Blue */
-					green: '#00FF00',    /* Pure Brand Green */
-					black: '#000000',    /* Pure Black */
-					white: '#FFFFFF'     /* Pure White */
-				}
+			},
+			// Fuke's Media Award-Caliber Brand Colors (HSL format)
+			fukes: {
+				red: 'hsl(0, 100%, 50%)',      /* Pure Brand Red */
+				blue: 'hsl(240, 100%, 50%)',   /* Pure Brand Blue */
+				green: 'hsl(120, 100%, 50%)',  /* Pure Brand Green */
+				black: 'hsl(0, 0%, 0%)',       /* Pure Black */
+				white: 'hsl(0, 0%, 100%)'      /* Pure White */
+			}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

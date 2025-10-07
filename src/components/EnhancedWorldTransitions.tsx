@@ -164,12 +164,12 @@ const EnhancedWorldTransitions = ({ children }: WorldTransitionProps) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
       >
-        <div className="flex items-center space-x-3 bg-black/20 backdrop-blur-md rounded-full px-6 py-3">
-          <div className="text-xs text-white/80 font-mono">
+        <div className="flex items-center space-x-3 bg-background/20 backdrop-blur-md rounded-full px-6 py-3">
+          <div className="text-xs text-foreground/80 font-mono">
             ROUTE: {location.pathname === '/' ? 'HOME' : location.pathname.slice(1).toUpperCase()}
           </div>
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <div className="text-xs text-white/60">
+          <div className="text-xs text-foreground/60">
             TRANSITION_ACTIVE
           </div>
         </div>

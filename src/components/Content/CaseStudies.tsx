@@ -171,7 +171,7 @@ const CaseStudies = () => {
                   alt={study.title}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <Button
                     variant="secondary"
                     onClick={() => handleViewDetails(study)}
@@ -202,7 +202,7 @@ const CaseStudies = () => {
                 
                 {study.awards.length > 0 && (
                   <div className="flex items-center gap-1 mb-3">
-                    <Award className="h-3 w-3 text-yellow-500" />
+                    <Award className="h-3 w-3 text-primary" />
                     <span className="text-xs">{study.awards[0]}</span>
                   </div>
                 )}
@@ -230,7 +230,7 @@ const CaseStudies = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-background/95 flex items-center justify-center p-4"
           onClick={() => setSelectedStudy(null)}
         >
           <motion.div

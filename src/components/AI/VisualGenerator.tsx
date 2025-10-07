@@ -136,7 +136,7 @@ const VisualGenerator = () => {
           >
             {isGenerating ? (
               <div className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
                 Generating...
               </div>
             ) : (
@@ -165,7 +165,7 @@ const VisualGenerator = () => {
                     alt={`Generated image ${index + 1}`}
                     className="w-full h-64 object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <div className="absolute inset-0 bg-background/90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <Button
                       onClick={() => handleDownload(image, index)}
                       variant="secondary"
