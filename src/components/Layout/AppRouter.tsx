@@ -40,6 +40,7 @@ import Terms from '@/pages/Terms';
 import Legal from '@/pages/Legal';
 import Careers from '@/pages/Careers';
 import Investors from '@/pages/Investors';
+import UpcomingFeatures from '@/pages/UpcomingFeatures';
 
 const AppRouter = () => {
   return (
@@ -78,6 +79,7 @@ const AppRouter = () => {
       <Route path="/tools/document-converter" element={<MainLayout><DocumentConverter /></MainLayout>} />
       <Route path="/blockchain" element={<MainLayout><BlockchainIntegration /></MainLayout>} />
       <Route path="/learning" element={<MainLayout><GamifiedLearning /></MainLayout>} />
+      <Route path="/upcoming-features" element={<MainLayout><UpcomingFeatures /></MainLayout>} />
       <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />
       <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
       <Route path="/legal" element={<MainLayout><Legal /></MainLayout>} />

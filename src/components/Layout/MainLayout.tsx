@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
-import FloatingThemeToggle from '@/components/FloatingThemeToggle';
+import DraggableThemeToggle from '@/components/DraggableThemeToggle';
 import { Toaster } from '@/components/ui/toaster';
 
 interface MainLayoutProps {
@@ -22,7 +22,7 @@ const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
       </main>
       <Footer />
       <ScrollToTop />
-      <FloatingThemeToggle />
+      <DraggableThemeToggle />
       <Toaster />
     </div>
   );

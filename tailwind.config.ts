@@ -57,11 +57,11 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 			},
-			// Fuke's Media Award-Caliber Brand Colors (HSL format)
+			// Fuke's Media Brand Colors from Guidelines (HSL format)
 			fukes: {
-				red: 'hsl(0, 100%, 50%)',      /* Pure Brand Red */
-				blue: 'hsl(240, 100%, 50%)',   /* Pure Brand Blue */
-				green: 'hsl(120, 100%, 50%)',  /* Pure Brand Green */
+				red: 'hsl(0, 84%, 38%)',       /* Brand Red: #BE1E2D */
+				blue: 'hsl(207, 100%, 40%)',   /* Brand Blue: #0071CE */
+				green: 'hsl(145, 100%, 33%)',  /* Brand Green: #00A641 */
 				black: 'hsl(0, 0%, 0%)',       /* Pure Black */
 				white: 'hsl(0, 0%, 100%)'      /* Pure White */
 			}

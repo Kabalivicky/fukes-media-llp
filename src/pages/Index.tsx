@@ -14,6 +14,7 @@ import SectionTitle from '@/components/SectionTitle';
 import AnimatedLogo from '@/components/AnimatedLogo';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import EnhancedModularInfo from '@/components/EnhancedModularInfo';
+import VideoBackground from '@/components/VideoBackground';
 import useScrollSync from '@/hooks/useScrollSync';
 
 // Animation variants for scroll-triggered animations
@@ -95,6 +96,9 @@ const Home = () => {
       />
 
       <div className="relative min-h-screen w-full text-foreground overflow-x-hidden">
+        {/* Video Background - Showreel playing behind content */}
+        <VideoBackground opacity={0.15} showOverlay={true} />
+        
         {/* Floating elements in background with will-change for better performance */}
         <div className="fixed inset-0 -z-10 w-full" aria-hidden="true">
           <motion.div 

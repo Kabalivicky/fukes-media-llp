@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
 import { mockVideoConversion, formatFileSize, validateFileType } from '@/utils/toolsHelper';
+import { batchConvertAndDownload } from '@/utils/downloadHelper';
 
 const VideoConverter = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -149,6 +150,23 @@ const VideoConverter = () => {
       setProgress(0);
     } finally {
       setIsConverting(false);
+    }
+  };
+
+  const handleDownloadAll = async () => {
+    if (!conversionComplete || selectedFiles.length === 0) return;
+    try {
+      await batchConvertAndDownload(selectedFiles, outputFormat, { quality });
+      toast({
+        title: "Download started",
+        description: `Downloading ${selectedFiles.length} converted file(s)`,
+      });
+    } catch (error) {
+      toast({
+        title: "Download failed",
+        description: "An error occurred while downloading files",
+        variant: "destructive",
+      });
     }
   };
 
@@ -298,12 +316,17 @@ const VideoConverter = () => {
                 <Button 
                   onClick={handleConvert}
                   disabled={selectedFiles.length === 0 || !outputFormat || isConverting}
-                  className="gradient-button flex-1"
+                  className="bg-primary hover:bg-primary/90 flex-1 shadow-lg hover:shadow-xl transition-all"
                 >
                   <Settings className="mr-2 h-4 w-4" />
                   {isConverting ? 'Converting...' : 'Convert Videos'}
                 </Button>
-                <Button variant="outline" disabled={!conversionComplete}>
+                <Button 
+                  variant="outline" 
+                  disabled={!conversionComplete}
+                  onClick={handleDownloadAll}
+                  className="shadow-lg hover:shadow-xl transition-all"
+                >
                   <Download className="mr-2 h-4 w-4" />
                   Download All
                 </Button>

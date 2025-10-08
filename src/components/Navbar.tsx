@@ -33,33 +33,33 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/40">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/50 shadow-lg">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo & Branding - Left aligned */}
-          <div className="flex items-center gap-3">
-            <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <AnimatedLogo size="sm" showGlow={false} withParticles={false} showStrip={false} />
+        <div className="flex items-center justify-between h-16 gap-4">
+          {/* Logo & Branding - Left aligned with better visibility */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+              <AnimatedLogo size="sm" showGlow={true} withParticles={false} showStrip={true} />
             </Link>
           </div>
           
           {/* Desktop Navigation - Center */}
-          <div className="hidden lg:flex items-center justify-center flex-1 max-w-2xl mx-8">
+          <div className="hidden lg:flex items-center justify-center flex-1 max-w-3xl mx-4">
             <MegaMenu />
           </div>
           
-          {/* Action Buttons - Right aligned */}
-          <div className="flex items-center gap-3">
+          {/* Action Buttons - Right aligned with better spacing */}
+          <div className="flex items-center gap-2 flex-shrink-0">
             <ThemeToggle />
             
             <Link to="/news" className="hidden sm:block">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="shadow-md hover:shadow-lg transition-shadow">
                 Industry News
               </Button>
             </Link>
             
             <Link to="/chat-assistant">
-              <Button size="sm" className="gradient-button">
+              <Button size="sm" className="bg-primary hover:bg-primary/90 shadow-md hover:shadow-lg transition-all">
                 <Headset className="mr-2 h-4 w-4" />
                 <span className="hidden sm:inline">AI Assistant</span>
                 <span className="sm:hidden">AI</span>
@@ -69,14 +69,14 @@ const Navbar = () => {
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" className="flex items-center gap-2 shadow-md hover:shadow-lg transition-shadow">
                     <User className="h-4 w-4" />
                     <span className="hidden sm:inline">
                       {user.user_metadata?.display_name || user.email?.split('@')[0] || 'Account'}
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-48 bg-popover/95 backdrop-blur-sm shadow-xl">
                   <DropdownMenuItem onClick={() => navigate('/freelancer-portal')}>
                     <User className="mr-2 h-4 w-4" />
                     Freelancer Portal
@@ -93,7 +93,7 @@ const Navbar = () => {
               </DropdownMenu>
             ) : (
               <Link to="/auth">
-                <Button size="sm" variant="outline">
+                <Button size="sm" variant="outline" className="shadow-md hover:shadow-lg transition-shadow">
                   <User className="mr-2 h-4 w-4" />
                   <span className="hidden sm:inline">Sign In</span>
                 </Button>
@@ -102,7 +102,7 @@ const Navbar = () => {
             
             <Button 
               size="sm" 
-              className="gradient-button hidden md:flex"
+              className="bg-secondary hover:bg-secondary/90 hidden md:flex shadow-md hover:shadow-lg transition-all"
               onClick={handleGetStartedClick}
             >
               Get Started

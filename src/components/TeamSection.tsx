@@ -26,34 +26,33 @@ const TeamSection = () => {
       name: 'Vikram',
       role: 'Project Management',
       bio: 'With extensive experience in VFX project coordination, Vikram ensures that all our projects are delivered on time and within budget. His exceptional organizational skills and attention to detail help maintain the highest standards of quality.',
-      brandColor: '#0057B7',
+      brandColor: '#0071CE',
       initials: 'VA',
       social: {
-        linkedin: 'https://linkedin.com/in/vikram',
-        email: 'vikram@fukesmedia.com'
+        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
+        email: 'contact@fukesmedia.com'
       }
     },
     {
       name: 'Arjun',
       role: 'Production Head',
       bio: 'As our Production Head, Arjun oversees all creative and technical aspects of our VFX productions. With his background in both film and technology, he bridges the gap between creative vision and technical execution.',
-      brandColor: '#D50032',
+      brandColor: '#BE1E2D',
       initials: 'AR',
       social: {
-        linkedin: 'https://linkedin.com/in/arjun',
-        email: 'arjun@fukesmedia.com',
-        phone: '+91 98765 43210'
+        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
+        email: 'contact@fukesmedia.com'
       }
     },
     {
       name: 'Harshith',
       role: 'Creative Director',
       bio: 'Harshith brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, he ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
-      brandColor: '#009639',
+      brandColor: '#00A641',
       initials: 'HA',
       social: {
-        linkedin: 'https://linkedin.com/in/harshith',
-        email: 'harshith@fukesmedia.com'
+        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
+        email: 'contact@fukesmedia.com'
       }
     },
     {
@@ -63,9 +62,8 @@ const TeamSection = () => {
       brandColor: '#00BFFF',
       initials: 'SP',
       social: {
-        linkedin: 'https://linkedin.com/in/saiprasad',
-        email: 'saiprasad@fukesmedia.com',
-        phone: '+91 97654 32109'
+        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
+        email: 'contact@fukesmedia.com'
       }
     },
     {
@@ -75,8 +73,8 @@ const TeamSection = () => {
       brandColor: '#FFCC00',
       initials: 'SA',
       social: {
-        linkedin: 'https://linkedin.com/in/sandesh',
-        email: 'sandesh@fukesmedia.com'
+        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
+        email: 'contact@fukesmedia.com'
       }
     }
   ];
@@ -100,8 +98,10 @@ const TeamSection = () => {
           {teamMembers.map((member, index) => (
             <FadeInOnScroll key={index} delay={index * 100}>
               <div 
-                className={`glass rounded-xl p-8 transition-all duration-300 cursor-pointer ${
-                  activeIndex === index ? 'scale-105 shadow-lg' : 'hover:scale-102'
+                className={`glass rounded-xl p-8 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-2xl border-2 ${
+                  activeIndex === index 
+                    ? 'scale-105 shadow-2xl border-primary/50' 
+                    : 'hover:scale-102 border-transparent hover:border-primary/20'
                 }`}
                 onClick={() => handleClick(index)}
                 onKeyDown={(e) => {

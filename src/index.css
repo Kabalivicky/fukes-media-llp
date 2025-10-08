@@ -15,15 +15,15 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
 
-    /* Fuke's Media Brand Colors - Award Caliber Design */
-    --primary: 0 100% 50%;     /* Pure Red (#FF0000) */
+    /* Fuke's Media Brand Colors - From Brand Guidelines PDF */
+    --primary: 0 84% 38%;      /* Brand Red: #BE1E2D (RGB 190, 30, 45) */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 100% 50%; /* Pure Blue (#0000FF) */
+    --secondary: 207 100% 40%; /* Brand Blue: #0071CE (RGB 0, 113, 206) */
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 120 100% 50%;    /* Pure Green (#00FF00) */
-    --accent-foreground: 0 0% 0%;
+    --accent: 145 100% 33%;    /* Brand Green: #00A641 (RGB 0, 166, 65) */
+    --accent-foreground: 0 0% 100%;
 
     --muted: 0 0% 90%;
     --muted-foreground: 0 0% 40%;
@@ -55,15 +55,15 @@
     --popover: 0 0% 3%;
     --popover-foreground: 0 0% 100%;
     
-    /* Fuke's Media Brand Colors - Dark Mode */
-    --primary: 0 100% 50%;       /* Pure Red for consistency */
+    /* Fuke's Media Brand Colors - Dark Mode (From Brand Guidelines) */
+    --primary: 0 84% 45%;        /* Brand Red adjusted for dark mode */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 240 100% 60%;   /* Brighter Blue for dark mode */
+    --secondary: 207 100% 50%;   /* Brand Blue adjusted for dark mode */
     --secondary-foreground: 0 0% 100%;
     
-    --accent: 120 100% 50%;      /* Pure Green maintained */
-    --accent-foreground: 0 0% 0%;
+    --accent: 145 100% 40%;      /* Brand Green adjusted for dark mode */
+    --accent-foreground: 0 0% 100%;
     
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 65%;
