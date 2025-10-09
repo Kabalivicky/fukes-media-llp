@@ -76,6 +76,17 @@ const TeamSection = () => {
         linkedin: 'https://www.linkedin.com/company/fukesmedia/',
         email: 'contact@fukesmedia.com'
       }
+    },
+    {
+      name: 'Rsnjith',
+      role: 'Partner',
+      bio: 'Rsnjith is a key partner driving strategic growth and innovation at Fukes Media. With expertise in business development and strategic partnerships, he plays a vital role in expanding our capabilities and market reach.',
+      brandColor: '#9333EA',
+      initials: 'RN',
+      social: {
+        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
+        email: 'contact@fukesmedia.com'
+      }
     }
   ];
 
