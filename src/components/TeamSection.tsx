@@ -3,7 +3,15 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import SectionTitle from '@/components/SectionTitle';
 import FadeInOnScroll from '@/components/FadeInOnScroll';
-import { ArrowRight, Linkedin, Mail, Phone, User } from 'lucide-react';
+import { ArrowRight, Linkedin, Mail, Phone } from 'lucide-react';
+
+// Import team member photos
+import vikramPhoto from '@/assets/team/vikram.jpg';
+import arjunPhoto from '@/assets/team/arjun.jpg';
+import harshithPhoto from '@/assets/team/harshith.jpg';
+import saiPrasadPhoto from '@/assets/team/sai-prasad.jpg';
+import sandeshPhoto from '@/assets/team/sandesh.jpg';
+import ranjithPhoto from '@/assets/team/ranjith.jpg';
 
 interface TeamMember {
   name: string;
@@ -11,6 +19,7 @@ interface TeamMember {
   bio: string;
   brandColor: string;
   initials: string;
+  imageUrl: string;
   social?: {
     linkedin?: string;
     email?: string;
@@ -28,6 +37,7 @@ const TeamSection = () => {
       bio: 'With extensive experience in VFX project coordination, Vikram ensures that all our projects are delivered on time and within budget. His exceptional organizational skills and attention to detail help maintain the highest standards of quality.',
       brandColor: '#0071CE',
       initials: 'VA',
+      imageUrl: vikramPhoto,
       social: {
         linkedin: 'https://www.linkedin.com/company/fukesmedia/',
         email: 'contact@fukesmedia.com'
@@ -39,6 +49,7 @@ const TeamSection = () => {
       bio: 'As our Production Head, Arjun oversees all creative and technical aspects of our VFX productions. With his background in both film and technology, he bridges the gap between creative vision and technical execution.',
       brandColor: '#BE1E2D',
       initials: 'AR',
+      imageUrl: arjunPhoto,
       social: {
         linkedin: 'https://www.linkedin.com/company/fukesmedia/',
         email: 'contact@fukesmedia.com'
@@ -50,6 +61,7 @@ const TeamSection = () => {
       bio: 'Harshith brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, he ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
       brandColor: '#00A641',
       initials: 'HA',
+      imageUrl: harshithPhoto,
       social: {
         linkedin: 'https://www.linkedin.com/company/fukesmedia/',
         email: 'contact@fukesmedia.com'
@@ -61,6 +73,7 @@ const TeamSection = () => {
       bio: 'Sai Prasad optimizes our workflow processes and resource allocation. His systematic approach to operations ensures smooth collaboration between departments and maximizes productivity across all projects.',
       brandColor: '#00BFFF',
       initials: 'SP',
+      imageUrl: saiPrasadPhoto,
       social: {
         linkedin: 'https://www.linkedin.com/company/fukesmedia/',
         email: 'contact@fukesmedia.com'
@@ -72,6 +85,7 @@ const TeamSection = () => {
       bio: 'Sandesh manages our financial planning and reporting with precision. His expertise in budgeting for VFX productions helps us deliver exceptional results while maintaining financial efficiency.',
       brandColor: '#FFCC00',
       initials: 'SA',
+      imageUrl: sandeshPhoto,
       social: {
         linkedin: 'https://www.linkedin.com/company/fukesmedia/',
         email: 'contact@fukesmedia.com'
@@ -83,6 +97,7 @@ const TeamSection = () => {
       bio: 'Ranjith is a key partner driving strategic growth and innovation at Fukes Media. With expertise in business development and strategic partnerships, he plays a vital role in expanding our capabilities and market reach.',
       brandColor: '#9333EA',
       initials: 'RN',
+      imageUrl: ranjithPhoto,
       social: {
         linkedin: 'https://www.linkedin.com/company/fukesmedia/',
         email: 'contact@fukesmedia.com'
@@ -128,16 +143,16 @@ const TeamSection = () => {
               >
                 <div className="flex flex-col items-center text-center">
                   <div 
-                    className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 shadow-lg relative flex items-center justify-center text-white font-bold text-2xl"
+                    className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 shadow-lg relative"
                     style={{ 
-                      backgroundColor: member.brandColor,
                       borderColor: `${member.brandColor}30`
                     }}
                   >
-                    <User className="w-12 h-12" />
-                    <div className="absolute bottom-2 right-2 text-xs font-bold">
-                      {member.initials}
-                    </div>
+                    <img 
+                      src={member.imageUrl} 
+                      alt={`${member.name} - ${member.role}`}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   
                   <h3 className="text-xl font-bold mb-1">{member.name}</h3>

@@ -101,7 +101,25 @@ const Services = () => {
       
       <Navbar />
       
-      <main className="pt-24 pb-16">
+      {/* Hero Section with Brand Logo */}
+      <section className="pt-24 pb-8">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="flex justify-center"
+          >
+            <img 
+              src="/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png"
+              alt="Fuke's Media Services"
+              className="w-48 h-auto object-contain"
+            />
+          </motion.div>
+        </div>
+      </section>
+      
+      <main className="pb-16">
         <section className="py-16">
           <div className="container mx-auto px-4">
             <motion.div 
