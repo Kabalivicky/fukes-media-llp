@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -222,8 +221,6 @@ const HelpCenter = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
     </div>
   );
 };

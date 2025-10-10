@@ -1,7 +1,6 @@
 
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import VFXResearchIntro from '@/components/VFXResearch/VFXResearchIntro';
 import VFXGlobalMap from '@/components/VFXResearch/VFXGlobalMap';
 import VFXRegionalSpotlight from '@/components/VFXResearch/VFXRegionalSpotlight';
@@ -125,8 +124,6 @@ const VFXResearch = () => {
           </motion.section>
         </motion.div>
       </main>
-      
-      <Footer />
     </div>
   );
 };

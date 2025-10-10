@@ -1,6 +1,5 @@
 
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import ProductionGuidelines from '@/components/HelpCenter/ProductionGuidelines';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from 'react-router-dom';
@@ -47,8 +46,6 @@ const ProductionGuidelinesPage = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
     </div>
   );
 };

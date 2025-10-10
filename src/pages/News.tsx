@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';

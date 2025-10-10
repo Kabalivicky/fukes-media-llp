@@ -1,6 +1,5 @@
 
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import CategoryPage from '@/components/HelpCenter/CategoryPage';
 import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
@@ -202,8 +201,6 @@ const HelpCenterCategory = () => {
       <section className="bg-background">
         <CategoryPage categoryData={categoryData} />
       </section>
-      
-      <Footer />
     </div>
   );
 };

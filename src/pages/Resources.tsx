@@ -1,7 +1,6 @@
 
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -340,8 +339,6 @@ const Resources = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   );
 };

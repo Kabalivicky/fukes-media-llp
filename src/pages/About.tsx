@@ -1,7 +1,6 @@
 
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Helmet } from 'react-helmet-async';
 
@@ -99,8 +98,6 @@ const About = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   );
 };
