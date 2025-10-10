@@ -78,9 +78,9 @@ const TeamSection = () => {
       }
     },
     {
-      name: 'Rsnjith',
+      name: 'Ranjith',
       role: 'Partner',
-      bio: 'Rsnjith is a key partner driving strategic growth and innovation at Fukes Media. With expertise in business development and strategic partnerships, he plays a vital role in expanding our capabilities and market reach.',
+      bio: 'Ranjith is a key partner driving strategic growth and innovation at Fukes Media. With expertise in business development and strategic partnerships, he plays a vital role in expanding our capabilities and market reach.',
       brandColor: '#9333EA',
       initials: 'RN',
       social: {
