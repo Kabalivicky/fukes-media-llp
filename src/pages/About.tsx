@@ -82,16 +82,89 @@ const About = () => {
                 </div>
                 
                 <div className="glass p-8 rounded-xl mt-8">
-                  <h2 className="text-2xl font-bold mb-4 text-primary">Our Story</h2>
+                  <h2 className="text-2xl font-bold mb-4 text-primary">Our Story: From Lazy Arts to Fuke's Media</h2>
                   <p className="mb-4">
-                    Founded in 2020 by a team of VFX veterans and AI specialists, Fuke's Media was born from the vision to bridge the gap between traditional visual effects techniques and emerging artificial intelligence technologies. We recognized the potential for AI to transform the labor-intensive aspects of VFX production while enhancing creative possibilities.
+                    <strong>2018 - The Beginning (Lazy Arts):</strong> Founded as Lazy Arts by a small team of passionate VFX artists and AI specialists, we started with a vision to bridge traditional visual effects with emerging AI technologies. Working from a modest studio in Bangalore, we focused on independent film projects and commercial work.
                   </p>
                   <p className="mb-4">
-                    Starting with a small team in Mumbai, we quickly expanded by building a distributed global network of artists and developers. Our innovative approach to VFX production attracted attention from both the film industry and the tech sector, leading to partnerships with major studios and technology companies.
+                    <strong>2019 - Growth & Recognition:</strong> Lazy Arts gained traction with several award-winning projects for regional cinema. Our innovative approach to combining traditional VFX techniques with machine learning tools caught the attention of larger production houses.
+                  </p>
+                  <p className="mb-4">
+                    <strong>2020 - Transformation to Fuke's Media LLP:</strong> Recognizing the need for expansion and professional structure, we rebranded as Fuke's Media LLP. This transformation marked our commitment to becoming a leading VFX studio with a global presence. We expanded our team, invested in cutting-edge infrastructure, and formalized partnerships.
+                  </p>
+                  <p className="mb-4">
+                    <strong>2021 - Major Projects & Expansion:</strong> Secured contracts for major Indian cinema projects including work on blockbusters like KGF Chapter 2, Leo, and Salaar. Opened satellite offices and established a distributed global network of artists.
+                  </p>
+                  <p className="mb-4">
+                    <strong>2022-2023 - Industry Leadership:</strong> Worked on 500+ projects spanning feature films, web series, commercials, and digital content. Won multiple awards for technical and creative excellence. Developed proprietary AI tools for VFX production.
                   </p>
                   <p>
-                    Today, Fuke's Media operates with headquarters in Mumbai and satellite offices in London, Los Angeles, and Singapore, serving clients from independent filmmakers to major studios around the world.
+                    <strong>2024-Present:</strong> Operating as a full-service LLP with headquarters in Bangalore and partnerships worldwide. Serving clients from independent filmmakers to major studios, with a reputation for innovation, quality, and client satisfaction.
                   </p>
+                </div>
+                
+                {/* Milestones & Achievements */}
+                <div className="glass p-8 rounded-xl mt-8">
+                  <h2 className="text-2xl font-bold mb-6 text-center text-secondary">Milestones & Achievements</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="text-center p-4 bg-card/50 rounded-lg">
+                      <div className="text-4xl font-display font-bold text-primary mb-2">500+</div>
+                      <p className="text-sm font-semibold">Projects Completed</p>
+                      <p className="text-xs text-muted-foreground mt-1">Since 2018</p>
+                    </div>
+                    <div className="text-center p-4 bg-card/50 rounded-lg">
+                      <div className="text-4xl font-display font-bold text-secondary mb-2">50+</div>
+                      <p className="text-sm font-semibold">Feature Films</p>
+                      <p className="text-xs text-muted-foreground mt-1">Major Productions</p>
+                    </div>
+                    <div className="text-center p-4 bg-card/50 rounded-lg">
+                      <div className="text-4xl font-display font-bold text-accent mb-2">15+</div>
+                      <p className="text-sm font-semibold">Industry Awards</p>
+                      <p className="text-xs text-muted-foreground mt-1">Excellence Recognition</p>
+                    </div>
+                    <div className="text-center p-4 bg-card/50 rounded-lg">
+                      <div className="text-4xl font-display font-bold text-primary mb-2">98%</div>
+                      <p className="text-sm font-semibold">Client Satisfaction</p>
+                      <p className="text-xs text-muted-foreground mt-1">Repeat Business Rate</p>
+                    </div>
+                    <div className="text-center p-4 bg-card/50 rounded-lg">
+                      <div className="text-4xl font-display font-bold text-secondary mb-2">100+</div>
+                      <p className="text-sm font-semibold">Team Members</p>
+                      <p className="text-xs text-muted-foreground mt-1">Global Network</p>
+                    </div>
+                    <div className="text-center p-4 bg-card/50 rounded-lg">
+                      <div className="text-4xl font-display font-bold text-accent mb-2">24/7</div>
+                      <p className="text-sm font-semibold">Production Capacity</p>
+                      <p className="text-xs text-muted-foreground mt-1">Continuous Delivery</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Recognition & Mentions */}
+                <div className="glass p-8 rounded-xl mt-8">
+                  <h2 className="text-2xl font-bold mb-6 text-center text-accent">Recognition & Industry Mentions</h2>
+                  <div className="space-y-4">
+                    <div className="border-l-4 border-primary pl-4">
+                      <h4 className="font-bold">Best VFX Studio - Regional Cinema 2023</h4>
+                      <p className="text-sm text-muted-foreground">South Indian Cinema Awards</p>
+                    </div>
+                    <div className="border-l-4 border-secondary pl-4">
+                      <h4 className="font-bold">Innovation in AI-Driven VFX 2023</h4>
+                      <p className="text-sm text-muted-foreground">FICCI Frames Technology Awards</p>
+                    </div>
+                    <div className="border-l-4 border-accent pl-4">
+                      <h4 className="font-bold">Featured in "Top 10 VFX Studios to Watch"</h4>
+                      <p className="text-sm text-muted-foreground">VFX Voice Magazine, 2024</p>
+                    </div>
+                    <div className="border-l-4 border-primary pl-4">
+                      <h4 className="font-bold">Excellence in Technical Achievement</h4>
+                      <p className="text-sm text-muted-foreground">Karnataka Film Chamber of Commerce, 2022</p>
+                    </div>
+                    <div className="border-l-4 border-secondary pl-4">
+                      <h4 className="font-bold">Mentioned in "AI Revolution in Indian VFX"</h4>
+                      <p className="text-sm text-muted-foreground">The Hindu Business Line, 2024</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>

@@ -5,6 +5,10 @@ import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import DraggableThemeToggle from '@/components/DraggableThemeToggle';
 import { Toaster } from '@/components/ui/toaster';
+import GlobalScrollProgress from '@/components/GlobalScrollProgress';
+import StickyCTAs from '@/components/StickyCTAs';
+import CustomCursor from '@/components/CustomCursor';
+import BrandedPreloader from '@/components/BrandedPreloader';
 
 interface MainLayoutProps {
   children?: React.ReactNode;
@@ -13,18 +17,24 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col w-full relative">
-      <Navbar />
-      <main className="flex-1 pt-16 w-full relative z-10" id="main-content">
-        <div className="w-full max-w-none">
-          {children || <Outlet />}
-        </div>
-      </main>
-      <Footer />
-      <ScrollToTop />
-      <DraggableThemeToggle />
-      <Toaster />
-    </div>
+    <>
+      <BrandedPreloader />
+      <GlobalScrollProgress />
+      <CustomCursor />
+      <div className="min-h-screen flex flex-col w-full relative cursor-none">
+        <Navbar />
+        <main className="flex-1 pt-16 w-full relative z-10" id="main-content">
+          <div className="w-full max-w-none">
+            {children || <Outlet />}
+          </div>
+        </main>
+        <Footer />
+        <ScrollToTop />
+        <StickyCTAs />
+        <DraggableThemeToggle />
+        <Toaster />
+      </div>
+    </>
   );
 };
 

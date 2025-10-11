@@ -13,7 +13,7 @@ const Footer = () => {
     <footer className="bg-card/30 backdrop-blur-md border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand Section - Fixed alignment */}
+          {/* Brand Section */}
           <div className="lg:col-span-1 space-y-4">
             <Link to="/" className="flex items-center space-x-3 mb-4">
               <div className="relative flex-shrink-0">
@@ -25,20 +25,31 @@ const Footer = () => {
                     : '/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png'
                   }
                 />
-                {/* Design strip element */}
-                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3/4 h-0.5">
-                  <img 
-                    src="/lovable-uploads/de05f56b-a2c6-43b6-b516-77732a316239.png"
-                    alt="Design Accent"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
               </div>
-              <span className="font-bold text-lg">Fuke's Media</span>
+              <span className="font-bold text-lg font-display">Fuke's Media LLP</span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Pioneering AI-driven VFX and creative services for the digital media landscape.
+              Award-caliber VFX studio combining AI technology with creative excellence since 2020.
             </p>
+            
+            {/* Address */}
+            <div className="text-sm text-muted-foreground space-y-1">
+              <p className="font-semibold text-foreground">Head Office</p>
+              <p>Bangalore, Karnataka</p>
+              <p>India</p>
+              <p className="mt-2">
+                <a href="mailto:info@fukesmedia.com" className="hover:text-primary transition-colors">
+                  info@fukesmedia.com
+                </a>
+              </p>
+              <p>
+                <a href="tel:+919876543210" className="hover:text-primary transition-colors">
+                  +91 98765 43210
+                </a>
+              </p>
+            </div>
+            
+            {/* Social Media */}
             <div className="flex space-x-2">
               <Button 
                 variant="ghost" 
@@ -46,7 +57,7 @@ const Footer = () => {
                 className="h-8 w-8 rounded-full hover:bg-primary/10"
                 asChild
               >
-                <a href="https://www.facebook.com/profile.php?viewas=100000686899395&id=61575800197616" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/profile.php?viewas=100000686899395&id=61575800197616" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                   <Facebook className="h-4 w-4" />
                 </a>
               </Button>
@@ -56,7 +67,7 @@ const Footer = () => {
                 className="h-8 w-8 rounded-full hover:bg-primary/10"
                 asChild
               >
-                <a href="https://x.com/FukesMedia" target="_blank" rel="noopener noreferrer">
+                <a href="https://x.com/FukesMedia" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                   <Twitter className="h-4 w-4" />
                 </a>
               </Button>
@@ -66,7 +77,7 @@ const Footer = () => {
                 className="h-8 w-8 rounded-full hover:bg-primary/10"
                 asChild
               >
-                <a href="https://www.instagram.com/fukes_media/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.instagram.com/fukes_media/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                   <Instagram className="h-4 w-4" />
                 </a>
               </Button>
@@ -76,7 +87,7 @@ const Footer = () => {
                 className="h-8 w-8 rounded-full hover:bg-primary/10"
                 asChild
               >
-                <a href="https://www.linkedin.com/company/fukesmedia/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/company/fukesmedia/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                   <Linkedin className="h-4 w-4" />
                 </a>
               </Button>
@@ -86,7 +97,7 @@ const Footer = () => {
                 className="h-8 w-8 rounded-full hover:bg-primary/10"
                 asChild
               >
-                <a href="https://www.youtube.com/@FukesMedia" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.youtube.com/@FukesMedia" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                   <Youtube className="h-4 w-4" />
                 </a>
               </Button>
@@ -159,10 +170,12 @@ const Footer = () => {
         
         <Separator className="my-8 bg-border" />
         
-        {/* Bottom section - Fixed alignment */}
+        {/* Bottom section */}
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-          <div className="text-muted-foreground text-sm text-center md:text-left">
-            &copy; {new Date().getFullYear()} Fuke's Media LLP. All rights reserved.
+          <div className="text-muted-foreground text-sm text-center md:text-left space-y-1">
+            <p>&copy; {new Date().getFullYear()} Fuke's Media LLP. All rights reserved.</p>
+            <p className="text-xs">LLP Identification Number (LLPIN): [Insert LLPIN]</p>
+            <p className="text-xs">Registered Office: Bangalore, Karnataka, India</p>
           </div>
           
           <div className="flex flex-wrap justify-center md:justify-end space-x-6 text-sm">
