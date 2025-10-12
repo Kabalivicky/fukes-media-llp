@@ -81,29 +81,10 @@ const About = () => {
                   </div>
                 </div>
                 
+                {/* Our Story: From Lazy Arts to Fuke's Media */}
                 <div className="glass p-8 rounded-xl mt-8">
-                  <h2 className="text-2xl font-bold mb-4 text-primary">Our Story: From Lazy Arts to Fuke's Media</h2>
-                  <p className="mb-4">
-                    <strong>2018 - The Beginning (Lazy Arts):</strong> Founded as Lazy Arts by a small team of passionate VFX artists and AI specialists, we started with a vision to bridge traditional visual effects with emerging AI technologies. Working from a modest studio in Bangalore, we focused on independent film projects and commercial work.
-                  </p>
-                  <p className="mb-4">
-                    <strong>2019 - Growth & Recognition:</strong> Lazy Arts gained traction with several award-winning projects for regional cinema. Our innovative approach to combining traditional VFX techniques with machine learning tools caught the attention of larger production houses.
-                  </p>
-                  <p className="mb-4">
-                    <strong>2020 - Transformation to Fuke's Media LLP:</strong> Recognizing the need for expansion and professional structure, we rebranded as Fuke's Media LLP. This transformation marked our commitment to becoming a leading VFX studio with a global presence. We expanded our team, invested in cutting-edge infrastructure, and formalized partnerships.
-                  </p>
-                  <p className="mb-4">
-                    <strong>2021 - Major Projects & Expansion:</strong> Secured contracts for major Indian cinema projects including work on blockbusters like KGF Chapter 2, Leo, and Salaar. Opened satellite offices and established a distributed global network of artists.
-                  </p>
-                  <p className="mb-4">
-                    <strong>2022-2023 - Industry Leadership:</strong> Worked on 500+ projects spanning feature films, web series, commercials, and digital content. Won multiple awards for technical and creative excellence. Developed proprietary AI tools for VFX production.
-                  </p>
-                  <p>
-                    <strong>2024-Present:</strong> Operating as a full-service LLP with headquarters in Bangalore and partnerships worldwide. Serving clients from independent filmmakers to major studios, with a reputation for innovation, quality, and client satisfaction.
-                  </p>
+...
                 </div>
-                
-                {/* Milestones & Achievements */}
                 <div className="glass p-8 rounded-xl mt-8">
                   <h2 className="text-2xl font-bold mb-6 text-center text-secondary">Milestones & Achievements</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

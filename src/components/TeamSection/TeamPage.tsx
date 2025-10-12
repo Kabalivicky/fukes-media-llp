@@ -10,7 +10,6 @@ const foundingTeam = [
     name: 'Vikram A',
     role: 'Founder | Project & Client Management',
     designation: 'Designated Partner',
-    bio: 'Visionary leader overseeing project delivery and client relationships. 15+ years in VFX production management.',
     skills: ['Project Management', 'Client Relations', 'Business Strategy', 'Team Leadership'],
     email: 'vikram@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/vikrama',
@@ -21,7 +20,6 @@ const foundingTeam = [
     name: 'Arjun R',
     role: 'Co-Founder | Production Head, CG & VFX Lead',
     designation: 'Designated Partner',
-    bio: 'Technical mastermind leading all CG and VFX operations. Award-winning VFX supervisor.',
     skills: ['VFX Supervision', 'CG Production', 'Technical Direction', 'Pipeline Development'],
     email: 'arjun@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/arjunr',
@@ -32,7 +30,6 @@ const foundingTeam = [
     name: 'Sai Prasad',
     role: 'Operational Manager | Vendor & Outsource Head',
     designation: 'Partner',
-    bio: 'Manages all operational workflows and vendor relationships. Expert in resource optimization.',
     skills: ['Operations Management', 'Vendor Relations', 'Resource Allocation', 'Quality Control'],
     email: 'saiprasad@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/saiprasad',
@@ -43,7 +40,6 @@ const foundingTeam = [
     name: 'Harshith Kulai',
     role: 'Creative Head & Business Development',
     designation: 'Partner',
-    bio: 'Drives creative vision and business growth. 10+ years in creative direction and client acquisition.',
     skills: ['Creative Direction', 'Business Development', 'Brand Strategy', 'Client Acquisition'],
     email: 'harshith@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/harshithkulai',
@@ -54,7 +50,6 @@ const foundingTeam = [
     name: 'Sandesh Naik',
     role: 'Accounts & Finance Head',
     designation: 'Partner',
-    bio: 'Manages financial operations and ensures fiscal responsibility. CA with 12+ years experience.',
     skills: ['Financial Management', 'Accounting', 'Tax Planning', 'Budget Control'],
     email: 'sandesh@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/sandeshnaik',
@@ -94,8 +89,8 @@ const coreTeam = [
 const extendedTeam = [
   {
     name: 'Ranjith',
-    role: 'Investor & Business Development Partner',
-    bio: 'Strategic investor providing business guidance and industry connections.',
+    role: 'Business Development',
+    bio: 'Strategic partner providing business guidance and industry connections.',
   }
 ];
 
@@ -179,9 +174,9 @@ const TeamPage = () => {
                 </div>
               </div>
               
-              {/* Extended Team & Partners */}
+              {/* Extended Team */}
               <div className="mt-16 bg-muted/20 rounded-lg p-8">
-                <h3 className="text-2xl font-display font-bold text-center mb-8">Extended Team & Partners</h3>
+                <h3 className="text-2xl font-display font-bold text-center mb-8">Extended Team</h3>
                 <div className="max-w-2xl mx-auto space-y-4">
                   {extendedTeam.map((member, index) => (
                     <div key={index} className="bg-card border border-border rounded-lg p-4">

@@ -6,30 +6,24 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Camera, Palette, Video, MonitorPlay, Code } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import DynamicPrice from './DynamicPrice';
 import TypewriterText from './TypewriterText';
 import Enhanced3DHoverCards from './Enhanced3DHoverCards';
 
 const services = [
   {
     id: 'vfx',
-    name: 'VFX Solutions',
+    name: 'CGI & VFX Solutions',
     description: 'From basic compositing to complex 3D integration, we deliver high-quality visual effects for film, TV, and digital content.',
     icon: <Video className="h-10 w-10 text-primary" />,
     features: [
+      '2D & 3D Compositing',
+      'Rotoscoping & Clean-up',
+      'Digital Matte Painting',
       '3D Modeling & Animation',
-      'Compositing & Rotoscoping',
-      'Motion Graphics & Tracking',
-      'Particle & Fluid Simulations',
-      'Digital Set Extensions',
-      'AI-enhanced workflows'
+      'Simulation & FX',
+      'Match Move & Tracking'
     ],
-    image: 'https://images.unsplash.com/photo-1626428091984-427d4209b3fa?q=80&w=1287&auto=format&fit=crop',
-    pricing: [
-      { name: 'Basic Rotoscoping', price: 30, unit: 'per frame' },
-      { name: '2D Compositing', price: 75, unit: 'per frame' },
-      { name: '3D Integration', price: 250, unit: 'per shot' }
-    ]
+    image: 'https://images.unsplash.com/photo-1626428091984-427d4209b3fa?q=80&w=1287&auto=format&fit=crop'
   },
   {
     id: 'creative',
@@ -37,19 +31,18 @@ const services = [
     description: 'Our creative team brings your vision to life with cutting-edge design, animation, and conceptual development.',
     icon: <Palette className="h-10 w-10 text-secondary" />,
     features: [
-      'Art Direction & Conceptualization',
-      'Character Design & Development',
-      'Environment Design',
-      'Storyboarding & Previsualization',
-      'UI/UX Design for AR/VR',
-      'Brand Identity Development'
+      'Graphic Design',
+      'Logo Design',
+      'Poster Design',
+      'Motion Posters MGFX',
+      'Lyrical Video',
+      'Video Editing',
+      'Title Sequence Design',
+      'Motion Graphics',
+      'Podcast',
+      'Digital Marketing'
     ],
-    image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1170&auto=format&fit=crop',
-    pricing: [
-      { name: 'Poster Design', price: 5000, unit: 'per poster' },
-      { name: 'Motion Poster', price: 15000, unit: 'per design' },
-      { name: 'Concept Art', price: 8000, unit: 'per piece' }
-    ]
+    image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1170&auto=format&fit=crop'
   },
   {
     id: 'di',
@@ -57,19 +50,14 @@ const services = [
     description: 'Complete end-to-end DI solutions including color grading, conforming, mastering and delivery for all formats.',
     icon: <MonitorPlay className="h-10 w-10 text-accent" />,
     features: [
-      'Base Light & DaVinci Resolve Grading',
-      'HDR/Dolby Vision Mastering',
-      'Film Restoration & Enhancement',
-      'LUT Development & Color Management',
-      'Final Conforming & Versioning',
-      'Deliverable Creation for All Platforms'
+      'Basic & Advanced Colour Grading',
+      'HDR Grading',
+      'Look Development',
+      'VFX Supervision during DI',
+      'Final Delivery Masters',
+      'Quality Control'
     ],
-    image: 'https://images.unsplash.com/photo-1585314062604-1a357de8b000?q=80&w=1171&auto=format&fit=crop',
-    pricing: [
-      { name: 'Basic Color Grading', price: 25000, unit: 'per minute' },
-      { name: 'Advanced Color Grading', price: 50000, unit: 'per minute' },
-      { name: 'HDR Grading', price: 80000, unit: 'per minute' }
-    ]
+    image: 'https://images.unsplash.com/photo-1585314062604-1a357de8b000?q=80&w=1171&auto=format&fit=crop'
   },
   {
     id: 'tech',
@@ -77,25 +65,19 @@ const services = [
     description: 'Cutting-edge technology solutions and AI integration to enhance creative workflows and production efficiency.',
     icon: <Code className="h-10 w-10 text-neon-green" />,
     features: [
-      'Custom AI Pipeline Development',
-      'Automated Rotoscoping Solutions',
-      'Facial Motion Capture & Tracking',
-      'Virtual Production Setup',
-      'Real-time Rendering Implementation',
-      'Custom Tool Development'
+      'AI-Assisted Workflows',
+      'Custom Pipeline Development',
+      'Automation Solutions',
+      'Cloud Rendering',
+      'Real-time Collaboration Tools',
+      'Asset Management Systems'
     ],
-    image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?q=80&w=1170&auto=format&fit=crop',
-    pricing: [
-      { name: 'AI Pipeline Integration', price: 100000, unit: 'per project' },
-      { name: 'Virtual Production Setup', price: 250000, unit: 'one-time' },
-      { name: 'Custom Tool Development', price: 75000, unit: 'per tool' }
-    ]
+    image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?q=80&w=1170&auto=format&fit=crop'
   }
 ];
 
 const ServicesSection = () => {
   const [activeTab, setActiveTab] = useState('vfx');
-  const [expandedAccordion, setExpandedAccordion] = useState<string>('features');
   
   return (
     <section id="services" className="py-20 relative">
@@ -141,8 +123,6 @@ const ServicesSection = () => {
                         type="single" 
                         collapsible 
                         defaultValue="features"
-                        value={expandedAccordion}
-                        onValueChange={setExpandedAccordion}
                       >
                         <AccordionItem value="features">
                           <AccordionTrigger className="text-lg font-medium">
@@ -157,25 +137,6 @@ const ServicesSection = () => {
                                 </li>
                               ))}
                             </ul>
-                          </AccordionContent>
-                        </AccordionItem>
-                        
-                        <AccordionItem value="pricing">
-                          <AccordionTrigger className="text-lg font-medium">
-                            Sample Pricing
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <div className="space-y-3 mt-2">
-                              {service.pricing.map((item, index) => (
-                                <div key={index} className="flex justify-between items-center border-b border-border pb-2">
-                                  <span>{item.name}</span>
-                                  <span><DynamicPrice priceUSD={item.price} showCode={true} /> {item.unit}</span>
-                                </div>
-                              ))}
-                              <div className="text-sm text-muted-foreground mt-2">
-                                * Prices vary based on project complexity and requirements
-                              </div>
-                            </div>
                           </AccordionContent>
                         </AccordionItem>
                       </Accordion>

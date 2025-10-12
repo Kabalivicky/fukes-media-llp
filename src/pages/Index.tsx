@@ -3,10 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
-import PricingCalculator from '@/components/PricingCalculator';
 import PortfolioSection from '@/components/PortfolioSection';
 import TeamSection from '@/components/TeamSection';
-import CareersSection from '@/components/CareersSection';
 import IndustryResourcesSection from '@/components/IndustryResourcesSection';
 import ContactSection from '@/components/ContactSection';
 import SEOHelmet from '@/components/SEOHelmet';
@@ -88,9 +86,9 @@ const Home = () => {
   return (
     <>
       <SEOHelmet 
-        title="Fuke's Media LLP - Award-Winning AI-Driven VFX Studio"
-        description="Award-caliber VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects, AI-assisted production, and innovative storytelling solutions."
-        keywords="award-winning VFX, AI-driven visual effects, cinematic VFX, neural rendering, machine learning VFX, creative studio, film production, Fuke's Media, AI assistant"
+        title="Fuke's Media LLP - AI-Driven VFX Studio"
+        description="Professional VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects, AI-assisted production, and innovative storytelling solutions."
+        keywords="AI-driven visual effects, cinematic VFX, neural rendering, machine learning VFX, creative studio, film production, Fuke's Media, AI assistant"
         canonical="https://fukes-media.com"
         structuredData={structuredData}
       />
@@ -166,16 +164,6 @@ const Home = () => {
             </motion.div>
           </ErrorBoundary>
           
-          <ErrorBoundary>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeInUpVariants}
-            >
-              <PricingCalculator />
-            </motion.div>
-          </ErrorBoundary>
           
           <div id="portfolio" ref={(el) => sectionsRef.current.portfolio = el}>
             <ErrorBoundary>
@@ -190,91 +178,6 @@ const Home = () => {
             </ErrorBoundary>
           </div>
           
-          {/* Featured Content & Awards Section */}
-          <ErrorBoundary>
-            <motion.section
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeInUpVariants}
-              className="py-20 px-4 bg-muted/20"
-            >
-              <div className="container mx-auto">
-                <SectionTitle
-                  title="Award-Winning Excellence"
-                  subtitle="Recognition from industry leaders and creative festivals worldwide"
-                />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
-                  <motion.div 
-                    className="text-center p-6 rounded-lg bg-card/50 border border-primary/20 hover:border-primary/40 transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className="text-4xl font-display font-bold text-primary mb-2">15+</div>
-                    <p className="text-muted-foreground font-medium">International Awards</p>
-                    <p className="text-xs text-muted-foreground mt-1">Industry Recognition</p>
-                  </motion.div>
-                  <motion.div 
-                    className="text-center p-6 rounded-lg bg-card/50 border border-secondary/20 hover:border-secondary/40 transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className="text-4xl font-display font-bold text-secondary mb-2">500+</div>
-                    <p className="text-muted-foreground font-medium">Projects Completed</p>
-                    <p className="text-xs text-muted-foreground mt-1">Global Reach</p>
-                  </motion.div>
-                  <motion.div 
-                    className="text-center p-6 rounded-lg bg-card/50 border border-accent/20 hover:border-accent/40 transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className="text-4xl font-display font-bold text-accent mb-2">98%</div>
-                    <p className="text-muted-foreground font-medium">Client Satisfaction</p>
-                    <p className="text-xs text-muted-foreground mt-1">Proven Excellence</p>
-                  </motion.div>
-                </div>
-                
-                {/* Client Testimonials Carousel */}
-                <motion.div 
-                  className="mt-16 max-w-4xl mx-auto"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                >
-                  <div className="text-center">
-                    <h3 className="text-2xl font-display font-bold mb-8">What Industry Leaders Say</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="p-6 bg-card rounded-lg border border-border/50">
-                        <p className="text-muted-foreground italic mb-4">
-                          "Fuke's Media's AI-driven approach revolutionized our post-production workflow. Their innovation is unmatched."
-                        </p>
-                        <div className="flex items-center">
-                          <div className="w-12 h-12 bg-primary/20 rounded-full mr-3" />
-                          <div>
-                            <p className="font-semibold">Sarah Chen</p>
-                            <p className="text-sm text-muted-foreground">Director, Quantum Films</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="p-6 bg-card rounded-lg border border-border/50">
-                        <p className="text-muted-foreground italic mb-4">
-                          "The quality and speed of delivery exceeded all expectations. True masters of their craft."
-                        </p>
-                        <div className="flex items-center">
-                          <div className="w-12 h-12 bg-secondary/20 rounded-full mr-3" />
-                          <div>
-                            <p className="font-semibold">Marcus Rodriguez</p>
-                            <p className="text-sm text-muted-foreground">Producer, Nova Entertainment</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.section>
-          </ErrorBoundary>
           
           <div id="team" ref={(el) => sectionsRef.current.team = el}>
             <ErrorBoundary>
@@ -289,18 +192,6 @@ const Home = () => {
             </ErrorBoundary>
           </div>
           
-          <div id="careers" ref={(el) => sectionsRef.current.careers = el}>
-            <ErrorBoundary>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeInUpVariants}
-              >
-                <CareersSection />
-              </motion.div>
-            </ErrorBoundary>
-          </div>
           
           <ErrorBoundary>
             <motion.div

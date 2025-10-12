@@ -4,8 +4,6 @@ import Home from '@/pages/Index';
 import About from '@/pages/About';
 import Services from '@/pages/Services';
 import Team from '@/pages/Team';
-import Pricing from '@/pages/Pricing';
-import AdvancedPricing from '@/pages/AdvancedPricing';
 import Resources from '@/pages/Resources';
 import VFXResearch from '@/pages/VFXResearch';
 import VFXIndustryInsights from '@/pages/VFXIndustryInsights';
@@ -52,8 +50,6 @@ const AppRouter = () => {
       <Route path="/about" element={<MainLayout><About /></MainLayout>} />
       <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
       <Route path="/team" element={<MainLayout><Team /></MainLayout>} />
-      <Route path="/pricing" element={<MainLayout><Pricing /></MainLayout>} />
-      <Route path="/advanced-pricing" element={<MainLayout><AdvancedPricing /></MainLayout>} />
       <Route path="/resources" element={<MainLayout><Resources /></MainLayout>} />
       <Route path="/vfx-research" element={<MainLayout><VFXResearch /></MainLayout>} />
       <Route path="/vfx-industry-insights" element={<MainLayout><VFXIndustryInsights /></MainLayout>} />
