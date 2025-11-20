@@ -43,6 +43,23 @@ const App = () => {
     enabled: false
   });
   
+  // Set mobile viewport height
+  useEffect(() => {
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    
+    setVH();
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+    
+    return () => {
+      window.removeEventListener('resize', setVH);
+      window.removeEventListener('orientationchange', setVH);
+    };
+  }, []);
+  
   // Check if intro has been seen and set app ready state
   useEffect(() => {
     const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
@@ -81,26 +98,32 @@ const App = () => {
           <ThemeProvider defaultTheme="dark">
             <AccessibilityProvider>
               <TooltipProvider>
-                <MotionConfig reducedMotion="always" transition={{ duration: 0 }}><div className="min-h-screen bg-background">
-                  <Toaster />
-                  <Sonner />
-                  <BrowserRouter>
-                    {/* Loading Intro - Always render but handles its own visibility */}
-                    <LoadingIntro />
-                    
-                    {/* Navigation Controls */}
-                    <ScrollToTop showBelow={400} />
-                    
-                    {/* Main Application Routes - Always render when app is ready */}
-                    {isAppReady && (
-                      <Suspense fallback={<LoadingFallback />}>
-                        <ErrorBoundary>
-                          <AppRouter />
-                        </ErrorBoundary>
-                      </Suspense>
-                    )}
-                  </BrowserRouter>
-                </div></MotionConfig>
+                <MotionConfig reducedMotion="user" transition={{ duration: 0.3 }}>
+                  <div className="min-h-screen bg-background content-loader">
+                    <Toaster />
+                    <Sonner />
+                    <BrowserRouter>
+                      {/* Loading Intro - Always render but handles its own visibility */}
+                      <LoadingIntro />
+                      
+                      {/* Navigation Controls */}
+                      <ScrollToTop showBelow={400} />
+                      
+                      {/* Main Application Routes - Always render when app is ready */}
+                      {isAppReady ? (
+                        <Suspense fallback={<LoadingFallback />}>
+                          <ErrorBoundary>
+                            <div className="fade-in-up">
+                              <AppRouter />
+                            </div>
+                          </ErrorBoundary>
+                        </Suspense>
+                      ) : (
+                        <LoadingFallback />
+                      )}
+                    </BrowserRouter>
+                  </div>
+                </MotionConfig>
               </TooltipProvider>
             </AccessibilityProvider>
           </ThemeProvider>

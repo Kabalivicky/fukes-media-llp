@@ -3,11 +3,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fuke's Media LLP - Award-Winning AI-Driven VFX Studio</title>
-    <meta name="description" content="Award-caliber VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects, AI-assisted production, and innovative storytelling solutions for film, television, and digital media." />
+    <!-- Enhanced Viewport for All Devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- Browser Compatibility -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="format-detection" content="telephone=no" />
+    
+    <title>Fuke's Media LLP - Professional AI-Driven VFX Studio</title>
+    <meta name="description" content="Professional VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects, AI-assisted production, and innovative storytelling solutions for film, television, and digital media." />
     <meta name="author" content="Fuke's Media LLP" />
-    <meta name="keywords" content="award-winning VFX, AI-driven visual effects, cinematic VFX, neural rendering, machine learning VFX, creative studio, film production, Fuke's Media, AI assistant, blockchain VFX" />
+    <meta name="keywords" content="professional VFX, AI-driven visual effects, cinematic VFX, neural rendering, machine learning VFX, creative studio, film production, Fuke's Media, AI assistant, blockchain VFX" />
     
     <!-- Typography - ABVIO-inspired geometric font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,12 +43,57 @@
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://fukes-media.com" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#BE1E2D" />
   </head>
 
   <body>
+    <!-- Loading Screen -->
+    <div id="app-loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: hsl(var(--background)); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+      <div style="position: relative; width: 120px; height: 120px;">
+        <div class="loader-spinner"></div>
+        <img src="/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png" alt="Loading" style="width: 60px; height: 60px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.9;" />
+      </div>
+      <p style="color: hsl(var(--muted-foreground)); margin-top: 20px; font-family: 'Inter', sans-serif; font-size: 14px;">Loading Fuke's Media...</p>
+    </div>
+    
+    <style>
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .loader-spinner {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 3px solid hsl(var(--muted));
+        border-top: 3px solid hsl(var(--primary));
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+    </style>
+    
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <script>
+      // Remove loader once app is ready
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const loader = document.getElementById('app-loader');
+          if (loader) {
+            loader.style.opacity = '0';
+            loader.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(function() {
+              loader.remove();
+            }, 500);
+          }
+        }, 500);
+      });
+    </script>
   </body>
 </html>
