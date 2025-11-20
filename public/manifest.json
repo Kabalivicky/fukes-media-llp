@@ -1,0 +1,26 @@
+{
+  "name": "Fuke's Media LLP - Professional VFX Studio",
+  "short_name": "Fuke's Media",
+  "description": "Professional VFX studio combining cutting-edge AI technology with creative excellence",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#BE1E2D",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["entertainment", "business", "productivity"],
+  "prefer_related_applications": false
+}

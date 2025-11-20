@@ -100,15 +100,15 @@ const Home = () => {
         {/* Floating elements in background with will-change for better performance */}
         <div className="fixed inset-0 -z-10 w-full" aria-hidden="true">
           <motion.div 
-            className="absolute top-1/4 right-[10%] w-64 h-64 rounded-full bg-fukes-blue/10 blur-[100px]"
+            className="absolute top-1/4 right-[10%] w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-fukes-blue/10 blur-[80px] sm:blur-[100px]"
             style={{ y: y1, willChange: 'transform' }}
           />
           <motion.div 
-            className="absolute top-[60%] left-[5%] w-72 h-72 rounded-full bg-fukes-red/10 blur-[120px]"
+            className="absolute top-[60%] left-[5%] w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-fukes-red/10 blur-[100px] sm:blur-[120px]"
             style={{ y: y2, willChange: 'transform' }}
           />
           <motion.div 
-            className="absolute top-[30%] left-[20%] w-48 h-48 rounded-full bg-fukes-green/10 blur-[80px]"
+            className="absolute top-[30%] left-[20%] w-36 h-36 sm:w-48 sm:h-48 rounded-full bg-fukes-green/10 blur-[60px] sm:blur-[80px]"
             animate={{ 
               x: [0, 30, 0], 
               y: [0, -20, 0]
