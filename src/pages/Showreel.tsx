@@ -34,7 +34,7 @@ const Showreel = () => {
       techniques: ["Volumetric Rendering", "Procedural Animation", "Real-time VFX"]
     },
     {
-      title: "Award-Winning Projects",
+      title: "Featured Projects",
       duration: "0:46 - 1:00",
       description: "Highlights from our most celebrated and recognized work",
       techniques: ["Feature Films", "Commercials", "Music Videos"]
@@ -66,7 +66,7 @@ const Showreel = () => {
     "@context": "https://schema.org",
     "@type": "VideoObject",
     "name": "Fuke's Media Official Showreel 2024",
-    "description": "Award-winning VFX showreel featuring AI-driven visual effects and cinematic storytelling",
+    "description": "Professional VFX showreel featuring AI-driven visual effects and cinematic storytelling",
     "duration": "PT1M",
     "uploadDate": "2024-01-01",
     "creator": {
@@ -79,8 +79,8 @@ const Showreel = () => {
     <>
       <SEOHelmet
         title="Official Showreel 2024 - Fuke's Media VFX Excellence"
-        description="Watch our award-winning showreel featuring breakthrough AI-driven VFX, cinematic storytelling, and technical innovation. 60 seconds of pure visual excellence."
-        keywords="VFX showreel, visual effects demo, AI-driven VFX, award-winning projects, cinematic VFX"
+        description="Watch our professional showreel featuring breakthrough AI-driven VFX, cinematic storytelling, and technical innovation. 60 seconds of pure visual excellence."
+        keywords="VFX showreel, visual effects demo, AI-driven VFX, professional projects, cinematic VFX"
         canonical="https://fukes-media.com/showreel"
         structuredData={structuredData}
       />
@@ -105,7 +105,7 @@ const Showreel = () => {
 
             <SectionTitle
               title="Official Showreel 2024"
-              subtitle="60 seconds of pure visual excellence showcasing our award-winning work"
+              subtitle="60 seconds of pure visual excellence showcasing our professional work"
             />
 
             {/* Main Video Player */}
@@ -247,7 +247,7 @@ const Showreel = () => {
               <Card className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20 max-w-3xl mx-auto">
                 <h3 className="text-2xl font-display font-bold mb-4">Inspired by Our Work?</h3>
                 <p className="text-muted-foreground mb-6">
-                  Let's create something extraordinary together. Experience the future of VFX with our award-winning team.
+                  Let's create something extraordinary together. Experience the future of VFX with our professional team.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/contact">

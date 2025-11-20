@@ -1,11 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Sparkles, Zap, Brain, PlayCircle } from 'lucide-react';
-import VisualGenerator from './AI/VisualGenerator';
+import { PlayCircle } from 'lucide-react';
 
 const HeroSection = () => {
-  const [showAIDemo, setShowAIDemo] = useState(false);
 
   return (
     <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-16">
@@ -18,7 +15,7 @@ const HeroSection = () => {
               FUKE'S MEDIA
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 text-center font-body">
-              Award-caliber VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects that push the boundaries of what's possible.
+              Professional VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects that push the boundaries of what's possible.
             </p>
           </div>
 
@@ -36,24 +33,6 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto w-full px-4">
-            <div className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full">
-              <Sparkles className="w-6 h-6 mx-auto mb-3 text-primary" />
-              <h3 className="font-semibold text-sm mb-2">AI Visual Generation</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">Create stunning visuals with AI</p>
-            </div>
-            <div className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full">
-              <Brain className="w-6 h-6 mx-auto mb-3 text-primary" />
-              <h3 className="font-semibold text-sm mb-2">Emotion Detection</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">Real-time facial analysis</p>
-            </div>
-            <div className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full">
-              <Zap className="w-6 h-6 mx-auto mb-3 text-primary" />
-              <h3 className="font-semibold text-sm mb-2">Neural Rendering</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">AI-optimized rendering</p>
-            </div>
-          </div>
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4">
             <Link to="/contact">
               <Button size="lg" className="text-lg px-8 py-4 w-full sm:w-auto">
@@ -61,27 +40,12 @@ const HeroSection = () => {
               </Button>
             </Link>
 
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="text-lg px-8 py-4 w-full sm:w-auto"
-              onClick={() => setShowAIDemo(!showAIDemo)}
-            >
-              Try AI Demo
-            </Button>
-
-            <Link to="/advanced-pricing">
-              <Button size="lg" variant="ghost" className="text-lg px-8 py-4 w-full sm:w-auto">
-                View Pricing
+            <Link to="/showreel">
+              <Button size="lg" variant="outline" className="text-lg px-8 py-4 w-full sm:w-auto">
+                View Showreel
               </Button>
             </Link>
           </div>
-
-          {showAIDemo && (
-            <div className="mt-12 w-full max-w-6xl mx-auto">
-              <VisualGenerator />
-            </div>
-          )}
         </div>
       </div>
     </section>

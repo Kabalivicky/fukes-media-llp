@@ -115,7 +115,7 @@ const Portfolio = () => {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     "name": "Fuke's Media Portfolio & Showreel",
-    "description": "Award-winning VFX portfolio showcasing AI-driven visual effects and creative excellence",
+    "description": "Professional VFX portfolio showcasing AI-driven visual effects and creative excellence",
     "creator": {
       "@type": "Organization",
       "name": "Fuke's Media LLP"
@@ -125,9 +125,9 @@ const Portfolio = () => {
   return (
     <>
       <SEOHelmet
-        title="Portfolio & Showreel - Award-Winning VFX Projects"
-        description="Explore our award-winning portfolio of VFX, AI-assisted production, and creative projects. See why we're recognized as industry leaders in visual effects."
-        keywords="VFX portfolio, showreel, award-winning projects, visual effects gallery, AI-driven VFX"
+        title="Portfolio & Showreel - Professional VFX Projects"
+        description="Explore our professional portfolio of VFX, AI-assisted production, and creative projects. See why we're recognized as industry leaders in visual effects."
+        keywords="VFX portfolio, showreel, professional projects, visual effects gallery, AI-driven VFX"
         canonical="https://fukes-media.com/portfolio"
         structuredData={structuredData}
       />
@@ -296,9 +296,9 @@ const Portfolio = () => {
               className="text-center mt-16"
             >
               <Card className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
-                <h3 className="text-2xl font-display font-bold mb-4">Ready to Create Award-Winning Content?</h3>
+                <h3 className="text-2xl font-display font-bold mb-4">Ready to Create Exceptional Content?</h3>
                 <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                  Let's collaborate to bring your vision to life with our award-winning team and cutting-edge AI technology.
+                  Let's collaborate to bring your vision to life with our professional team and cutting-edge AI technology.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button size="lg" className="bg-primary hover:bg-primary/90">

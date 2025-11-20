@@ -120,7 +120,7 @@ const Investors = () => {
                     <Award className="h-12 w-12 text-primary mb-4" />
                     <h3 className="text-xl font-bold mb-3">Industry Recognition</h3>
                     <p className="text-muted-foreground">
-                      Award-winning team with recognition from major film festivals and industry bodies 
+                      Professional team with recognition from major film festivals and industry bodies 
                       for technical innovation and creative excellence.
                     </p>
                   </Card>

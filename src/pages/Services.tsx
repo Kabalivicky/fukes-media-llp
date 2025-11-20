@@ -169,8 +169,8 @@ const Services = () => {
                       
                       <CardFooter>
                         <Button asChild className="w-full group-hover:bg-primary group-hover:text-white transition-colors">
-                          <Link to="/pricing">
-                            View Pricing <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          <Link to="/contact">
+                            Contact Us <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                           </Link>
                         </Button>
                       </CardFooter>

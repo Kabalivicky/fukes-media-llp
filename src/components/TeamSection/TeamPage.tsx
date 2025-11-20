@@ -13,7 +13,7 @@ const foundingTeam = [
     skills: ['Project Management', 'Client Relations', 'Business Strategy', 'Team Leadership'],
     email: 'vikram@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/vikrama',
-    imageUrl: '/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram&backgroundColor=BE1E2D',
     brandColor: '#BE1E2D'
   },
   {
@@ -23,7 +23,7 @@ const foundingTeam = [
     skills: ['VFX Supervision', 'CG Production', 'Technical Direction', 'Pipeline Development'],
     email: 'arjun@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/arjunr',
-    imageUrl: '/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=0071CE',
     brandColor: '#0071CE'
   },
   {
@@ -33,7 +33,7 @@ const foundingTeam = [
     skills: ['Operations Management', 'Vendor Relations', 'Resource Allocation', 'Quality Control'],
     email: 'saiprasad@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/saiprasad',
-    imageUrl: '/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00A641',
     brandColor: '#00A641'
   },
   {
@@ -43,7 +43,7 @@ const foundingTeam = [
     skills: ['Creative Direction', 'Business Development', 'Brand Strategy', 'Client Acquisition'],
     email: 'harshith@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/harshithkulai',
-    imageUrl: '/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=FFCC00',
     brandColor: '#FFCC00'
   },
   {
@@ -53,7 +53,7 @@ const foundingTeam = [
     skills: ['Financial Management', 'Accounting', 'Tax Planning', 'Budget Control'],
     email: 'sandesh@fukesmedia.com',
     linkedin: 'https://linkedin.com/in/sandeshnaik',
-    imageUrl: '/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png',
+    imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=00BFFF',
     brandColor: '#00BFFF'
   }
 ];
@@ -90,7 +90,7 @@ const extendedTeam = [
   {
     name: 'Ranjith',
     role: 'Business Development',
-    bio: 'Strategic partner providing business guidance and industry connections.',
+    bio: 'Business Development',
   }
 ];
 
