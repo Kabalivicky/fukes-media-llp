@@ -107,7 +107,7 @@ const AnimatedProjectsSection = () => {
         <motion.div variants={itemVariants} className="text-center mb-16">
           <SectionTitle
             title="Featured Projects"
-            subtitle="Showcase of our award-winning VFX and post-production work"
+            subtitle="Showcase of our professional VFX and post-production work"
           />
         </motion.div>
 

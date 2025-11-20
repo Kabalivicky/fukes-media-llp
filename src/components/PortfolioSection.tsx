@@ -54,7 +54,7 @@ const portfolioProjects = [
     category: 'di',
     image: 'https://images.unsplash.com/photo-1618172193622-ae2d025f4032?q=80&w=1464&auto=format&fit=crop',
     description: 'Complete digital intermediate process for a feature film, including color grading, finishing, and deliverable creation.',
-    details: 'Our team handled the entire DI process for this award-winning independent film. Working directly with the cinematographer, we developed a distinctive look that enhanced the storytelling while maintaining the natural beauty of the original footage.',
+    details: 'Our team handled the entire DI process for this independent film. Working directly with the cinematographer, we developed a distinctive look that enhanced the storytelling while maintaining the natural beauty of the original footage.',
     client: 'Independent Filmmaker',
     duration: '6 weeks'
   },

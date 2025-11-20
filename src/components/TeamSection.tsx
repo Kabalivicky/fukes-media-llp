@@ -26,7 +26,7 @@ const TeamSection = () => {
     {
       name: 'Vikram A',
       role: 'Project Management',
-      bio: 'With extensive experience in VFX project coordination, Vikram ensures that all our projects are delivered on time and within budget. His exceptional organizational skills and attention to detail help maintain the highest standards of quality.',
+      bio: '',
       brandColor: '#0071CE',
       initials: 'VA',
       imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram&backgroundColor=0071CE',
@@ -38,7 +38,7 @@ const TeamSection = () => {
     {
       name: 'Arjun R',
       role: 'Production Head',
-      bio: 'As our Production Head, Arjun oversees all creative and technical aspects of our VFX productions. With his background in both film and technology, he bridges the gap between creative vision and technical execution.',
+      bio: '',
       brandColor: '#BE1E2D',
       initials: 'AR',
       imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=BE1E2D',
@@ -50,7 +50,7 @@ const TeamSection = () => {
     {
       name: 'Harshith Kulai',
       role: 'Creative Director',
-      bio: 'Harshith brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, he ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
+      bio: '',
       brandColor: '#00A641',
       initials: 'HA',
       imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=00A641',
@@ -62,7 +62,7 @@ const TeamSection = () => {
     {
       name: 'Sai Prasad V',
       role: 'Operational Manager',
-      bio: 'Sai Prasad optimizes our workflow processes and resource allocation. His systematic approach to operations ensures smooth collaboration between departments and maximizes productivity across all projects.',
+      bio: '',
       brandColor: '#00BFFF',
       initials: 'SP',
       imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF',
@@ -74,7 +74,7 @@ const TeamSection = () => {
     {
       name: 'Sandesh Naik',
       role: 'Accounts & Financial Head',
-      bio: 'Sandesh manages our financial planning and reporting with precision. His expertise in budgeting for VFX productions helps us deliver exceptional results while maintaining financial efficiency.',
+      bio: '',
       brandColor: '#FFCC00',
       initials: 'SA',
       imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=FFCC00',
