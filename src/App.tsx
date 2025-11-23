@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import LoadingIntro from "./components/LoadingIntro";
+import PowerOnIntro from "./components/PowerOnIntro";
 import AccessibilityProvider from "./components/AccessibilityProvider";
 import { MotionConfig } from "framer-motion";
 
@@ -32,6 +33,9 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const [isPoweredOn, setIsPoweredOn] = useState(
+    () => sessionStorage.getItem('powerOnComplete') === 'true'
+  );
   const [isAppReady, setIsAppReady] = useState(false);
   
   // Enable custom cursor effect
@@ -66,23 +70,21 @@ const App = () => {
     
     if (hasSeenIntro === 'true') {
       setIsAppReady(true);
-    } else {
-      // Set a timeout as fallback to ensure app loads even if intro fails
-      const fallbackTimer = setTimeout(() => {
+    } else if (isPoweredOn) {
+      // After power on, wait for loading intro
+      const timer = setTimeout(() => {
         setIsAppReady(true);
         sessionStorage.setItem('hasSeenIntro', 'true');
-      }, 8000); // 8 second fallback
+      }, 4000);
       
-      const quickTimer = setTimeout(() => {
-        setIsAppReady(true);
-      }, 100);
-      
-      return () => {
-        clearTimeout(fallbackTimer);
-        clearTimeout(quickTimer);
-      };
+      return () => clearTimeout(timer);
     }
-  }, []);
+  }, [isPoweredOn]);
+
+  const handlePowerOnComplete = () => {
+    setIsPoweredOn(true);
+    sessionStorage.setItem('powerOnComplete', 'true');
+  };
 
   // Global loading fallback component
   const LoadingFallback = () => (
@@ -103,14 +105,17 @@ const App = () => {
                     <Toaster />
                     <Sonner />
                     <BrowserRouter>
-                      {/* Loading Intro - Always render but handles its own visibility */}
-                      <LoadingIntro />
+                      {/* Power On Intro - Shows first */}
+                      {!isPoweredOn && <PowerOnIntro onComplete={handlePowerOnComplete} />}
+                      
+                      {/* Loading Intro - Shows after power on */}
+                      {isPoweredOn && !isAppReady && <LoadingIntro />}
                       
                       {/* Navigation Controls */}
                       <ScrollToTop showBelow={400} />
                       
-                      {/* Main Application Routes - Always render when app is ready */}
-                      {isAppReady ? (
+                      {/* Main Application Routes - Show when ready */}
+                      {isPoweredOn && isAppReady && (
                         <Suspense fallback={<LoadingFallback />}>
                           <ErrorBoundary>
                             <div className="fade-in-up">
@@ -118,8 +123,6 @@ const App = () => {
                             </div>
                           </ErrorBoundary>
                         </Suspense>
-                      ) : (
-                        <LoadingFallback />
                       )}
                     </BrowserRouter>
                   </div>

@@ -8,7 +8,6 @@ import { Toaster } from '@/components/ui/toaster';
 import GlobalScrollProgress from '@/components/GlobalScrollProgress';
 import StickyCTAs from '@/components/StickyCTAs';
 import CustomCursor from '@/components/CustomCursor';
-import BrandedPreloader from '@/components/BrandedPreloader';
 
 interface MainLayoutProps {
   children?: React.ReactNode;
@@ -18,7 +17,6 @@ interface MainLayoutProps {
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
   return (
     <>
-      <BrandedPreloader />
       <GlobalScrollProgress />
       <CustomCursor />
       <div className="min-h-screen flex flex-col w-full relative cursor-none">
