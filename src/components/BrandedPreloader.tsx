@@ -24,13 +24,13 @@ const BrandedPreloader = () => {
           transition={{ duration: 0.5 }}
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
         >
-          <div className="relative">
+          <div className="flex flex-col items-center justify-center gap-8">
             {/* Animated Logo */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="relative"
+              className="flex items-center justify-center"
             >
               <img
                 src={theme === 'dark' 
@@ -38,12 +38,12 @@ const BrandedPreloader = () => {
                   : '/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png'
                 }
                 alt="Fuke's Media Logo"
-                className="h-24 w-auto"
+                className="h-24 w-auto mx-auto"
               />
             </motion.div>
 
             {/* RGB Loading Bars */}
-            <div className="mt-8 space-y-2">
+            <div className="w-64 space-y-2">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: '100%' }}
@@ -69,7 +69,7 @@ const BrandedPreloader = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 1 }}
-              className="text-center mt-6 text-muted-foreground font-body"
+              className="text-center text-lg text-muted-foreground font-body"
             >
               Loading Excellence...
             </motion.p>
