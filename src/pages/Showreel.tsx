@@ -276,11 +276,64 @@ const Showreel = () => {
               </Card>
             </motion.div>
 
-            {/* Call to Action */}
+            {/* Service Category Links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.0 }}
+              className="mt-16"
+            >
+              <h3 className="text-2xl font-display font-bold text-center mb-8">Explore Service Showreels</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <Link to="/showreel/cgi-vfx">
+                  <Card className="text-center border-border/50 hover:border-primary/50 transition-all hover:scale-105 cursor-pointer">
+                    <CardContent className="p-8">
+                      <h4 className="font-display font-bold text-xl mb-2 text-primary">CGI & VFX Solutions</h4>
+                      <p className="text-muted-foreground text-sm mb-4">
+                        Compositing, 3D animation, simulations, and visual effects
+                      </p>
+                      <Button variant="outline" className="w-full">
+                        View VFX Showreel
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                <Link to="/showreel/creative">
+                  <Card className="text-center border-border/50 hover:border-accent/50 transition-all hover:scale-105 cursor-pointer">
+                    <CardContent className="p-8">
+                      <h4 className="font-display font-bold text-xl mb-2 text-accent">Creative Services</h4>
+                      <p className="text-muted-foreground text-sm mb-4">
+                        Design, motion graphics, video editing, and branding
+                      </p>
+                      <Button variant="outline" className="w-full">
+                        View Creative Showreel
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                <Link to="/showreel/di">
+                  <Card className="text-center border-border/50 hover:border-secondary/50 transition-all hover:scale-105 cursor-pointer">
+                    <CardContent className="p-8">
+                      <h4 className="font-display font-bold text-xl mb-2 text-secondary">DI Services</h4>
+                      <p className="text-muted-foreground text-sm mb-4">
+                        Color grading, HDR, look development, and finishing
+                      </p>
+                      <Button variant="outline" className="w-full">
+                        View DI Showreel
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Call to Action */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
               className="text-center mt-16"
             >
               <Card className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20 max-w-3xl mx-auto">

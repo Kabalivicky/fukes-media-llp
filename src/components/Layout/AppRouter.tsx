@@ -32,6 +32,9 @@ import BlockchainIntegration from '@/components/BlockchainIntegration';
 import GamifiedLearning from '@/components/GamifiedLearning';
 import Portfolio from '@/pages/Portfolio';
 import Showreel from '@/pages/Showreel';
+import ShowreelCGIVFX from '@/pages/ShowreelCGIVFX';
+import ShowreelCreative from '@/pages/ShowreelCreative';
+import ShowreelDI from '@/pages/ShowreelDI';
 import Contact from '@/pages/Contact';
 import Privacy from '@/pages/Privacy';
 import Terms from '@/pages/Terms';
@@ -46,6 +49,9 @@ const AppRouter = () => {
       <Route path="/" element={<MainLayout><Home /></MainLayout>} />
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/showreel" element={<MainLayout><Showreel /></MainLayout>} />
+      <Route path="/showreel/cgi-vfx" element={<ShowreelCGIVFX />} />
+      <Route path="/showreel/creative" element={<ShowreelCreative />} />
+      <Route path="/showreel/di" element={<ShowreelDI />} />
       <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
       <Route path="/about" element={<MainLayout><About /></MainLayout>} />
       <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
