@@ -25,6 +25,8 @@ const Billboard = ({ onMoreInfo }: BillboardProps) => {
     return () => clearInterval(timer);
   }, [featuredProjects.length]);
 
+  if (!currentProject) return null;
+
   return (
     <div className="billboard">
       {/* Background Image */}
@@ -32,24 +34,24 @@ const Billboard = ({ onMoreInfo }: BillboardProps) => {
         <motion.div
           key={currentProject.id}
           className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1.2 }}
         >
           <img
             src={currentProject.poster}
             alt={currentProject.title}
-            className="w-full h-full object-cover object-top"
+            className="w-full h-full object-cover object-center"
           />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/30" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Gradient Overlays */}
-      <div className="billboard-gradient absolute inset-0" />
-      
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      {/* Gradient Overlays - Netflix style */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
 
       {/* Content */}
       <div className="absolute inset-0 flex items-center">

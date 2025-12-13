@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import HeroSection from '@/components/HeroSection';
-import ServicesSection from '@/components/ServicesSection';
-import PortfolioSection from '@/components/PortfolioSection';
-import TeamSection from '@/components/TeamSection';
-import ContactSection from '@/components/ContactSection';
+import { useState } from 'react';
 import SEOHelmet from '@/components/SEOHelmet';
-import ErrorBoundary from '@/components/ErrorBoundary';
+import Billboard from '@/components/Netflix/Billboard';
+import ContentRow from '@/components/Netflix/ContentRow';
+import ProjectModal from '@/components/Netflix/ProjectModal';
+import { Project, projects } from '@/components/ProjectsData';
 
 const Home = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  // Categorize projects for Netflix-style rows
+  const trendingProjects = projects.filter(p => p.rating >= 8.5);
+  const actionProjects = projects.filter(p => p.genre.toLowerCase().includes('action'));
+  const thrillerProjects = projects.filter(p => p.genre.toLowerCase().includes('thriller'));
+  const dramaProjects = projects.filter(p => p.genre.toLowerCase().includes('drama'));
+  const recentProjects = projects.filter(p => p.year === '2024' || p.year === '2023');
 
   // SEO Structured Data
   const structuredData = {
@@ -40,41 +40,49 @@ const Home = () => {
         structuredData={structuredData}
       />
 
-      <motion.div 
-        className="min-h-screen w-full bg-background text-foreground"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoaded ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
-      >
+      <div className="netflix-browse">
         {/* Hero Billboard */}
-        <ErrorBoundary>
-          <HeroSection />
-        </ErrorBoundary>
+        <Billboard onMoreInfo={setSelectedProject} />
 
-        {/* Portfolio Rows */}
-        <ErrorBoundary>
-          <PortfolioSection />
-        </ErrorBoundary>
-
-        {/* Services Section */}
-        <ErrorBoundary>
-          <ServicesSection />
-        </ErrorBoundary>
-
-        {/* Team Section */}
-        <div id="team">
-          <ErrorBoundary>
-            <TeamSection />
-          </ErrorBoundary>
+        {/* Content Rows */}
+        <div className="netflix-content">
+          <ContentRow 
+            title="Trending Now" 
+            projects={trendingProjects}
+            onProjectSelect={setSelectedProject}
+          />
+          
+          <ContentRow 
+            title="Action & Thrillers" 
+            projects={actionProjects}
+            onProjectSelect={setSelectedProject}
+          />
+          
+          <ContentRow 
+            title="Recently Added" 
+            projects={recentProjects}
+            onProjectSelect={setSelectedProject}
+          />
+          
+          <ContentRow 
+            title="Drama Collection" 
+            projects={dramaProjects}
+            onProjectSelect={setSelectedProject}
+          />
+          
+          <ContentRow 
+            title="All Projects" 
+            projects={projects}
+            onProjectSelect={setSelectedProject}
+          />
         </div>
 
-        {/* Contact Section */}
-        <div id="contact">
-          <ErrorBoundary>
-            <ContactSection />
-          </ErrorBoundary>
-        </div>
-      </motion.div>
+        {/* Project Modal */}
+        <ProjectModal 
+          project={selectedProject} 
+          onClose={() => setSelectedProject(null)} 
+        />
+      </div>
     </>
   );
 };

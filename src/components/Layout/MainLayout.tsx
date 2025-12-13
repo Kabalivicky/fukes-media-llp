@@ -1,13 +1,8 @@
-
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
-import DraggableThemeToggle from '@/components/DraggableThemeToggle';
 import { Toaster } from '@/components/ui/toaster';
-import GlobalScrollProgress from '@/components/GlobalScrollProgress';
-import StickyCTAs from '@/components/StickyCTAs';
-import CustomCursor from '@/components/CustomCursor';
 
 interface MainLayoutProps {
   children?: React.ReactNode;
@@ -15,21 +10,20 @@ interface MainLayoutProps {
 }
 
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
   return (
     <>
-      <GlobalScrollProgress />
-      <CustomCursor />
-      <div className="min-h-screen flex flex-col w-full relative cursor-none">
+      <div className="min-h-screen flex flex-col w-full relative bg-background">
         <Navbar />
-        <main className="flex-1 pt-16 w-full relative z-10" id="main-content">
+        <main className={`flex-1 w-full relative z-10 ${isHomePage ? '' : 'pt-16'}`} id="main-content">
           <div className="w-full max-w-none">
             {children || <Outlet />}
           </div>
         </main>
         <Footer />
         <ScrollToTop />
-        <StickyCTAs />
-        <DraggableThemeToggle />
         <Toaster />
       </div>
     </>
