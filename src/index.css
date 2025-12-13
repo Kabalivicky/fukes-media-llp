@@ -65,91 +65,69 @@ img, video, iframe {
 
 @layer base {
   :root {
-    /* Light mode - Modern Tech-Forward */
-    --background: 220 20% 97%;
-    --foreground: 220 20% 10%;
+    /* Netflix Dark Theme */
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
 
-    /* Fuke's Media Brand Colors - Vibrant Tech */
-    --primary: 0 84% 50%;          /* Brand Red - More vibrant */
+    /* Netflix Red as Primary */
+    --primary: 0 84% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 100% 55%;     /* Brand Blue - Electric */
+    /* Fuke's Brand Colors */
+    --secondary: 217 100% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 145 100% 40%;        /* Brand Green - Vibrant */
+    --accent: 145 100% 40%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 220 15% 92%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
 
     --destructive: 0 85% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 85%;
-    --input: 220 15% 90%;
-    --ring: 217 100% 55%;
+    --border: 0 0% 18%;
+    --input: 0 0% 15%;
+    --ring: 0 84% 50%;
 
-    /* Modern Tech Accent Colors */
-    --neon-cyan: 185 100% 50%;
-    --neon-purple: 270 100% 60%;
-    --neon-pink: 330 100% 60%;
-    --neon-orange: 25 100% 55%;
-
-    /* Glassmorphism */
-    --glass: 0 0% 100% / 0.7;
-    --glass-border: 0 0% 100% / 0.2;
-    --glass-shadow: 220 20% 10% / 0.1;
-
-    --radius: 0.75rem;
+    --radius: 0.25rem;
   }
 
   .dark {
-    /* Dark mode - Modern Tech-Forward */
-    --background: 230 25% 7%;
+    /* Same as root - Netflix is always dark */
+    --background: 0 0% 5%;
     --foreground: 0 0% 98%;
     
-    --card: 230 25% 10%;
+    --card: 0 0% 8%;
     --card-foreground: 0 0% 98%;
     
-    --popover: 230 25% 8%;
+    --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
     
-    /* Fuke's Media Brand Colors - Dark Mode Glow */
-    --primary: 0 84% 55%;          /* Brand Red - Glowing */
+    --primary: 0 84% 50%;
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 217 100% 60%;     /* Brand Blue - Electric */
+    --secondary: 217 100% 55%;
     --secondary-foreground: 0 0% 100%;
     
-    --accent: 145 100% 45%;        /* Brand Green - Neon */
+    --accent: 145 100% 40%;
     --accent-foreground: 0 0% 100%;
     
-    --muted: 230 20% 15%;
-    --muted-foreground: 220 10% 60%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
     
     --destructive: 0 85% 55%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 230 20% 18%;
-    --input: 230 20% 15%;
-    --ring: 217 100% 60%;
-
-    /* Modern Tech Accent Colors - Dark Mode */
-    --neon-cyan: 185 100% 55%;
-    --neon-purple: 270 100% 65%;
-    --neon-pink: 330 100% 65%;
-    --neon-orange: 25 100% 60%;
-
-    /* Glassmorphism - Dark Mode */
-    --glass: 230 25% 15% / 0.6;
-    --glass-border: 0 0% 100% / 0.1;
-    --glass-shadow: 0 0% 0% / 0.3;
+    --border: 0 0% 18%;
+    --input: 0 0% 15%;
+    --ring: 0 84% 50%;
   }
 
   * {
@@ -622,4 +600,164 @@ img, video, iframe {
 
 .blur-4xl {
   filter: blur(96px);
+}
+
+/* ============================================
+   NETFLIX-STYLE COMPONENTS
+   ============================================ */
+
+/* Main browse container */
+.netflix-browse {
+  @apply min-h-screen bg-background;
+}
+
+/* Netflix content area */
+.netflix-content {
+  @apply relative z-10 -mt-32 pb-20;
+}
+
+/* Billboard hero section */
+.billboard {
+  @apply relative w-full h-[85vh] min-h-[500px] max-h-[900px] overflow-hidden;
+}
+
+.billboard-gradient {
+  background: linear-gradient(
+    to right,
+    hsl(var(--background)) 0%,
+    transparent 50%
+  ),
+  linear-gradient(
+    to top,
+    hsl(var(--background)) 0%,
+    transparent 40%
+  );
+}
+
+/* Content row styles */
+.content-row {
+  @apply relative px-4 md:px-12 mb-8;
+}
+
+.content-row-title {
+  @apply text-lg md:text-xl font-semibold text-foreground mb-4;
+}
+
+.content-slider {
+  @apply flex gap-2 md:gap-3 overflow-x-auto scrollbar-hide pb-4;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Netflix card - poster style */
+.netflix-card-poster {
+  @apply relative flex-shrink-0 cursor-pointer overflow-hidden rounded-sm;
+  width: 160px;
+  height: 240px;
+  transition: transform 0.3s ease, z-index 0s 0.3s;
+}
+
+@media (min-width: 640px) {
+  .netflix-card-poster {
+    width: 180px;
+    height: 270px;
+  }
+}
+
+@media (min-width: 768px) {
+  .netflix-card-poster {
+    width: 200px;
+    height: 300px;
+  }
+}
+
+.netflix-card-poster:hover {
+  z-index: 10;
+  transition: transform 0.3s ease, z-index 0s 0s;
+}
+
+/* Netflix card - landscape */
+.netflix-card {
+  @apply relative flex-shrink-0 cursor-pointer overflow-hidden rounded-sm;
+  aspect-ratio: 16 / 9;
+  transition: transform 0.3s ease, z-index 0s 0.3s;
+}
+
+.netflix-card:hover {
+  z-index: 10;
+  transition: transform 0.3s ease, z-index 0s 0s;
+}
+
+/* Card info overlay */
+.card-info {
+  @apply absolute inset-0;
+  background: linear-gradient(
+    to top,
+    hsl(var(--background)) 0%,
+    hsl(var(--background) / 0.8) 30%,
+    transparent 100%
+  );
+}
+
+/* Shimmer loading effect */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 0%,
+    hsl(var(--muted-foreground) / 0.1) 50%,
+    hsl(var(--muted)) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Netflix-style buttons */
+.btn-netflix-primary {
+  @apply inline-flex items-center gap-2 px-6 py-2 rounded-sm font-semibold text-sm;
+  @apply bg-white text-black hover:bg-white/80 transition-colors;
+}
+
+.btn-netflix-secondary {
+  @apply inline-flex items-center gap-2 px-6 py-2 rounded-sm font-semibold text-sm;
+  @apply bg-muted/80 text-white border border-border hover:bg-muted transition-colors;
+}
+
+.btn-netflix-icon {
+  @apply w-10 h-10 rounded-full border border-white/50 flex items-center justify-center;
+  @apply text-white hover:border-white hover:bg-white/10 transition-all;
+}
+
+/* Project modal overlay */
+.modal-overlay {
+  @apply fixed inset-0 z-50 bg-black/80 backdrop-blur-sm;
+}
+
+.modal-content {
+  @apply fixed left-1/2 top-1/2 z-50 w-full max-w-4xl -translate-x-1/2 -translate-y-1/2;
+  @apply bg-card rounded-lg overflow-hidden shadow-2xl;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Netflix navbar */
+.netflix-nav {
+  @apply fixed top-0 left-0 right-0 z-50 transition-all duration-300;
+}
+
+.netflix-nav-scrolled {
+  @apply bg-background/95 backdrop-blur-sm;
+}
+
+.netflix-nav-transparent {
+  background: linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 100%);
 }

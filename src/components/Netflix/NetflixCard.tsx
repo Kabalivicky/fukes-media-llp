@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Info, Star } from 'lucide-react';
+import { Play, Plus, ThumbsUp, ChevronDown, Star } from 'lucide-react';
 import { Project } from '@/components/ProjectsData';
 
 interface NetflixCardProps {
@@ -19,12 +19,14 @@ const NetflixCard = ({ project, variant = 'poster', onSelect }: NetflixCardProps
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => onSelect?.(project)}
-      whileHover={{ scale: variant === 'poster' ? 1.05 : 1.1 }}
-      transition={{ duration: 0.3, delay: 0.1 }}
+      whileHover={{ scale: 1.08, zIndex: 10 }}
+      transition={{ duration: 0.2 }}
     >
       {/* Image */}
-      <div className="absolute inset-0 bg-muted">
-        {!imageLoaded && <div className="absolute inset-0 shimmer" />}
+      <div className="absolute inset-0 bg-gray-900">
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-gray-800 animate-pulse" />
+        )}
         <img
           src={project.poster}
           alt={project.title}
@@ -36,45 +38,74 @@ const NetflixCard = ({ project, variant = 'poster', onSelect }: NetflixCardProps
         />
       </div>
 
-      {/* Hover overlay */}
+      {/* Hover overlay - Netflix style expanded card */}
       <motion.div
-        className="card-info flex flex-col justify-end p-3"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 1 : 0 }}
+        className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/90 to-transparent"
+        initial={{ opacity: 0, height: '0%' }}
+        animate={{ 
+          opacity: isHovered ? 1 : 0,
+          height: isHovered ? '100%' : '0%'
+        }}
         transition={{ duration: 0.2 }}
       >
-        {/* Title */}
-        <h3 className="font-display text-lg md:text-xl text-white leading-tight mb-1">
-          {project.title}
-        </h3>
+        <div className="absolute bottom-0 left-0 right-0 p-3">
+          {/* Action buttons */}
+          <div className="flex items-center gap-2 mb-2">
+            <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-200 transition-colors">
+              <Play className="w-4 h-4 text-black fill-black ml-0.5" />
+            </button>
+            <button className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:border-white transition-colors">
+              <Plus className="w-4 h-4 text-white" />
+            </button>
+            <button className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:border-white transition-colors">
+              <ThumbsUp className="w-4 h-4 text-white" />
+            </button>
+            <button 
+              className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:border-white transition-colors ml-auto"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelect?.(project);
+              }}
+            >
+              <ChevronDown className="w-4 h-4 text-white" />
+            </button>
+          </div>
 
-        {/* Meta info */}
-        <div className="flex items-center gap-2 text-xs text-white/80 mb-2">
-          <span className="flex items-center gap-1">
-            <Star className="w-3 h-3 text-primary fill-primary" />
-            {project.rating}
-          </span>
-          <span className="text-white/50">•</span>
-          <span>{project.year}</span>
-          <span className="text-white/50">•</span>
-          <span className="text-white/70">{project.genre}</span>
-        </div>
+          {/* Title */}
+          <h3 className="font-semibold text-white text-sm leading-tight mb-1 line-clamp-1">
+            {project.title}
+          </h3>
 
-        {/* Action buttons */}
-        <div className="flex items-center gap-2">
-          <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-white/90 transition-colors">
-            <Play className="w-4 h-4 text-black fill-black" />
-          </button>
-          <button className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center hover:border-white hover:bg-white/10 transition-all">
-            <Info className="w-4 h-4 text-white" />
-          </button>
+          {/* Meta info */}
+          <div className="flex items-center gap-2 text-xs">
+            <span className="flex items-center gap-0.5 text-green-500 font-semibold">
+              <Star className="w-3 h-3 fill-green-500" />
+              {project.rating}
+            </span>
+            <span className="text-gray-400">{project.year}</span>
+            <span className="px-1 py-0.5 border border-gray-500 text-gray-400 text-[10px]">
+              HD
+            </span>
+          </div>
+
+          {/* Genre */}
+          <div className="flex items-center gap-1 mt-1.5 text-xs text-gray-300">
+            <span>{project.genre}</span>
+          </div>
         </div>
       </motion.div>
 
       {/* Status badge for in-production projects */}
       {project.status === 'in-production' && (
-        <div className="absolute top-2 left-2 px-2 py-0.5 bg-primary text-white text-[10px] font-medium rounded">
-          IN PRODUCTION
+        <div className="absolute top-2 left-2 px-2 py-0.5 bg-primary text-white text-[10px] font-semibold rounded">
+          COMING SOON
+        </div>
+      )}
+
+      {/* Netflix "N" badge for featured */}
+      {project.rating >= 9 && (
+        <div className="absolute top-2 right-2 w-5 h-5 bg-primary rounded-sm flex items-center justify-center">
+          <span className="text-white text-xs font-bold">N</span>
         </div>
       )}
     </motion.div>
