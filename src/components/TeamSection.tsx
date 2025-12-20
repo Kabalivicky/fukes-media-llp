@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import SectionTitle from '@/components/SectionTitle';
 import FadeInOnScroll from '@/components/FadeInOnScroll';
-import { ArrowRight, Linkedin, Mail, Phone } from 'lucide-react';
+import { ArrowRight, Linkedin, Mail, Phone, User } from 'lucide-react';
 
 interface TeamMember {
   name: string;
@@ -11,7 +11,6 @@ interface TeamMember {
   bio: string;
   brandColor: string;
   initials: string;
-  imageUrl: string;
   social?: {
     linkedin?: string;
     email?: string;
@@ -24,63 +23,60 @@ const TeamSection = () => {
 
   const teamMembers: TeamMember[] = [
     {
-      name: 'Vikram A',
+      name: 'Vikram',
       role: 'Project Management',
-      bio: '',
-      brandColor: '#0071CE',
+      bio: 'With extensive experience in VFX project coordination, Vikram ensures that all our projects are delivered on time and within budget. His exceptional organizational skills and attention to detail help maintain the highest standards of quality.',
+      brandColor: '#0057B7',
       initials: 'VA',
-      imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram&backgroundColor=0071CE',
       social: {
-        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
-        email: 'contact@fukesmedia.com'
+        linkedin: 'https://linkedin.com/in/vikram',
+        email: 'vikram@fukesmedia.com'
       }
     },
     {
-      name: 'Arjun R',
+      name: 'Arjun',
       role: 'Production Head',
-      bio: '',
-      brandColor: '#BE1E2D',
+      bio: 'As our Production Head, Arjun oversees all creative and technical aspects of our VFX productions. With his background in both film and technology, he bridges the gap between creative vision and technical execution.',
+      brandColor: '#D50032',
       initials: 'AR',
-      imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=BE1E2D',
       social: {
-        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
-        email: 'contact@fukesmedia.com'
+        linkedin: 'https://linkedin.com/in/arjun',
+        email: 'arjun@fukesmedia.com',
+        phone: '+91 98765 43210'
       }
     },
     {
-      name: 'Harshith Kulai',
+      name: 'Harshith',
       role: 'Creative Director',
-      bio: '',
-      brandColor: '#00A641',
+      bio: 'Harshith brings creative vision and artistic excellence to our projects. With a keen eye for visual storytelling, he ensures all VFX elements enhance the narrative while maintaining the highest aesthetic standards.',
+      brandColor: '#009639',
       initials: 'HA',
-      imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harshith&backgroundColor=00A641',
       social: {
-        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
-        email: 'contact@fukesmedia.com'
+        linkedin: 'https://linkedin.com/in/harshith',
+        email: 'harshith@fukesmedia.com'
       }
     },
     {
-      name: 'Sai Prasad V',
+      name: 'Sai Prasad',
       role: 'Operational Manager',
-      bio: '',
+      bio: 'Sai Prasad optimizes our workflow processes and resource allocation. His systematic approach to operations ensures smooth collaboration between departments and maximizes productivity across all projects.',
       brandColor: '#00BFFF',
       initials: 'SP',
-      imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SaiPrasad&backgroundColor=00BFFF',
       social: {
-        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
-        email: 'contact@fukesmedia.com'
+        linkedin: 'https://linkedin.com/in/saiprasad',
+        email: 'saiprasad@fukesmedia.com',
+        phone: '+91 97654 32109'
       }
     },
     {
-      name: 'Sandesh Naik',
+      name: 'Sandesh',
       role: 'Accounts & Financial Head',
-      bio: '',
+      bio: 'Sandesh manages our financial planning and reporting with precision. His expertise in budgeting for VFX productions helps us deliver exceptional results while maintaining financial efficiency.',
       brandColor: '#FFCC00',
       initials: 'SA',
-      imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sandesh&backgroundColor=FFCC00',
       social: {
-        linkedin: 'https://www.linkedin.com/company/fukesmedia/',
-        email: 'contact@fukesmedia.com'
+        linkedin: 'https://linkedin.com/in/sandesh',
+        email: 'sandesh@fukesmedia.com'
       }
     }
   ];
@@ -104,10 +100,8 @@ const TeamSection = () => {
           {teamMembers.map((member, index) => (
             <FadeInOnScroll key={index} delay={index * 100}>
               <div 
-                className={`glass rounded-xl p-8 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-2xl border-2 ${
-                  activeIndex === index 
-                    ? 'scale-105 shadow-2xl border-primary/50' 
-                    : 'hover:scale-102 border-transparent hover:border-primary/20'
+                className={`glass rounded-xl p-8 transition-all duration-300 cursor-pointer ${
+                  activeIndex === index ? 'scale-105 shadow-lg' : 'hover:scale-102'
                 }`}
                 onClick={() => handleClick(index)}
                 onKeyDown={(e) => {
@@ -123,16 +117,16 @@ const TeamSection = () => {
               >
                 <div className="flex flex-col items-center text-center">
                   <div 
-                    className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 shadow-lg relative"
+                    className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 shadow-lg relative flex items-center justify-center text-white font-bold text-2xl"
                     style={{ 
+                      backgroundColor: member.brandColor,
                       borderColor: `${member.brandColor}30`
                     }}
                   >
-                    <img 
-                      src={member.imageUrl} 
-                      alt={`${member.name} - ${member.role}`}
-                      className="w-full h-full object-cover"
-                    />
+                    <User className="w-12 h-12" />
+                    <div className="absolute bottom-2 right-2 text-xs font-bold">
+                      {member.initials}
+                    </div>
                   </div>
                   
                   <h3 className="text-xl font-bold mb-1">{member.name}</h3>

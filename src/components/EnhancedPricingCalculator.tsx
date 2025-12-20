@@ -422,7 +422,8 @@ const EnhancedPricingCalculator = () => {
           description: "You can now share it with your team or clients",
         });
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('Failed to copy quote: ', err);
         toast({
           title: "Failed to copy quote",
           description: "Please try again or download the PDF",
@@ -622,7 +623,7 @@ const EnhancedPricingCalculator = () => {
                               <Badge className="ml-1 bg-amber-500">+25%</Badge>
                             }
                             {speed === 'rush' && 
-                              <Badge className="ml-1 bg-destructive">+50%</Badge>
+                              <Badge className="ml-1 bg-red-500">+50%</Badge>
                             }
                           </Button>
                         ))}

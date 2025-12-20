@@ -1,340 +1,345 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Play, ArrowRight, Film, Palette, Sparkles, Users, Calendar, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import SEOHelmet from '@/components/SEOHelmet';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
 
-interface NewsItem {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  category: string;
-  published_at: string;
-  image_url: string | null;
-}
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import HeroSection from '@/components/HeroSection';
+import ServicesSection from '@/components/ServicesSection';
+import PricingCalculator from '@/components/PricingCalculator';
+import PortfolioSection from '@/components/PortfolioSection';
+import TeamSection from '@/components/TeamSection';
+import CareersSection from '@/components/CareersSection';
+import IndustryResourcesSection from '@/components/IndustryResourcesSection';
+import ContactSection from '@/components/ContactSection';
+import SEOHelmet from '@/components/SEOHelmet';
+import SectionTitle from '@/components/SectionTitle';
+import AnimatedLogo from '@/components/AnimatedLogo';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import EnhancedModularInfo from '@/components/EnhancedModularInfo';
+import useScrollSync from '@/hooks/useScrollSync';
+
+// Animation variants for scroll-triggered animations
+const fadeInUpVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.8,
+      ease: "easeOut"
+    }
+  }
+};
 
 const Home = () => {
-  const [news, setNews] = useState<NewsItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  // State for scroll progress
+  const [scrollProgress, setScrollProgress] = useState(0);
+  
+  // Use our custom hook for scroll sync
+  useScrollSync({ offset: 80 });
+  
+  // Create refs for the sections to scroll to
+  const sectionsRef = useRef<{ [key: string]: HTMLDivElement | null }>({
+    services: null,
+    portfolio: null,
+    team: null,
+    careers: null,
+    contact: null
+  });
 
+  // Parallax scroll effects
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 1000], [0, -150]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, -50]);
+  const opacity = useTransform(scrollY, [0, 200, 300], [1, 0.5, 0]);
+
+  // Handle scroll events to update animation values with performance optimization
   useEffect(() => {
-    fetchNews();
+    const handleScroll = () => {
+      // Use requestAnimationFrame for better performance
+      window.requestAnimationFrame(() => {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
+        setScrollProgress(progress);
+      });
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  const fetchNews = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('news')
-        .select('id, title, slug, excerpt, category, published_at, image_url')
-        .eq('published', true)
-        .order('published_at', { ascending: false })
-        .limit(6);
-
-      if (error) throw error;
-      setNews(data || []);
-    } catch (error) {
-      console.error('Error fetching news:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const services = [
-    {
-      icon: Film,
-      title: 'CGI & VFX',
-      description: 'Compositing, Rotoscoping, Matte Painting, 3D Animation & FX',
-      link: '/services'
-    },
-    {
-      icon: Palette,
-      title: 'Creative Services',
-      description: 'Motion Graphics, Video Editing, Title Design & Digital Marketing',
-      link: '/services'
-    },
-    {
-      icon: Sparkles,
-      title: 'Digital Intermediate',
-      description: 'Color Grading, HDR, Look Development & Final Delivery',
-      link: '/services'
-    }
-  ];
-
+  // SEO Structured Data
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Fuke's Media",
     "url": "https://fukes-media.com",
     "logo": "/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png",
-    "description": "Professional VFX Studio delivering exceptional visual effects and creative solutions",
+    "description": "AI-Driven VFX & Creative Studio delivering exceptional visual effects and creative solutions",
+    "sameAs": [
+      "https://twitter.com/fukesmedia",
+      "https://www.linkedin.com/company/fukes-media",
+      "https://www.instagram.com/fukesmedia"
+    ]
   };
 
   return (
     <>
       <SEOHelmet 
-        title="Fuke's Media LLP - Professional VFX Studio"
-        description="Professional VFX studio delivering cutting-edge visual effects, CGI, color grading, and creative services for film and television."
-        keywords="VFX studio, visual effects, CGI, color grading, post-production, film VFX, Fuke's Media"
+        title="Fuke's Media LLP - Award-Winning AI-Driven VFX Studio"
+        description="Award-caliber VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects, AI-assisted production, and innovative storytelling solutions."
+        keywords="award-winning VFX, AI-driven visual effects, cinematic VFX, neural rendering, machine learning VFX, creative studio, film production, Fuke's Media, AI assistant"
         canonical="https://fukes-media.com"
         structuredData={structuredData}
       />
 
-      <div className="min-h-screen bg-background">
-        <Navbar />
+      <div className="relative min-h-screen w-full text-foreground overflow-x-hidden">
+        {/* Floating elements in background with will-change for better performance */}
+        <div className="fixed inset-0 -z-10 w-full" aria-hidden="true">
+          <motion.div 
+            className="absolute top-1/4 right-[10%] w-64 h-64 rounded-full bg-fukes-blue/10 blur-[100px]"
+            style={{ y: y1, willChange: 'transform' }}
+          />
+          <motion.div 
+            className="absolute top-[60%] left-[5%] w-72 h-72 rounded-full bg-fukes-red/10 blur-[120px]"
+            style={{ y: y2, willChange: 'transform' }}
+          />
+          <motion.div 
+            className="absolute top-[30%] left-[20%] w-48 h-48 rounded-full bg-fukes-green/10 blur-[80px]"
+            animate={{ 
+              x: [0, 30, 0], 
+              y: [0, -20, 0]
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+            style={{ willChange: 'transform' }}
+          />
+        </div>
         
-        {/* Hero Section */}
-        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/10" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
+        {/* Main Content with Motion Effects */}
+        <main id="main-content" className="relative z-10">
+          {/* Animated logo that follows scroll */}
+          <motion.div 
+            className="hidden md:block fixed top-20 right-[5%] z-10"
+            style={{ 
+              opacity, 
+              scale: useTransform(scrollY, [0, 300], [1, 0.8]),
+              willChange: 'transform, opacity' 
+            }}
+          >
+            <AnimatedLogo size="md" />
+          </motion.div>
+
+          <ErrorBoundary>
+            <HeroSection />
+          </ErrorBoundary>
           
-          {/* Animated particles/grid effect */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--primary)/0.3) 1px, transparent 0)`,
-              backgroundSize: '40px 40px'
-            }} />
+          <div id="services" ref={(el) => sectionsRef.current.services = el}>
+            <ErrorBoundary>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeInUpVariants}
+              >
+                <ServicesSection />
+              </motion.div>
+            </ErrorBoundary>
           </div>
-
-          <div className="container relative z-10 px-4 py-20">
+          
+          <ErrorBoundary>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center max-w-4xl mx-auto"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
             >
-              <Badge variant="outline" className="mb-6 border-primary/50 text-primary">
-                Post-Production Excellence
-              </Badge>
-              
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight">
-                <span className="text-foreground">Crafting Visual</span>
-                <br />
-                <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                  Masterpieces
-                </span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-                From blockbuster films to creative commercials, we deliver world-class VFX, 
-                color grading, and post-production services that bring your vision to life.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild className="group">
-                  <Link to="/portfolio">
-                    <Play className="mr-2 h-5 w-5" />
-                    View Our Work
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link to="/contact">
-                    Start a Project
-                  </Link>
-                </Button>
-                {!user && (
-                  <Button size="lg" variant="ghost" asChild>
-                    <Link to="/auth">
-                      <Users className="mr-2 h-4 w-4" />
-                      Sign In
-                    </Link>
-                  </Button>
-                )}
-              </div>
+              <EnhancedModularInfo />
             </motion.div>
+          </ErrorBoundary>
+          
+          <ErrorBoundary>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <PricingCalculator />
+            </motion.div>
+          </ErrorBoundary>
+          
+          <div id="portfolio" ref={(el) => sectionsRef.current.portfolio = el}>
+            <ErrorBoundary>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeInUpVariants}
+              >
+                <PortfolioSection />
+              </motion.div>
+            </ErrorBoundary>
           </div>
-        </section>
-
-        {/* Services Overview */}
-        <section className="py-20 px-4 bg-card/50">
-          <div className="container mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12"
+          
+          {/* Featured Content & Awards Section */}
+          <ErrorBoundary>
+            <motion.section
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+              className="py-20 px-4 bg-muted/20"
             >
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-                Our Services
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Comprehensive post-production solutions powered by cutting-edge technology
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {services.map((service, index) => (
-                <motion.div
-                  key={service.title}
+              <div className="container mx-auto">
+                <SectionTitle
+                  title="Award-Winning Excellence"
+                  subtitle="Recognition from industry leaders and creative festivals worldwide"
+                />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
+                  <motion.div 
+                    className="text-center p-6 rounded-lg bg-card/50 border border-primary/20 hover:border-primary/40 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="text-4xl font-display font-bold text-primary mb-2">15+</div>
+                    <p className="text-muted-foreground font-medium">International Awards</p>
+                    <p className="text-xs text-muted-foreground mt-1">Industry Recognition</p>
+                  </motion.div>
+                  <motion.div 
+                    className="text-center p-6 rounded-lg bg-card/50 border border-secondary/20 hover:border-secondary/40 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="text-4xl font-display font-bold text-secondary mb-2">500+</div>
+                    <p className="text-muted-foreground font-medium">Projects Completed</p>
+                    <p className="text-xs text-muted-foreground mt-1">Global Reach</p>
+                  </motion.div>
+                  <motion.div 
+                    className="text-center p-6 rounded-lg bg-card/50 border border-accent/20 hover:border-accent/40 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="text-4xl font-display font-bold text-accent mb-2">98%</div>
+                    <p className="text-muted-foreground font-medium">Client Satisfaction</p>
+                    <p className="text-xs text-muted-foreground mt-1">Proven Excellence</p>
+                  </motion.div>
+                </div>
+                
+                {/* Client Testimonials Carousel */}
+                <motion.div 
+                  className="mt-16 max-w-4xl mx-auto"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
                 >
-                  <Card className="h-full hover:border-primary/50 transition-colors group">
-                    <CardContent className="p-6">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                        <service.icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                      <p className="text-muted-foreground mb-4">{service.description}</p>
-                      <Link 
-                        to={service.link}
-                        className="text-primary hover:text-primary/80 inline-flex items-center text-sm font-medium"
-                      >
-                        Learn more
-                        <ChevronRight className="h-4 w-4 ml-1" />
-                      </Link>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="text-center mt-10">
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/services">
-                  View All Services
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Latest News Section */}
-        <section className="py-20 px-4">
-          <div className="container mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="flex items-center justify-between mb-12"
-            >
-              <div>
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">
-                  Latest Updates
-                </h2>
-                <p className="text-muted-foreground">
-                  News and announcements from Fuke's Media
-                </p>
-              </div>
-              <Button variant="ghost" asChild className="hidden md:flex">
-                <Link to="/news">
-                  View All
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </motion.div>
-
-            {loading ? (
-              <div className="grid md:grid-cols-3 gap-6">
-                {[1, 2, 3].map((i) => (
-                  <Card key={i} className="animate-pulse">
-                    <CardContent className="p-6">
-                      <div className="h-4 bg-muted rounded w-20 mb-4" />
-                      <div className="h-6 bg-muted rounded w-full mb-2" />
-                      <div className="h-4 bg-muted rounded w-3/4" />
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ) : news.length > 0 ? (
-              <div className="grid md:grid-cols-3 gap-6">
-                {news.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                  >
-                    <Card className="h-full hover:border-primary/50 transition-colors">
-                      <CardContent className="p-6">
-                        <div className="flex items-center gap-2 mb-3">
-                          <Badge variant="secondary" className="text-xs capitalize">
-                            {item.category}
-                          </Badge>
-                          <span className="text-xs text-muted-foreground flex items-center">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            {new Date(item.published_at).toLocaleDateString()}
-                          </span>
-                        </div>
-                        <h3 className="text-lg font-semibold mb-2 line-clamp-2">
-                          {item.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm line-clamp-3">
-                          {item.excerpt}
+                  <div className="text-center">
+                    <h3 className="text-2xl font-display font-bold mb-8">What Industry Leaders Say</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="p-6 bg-card rounded-lg border border-border/50">
+                        <p className="text-muted-foreground italic mb-4">
+                          "Fuke's Media's AI-driven approach revolutionized our post-production workflow. Their innovation is unmatched."
                         </p>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
+                        <div className="flex items-center">
+                          <div className="w-12 h-12 bg-primary/20 rounded-full mr-3" />
+                          <div>
+                            <p className="font-semibold">Sarah Chen</p>
+                            <p className="text-sm text-muted-foreground">Director, Quantum Films</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-6 bg-card rounded-lg border border-border/50">
+                        <p className="text-muted-foreground italic mb-4">
+                          "The quality and speed of delivery exceeded all expectations. True masters of their craft."
+                        </p>
+                        <div className="flex items-center">
+                          <div className="w-12 h-12 bg-secondary/20 rounded-full mr-3" />
+                          <div>
+                            <p className="font-semibold">Marcus Rodriguez</p>
+                            <p className="text-sm text-muted-foreground">Producer, Nova Entertainment</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
-            ) : (
-              <Card className="text-center py-12">
-                <CardContent>
-                  <p className="text-muted-foreground">No news available yet.</p>
-                </CardContent>
-              </Card>
-            )}
-
-            <div className="text-center mt-8 md:hidden">
-              <Button variant="outline" asChild>
-                <Link to="/news">
-                  View All News
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+            </motion.section>
+          </ErrorBoundary>
+          
+          <div id="team" ref={(el) => sectionsRef.current.team = el}>
+            <ErrorBoundary>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeInUpVariants}
+              >
+                <TeamSection />
+              </motion.div>
+            </ErrorBoundary>
+          </div>
+          
+          <div id="careers" ref={(el) => sectionsRef.current.careers = el}>
+            <ErrorBoundary>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeInUpVariants}
+              >
+                <CareersSection />
+              </motion.div>
+            </ErrorBoundary>
+          </div>
+          
+          <ErrorBoundary>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <IndustryResourcesSection />
+            </motion.div>
+          </ErrorBoundary>
+          
+          <div id="contact" ref={(el) => sectionsRef.current.contact = el}>
+            <ErrorBoundary>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeInUpVariants}
+              >
+                <ContactSection />
+              </motion.div>
+            </ErrorBoundary>
+          </div>
+          
+          {/* Enhanced progress indicator */}
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 hidden md:block">
+            <div className="h-1 w-60 bg-muted rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-gradient-to-r from-fukes-blue via-fukes-red to-fukes-green"
+                style={{ width: `${scrollProgress * 100}%`, willChange: 'width' }}
+                initial={{ width: '0%' }}
+                animate={{ width: `${scrollProgress * 100}%` }}
+                transition={{ type: 'spring', stiffness: 50 }}
+              />
+            </div>
+            
+            <div className="flex justify-between mt-2 text-xs text-muted-foreground">
+              <span>Top</span>
+              <span>Bottom</span>
             </div>
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
-          <div className="container mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center max-w-3xl mx-auto"
-            >
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-                Ready to Elevate Your Production?
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Let's discuss your project and create something extraordinary together.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild>
-                  <Link to="/contact">
-                    Get in Touch
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link to="/portfolio">
-                    Explore Portfolio
-                  </Link>
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        <Footer />
+        </main>
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import VFXIndustryInsights from '@/components/VFXIndustryInsights';
 import { Button } from '@/components/ui/button';
 import { Download, ArrowRight, FileText, PieChart, Globe } from 'lucide-react';
@@ -154,6 +155,8 @@ const VFXIndustryInsightsPage = () => {
           </div>
         </section>
       </main>
+      
+      <Footer />
     </div>
   );
 };

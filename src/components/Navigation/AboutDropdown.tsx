@@ -69,17 +69,19 @@ const AboutDropdown = () => {
           </ListItem>
           
           <ListItem 
-            href="/investors" 
+            href="/#investors" 
             title="Investors" 
             icon={<Zap className="mr-2 h-4 w-4" />}
+            onClick={(e) => handleAnchorClick(e, '/#investors', currentPath)}
           >
             Learn about our investment partners and funding initiatives
           </ListItem>
           
           <ListItem 
-            href="/careers" 
+            href="/#careers" 
             title="Careers" 
             icon={<ChevronRight className="mr-2 h-4 w-4" />}
+            onClick={(e) => handleAnchorClick(e, '/#careers', currentPath)}
           >
             Join our team and become part of the future of VFX
           </ListItem>

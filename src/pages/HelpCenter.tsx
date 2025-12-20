@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import HelpCategoryCard from '@/components/HelpCenter/HelpCategoryCard';
 import TopArticles from '@/components/HelpCenter/TopArticles';
 import { Link } from 'react-router-dom';
-import SEOHelmet from '@/components/SEOHelmet';
 
 const HelpCenter = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -131,11 +131,6 @@ const HelpCenter = () => {
 
   return (
     <div className="min-h-screen">
-      <SEOHelmet
-        title="Help Center - Fuke's Media Partner Resources"
-        description="Access comprehensive production guidelines, technical specifications, and resources for Fuke's Media partners. Find answers to your production and post-production questions."
-        keywords="production guidelines, VFX resources, post-production help, partner help center, technical specifications"
-      />
       <Navbar />
       
       {/* Hero section with search */}
@@ -221,6 +216,8 @@ const HelpCenter = () => {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </div>
   );
 };

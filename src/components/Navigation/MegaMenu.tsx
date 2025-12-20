@@ -76,6 +76,21 @@ const MegaMenu = () => {
             Portfolio
           </NavigationMenuLink>
         </NavigationMenuItem>
+
+        {/* Pricing */}
+        <NavigationMenuItem>
+          <NavigationMenuLink 
+            className={cn(
+              navigationMenuTriggerStyle(),
+              "cursor-pointer",
+              isLinkActive(currentPath, '/pricing') ? "text-primary font-medium" : ""
+            )}
+            onClick={() => handleNavigation('/pricing')}
+          >
+            <Calculator className="mr-2 h-4 w-4" />
+            Pricing
+          </NavigationMenuLink>
+        </NavigationMenuItem>
         
         {/* Contact */}
         <NavigationMenuItem>

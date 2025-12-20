@@ -113,7 +113,8 @@ const ExpandableInfoModules = () => {
     const hasAllSelections = modules.every(module => selectedOptions[module.id]);
     
     if (hasAllSelections) {
-      // Generate quote
+      // Simulate quote generation
+      console.log('Generating quote for:', selectedOptions);
       alert('Quote generated! A detailed proposal will be sent to your email.');
     } else {
       alert('Please select an option from each module to generate a quote.');

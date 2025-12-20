@@ -18,6 +18,7 @@ import priceRateCard from '@/assets/infographics/price-rate-card.png';
 import franceVfxSpotlight from '@/assets/infographics/france-vfx-spotlight.png';
 import egyptVfxSpotlight from '@/assets/infographics/egypt-vfx-spotlight.png';
 import animationCareerMap from '@/assets/infographics/animation-career-map.png';
+
 interface Resource {
   id: string;
   title: string;
@@ -26,77 +27,88 @@ interface Resource {
   image: string;
   type: 'infographic' | 'career-map' | 'pricing' | 'research';
 }
-const resources: Resource[] = [{
-  id: '1',
-  title: 'Film & TV Drama Career Map',
-  description: 'Comprehensive career pathway guide for film and television industry professionals',
-  category: 'Career Development',
-  image: filmTvCareerMap,
-  type: 'career-map'
-}, {
-  id: '2',
-  title: 'Animation Industry Career Map',
-  description: 'Complete career progression guide for animation industry roles and opportunities',
-  category: 'Career Development',
-  image: animationCareerMap,
-  type: 'career-map'
-}, {
-  id: '3',
-  title: 'VFX Careers & Opportunities',
-  description: 'Visual effects career paths, skills requirements, and industry insights',
-  category: 'Career Development',
-  image: vfxCareers,
-  type: 'infographic'
-}, {
-  id: '4',
-  title: 'Professional Rate Card',
-  description: 'Detailed pricing structure for VFX services across all departments and complexity levels',
-  category: 'Pricing & Services',
-  image: priceRateCard,
-  type: 'pricing'
-}, {
-  id: '5',
-  title: 'African VFX Market Analysis',
-  description: 'Comprehensive overview of the visual effects industry landscape across Africa',
-  category: 'Market Research',
-  image: africanVfxMarket,
-  type: 'research'
-}, {
-  id: '6',
-  title: 'France VFX Industry Spotlight',
-  description: 'In-depth analysis of the French visual effects market and opportunities',
-  category: 'Market Research',
-  image: franceVfxSpotlight,
-  type: 'research'
-}, {
-  id: '7',
-  title: 'Egypt VFX Market Overview',
-  description: 'Detailed examination of Egyptian VFX industry trends and ecosystem',
-  category: 'Market Research',
-  image: egyptVfxSpotlight,
-  type: 'research'
-}, {
-  id: '8',
-  title: 'Film & TV Production Guide',
-  description: 'Complete production pipeline and role definitions for film and television projects',
-  category: 'Production',
-  image: filmTvProduction,
-  type: 'infographic'
-}];
+
+const resources: Resource[] = [
+  {
+    id: '1',
+    title: 'Film & TV Drama Career Map',
+    description: 'Comprehensive career pathway guide for film and television industry professionals',
+    category: 'Career Development',
+    image: filmTvCareerMap,
+    type: 'career-map'
+  },
+  {
+    id: '2',
+    title: 'Animation Industry Career Map',
+    description: 'Complete career progression guide for animation industry roles and opportunities',
+    category: 'Career Development', 
+    image: animationCareerMap,
+    type: 'career-map'
+  },
+  {
+    id: '3',
+    title: 'VFX Careers & Opportunities',
+    description: 'Visual effects career paths, skills requirements, and industry insights',
+    category: 'Career Development',
+    image: vfxCareers,
+    type: 'infographic'
+  },
+  {
+    id: '4',
+    title: 'Professional Rate Card',
+    description: 'Detailed pricing structure for VFX services across all departments and complexity levels',
+    category: 'Pricing & Services',
+    image: priceRateCard,
+    type: 'pricing'
+  },
+  {
+    id: '5',
+    title: 'African VFX Market Analysis',
+    description: 'Comprehensive overview of the visual effects industry landscape across Africa',
+    category: 'Market Research',
+    image: africanVfxMarket,
+    type: 'research'
+  },
+  {
+    id: '6',
+    title: 'France VFX Industry Spotlight',
+    description: 'In-depth analysis of the French visual effects market and opportunities',
+    category: 'Market Research',
+    image: franceVfxSpotlight,
+    type: 'research'
+  },
+  {
+    id: '7',
+    title: 'Egypt VFX Market Overview',
+    description: 'Detailed examination of Egyptian VFX industry trends and ecosystem',
+    category: 'Market Research',
+    image: egyptVfxSpotlight,
+    type: 'research'
+  },
+  {
+    id: '8',
+    title: 'Film & TV Production Guide',
+    description: 'Complete production pipeline and role definitions for film and television projects',
+    category: 'Production',
+    image: filmTvProduction,
+    type: 'infographic'
+  }
+];
+
 const IndustryResourcesSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, {
-    once: true,
-    margin: "-50px"
-  });
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
+
   const categories = ['All', 'Career Development', 'Market Research', 'Pricing & Services', 'Production'];
-  const filteredResources = selectedCategory === 'All' ? resources : resources.filter(resource => resource.category === selectedCategory);
+  
+  const filteredResources = selectedCategory === 'All' 
+    ? resources 
+    : resources.filter(resource => resource.category === selectedCategory);
+
   const containerVariants = {
-    hidden: {
-      opacity: 0
-    },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
@@ -104,11 +116,9 @@ const IndustryResourcesSection = () => {
       }
     }
   };
+
   const itemVariants = {
-    hidden: {
-      y: 20,
-      opacity: 0
-    },
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
@@ -118,6 +128,7 @@ const IndustryResourcesSection = () => {
       }
     }
   };
+
   const getCategoryColor = (category: string) => {
     const colors = {
       'Career Development': 'bg-primary/10 text-primary border-primary/20',
@@ -127,81 +138,89 @@ const IndustryResourcesSection = () => {
     };
     return colors[category as keyof typeof colors] || 'bg-muted text-muted-foreground border-muted-foreground/20';
   };
+
   return (
-    <section className="py-20 bg-muted/20" ref={ref}>
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl font-display font-bold mb-4">Industry Resources</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Explore comprehensive guides, career maps, and industry insights for VFX professionals
-          </p>
-        </motion.div>
-
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          {categories.map((category) => (
-            <Badge
-              key={category}
-              variant={selectedCategory === category ? 'default' : 'outline'}
-              className="cursor-pointer hover:bg-primary/20 transition-colors px-4 py-2 text-sm"
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </Badge>
-          ))}
-        </div>
-
-        {/* Resources Grid */}
+    <section className="py-24 bg-gradient-to-b from-background via-background/50 to-muted/30">
+      <div className="container mx-auto px-6">
         <motion.div
           ref={ref}
-          variants={containerVariants}
           initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          animate={isInView ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="space-y-12"
         >
-          {filteredResources.map((resource) => (
-            <motion.div key={resource.id} variants={itemVariants}>
-              <Card className="h-full glass-card hover:shadow-2xl transition-all duration-300 overflow-hidden group">
-                <CardContent className="p-0">
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={resource.image}
+          {/* Header */}
+          <motion.div variants={itemVariants} className="text-center space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+              Industry Resources
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Comprehensive guides, market insights, and professional resources for the VFX and animation industry
+            </p>
+          </motion.div>
+
+          {/* Category Filter */}
+          <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-3">
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category)}
+                className="transition-all duration-300"
+              >
+                {category}
+              </Button>
+            ))}
+          </motion.div>
+
+          {/* Resources Grid */}
+          <motion.div 
+            variants={containerVariants}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            {filteredResources.map((resource) => (
+              <motion.div key={resource.id} variants={itemVariants}>
+                <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-card/50 backdrop-blur-sm overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img 
+                      src={resource.image} 
                       alt={resource.title}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button 
-                            size="sm" 
+                          <Button
+                            size="sm"
                             variant="secondary"
+                            className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30"
                             onClick={() => setSelectedResource(resource)}
                           >
-                            <Eye className="h-4 w-4 mr-1" />
-                            View
+                            <Eye className="w-4 h-4 mr-2" />
+                            Preview
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-                          <DialogHeader>
-                            <DialogTitle>{resource.title}</DialogTitle>
+                        <DialogContent className="max-w-6xl w-full h-[90vh] p-0">
+                          <DialogHeader className="p-6 pb-4">
+                            <DialogTitle className="flex items-center justify-between">
+                              {selectedResource?.title}
+                            </DialogTitle>
                           </DialogHeader>
-                          <img
-                            src={resource.image}
-                            alt={resource.title}
-                            className="w-full h-auto rounded-lg"
-                          />
-                          <p className="text-muted-foreground">{resource.description}</p>
+                          <div className="flex-1 overflow-auto px-6 pb-6">
+                            {selectedResource && (
+                              <img 
+                                src={selectedResource.image} 
+                                alt={selectedResource.title}
+                                className="w-full h-auto mx-auto"
+                              />
+                            )}
+                          </div>
                         </DialogContent>
                       </Dialog>
-                      
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         variant="secondary"
+                        className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30"
                         onClick={() => {
                           const link = document.createElement('a');
                           link.href = resource.image;
@@ -209,23 +228,42 @@ const IndustryResourcesSection = () => {
                           link.click();
                         }}
                       >
-                        <Download className="h-4 w-4 mr-1" />
+                        <Download className="w-4 h-4 mr-2" />
                         Download
                       </Button>
                     </div>
                   </div>
-                  
-                  <div className="p-4">
-                    <Badge variant="outline" className={`mb-2 text-xs ${getCategoryColor(resource.category)}`}>
-                      {resource.category}
-                    </Badge>
-                    <h3 className="font-semibold mb-2 text-sm line-clamp-2">{resource.title}</h3>
-                    <p className="text-xs text-muted-foreground line-clamp-2">{resource.description}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                  <CardContent className="p-6">
+                    <div className="space-y-3">
+                      <Badge className={`${getCategoryColor(resource.category)} text-xs`}>
+                        {resource.category}
+                      </Badge>
+                      <h3 className="font-semibold text-lg leading-tight group-hover:text-primary transition-colors">
+                        {resource.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {resource.description}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Call to Action */}
+          <motion.div variants={itemVariants} className="text-center space-y-6 pt-12">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold">Looking for Custom Resources?</h3>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Need industry-specific guides, custom rate cards, or market research for your region? 
+                Contact us for personalized consulting and resource development.
+              </p>
+            </div>
+            <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
+              Request Custom Resources
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
     </section>

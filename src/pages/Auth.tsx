@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Lock, Mail, User, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
@@ -316,6 +317,8 @@ const Auth = () => {
             </Card>
           </motion.div>
         </main>
+
+        <Footer />
       </div>
     </>
   );

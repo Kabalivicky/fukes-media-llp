@@ -118,6 +118,7 @@ const AIChat = () => {
       
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
+      console.error('Error fetching AI response:', error);
       toast({
         title: "Communication Error",
         description: "We're having trouble connecting to our AI system. Please try again later.",

@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Headset, Camera, Play, Maximize, RotateCcw } from 'lucide-react';
 import { Mesh } from 'three';
-import SEOHelmet from '@/components/SEOHelmet';
 
 interface ShowroomItemProps {
   position: [number, number, number];
@@ -129,11 +128,6 @@ const ARVRShowroom = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEOHelmet
-        title="AR/VR Showroom - Explore Fuke's Media Virtual Production Facilities"
-        description="Take an immersive 3D tour of Fuke's Media state-of-the-art facilities. Explore LED wall studios, VR capture stages, and render farms in virtual reality."
-        keywords="VR showroom, virtual tour, 3D facility tour, LED wall studio, VR production, render farm, immersive experience"
-      />
       {/* Header */}
       <div className="container mx-auto px-4 py-8">
         <motion.div

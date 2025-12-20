@@ -1,10 +1,10 @@
 
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import CategoryPage from '@/components/HelpCenter/CategoryPage';
 import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import BackgroundEffect from '@/components/BackgroundEffect';
-import SEOHelmet from '@/components/SEOHelmet';
 
 const HelpCenterCategory = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
@@ -162,11 +162,6 @@ const HelpCenterCategory = () => {
 
   return (
     <div className="min-h-screen">
-      <SEOHelmet
-        title={`${categoryData.title} - Fuke's Media Help Center`}
-        description={`${categoryData.description}. Access comprehensive resources and guidelines for ${categoryData.title.toLowerCase()}.`}
-        keywords={`${categoryData.title}, VFX production, ${categoryId || 'resources'}, technical guidelines`}
-      />
       <BackgroundEffect />
       <Navbar />
       
@@ -201,6 +196,8 @@ const HelpCenterCategory = () => {
       <section className="bg-background">
         <CategoryPage categoryData={categoryData} />
       </section>
+      
+      <Footer />
     </div>
   );
 };

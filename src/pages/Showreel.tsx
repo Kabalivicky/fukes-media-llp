@@ -34,7 +34,7 @@ const Showreel = () => {
       techniques: ["Volumetric Rendering", "Procedural Animation", "Real-time VFX"]
     },
     {
-      title: "Featured Projects",
+      title: "Award-Winning Projects",
       duration: "0:46 - 1:00",
       description: "Highlights from our most celebrated and recognized work",
       techniques: ["Feature Films", "Commercials", "Music Videos"]
@@ -66,7 +66,7 @@ const Showreel = () => {
     "@context": "https://schema.org",
     "@type": "VideoObject",
     "name": "Fuke's Media Official Showreel 2024",
-    "description": "Professional VFX showreel featuring AI-driven visual effects and cinematic storytelling",
+    "description": "Award-winning VFX showreel featuring AI-driven visual effects and cinematic storytelling",
     "duration": "PT1M",
     "uploadDate": "2024-01-01",
     "creator": {
@@ -79,8 +79,8 @@ const Showreel = () => {
     <>
       <SEOHelmet
         title="Official Showreel 2024 - Fuke's Media VFX Excellence"
-        description="Watch our professional showreel featuring breakthrough AI-driven VFX, cinematic storytelling, and technical innovation. 60 seconds of pure visual excellence."
-        keywords="VFX showreel, visual effects demo, AI-driven VFX, professional projects, cinematic VFX"
+        description="Watch our award-winning showreel featuring breakthrough AI-driven VFX, cinematic storytelling, and technical innovation. 60 seconds of pure visual excellence."
+        keywords="VFX showreel, visual effects demo, AI-driven VFX, award-winning projects, cinematic VFX"
         canonical="https://fukes-media.com/showreel"
         structuredData={structuredData}
       />
@@ -105,7 +105,7 @@ const Showreel = () => {
 
             <SectionTitle
               title="Official Showreel 2024"
-              subtitle="60 seconds of pure visual excellence showcasing our professional work"
+              subtitle="60 seconds of pure visual excellence showcasing our award-winning work"
             />
 
             {/* Main Video Player */}
@@ -115,76 +115,37 @@ const Showreel = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="max-w-6xl mx-auto mt-12"
             >
-              <Card className="overflow-hidden border-2 border-primary/20 bg-black">
-                <div className="relative aspect-video">
-                  {/* Video Player - Replace src with your video URL */}
-                  <video
-                    className="w-full h-full object-cover"
-                    controls
-                    controlsList="nodownload"
-                    preload="metadata"
-                    poster="/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png"
-                  >
-                    <source src="YOUR_VIDEO_URL_HERE.mp4" type="video/mp4" />
-                    <source src="YOUR_VIDEO_URL_HERE.webm" type="video/webm" />
-                    Your browser does not support the video tag.
-                  </video>
-
-                  {/* Fallback: Google Drive Embed */}
-                  {/* Uncomment and update the src with your Google Drive embed link */}
-                  {/* 
-                  <iframe
-                    src="https://drive.google.com/file/d/YOUR_FILE_ID/preview"
-                    className="w-full h-full"
-                    allow="autoplay"
-                    allowFullScreen
-                  />
-                  */}
+              <Card className="overflow-hidden border-2 border-primary/20">
+                <div className="relative aspect-video bg-black">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 flex items-center justify-center">
+                    <Button
+                      size="lg"
+                      className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-8"
+                    >
+                      <Play className="h-12 w-12 ml-2" />
+                    </Button>
+                  </div>
                   
-                  {/* Info Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pointer-events-none">
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  {/* Video Controls Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                    <div className="flex justify-between items-center text-white">
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
-                          Fuke's Media - VFX & CGI Showreel 2024
-                        </h3>
-                        <p className="text-white/80 text-sm sm:text-base">Professional visual effects showcase</p>
+                        <h3 className="text-2xl font-display font-bold">Fuke's Media - Official Showreel 2024</h3>
+                        <p className="text-white/80">Award-caliber VFX excellence in 60 seconds</p>
                       </div>
-                      <div className="flex gap-2 pointer-events-auto">
-                        <Button size="sm" variant="secondary" className="text-xs sm:text-sm">
-                          <Share2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="secondary">
+                          <Download className="h-4 w-4 mr-2" />
+                          Download
+                        </Button>
+                        <Button size="sm" variant="secondary">
+                          <Share2 className="h-4 w-4 mr-2" />
                           Share
                         </Button>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Video Information */}
-                <div className="p-6 bg-background/50 backdrop-blur-sm border-t border-border/50">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                    <div>
-                      <p className="text-2xl font-bold text-primary">4K</p>
-                      <p className="text-xs text-muted-foreground">Ultra HD Quality</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-secondary">60s</p>
-                      <p className="text-xs text-muted-foreground">Duration</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-accent">2024</p>
-                      <p className="text-xs text-muted-foreground">Latest Work</p>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-
-              {/* Instructions for updating video */}
-              <Card className="mt-4 p-4 bg-muted/50 border-dashed">
-                <p className="text-sm text-muted-foreground text-center">
-                  <strong>To add your showreel:</strong> Upload your video to a hosting service (Vimeo, YouTube, or your server), 
-                  then update the video src in the code. For Google Drive, make the file public and use the embed URL format.
-                </p>
               </Card>
             </motion.div>
 
@@ -276,70 +237,17 @@ const Showreel = () => {
               </Card>
             </motion.div>
 
-            {/* Service Category Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              className="mt-16"
-            >
-              <h3 className="text-2xl font-display font-bold text-center mb-8">Explore Service Showreels</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                <Link to="/showreel/cgi-vfx">
-                  <Card className="text-center border-border/50 hover:border-primary/50 transition-all hover:scale-105 cursor-pointer">
-                    <CardContent className="p-8">
-                      <h4 className="font-display font-bold text-xl mb-2 text-primary">CGI & VFX Solutions</h4>
-                      <p className="text-muted-foreground text-sm mb-4">
-                        Compositing, 3D animation, simulations, and visual effects
-                      </p>
-                      <Button variant="outline" className="w-full">
-                        View VFX Showreel
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
-
-                <Link to="/showreel/creative">
-                  <Card className="text-center border-border/50 hover:border-accent/50 transition-all hover:scale-105 cursor-pointer">
-                    <CardContent className="p-8">
-                      <h4 className="font-display font-bold text-xl mb-2 text-accent">Creative Services</h4>
-                      <p className="text-muted-foreground text-sm mb-4">
-                        Design, motion graphics, video editing, and branding
-                      </p>
-                      <Button variant="outline" className="w-full">
-                        View Creative Showreel
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
-
-                <Link to="/showreel/di">
-                  <Card className="text-center border-border/50 hover:border-secondary/50 transition-all hover:scale-105 cursor-pointer">
-                    <CardContent className="p-8">
-                      <h4 className="font-display font-bold text-xl mb-2 text-secondary">DI Services</h4>
-                      <p className="text-muted-foreground text-sm mb-4">
-                        Color grading, HDR, look development, and finishing
-                      </p>
-                      <Button variant="outline" className="w-full">
-                        View DI Showreel
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-            </motion.div>
-
             {/* Call to Action */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
               className="text-center mt-16"
             >
               <Card className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20 max-w-3xl mx-auto">
                 <h3 className="text-2xl font-display font-bold mb-4">Inspired by Our Work?</h3>
                 <p className="text-muted-foreground mb-6">
-                  Let's create something extraordinary together. Experience the future of VFX with our professional team.
+                  Let's create something extraordinary together. Experience the future of VFX with our award-winning team.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/contact">

@@ -160,28 +160,26 @@ const GamifiedLearning = () => {
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
-      case 'common': return 'text-muted-foreground';
-      case 'rare': return 'text-secondary';
-      case 'epic': return 'text-accent';
-      case 'legendary': return 'text-primary';
-      default: return 'text-muted-foreground';
+      case 'common': return 'text-gray-600';
+      case 'rare': return 'text-blue-600';
+      case 'epic': return 'text-purple-600';
+      case 'legendary': return 'text-yellow-600';
+      default: return 'text-gray-600';
     }
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'beginner': return 'bg-accent/10 text-accent';
-      case 'intermediate': return 'bg-secondary/10 text-secondary';
-      case 'advanced': return 'bg-destructive/10 text-destructive';
-      default: return 'bg-muted text-muted-foreground';
+      case 'beginner': return 'bg-green-100 text-green-800';
+      case 'intermediate': return 'bg-yellow-100 text-yellow-800';
+      case 'advanced': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
   const startModule = (moduleId: string) => {
-    // This would navigate to a dedicated learning module page
-    // For now, show a toast notification as placeholder
+    // Simulate starting a learning module
     console.log(`Starting module: ${moduleId}`);
-    // Future: navigate(`/learning/module/${moduleId}`)
   };
 
   return (
@@ -221,7 +219,7 @@ const GamifiedLearning = () => {
             />
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-primary" />
+                <Zap className="w-4 h-4 text-orange-500" />
                 <span className="text-sm font-medium">{userProgress.streakDays} day streak</span>
               </div>
               <Badge variant="secondary">
@@ -267,9 +265,9 @@ const GamifiedLearning = () => {
                       <div className="flex-1">
                         <CardTitle className="flex items-center gap-2">
                           {module.completed ? (
-                            <CheckCircle2 className="w-5 h-5 text-accent" />
+                            <CheckCircle2 className="w-5 h-5 text-green-600" />
                           ) : module.locked ? (
-                            <Lock className="w-5 h-5 text-muted-foreground" />
+                            <Lock className="w-5 h-5 text-gray-400" />
                           ) : (
                             <PlayCircle className="w-5 h-5 text-primary" />
                           )}
@@ -322,11 +320,11 @@ const GamifiedLearning = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: parseInt(achievement.id) * 0.1 }}
               >
-                <Card className={`${achievement.unlocked ? 'border-primary/20 bg-primary/5' : 'opacity-60'}`}>
+                <Card className={`${achievement.unlocked ? 'border-yellow-200 bg-yellow-50 dark:bg-yellow-900/20' : 'opacity-60'}`}>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-full ${achievement.unlocked ? 'bg-primary/10' : 'bg-muted'}`}>
-                        <div className={achievement.unlocked ? getRarityColor(achievement.rarity) : 'text-muted-foreground'}>
+                      <div className={`p-2 rounded-full ${achievement.unlocked ? 'bg-yellow-100' : 'bg-gray-100'}`}>
+                        <div className={achievement.unlocked ? getRarityColor(achievement.rarity) : 'text-gray-400'}>
                           {achievement.icon}
                         </div>
                       </div>

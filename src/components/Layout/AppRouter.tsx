@@ -4,6 +4,8 @@ import Home from '@/pages/Index';
 import About from '@/pages/About';
 import Services from '@/pages/Services';
 import Team from '@/pages/Team';
+import Pricing from '@/pages/Pricing';
+import AdvancedPricing from '@/pages/AdvancedPricing';
 import Resources from '@/pages/Resources';
 import VFXResearch from '@/pages/VFXResearch';
 import VFXIndustryInsights from '@/pages/VFXIndustryInsights';
@@ -32,16 +34,12 @@ import BlockchainIntegration from '@/components/BlockchainIntegration';
 import GamifiedLearning from '@/components/GamifiedLearning';
 import Portfolio from '@/pages/Portfolio';
 import Showreel from '@/pages/Showreel';
-import ShowreelCGIVFX from '@/pages/ShowreelCGIVFX';
-import ShowreelCreative from '@/pages/ShowreelCreative';
-import ShowreelDI from '@/pages/ShowreelDI';
 import Contact from '@/pages/Contact';
 import Privacy from '@/pages/Privacy';
 import Terms from '@/pages/Terms';
 import Legal from '@/pages/Legal';
 import Careers from '@/pages/Careers';
 import Investors from '@/pages/Investors';
-import UpcomingFeatures from '@/pages/UpcomingFeatures';
 
 const AppRouter = () => {
   return (
@@ -49,13 +47,12 @@ const AppRouter = () => {
       <Route path="/" element={<MainLayout><Home /></MainLayout>} />
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/showreel" element={<MainLayout><Showreel /></MainLayout>} />
-      <Route path="/showreel/cgi-vfx" element={<ShowreelCGIVFX />} />
-      <Route path="/showreel/creative" element={<ShowreelCreative />} />
-      <Route path="/showreel/di" element={<ShowreelDI />} />
       <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
       <Route path="/about" element={<MainLayout><About /></MainLayout>} />
       <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
       <Route path="/team" element={<MainLayout><Team /></MainLayout>} />
+      <Route path="/pricing" element={<MainLayout><Pricing /></MainLayout>} />
+      <Route path="/advanced-pricing" element={<MainLayout><AdvancedPricing /></MainLayout>} />
       <Route path="/resources" element={<MainLayout><Resources /></MainLayout>} />
       <Route path="/vfx-research" element={<MainLayout><VFXResearch /></MainLayout>} />
       <Route path="/vfx-industry-insights" element={<MainLayout><VFXIndustryInsights /></MainLayout>} />
@@ -81,7 +78,6 @@ const AppRouter = () => {
       <Route path="/tools/document-converter" element={<MainLayout><DocumentConverter /></MainLayout>} />
       <Route path="/blockchain" element={<MainLayout><BlockchainIntegration /></MainLayout>} />
       <Route path="/learning" element={<MainLayout><GamifiedLearning /></MainLayout>} />
-      <Route path="/upcoming-features" element={<MainLayout><UpcomingFeatures /></MainLayout>} />
       <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />
       <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
       <Route path="/legal" element={<MainLayout><Legal /></MainLayout>} />

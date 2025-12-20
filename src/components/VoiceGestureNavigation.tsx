@@ -113,7 +113,8 @@ const VoiceGestureNavigation = () => {
         }
       };
 
-      recognitionRef.current.onerror = () => {
+      recognitionRef.current.onerror = (event: any) => {
+        console.error('Speech recognition error:', event.error);
         setIsListening(false);
       };
 
@@ -168,7 +169,7 @@ const VoiceGestureNavigation = () => {
         // Simulate gesture detection (in real implementation, use MediaPipe or similar)
         simulateGestureDetection();
       } catch (error) {
-        // Camera access denied or unavailable
+        console.error('Error accessing camera:', error);
       }
     }
   };

@@ -101,7 +101,7 @@ const Contact = () => {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     "name": "Contact Fuke's Media",
-    "description": "Get in touch with our professional VFX team for your next project",
+    "description": "Get in touch with our award-winning VFX team for your next project",
     "url": "https://fukes-media.com/contact"
   };
 
@@ -109,7 +109,7 @@ const Contact = () => {
     <>
       <SEOHelmet
         title="Contact Us - Start Your VFX Project Today"
-        description="Ready to bring your vision to life? Contact our professional VFX team for consultation, quotes, and project planning. Available 24/7 for urgent projects."
+        description="Ready to bring your vision to life? Contact our award-winning VFX team for consultation, quotes, and project planning. Available 24/7 for urgent projects."
         keywords="contact VFX studio, VFX consultation, project quote, visual effects inquiry, Fuke's Media contact"
         canonical="https://fukes-media.com/contact"
         structuredData={structuredData}

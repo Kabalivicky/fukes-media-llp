@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import SEOHelmet from '@/components/SEOHelmet';
 import VisualGenerator from '@/components/AI/VisualGenerator';
 import EmotionDetection from '@/components/AI/EmotionDetection';
@@ -73,6 +74,8 @@ const AITools = () => {
             </Tabs>
           </div>
         </main>
+
+        <Footer />
       </div>
     </>
   );

@@ -174,9 +174,9 @@ const BlockchainIntegration = () => {
               Connect Wallet
             </Button>
           ) : (
-            <div className="flex items-center justify-between p-3 bg-accent/10 rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
               <div className="flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-accent" />
+                <CheckCircle className="w-5 h-5 text-green-600" />
                 <span className="font-medium">Connected: 0x1234...5678</span>
               </div>
               <Badge variant="secondary">MetaMask</Badge>

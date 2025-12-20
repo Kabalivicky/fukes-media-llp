@@ -1,207 +1,207 @@
+
 import { useState } from 'react';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Video, Palette, MonitorPlay, Code, Check } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { ArrowRight, Camera, Palette, Video, MonitorPlay, Code } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import DynamicPrice from './DynamicPrice';
+import TypewriterText from './TypewriterText';
+import Enhanced3DHoverCards from './Enhanced3DHoverCards';
 
 const services = [
   {
     id: 'vfx',
-    name: 'CGI & VFX',
+    name: 'VFX Solutions',
     description: 'From basic compositing to complex 3D integration, we deliver high-quality visual effects for film, TV, and digital content.',
-    icon: Video,
-    color: 'primary',
+    icon: <Video className="h-10 w-10 text-primary" />,
     features: [
-      '2D & 3D Compositing',
-      'Rotoscoping & Clean-up',
-      'Digital Matte Painting',
       '3D Modeling & Animation',
-      'Simulation & FX',
-      'Match Move & Tracking'
+      'Compositing & Rotoscoping',
+      'Motion Graphics & Tracking',
+      'Particle & Fluid Simulations',
+      'Digital Set Extensions',
+      'AI-enhanced workflows'
     ],
-    image: 'https://images.unsplash.com/photo-1626428091984-427d4209b3fa?q=80&w=1287&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1626428091984-427d4209b3fa?q=80&w=1287&auto=format&fit=crop',
+    pricing: [
+      { name: 'Basic Rotoscoping', price: 30, unit: 'per frame' },
+      { name: '2D Compositing', price: 75, unit: 'per frame' },
+      { name: '3D Integration', price: 250, unit: 'per shot' }
+    ]
   },
   {
     id: 'creative',
-    name: 'Creative',
+    name: 'Creative Services',
     description: 'Our creative team brings your vision to life with cutting-edge design, animation, and conceptual development.',
-    icon: Palette,
-    color: 'secondary',
+    icon: <Palette className="h-10 w-10 text-secondary" />,
     features: [
-      'Graphic & Logo Design',
-      'Motion Posters & MGFX',
-      'Video Editing',
-      'Title Sequence Design',
-      'Motion Graphics',
-      'Digital Marketing'
+      'Art Direction & Conceptualization',
+      'Character Design & Development',
+      'Environment Design',
+      'Storyboarding & Previsualization',
+      'UI/UX Design for AR/VR',
+      'Brand Identity Development'
     ],
-    image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1170&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1170&auto=format&fit=crop',
+    pricing: [
+      { name: 'Poster Design', price: 5000, unit: 'per poster' },
+      { name: 'Motion Poster', price: 15000, unit: 'per design' },
+      { name: 'Concept Art', price: 8000, unit: 'per piece' }
+    ]
   },
   {
     id: 'di',
-    name: 'Digital Intermediate',
+    name: 'Digital Intermediate (DI)',
     description: 'Complete end-to-end DI solutions including color grading, conforming, mastering and delivery for all formats.',
-    icon: MonitorPlay,
-    color: 'accent',
+    icon: <MonitorPlay className="h-10 w-10 text-accent" />,
     features: [
-      'Basic & Advanced Colour Grading',
-      'HDR Grading',
-      'Look Development',
-      'VFX Supervision during DI',
-      'Final Delivery Masters',
-      'Quality Control'
+      'Base Light & DaVinci Resolve Grading',
+      'HDR/Dolby Vision Mastering',
+      'Film Restoration & Enhancement',
+      'LUT Development & Color Management',
+      'Final Conforming & Versioning',
+      'Deliverable Creation for All Platforms'
     ],
-    image: 'https://images.unsplash.com/photo-1585314062604-1a357de8b000?q=80&w=1171&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1585314062604-1a357de8b000?q=80&w=1171&auto=format&fit=crop',
+    pricing: [
+      { name: 'Basic Color Grading', price: 25000, unit: 'per minute' },
+      { name: 'Advanced Color Grading', price: 50000, unit: 'per minute' },
+      { name: 'HDR Grading', price: 80000, unit: 'per minute' }
+    ]
   },
   {
     id: 'tech',
     name: 'Tech Innovation',
     description: 'Cutting-edge technology solutions and AI integration to enhance creative workflows and production efficiency.',
-    icon: Code,
-    color: 'neon-cyan',
+    icon: <Code className="h-10 w-10 text-neon-green" />,
     features: [
-      'AI-Assisted Workflows',
-      'Custom Pipeline Development',
-      'Automation Solutions',
-      'Cloud Rendering',
-      'Real-time Collaboration',
-      'Asset Management Systems'
+      'Custom AI Pipeline Development',
+      'Automated Rotoscoping Solutions',
+      'Facial Motion Capture & Tracking',
+      'Virtual Production Setup',
+      'Real-time Rendering Implementation',
+      'Custom Tool Development'
     ],
-    image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?q=80&w=1170&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?q=80&w=1170&auto=format&fit=crop',
+    pricing: [
+      { name: 'AI Pipeline Integration', price: 100000, unit: 'per project' },
+      { name: 'Virtual Production Setup', price: 250000, unit: 'one-time' },
+      { name: 'Custom Tool Development', price: 75000, unit: 'per tool' }
+    ]
   }
 ];
 
 const ServicesSection = () => {
   const [activeTab, setActiveTab] = useState('vfx');
-  
-  const activeService = services.find(s => s.id === activeTab);
+  const [expandedAccordion, setExpandedAccordion] = useState<string>('features');
   
   return (
-    <section id="services" className="py-24 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 gradient-mesh opacity-50" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-      
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="services" className="py-20 relative">
+      <div className="container mx-auto px-4">
         <SectionTitle 
           title="Our Services" 
           subtitle="Comprehensive solutions powered by AI and creative excellence"
         />
         
-        <Tabs defaultValue="vfx" value={activeTab} onValueChange={setActiveTab} className="w-full mt-12">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-2 md:grid-cols-4 gap-2 bg-transparent h-auto p-0">
-            {services.map((service) => {
-              const IconComponent = service.icon;
-              const isActive = activeTab === service.id;
-              return (
-                <TabsTrigger
-                  key={service.id}
-                  value={service.id}
-                  className={`
-                    flex flex-col items-center gap-2 p-4 rounded-xl transition-all duration-300
-                    ${isActive 
-                      ? 'glass-card shadow-glow' 
-                      : 'bg-card/30 hover:bg-card/50 border border-border/30'
-                    }
-                  `}
-                >
-                  <IconComponent className={`h-6 w-6 ${isActive ? `text-${service.color}` : 'text-muted-foreground'}`} />
-                  <span className="text-xs sm:text-sm font-medium">{service.name}</span>
-                </TabsTrigger>
-              );
-            })}
+        <Tabs defaultValue="vfx" value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full md:w-fit mx-auto grid-cols-2 md:grid-cols-4 gap-2">
+            {services.map((service) => (
+              <TabsTrigger
+                key={service.id}
+                value={service.id}
+                className="data-[state=active]:bg-muted data-[state=active]:text-foreground"
+              >
+                {service.name}
+              </TabsTrigger>
+            ))}
           </TabsList>
           
           {services.map((service) => (
-            <TabsContent key={service.id} value={service.id} className="mt-12">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
-              >
-                {/* Content */}
-                <div className="order-2 lg:order-1">
-                  <Card className="glass-card border-border/30 overflow-hidden">
-                    <CardHeader className="pb-4">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className={`w-14 h-14 rounded-xl bg-${service.color}/10 flex items-center justify-center`}>
-                          <service.icon className={`h-7 w-7 text-${service.color}`} />
-                        </div>
-                        <div>
-                          <CardTitle className="text-2xl md:text-3xl font-bold">{service.name}</CardTitle>
-                          <CardDescription className="text-muted-foreground mt-1">
-                            Professional Solutions
-                          </CardDescription>
-                        </div>
-                      </div>
-                      <p className="text-muted-foreground text-base leading-relaxed">
-                        {service.description}
-                      </p>
-                    </CardHeader>
+            <TabsContent key={service.id} value={service.id} className="mt-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div>
+                  <Enhanced3DHoverCards intensity={0.8} glowColor={service.id === 'vfx' ? 'hsl(var(--primary))' : service.id === 'creative' ? 'hsl(var(--secondary))' : service.id === 'di' ? 'hsl(var(--accent))' : 'hsl(var(--neon-green))'}>
+                    <Card className="border border-border bg-card/50 backdrop-blur-sm">
+                      <CardHeader>
+                        <div className="mb-4">{service.icon}</div>
+                        <CardTitle className="text-2xl md:text-3xl font-bold">{service.name}</CardTitle>
+                        <CardDescription className="text-muted-foreground text-base">
+                          <TypewriterText 
+                            text={service.description}
+                            delay={500}
+                            speed={30}
+                          />
+                        </CardDescription>
+                      </CardHeader>
                     
-                    <CardContent className="pt-0">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {service.features.map((feature, index) => (
-                          <motion.div
-                            key={index}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.05 }}
-                            className="flex items-center gap-3 p-3 rounded-lg bg-muted/30"
-                          >
-                            <div className={`w-5 h-5 rounded-full bg-${service.color}/20 flex items-center justify-center flex-shrink-0`}>
-                              <Check className={`w-3 h-3 text-${service.color}`} />
+                    <CardContent>
+                      <Accordion 
+                        type="single" 
+                        collapsible 
+                        defaultValue="features"
+                        value={expandedAccordion}
+                        onValueChange={setExpandedAccordion}
+                      >
+                        <AccordionItem value="features">
+                          <AccordionTrigger className="text-lg font-medium">
+                            Key Features
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                              {service.features.map((feature, index) => (
+                                <li key={index} className="flex items-start">
+                                  <span className="text-primary mr-2">•</span>
+                                  <span>{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </AccordionContent>
+                        </AccordionItem>
+                        
+                        <AccordionItem value="pricing">
+                          <AccordionTrigger className="text-lg font-medium">
+                            Sample Pricing
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="space-y-3 mt-2">
+                              {service.pricing.map((item, index) => (
+                                <div key={index} className="flex justify-between items-center border-b border-border pb-2">
+                                  <span>{item.name}</span>
+                                  <span><DynamicPrice priceUSD={item.price} showCode={true} /> {item.unit}</span>
+                                </div>
+                              ))}
+                              <div className="text-sm text-muted-foreground mt-2">
+                                * Prices vary based on project complexity and requirements
+                              </div>
                             </div>
-                            <span className="text-sm">{feature}</span>
-                          </motion.div>
-                        ))}
-                      </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
                     </CardContent>
                     
-                    <CardFooter className="pt-4">
-                      <Link to="/services" className="w-full">
-                        <Button className="w-full btn-gradient group">
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            Learn More
-                            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                          </span>
-                        </Button>
-                      </Link>
+                    <CardFooter>
+                      <Button variant="default" className="w-full">
+                        Learn more about {service.name}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
                     </CardFooter>
-                  </Card>
+                    </Card>
+                  </Enhanced3DHoverCards>
                 </div>
                 
-                {/* Image */}
-                <div className="order-1 lg:order-2">
-                  <motion.div 
-                    className="relative rounded-2xl overflow-hidden glass-card hover-lift"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <div className="aspect-video relative">
-                      <img 
-                        src={service.image} 
-                        alt={service.name} 
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-                      
-                      {/* Floating badge */}
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <div className="glass-card p-4 rounded-xl">
-                          <p className="text-sm font-medium">{service.name} Solutions</p>
-                          <p className="text-xs text-muted-foreground mt-1">Professional quality, delivered on time</p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
+                <div className="relative">
+                  <div className="card-3d rounded-lg overflow-hidden">
+                    <img 
+                      src={service.image} 
+                      alt={service.name} 
+                      className="w-full h-auto rounded-lg"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+                  </div>
                 </div>
-              </motion.div>
+              </div>
             </TabsContent>
           ))}
         </Tabs>

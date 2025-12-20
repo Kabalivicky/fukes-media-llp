@@ -22,7 +22,7 @@ const AINeuraGlow = ({ intensity = 1 }: { intensity?: number }) => {
         }
       }
     } catch (error) {
-      // 3D animation error suppressed
+      console.warn('3D animation error:', error);
     }
   });
 

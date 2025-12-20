@@ -107,7 +107,7 @@ const AnimatedProjectsSection = () => {
         <motion.div variants={itemVariants} className="text-center mb-16">
           <SectionTitle
             title="Featured Projects"
-            subtitle="Showcase of our professional VFX and post-production work"
+            subtitle="Showcase of our award-winning VFX and post-production work"
           />
         </motion.div>
 
@@ -247,7 +247,7 @@ const AnimatedProjectsSection = () => {
                     alt={project.title}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-background/40" />
+                  <div className="absolute inset-0 bg-black/20" />
                   {index === currentProjectIndex && (
                     <div className="absolute inset-0 bg-primary/20 border-2 border-primary/50" />
                   )}

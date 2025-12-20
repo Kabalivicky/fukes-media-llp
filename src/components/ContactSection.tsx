@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -9,15 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/components/ui/use-toast';
 import { Mail, Phone, MapPin, MessageSquare, AlertCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-import { z } from 'zod';
-
-// Contact form validation schema
-const contactSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
-  phone: z.string().trim().max(20, "Phone must be less than 20 characters").optional().or(z.literal('')),
-  message: z.string().trim().min(10, "Message must be at least 10 characters").max(2000, "Message must be less than 2000 characters")
-});
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -26,75 +17,24 @@ const ContactSection = () => {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [cooldownRemaining, setCooldownRemaining] = useState(0);
-
-  // Rate limiting: Check cooldown on mount
-  useEffect(() => {
-    const checkCooldown = () => {
-      const lastSubmission = localStorage.getItem('contactFormLastSubmit');
-      if (lastSubmission) {
-        const timeSinceLastSubmit = Date.now() - parseInt(lastSubmission);
-        const cooldownTime = 60000; // 1 minute cooldown
-        const remainingTime = cooldownTime - timeSinceLastSubmit;
-        
-        if (remainingTime > 0) {
-          setCooldownRemaining(Math.ceil(remainingTime / 1000));
-          const interval = setInterval(() => {
-            setCooldownRemaining(prev => {
-              if (prev <= 1) {
-                clearInterval(interval);
-                return 0;
-              }
-              return prev - 1;
-            });
-          }, 1000);
-          return () => clearInterval(interval);
-        }
-      }
-    };
-    checkCooldown();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Check rate limit
-    const lastSubmission = localStorage.getItem('contactFormLastSubmit');
-    if (lastSubmission) {
-      const timeSinceLastSubmit = Date.now() - parseInt(lastSubmission);
-      if (timeSinceLastSubmit < 60000) { // 1 minute cooldown
-        const remainingSeconds = Math.ceil((60000 - timeSinceLastSubmit) / 1000);
-        toast({
-          title: "Please wait",
-          description: `You can submit another message in ${remainingSeconds} seconds`,
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-    
     setIsSubmitting(true);
     
     try {
-      // Validate form data
-      const validatedData = contactSchema.parse({
-        name,
-        email,
-        phone,
-        message
-      });
-
       const { error } = await supabase
         .from('contact_submissions')
         .insert({
-          name: validatedData.name,
-          email: validatedData.email,
-          phone: validatedData.phone || null,
-          message: validatedData.message,
+          name,
+          email,
+          phone: phone || null,
+          message,
           inquiry_type: 'general'
         });
 
       if (error) {
+        console.error('Error saving contact submission:', error);
         toast({
           title: "Error sending message",
           description: "Please try again or contact us directly at Fukesmedia@gmail.com",
@@ -102,10 +42,6 @@ const ContactSection = () => {
         });
         return;
       }
-
-      // Set rate limit timestamp
-      localStorage.setItem('contactFormLastSubmit', Date.now().toString());
-      setCooldownRemaining(60);
 
       toast({
         title: "Message sent successfully!",
@@ -118,21 +54,12 @@ const ContactSection = () => {
       setPhone('');
       setMessage('');
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        // Display validation errors
-        const firstError = error.errors[0];
-        toast({
-          title: "Validation Error",
-          description: firstError.message,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Error sending message",
-          description: "Please try again or contact us directly at Fukesmedia@gmail.com",
-          variant: "destructive",
-        });
-      }
+      console.error('Error saving contact submission:', error);
+      toast({
+        title: "Error sending message",
+        description: "Please try again or contact us directly at Fukesmedia@gmail.com",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -203,19 +130,12 @@ const ContactSection = () => {
                   />
                 </div>
                 
-                {cooldownRemaining > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
-                    <AlertCircle className="h-4 w-4" />
-                    <span>Please wait {cooldownRemaining}s before submitting again</span>
-                  </div>
-                )}
-                
                 <Button 
                   type="submit" 
                   className="w-full gradient-button"
-                  disabled={isSubmitting || cooldownRemaining > 0}
+                  disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Sending...' : cooldownRemaining > 0 ? `Wait ${cooldownRemaining}s` : 'Send Message'}
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
             </CardContent>

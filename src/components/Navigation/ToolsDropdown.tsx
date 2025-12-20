@@ -18,10 +18,18 @@ const ToolsDropdown = () => {
       <NavigationMenuContent>
         <div className="grid gap-3 p-6 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
           <div className="space-y-3">
-            <h4 className="text-sm font-medium leading-none text-muted-foreground">AI Tools</h4>
+            <h4 className="text-sm font-medium leading-none text-muted-foreground">AI & Pricing Tools</h4>
             <ListItem href="/ai-tools" title="AI Tools Suite">
               <Brain className="mr-2 h-4 w-4" />
               Complete AI toolkit for creators
+            </ListItem>
+            <ListItem href="/advanced-pricing" title="Advanced Pricing Calculator">
+              <Calculator className="mr-2 h-4 w-4" />
+              Professional project estimation tool
+            </ListItem>
+            <ListItem href="/pricing" title="Basic Pricing">
+              <Calculator className="mr-2 h-4 w-4" />
+              Quick pricing estimates
             </ListItem>
             
             <h4 className="text-sm font-medium leading-none text-muted-foreground mt-4">Media Converters</h4>

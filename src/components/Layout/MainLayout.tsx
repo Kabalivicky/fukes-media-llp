@@ -1,7 +1,9 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
+
+import { Outlet } from 'react-router-dom';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
+import FloatingThemeToggle from '@/components/FloatingThemeToggle';
 import { Toaster } from '@/components/ui/toaster';
 
 interface MainLayoutProps {
@@ -10,23 +12,19 @@ interface MainLayoutProps {
 }
 
 const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
-
   return (
-    <>
-      <div className="min-h-screen flex flex-col w-full relative bg-background">
-        <Navbar />
-        <main className={`flex-1 w-full relative z-10 ${isHomePage ? '' : 'pt-16'}`} id="main-content">
-          <div className="w-full max-w-none">
-            {children || <Outlet />}
-          </div>
-        </main>
-        <Footer />
-        <ScrollToTop />
-        <Toaster />
-      </div>
-    </>
+    <div className="min-h-screen flex flex-col w-full relative">
+      <Header />
+      <main className="flex-1 pt-16 w-full relative z-10" id="main-content">
+        <div className="w-full max-w-none">
+          {children || <Outlet />}
+        </div>
+      </main>
+      <Footer />
+      <ScrollToTop />
+      <FloatingThemeToggle />
+      <Toaster />
+    </div>
   );
 };
 

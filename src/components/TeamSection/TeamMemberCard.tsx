@@ -6,13 +6,12 @@ import { User } from 'lucide-react';
 interface TeamMemberProps {
   name: string;
   role: string;
-  bio?: string;
+  bio: string;
   imageUrl?: string;
   skills?: string[];
   email?: string;
   linkedin?: string;
   brandColor?: string;
-  designation?: string;
 }
 
 const TeamMemberCard = ({ name, role, bio, skills = [], email, linkedin, brandColor = '#0057B7' }: TeamMemberProps) => {
@@ -45,7 +44,7 @@ const TeamMemberCard = ({ name, role, bio, skills = [], email, linkedin, brandCo
             </div>
           </div>
           
-          {bio && <p className="text-sm text-muted-foreground mb-4 flex-grow">{bio}</p>}
+          <p className="text-sm text-muted-foreground mb-4 flex-grow">{bio}</p>
           
           {skills.length > 0 && (
             <div className="mt-auto">

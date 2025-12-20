@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { BarChart, Users, Activity, FileVideo, FileImage, FileAudio, TrendingUp, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BarChart, Users, Activity, FileVideo, FileImage, FileAudio, TrendingUp, Calendar } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -22,11 +21,6 @@ const AdminDashboard = () => {
   const { user } = useAuth();
   const [toolUsage, setToolUsage] = useState<ToolUsage[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [dateRange, setDateRange] = useState<string>('7'); // days
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 10;
   const [stats, setStats] = useState({
     totalConversions: 0,
     successRate: 0,
@@ -36,86 +30,23 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    if (user) {
-      checkAdminStatus();
-    } else {
-      setIsAdmin(false);
-      setLoading(false);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (isAdmin) {
-      setLoading(true);
-      fetchToolUsage();
-    }
-  }, [dateRange, currentPage]);
-
-  const checkAdminStatus = async () => {
-    if (!user) {
-      setIsAdmin(false);
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id)
-        .eq('role', 'admin')
-        .maybeSingle();
-
-      if (error) {
-        // Admin status check failed
-        setIsAdmin(false);
-        setLoading(false);
-        return;
-      }
-
-      setIsAdmin(!!data);
-      
-      if (data) {
-        fetchToolUsage();
-      } else {
-        setLoading(false);
-      }
-    } catch (error) {
-      // Admin check failed
-      setIsAdmin(false);
-      setLoading(false);
-    }
-  };
+    fetchToolUsage();
+  }, []);
 
   const fetchToolUsage = async () => {
     try {
-      // Calculate date filter
-      const daysAgo = parseInt(dateRange);
-      const startDate = new Date();
-      startDate.setDate(startDate.getDate() - daysAgo);
-      
-      // Get total count for pagination
-      const { count } = await supabase
-        .from('tool_usage')
-        .select('*', { count: 'exact', head: true })
-        .gte('created_at', startDate.toISOString());
-      
-      setTotalPages(Math.ceil((count || 0) / itemsPerPage));
-
-      // Fetch paginated data with date filter
       const { data, error } = await supabase
         .from('tool_usage')
         .select('*')
-        .gte('created_at', startDate.toISOString())
         .order('created_at', { ascending: false })
-        .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+        .limit(100);
 
       if (error) throw error;
 
       setToolUsage(data || []);
       calculateStats(data || []);
     } catch (error) {
-      // Error fetching tool usage data
+      console.error('Error fetching tool usage:', error);
     } finally {
       setLoading(false);
     }
@@ -177,26 +108,13 @@ const AdminDashboard = () => {
     return <Icon className="w-4 h-4" />;
   };
 
-  if (loading || isAdmin === null) {
-    return (
-      <div className="container mx-auto px-4 py-12">
-        <Card>
-          <CardHeader>
-            <CardTitle>Loading...</CardTitle>
-            <CardDescription>Verifying admin access...</CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
-    );
-  }
-
-  if (!user || !isAdmin) {
+  if (!user) {
     return (
       <div className="container mx-auto px-4 py-12">
         <Card>
           <CardHeader>
             <CardTitle>Access Denied</CardTitle>
-            <CardDescription>You must be an administrator to access this dashboard</CardDescription>
+            <CardDescription>Please log in to view the admin dashboard</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -205,28 +123,15 @@ const AdminDashboard = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 space-y-8">
-      <div className="flex items-center justify-between flex-wrap gap-4">
+      <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Tool Analytics Dashboard</h1>
           <p className="text-muted-foreground">Monitor tool usage and performance metrics</p>
         </div>
-        <div className="flex items-center gap-4">
-          <Select value={dateRange} onValueChange={setDateRange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select range" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="1">Last 24 hours</SelectItem>
-              <SelectItem value="7">Last 7 days</SelectItem>
-              <SelectItem value="30">Last 30 days</SelectItem>
-              <SelectItem value="90">Last 90 days</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button onClick={fetchToolUsage} disabled={loading}>
-            <TrendingUp className="w-4 h-4 mr-2" />
-            Refresh
-          </Button>
-        </div>
+        <Button onClick={fetchToolUsage} disabled={loading}>
+          <TrendingUp className="w-4 h-4 mr-2" />
+          Refresh Data
+        </Button>
       </div>
 
       {/* Stats Overview */}
@@ -302,63 +207,35 @@ const AdminDashboard = () => {
           ) : toolUsage.length === 0 ? (
             <p className="text-center py-8 text-muted-foreground">No tool usage data available</p>
           ) : (
-            <>
-              <div className="space-y-4">
-                {toolUsage.map((usage) => (
-                  <div key={usage.id} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center gap-3">
-                      {getToolIcon(usage.tool_name)}
-                      <div>
-                        <div className="font-medium">{usage.tool_name.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
-                        <div className="text-sm text-muted-foreground">
-                          {usage.input_format} → {usage.output_format}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <div className="text-sm font-medium">{formatFileSize(usage.file_size || 0)}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {usage.processing_time ? `${(usage.processing_time / 1000).toFixed(1)}s` : 'N/A'}
-                        </div>
-                      </div>
-                      <Badge variant={usage.success ? 'default' : 'destructive'}>
-                        {usage.success ? 'Success' : 'Failed'}
-                      </Badge>
-                      <div className="text-xs text-muted-foreground">
-                        {new Date(usage.created_at).toLocaleDateString()}
+            <div className="space-y-4">
+              {toolUsage.slice(0, 10).map((usage) => (
+                <div key={usage.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center gap-3">
+                    {getToolIcon(usage.tool_name)}
+                    <div>
+                      <div className="font-medium">{usage.tool_name.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {usage.input_format} → {usage.output_format}
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-              
-              {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 pt-4">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                    disabled={currentPage === 1}
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                    Previous
-                  </Button>
-                  <span className="text-sm text-muted-foreground">
-                    Page {currentPage} of {totalPages}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                    disabled={currentPage === totalPages}
-                  >
-                    Next
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-sm font-medium">{formatFileSize(usage.file_size || 0)}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {usage.processing_time ? `${(usage.processing_time / 1000).toFixed(1)}s` : 'N/A'}
+                      </div>
+                    </div>
+                    <Badge variant={usage.success ? 'default' : 'destructive'}>
+                      {usage.success ? 'Success' : 'Failed'}
+                    </Badge>
+                    <div className="text-xs text-muted-foreground">
+                      {new Date(usage.created_at).toLocaleDateString()}
+                    </div>
+                  </div>
                 </div>
-              )}
-            </>
+              ))}
+            </div>
           )}
         </CardContent>
       </Card>
