@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,12 @@ import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
 import SEOHelmet from '@/components/SEOHelmet';
 
+const SHOWREEL_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
+const SHOWREEL_DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk";
+
 const Showreel = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -117,28 +122,49 @@ const Showreel = () => {
             >
               <Card className="overflow-hidden border-2 border-primary/20">
                 <div className="relative aspect-video bg-black">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 flex items-center justify-center">
-                    <Button
-                      size="lg"
-                      className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-8"
+                  {isPlaying ? (
+                    <iframe
+                      src={SHOWREEL_URL}
+                      className="w-full h-full"
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
+                      title="Fuke's Media Official Showreel 2024"
+                    />
+                  ) : (
+                    <div 
+                      className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 flex items-center justify-center cursor-pointer group"
+                      onClick={() => setIsPlaying(true)}
                     >
-                      <Play className="h-12 w-12 ml-2" />
-                    </Button>
-                  </div>
+                      <Button
+                        size="lg"
+                        className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-8 group-hover:scale-110 transition-transform duration-300"
+                      >
+                        <Play className="h-12 w-12 ml-2" />
+                      </Button>
+                    </div>
+                  )}
                   
                   {/* Video Controls Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                  <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 transition-opacity duration-300 ${isPlaying ? 'opacity-0 hover:opacity-100' : ''}`}>
                     <div className="flex justify-between items-center text-white">
                       <div>
                         <h3 className="text-2xl font-display font-bold">Fuke's Media - Official Showreel 2024</h3>
                         <p className="text-white/80">Award-caliber VFX excellence in 60 seconds</p>
                       </div>
                       <div className="flex gap-2">
-                        <Button size="sm" variant="secondary">
-                          <Download className="h-4 w-4 mr-2" />
-                          Download
-                        </Button>
-                        <Button size="sm" variant="secondary">
+                        <a href={SHOWREEL_DOWNLOAD_URL} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="secondary">
+                            <Download className="h-4 w-4 mr-2" />
+                            Download
+                          </Button>
+                        </a>
+                        <Button 
+                          size="sm" 
+                          variant="secondary"
+                          onClick={() => {
+                            navigator.clipboard.writeText("https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view");
+                          }}
+                        >
                           <Share2 className="h-4 w-4 mr-2" />
                           Share
                         </Button>
