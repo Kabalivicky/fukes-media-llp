@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { useTheme } from '@/components/ui/theme-provider';
+import logoDarkTheme from '@/assets/logo-dark-theme.png';
+import logoLightTheme from '@/assets/logo-light-theme.png';
 
 interface AnimatedLogoProps {
   className?: string;
@@ -21,7 +23,6 @@ const AnimatedLogo = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const { theme } = useTheme();
-  const [logoSrc, setLogoSrc] = useState('');
   const [logoError, setLogoError] = useState(false);
   
   // Size mapping
@@ -32,17 +33,8 @@ const AnimatedLogo = ({
     xl: 'w-48 h-48',
   };
   
-  // Update logo based on theme using the new transparent logos
-  useEffect(() => {
-    setLogoError(false);
-    if (theme === 'dark') {
-      // Use the new colorful logo for dark theme
-      setLogoSrc('/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png');
-    } else {
-      // Use the black logo for light theme
-      setLogoSrc('/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png');
-    }
-  }, [theme]);
+  // Get logo based on theme - dark theme uses white text logo, light theme uses black text logo
+  const logoSrc = theme === 'dark' ? logoLightTheme : logoDarkTheme;
   
   useEffect(() => {
     if (isInView) {
