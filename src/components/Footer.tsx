@@ -1,10 +1,11 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight } from 'lucide-react';
 import { useTheme } from '@/components/ui/theme-provider';
+import logoDarkTheme from '@/assets/logo-dark-theme.png';
+import logoLightTheme from '@/assets/logo-light-theme.png';
 
 const Footer = () => {
   const { theme } = useTheme();
@@ -20,19 +21,8 @@ const Footer = () => {
                 <img 
                   alt="Fuke's Media Logo" 
                   className="h-10 w-auto" 
-                  src={theme === 'dark' 
-                    ? '/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png'
-                    : '/lovable-uploads/c679f808-3ebc-4220-b64f-90bed70e9847.png'
-                  }
+                  src={theme === 'dark' ? logoLightTheme : logoDarkTheme}
                 />
-                {/* Design strip element */}
-                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3/4 h-0.5">
-                  <img 
-                    src="/lovable-uploads/de05f56b-a2c6-43b6-b516-77732a316239.png"
-                    alt="Design Accent"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
               </div>
               <span className="font-bold text-lg">Fuke's Media</span>
             </Link>
