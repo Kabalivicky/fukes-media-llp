@@ -84,14 +84,6 @@ const resources: Resource[] = [
     category: 'Market Research',
     image: egyptVfxSpotlight,
     type: 'research'
-  },
-  {
-    id: '8',
-    title: 'Film & TV Production Guide',
-    description: 'Complete production pipeline and role definitions for film and television projects',
-    category: 'Production',
-    image: filmTvProduction,
-    type: 'infographic'
   }
 ];
 
