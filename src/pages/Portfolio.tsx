@@ -10,6 +10,7 @@ import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
 import AnimatedProjectsSection from '@/components/AnimatedProjectsSection';
 import SEOHelmet from '@/components/SEOHelmet';
+import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
 
 const SHOWREEL_EMBED_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
 const SHOWREEL_VIEW_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view";
@@ -158,7 +159,14 @@ const Portfolio = () => {
                 className="relative aspect-video rounded-2xl overflow-hidden bg-card border-2 border-primary/20 cursor-pointer group"
                 onClick={() => setIsPlaying(true)}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center group-hover:from-primary/20 group-hover:to-secondary/20 transition-all duration-300">
+                {/* Thumbnail Image */}
+                <img 
+                  src={showreelThumbnail} 
+                  alt="Showreel Thumbnail" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
                   <Button
                     size="lg"
                     className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-6 group-hover:scale-110 transition-transform duration-300"
@@ -166,11 +174,11 @@ const Portfolio = () => {
                     <Play className="h-8 w-8 ml-1" />
                   </Button>
                 </div>
-                <div className="absolute bottom-4 left-4">
-                  <h3 className="text-2xl font-display font-bold text-white mb-2">
+                <div className="absolute bottom-4 left-4 z-10">
+                  <h3 className="text-2xl font-display font-bold text-white mb-2 drop-shadow-lg">
                     Fuke's Media - Official Showreel 2024
                   </h3>
-                  <p className="text-white/80">Click to watch our showreel</p>
+                  <p className="text-white/90 drop-shadow-md">Click to watch our showreel</p>
                 </div>
               </div>
 
