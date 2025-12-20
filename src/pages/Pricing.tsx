@@ -277,35 +277,20 @@ const Pricing = () => {
 
       <MainLayout pageKey="pricing">
       
-      {/* Hero Section with parallax effect */}
-      <div 
-        className="relative h-[50vh] lg:h-[60vh] flex items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage: `url("/lovable-uploads/7aa001b2-00ae-4aed-9551-897de83da325.png")`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundAttachment: "fixed"
-        }}
-      >
-        <div 
-          className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/60 to-background"
-          style={{ 
-            transform: `translateY(${scrollY * 0.2}px)` 
-          }}
-        />
-        
+      {/* Hero Section */}
+      <div className="relative flex items-center justify-center overflow-hidden py-20">
         <motion.div 
-          className="container relative z-10 text-center px-4 py-20"
+          className="container relative z-10 text-center px-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-fukes-blue via-fukes-red to-fukes-green">
               Pricing & Packages
             </span>
           </h1>
-          <p className="text-xl md:text-2xl max-w-2xl mx-auto text-white/80">
+          <p className="text-xl md:text-2xl max-w-2xl mx-auto text-muted-foreground">
             Transparent pricing options tailored to your creative vision and production needs
           </p>
           <div className="mt-8">
@@ -314,13 +299,6 @@ const Pricing = () => {
             </Button>
           </div>
         </motion.div>
-
-        {/* Animated arrow indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
       </div>
       
       <main className="relative z-10">
