@@ -325,7 +325,7 @@ const Pricing = () => {
       
       <main className="relative z-10">
         {/* Popular Package Tiers - New Section */}
-        <section className="py-20 px-4 bg-gradient-to-b from-background to-background/95">
+        <section className="py-20 px-4">
           <div className="container mx-auto">
             <motion.div 
               className="text-center mb-12"
@@ -415,7 +415,7 @@ const Pricing = () => {
         </section>
         
         {/* Detailed Pricing Tables */}
-        <section className="py-16 px-4 bg-gradient-to-t from-background/95 to-background">
+        <section className="py-16 px-4">
           <div className="container mx-auto">
             <motion.div
               variants={containerVariants}
