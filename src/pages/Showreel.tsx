@@ -8,6 +8,7 @@ import { Play, ArrowLeft, Download, Share2 } from 'lucide-react';
 import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
 import SEOHelmet from '@/components/SEOHelmet';
+import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
 
 const SHOWREEL_EMBED_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
 const SHOWREEL_VIEW_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view";
@@ -146,15 +147,24 @@ const Showreel = () => {
                     </>
                   ) : (
                     <div 
-                      className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 flex items-center justify-center cursor-pointer group"
+                      className="absolute inset-0 cursor-pointer group"
                       onClick={() => setIsPlaying(true)}
                     >
-                      <Button
-                        size="lg"
-                        className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-8 group-hover:scale-110 transition-transform duration-300"
-                      >
-                        <Play className="h-12 w-12 ml-2" />
-                      </Button>
+                      {/* Thumbnail Image */}
+                      <img 
+                        src={showreelThumbnail} 
+                        alt="Showreel Thumbnail" 
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+                        <Button
+                          size="lg"
+                          className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-8 group-hover:scale-110 transition-transform duration-300"
+                        >
+                          <Play className="h-12 w-12 ml-2" />
+                        </Button>
+                      </div>
                     </div>
                   )}
                   
