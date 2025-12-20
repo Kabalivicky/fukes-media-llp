@@ -7,7 +7,7 @@ import PricingCalculator from '@/components/PricingCalculator';
 import PortfolioSection from '@/components/PortfolioSection';
 import TeamSection from '@/components/TeamSection';
 import CareersSection from '@/components/CareersSection';
-import IndustryResourcesSection from '@/components/IndustryResourcesSection';
+
 import ContactSection from '@/components/ContactSection';
 import SEOHelmet from '@/components/SEOHelmet';
 import SectionTitle from '@/components/SectionTitle';
@@ -298,16 +298,6 @@ const Home = () => {
             </ErrorBoundary>
           </div>
           
-          <ErrorBoundary>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeInUpVariants}
-            >
-              <IndustryResourcesSection />
-            </motion.div>
-          </ErrorBoundary>
           
           <div id="contact" ref={(el) => sectionsRef.current.contact = el}>
             <ErrorBoundary>
