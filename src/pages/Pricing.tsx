@@ -279,6 +279,49 @@ const Pricing = () => {
       
       {/* Hero Section */}
       <div className="relative flex items-center justify-center overflow-hidden py-20">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-fukes-blue/5 via-transparent to-fukes-red/5" />
+          <motion.div 
+            className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-fukes-blue/10 blur-[100px]"
+            animate={{ 
+              x: [0, 50, 0],
+              y: [0, -30, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ 
+              duration: 8, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-fukes-red/10 blur-[100px]"
+            animate={{ 
+              x: [0, -40, 0],
+              y: [0, 40, 0],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ 
+              duration: 10, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+          />
+          <motion.div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-fukes-green/8 blur-[80px]"
+            animate={{ 
+              scale: [1, 1.3, 1],
+              opacity: [0.5, 0.8, 0.5]
+            }}
+            transition={{ 
+              duration: 6, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+          />
+        </div>
+        
         <motion.div 
           className="container relative z-10 text-center px-4"
           initial={{ opacity: 0, y: 20 }}
