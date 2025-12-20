@@ -9,7 +9,8 @@ import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
 import SEOHelmet from '@/components/SEOHelmet';
 
-const SHOWREEL_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
+const SHOWREEL_EMBED_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
+const SHOWREEL_VIEW_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view";
 const SHOWREEL_DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk";
 
 const Showreel = () => {
@@ -123,13 +124,26 @@ const Showreel = () => {
               <Card className="overflow-hidden border-2 border-primary/20">
                 <div className="relative aspect-video bg-black">
                   {isPlaying ? (
-                    <iframe
-                      src={SHOWREEL_URL}
-                      className="w-full h-full"
-                      allow="autoplay; encrypted-media"
-                      allowFullScreen
-                      title="Fuke's Media Official Showreel 2024"
-                    />
+                    <>
+                      <iframe
+                        src={SHOWREEL_EMBED_URL}
+                        className="w-full h-full"
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                        title="Fuke's Media Official Showreel 2024"
+                      />
+                      {/* Fallback link */}
+                      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10">
+                        <a 
+                          href={SHOWREEL_VIEW_URL} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-white/70 hover:text-white text-sm underline bg-black/50 px-3 py-1 rounded"
+                        >
+                          Video not loading? Click here to watch on Google Drive
+                        </a>
+                      </div>
+                    </>
                   ) : (
                     <div 
                       className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 flex items-center justify-center cursor-pointer group"
@@ -162,7 +176,7 @@ const Showreel = () => {
                           size="sm" 
                           variant="secondary"
                           onClick={() => {
-                            navigator.clipboard.writeText("https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view");
+                            navigator.clipboard.writeText(SHOWREEL_VIEW_URL);
                           }}
                         >
                           <Share2 className="h-4 w-4 mr-2" />

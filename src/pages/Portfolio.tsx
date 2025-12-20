@@ -11,7 +11,8 @@ import SectionTitle from '@/components/SectionTitle';
 import AnimatedProjectsSection from '@/components/AnimatedProjectsSection';
 import SEOHelmet from '@/components/SEOHelmet';
 
-const SHOWREEL_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
+const SHOWREEL_EMBED_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
+const SHOWREEL_VIEW_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view";
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -177,14 +178,25 @@ const Portfolio = () => {
               <Dialog open={isPlaying} onOpenChange={setIsPlaying}>
                 <DialogContent className="max-w-5xl w-[95vw] p-0 bg-black border-none">
                   <DialogTitle className="sr-only">Fuke's Media Official Showreel 2024</DialogTitle>
-                  <div className="relative aspect-video w-full">
+                  <div className="relative aspect-video w-full bg-black">
                     <iframe
-                      src={SHOWREEL_URL}
+                      src={SHOWREEL_EMBED_URL}
                       className="w-full h-full"
                       allow="autoplay; encrypted-media"
                       allowFullScreen
                       title="Fuke's Media Official Showreel 2024"
                     />
+                    {/* Fallback link if embed doesn't work */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                      <a 
+                        href={SHOWREEL_VIEW_URL} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-white/70 hover:text-white text-sm underline"
+                      >
+                        Video not loading? Click here to watch on Google Drive
+                      </a>
+                    </div>
                   </div>
                 </DialogContent>
               </Dialog>
