@@ -4,11 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Play, Eye, Award, Filter } from 'lucide-react';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Play, Eye, Award, Filter, X } from 'lucide-react';
 import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
 import AnimatedProjectsSection from '@/components/AnimatedProjectsSection';
 import SEOHelmet from '@/components/SEOHelmet';
+
+const SHOWREEL_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -150,12 +153,14 @@ const Portfolio = () => {
               transition={{ duration: 0.8 }}
               className="relative max-w-6xl mx-auto mb-16"
             >
-              <div className="relative aspect-video rounded-2xl overflow-hidden bg-card border-2 border-primary/20">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+              <div 
+                className="relative aspect-video rounded-2xl overflow-hidden bg-card border-2 border-primary/20 cursor-pointer group"
+                onClick={() => setIsPlaying(true)}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center group-hover:from-primary/20 group-hover:to-secondary/20 transition-all duration-300">
                   <Button
                     size="lg"
-                    onClick={() => setIsPlaying(!isPlaying)}
-                    className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-6"
+                    className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-6 group-hover:scale-110 transition-transform duration-300"
                   >
                     <Play className="h-8 w-8 ml-1" />
                   </Button>
@@ -164,9 +169,25 @@ const Portfolio = () => {
                   <h3 className="text-2xl font-display font-bold text-white mb-2">
                     Fuke's Media - Official Showreel 2024
                   </h3>
-                  <p className="text-white/80">60 seconds of pure visual excellence</p>
+                  <p className="text-white/80">Click to watch our showreel</p>
                 </div>
               </div>
+
+              {/* Video Modal */}
+              <Dialog open={isPlaying} onOpenChange={setIsPlaying}>
+                <DialogContent className="max-w-5xl w-[95vw] p-0 bg-black border-none">
+                  <DialogTitle className="sr-only">Fuke's Media Official Showreel 2024</DialogTitle>
+                  <div className="relative aspect-video w-full">
+                    <iframe
+                      src={SHOWREEL_URL}
+                      className="w-full h-full"
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
+                      title="Fuke's Media Official Showreel 2024"
+                    />
+                  </div>
+                </DialogContent>
+              </Dialog>
             </motion.div>
 
             {/* Filter Tabs */}
