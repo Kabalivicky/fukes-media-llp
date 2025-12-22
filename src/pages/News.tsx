@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Bookmark, Calendar, Clock, ExternalLink, Loader2, MessageCircle, RefreshCw, Search, Share2, TrendingUp } from 'lucide-react';
+import { Bookmark, Calendar, Clock, ExternalLink, Loader2, RefreshCw, Search, Share2, TrendingUp, Sparkles, Globe } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -22,7 +22,10 @@ interface NewsItem {
   source: string;
   url?: string;
   trending?: boolean;
+  provider?: 'firecrawl' | 'perplexity';
 }
+
+type NewsSource = 'all' | 'firecrawl' | 'perplexity';
 
 const News = () => {
   const [activeTab, setActiveTab] = useState('all');
@@ -31,9 +34,9 @@ const News = () => {
   const [filteredNews, setFilteredNews] = useState<NewsItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastFetched, setLastFetched] = useState<string | null>(null);
+  const [newsSource, setNewsSource] = useState<NewsSource>('all');
   
-  const fetchNews = useCallback(async (category?: string) => {
-    setIsLoading(true);
+  const fetchFromFirecrawl = async (category?: string): Promise<NewsItem[]> => {
     try {
       const { data, error } = await supabase.functions.invoke('fetch-industry-news', {
         body: { 
@@ -41,25 +44,67 @@ const News = () => {
           category: category !== 'all' ? category : undefined 
         },
       });
+      if (error) throw error;
+      return (data?.news || []).map((item: NewsItem) => ({ ...item, provider: 'firecrawl' as const }));
+    } catch (error) {
+      console.error('Firecrawl fetch error:', error);
+      return [];
+    }
+  };
 
-      if (error) {
-        console.error('Error fetching news:', error);
-        toast.error('Failed to fetch latest news');
-        return;
+  const fetchFromPerplexity = async (category?: string): Promise<NewsItem[]> => {
+    try {
+      const { data, error } = await supabase.functions.invoke('fetch-perplexity-news', {
+        body: { 
+          searchQuery: searchQuery || undefined,
+          category: category !== 'all' ? category : undefined 
+        },
+      });
+      if (error) throw error;
+      return (data?.news || []).map((item: NewsItem) => ({ ...item, provider: 'perplexity' as const }));
+    } catch (error) {
+      console.error('Perplexity fetch error:', error);
+      return [];
+    }
+  };
+
+  const fetchNews = useCallback(async (category?: string) => {
+    setIsLoading(true);
+    try {
+      let allNews: NewsItem[] = [];
+
+      if (newsSource === 'all') {
+        // Fetch from both sources in parallel
+        const [firecrawlNews, perplexityNews] = await Promise.all([
+          fetchFromFirecrawl(category),
+          fetchFromPerplexity(category),
+        ]);
+        allNews = [...firecrawlNews, ...perplexityNews];
+      } else if (newsSource === 'firecrawl') {
+        allNews = await fetchFromFirecrawl(category);
+      } else {
+        allNews = await fetchFromPerplexity(category);
       }
 
-      if (data?.success && data?.news) {
-        setNewsItems(data.news);
-        setLastFetched(data.fetchedAt);
-        toast.success('News updated successfully');
-      }
+      // Remove duplicates based on similar titles
+      const uniqueNews = allNews.reduce((acc: NewsItem[], current) => {
+        const isDuplicate = acc.some(item => 
+          item.title.toLowerCase().substring(0, 30) === current.title.toLowerCase().substring(0, 30)
+        );
+        if (!isDuplicate) acc.push(current);
+        return acc;
+      }, []);
+
+      setNewsItems(uniqueNews);
+      setLastFetched(new Date().toISOString());
+      toast.success(`Found ${uniqueNews.length} news items`);
     } catch (error) {
       console.error('Error:', error);
       toast.error('Unable to fetch news at this time');
     } finally {
       setIsLoading(false);
     }
-  }, [searchQuery]);
+  }, [searchQuery, newsSource]);
 
   // Initial fetch
   useEffect(() => {
@@ -170,14 +215,45 @@ const News = () => {
             accent="primary"
           />
 
-          {/* Last updated indicator */}
-          {lastFetched && (
-            <div className="text-center mb-4">
-              <span className="text-sm text-muted-foreground">
-                Last updated: {new Date(lastFetched).toLocaleString()}
-              </span>
+          {/* Source selector and last updated */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Source:</span>
+              <div className="flex gap-1">
+                <Button
+                  variant={newsSource === 'all' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setNewsSource('all')}
+                  className="text-xs"
+                >
+                  <Globe className="h-3 w-3 mr-1" />
+                  All Sources
+                </Button>
+                <Button
+                  variant={newsSource === 'firecrawl' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setNewsSource('firecrawl')}
+                  className="text-xs"
+                >
+                  Firecrawl
+                </Button>
+                <Button
+                  variant={newsSource === 'perplexity' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setNewsSource('perplexity')}
+                  className="text-xs"
+                >
+                  <Sparkles className="h-3 w-3 mr-1" />
+                  Perplexity AI
+                </Button>
+              </div>
             </div>
-          )}
+            {lastFetched && (
+              <span className="text-sm text-muted-foreground">
+                Updated: {new Date(lastFetched).toLocaleTimeString()}
+              </span>
+            )}
+          </div>
           
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
             <form onSubmit={handleSearch} className="relative w-full md:max-w-md flex gap-2">
@@ -262,6 +338,12 @@ const News = () => {
                     <CardContent className="flex-grow p-5">
                       <div className="flex items-center gap-2 mb-2 text-xs text-muted-foreground">
                         <span className="font-medium">{item.source}</span>
+                        {item.provider && (
+                          <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
+                            {item.provider === 'perplexity' && <Sparkles className="h-2.5 w-2.5 mr-0.5" />}
+                            {item.provider === 'perplexity' ? 'AI' : 'Web'}
+                          </Badge>
+                        )}
                       </div>
                       <CardTitle className="mb-2 line-clamp-2 text-lg">{item.title}</CardTitle>
                       <CardDescription className="line-clamp-3">{item.summary}</CardDescription>
