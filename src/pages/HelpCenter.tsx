@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Search } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -131,8 +129,6 @@ const HelpCenter = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
-      
       {/* Hero section with search */}
       <section className="pt-16 bg-gradient-to-r from-red-600 to-red-700 text-white">
         <div className="container mx-auto px-4 py-12 md:py-24">
@@ -216,8 +212,6 @@ const HelpCenter = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
     </div>
   );
 };

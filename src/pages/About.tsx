@@ -1,7 +1,5 @@
 
 import { motion } from 'framer-motion';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Helmet } from 'react-helmet-async';
 
@@ -13,9 +11,7 @@ const About = () => {
         <meta name="description" content="Learn about Fuke's Media, an AI-driven VFX studio revolutionizing post-production in the film and entertainment industry." />
       </Helmet>
       
-      <Navbar />
-      
-      <main className="pt-24 pb-16">
+      <main className="pb-16">
         <section className="py-16">
           <div className="container mx-auto px-4">
             <motion.div 
@@ -73,8 +69,6 @@ const About = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   );
 };
