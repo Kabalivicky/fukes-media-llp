@@ -1,1 +1,7 @@
 project_id = "rhonncmgmcpkkfekeksi"
+
+[functions.fetch-industry-news]
+verify_jwt = false
+
+[functions.fetch-perplexity-news]
+verify_jwt = false
