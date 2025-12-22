@@ -1,4 +1,3 @@
-
 import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +8,7 @@ import { Upload, Download, FileVideo, Settings, X, PlayCircle, CheckCircle } fro
 import { useToast } from '@/hooks/use-toast';
 import SEOHelmet from '@/components/SEOHelmet';
 import { mockVideoConversion, validateFileType } from '@/utils/toolsHelper';
+import { AdBanner, DonationButtons } from '@/components/Monetization';
 
 const VideoConverter = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -342,6 +342,16 @@ const VideoConverter = () => {
                 </p>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Ad Banner */}
+          <div className="mt-8">
+            <AdBanner format="horizontal" />
+          </div>
+
+          {/* Support Section */}
+          <div className="mt-8">
+            <DonationButtons />
           </div>
         </div>
       </div>

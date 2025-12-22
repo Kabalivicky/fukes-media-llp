@@ -39,6 +39,7 @@ const Privacy = lazy(() => import('@/pages/Privacy'));
 const Terms = lazy(() => import('@/pages/Terms'));
 const Legal = lazy(() => import('@/pages/Legal'));
 const Careers = lazy(() => import('@/pages/Careers'));
+const Shop = lazy(() => import('@/pages/Shop'));
 
 const AppRouter = () => {
   return (
@@ -72,6 +73,7 @@ const AppRouter = () => {
         <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
         <Route path="/legal" element={<MainLayout><Legal /></MainLayout>} />
         <Route path="/careers" element={<MainLayout><Careers /></MainLayout>} />
+        <Route path="/shop" element={<MainLayout><Shop /></MainLayout>} />
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
       </Routes>
     </Suspense>

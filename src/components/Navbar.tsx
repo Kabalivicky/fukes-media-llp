@@ -52,8 +52,14 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <ThemeToggle />
             
-            <Link to="/news" className="hidden sm:block">
+            <Link to="/shop" className="hidden sm:block">
               <Button variant="outline" size="sm">
+                Shop
+              </Button>
+            </Link>
+            
+            <Link to="/news" className="hidden sm:block">
+              <Button variant="ghost" size="sm">
                 Industry News
               </Button>
             </Link>
