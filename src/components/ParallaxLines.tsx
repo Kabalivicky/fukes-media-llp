@@ -1,6 +1,3 @@
-
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTheme } from '@/components/ui/theme-provider';
 
 interface ParallaxLinesProps {
@@ -13,72 +10,57 @@ interface ParallaxLinesProps {
   direction?: 'vertical' | 'horizontal' | 'diagonal';
 }
 
+/**
+ * Lightweight CSS-only lines for subtle visual effect.
+ * Removed scroll-based animations for better performance.
+ */
 const ParallaxLines = ({ 
-  count = 10, 
+  count = 5, 
   color,
-  opacity = 0.05, 
+  opacity = 0.03, 
   thickness = 1, 
-  speed = 1,
   className = '',
   direction = 'vertical'
 }: ParallaxLinesProps) => {
-  const ref = useRef(null);
   const { theme } = useTheme();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"]
-  });
 
   // Default colors based on theme
-  const defaultColor = theme === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';
+  const defaultColor = theme === 'dark' ? 'hsl(var(--foreground))' : 'hsl(var(--foreground))';
   const lineColor = color || defaultColor;
 
-  const lines = Array(count).fill(0).map((_, i) => {
-    // Create varying speeds for different lines
-    const lineSpeed = speed * (0.8 + (i / count) * 0.4);
-    
-    // Transform each line with a different rate
-    const y = useTransform(
-      scrollYProgress, 
-      [0, 1], 
-      [0, -100 * lineSpeed]
-    );
-    
-    // Calculate positions across viewport with spacing
-    const position = `${(i / count) * 100}%`;
+  const lines = Array(Math.min(count, 8)).fill(0).map((_, i) => {
+    const position = `${((i + 1) / (count + 1)) * 100}%`;
     
     if (direction === 'vertical') {
       return (
-        <motion.div
-          key={`parallax-line-${i}`}
+        <div
+          key={`line-${i}`}
           className="absolute h-full"
           style={{
             left: position,
             width: `${thickness}px`,
             backgroundColor: lineColor,
-            opacity: opacity * (0.5 + (i / count) * 0.5), // Varying opacity
-            y
+            opacity: opacity,
           }}
         />
       );
     } else if (direction === 'horizontal') {
       return (
-        <motion.div
-          key={`parallax-line-${i}`}
+        <div
+          key={`line-${i}`}
           className="absolute w-full"
           style={{
             top: position,
             height: `${thickness}px`,
             backgroundColor: lineColor,
-            opacity: opacity * (0.5 + (i / count) * 0.5), // Varying opacity
-            x: useTransform(scrollYProgress, [0, 1], [0, 100 * lineSpeed])
+            opacity: opacity,
           }}
         />
       );
-    } else { // diagonal
+    } else {
       return (
-        <motion.div
-          key={`parallax-line-${i}`}
+        <div
+          key={`line-${i}`}
           className="absolute"
           style={{
             top: `${(i / count) * 50}%`,
@@ -86,10 +68,9 @@ const ParallaxLines = ({
             width: '150%',
             height: `${thickness}px`,
             backgroundColor: lineColor,
-            opacity: opacity * (0.5 + (i / count) * 0.5),
+            opacity: opacity,
             transform: 'rotate(45deg)',
             transformOrigin: '0 0',
-            y
           }}
         />
       );
@@ -97,10 +78,7 @@ const ParallaxLines = ({
   });
 
   return (
-    <div 
-      ref={ref}
-      className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}
-    >
+    <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
       {lines}
     </div>
   );
