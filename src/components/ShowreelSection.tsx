@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Play, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SectionTitle from '@/components/SectionTitle';
 import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
@@ -10,6 +10,11 @@ const SHOWREEL_VIEW_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n
 
 const ShowreelSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
 
   return (
     <section id="showreel" className="py-20 px-4 bg-muted/10">
@@ -28,29 +33,41 @@ const ShowreelSection = () => {
         >
           <div className="relative aspect-video rounded-xl overflow-hidden border-2 border-primary/20 bg-black shadow-2xl">
             {isPlaying ? (
-              <>
+              <div className="relative w-full h-full">
+                {/* Loading indicator */}
+                {!iframeLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                  </div>
+                )}
+                
                 <iframe
                   src={SHOWREEL_EMBED_URL}
                   className="w-full h-full"
-                  allow="autoplay; encrypted-media"
+                  allow="autoplay; encrypted-media; fullscreen"
                   allowFullScreen
                   title="Fuke's Media Official Showreel 2024"
+                  onLoad={() => setIframeLoaded(true)}
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 />
+                
+                {/* Fallback link - always visible when playing */}
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
                   <a 
                     href={SHOWREEL_VIEW_URL} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-white/70 hover:text-white text-sm underline bg-black/50 px-3 py-1 rounded"
+                    className="inline-flex items-center gap-2 text-white/90 hover:text-white text-sm bg-black/70 hover:bg-black/80 px-4 py-2 rounded-full transition-colors"
                   >
-                    Video not loading? Click here to watch on Google Drive
+                    <ExternalLink className="h-4 w-4" />
+                    Open in Google Drive
                   </a>
                 </div>
-              </>
+              </div>
             ) : (
               <div 
                 className="absolute inset-0 cursor-pointer group"
-                onClick={() => setIsPlaying(true)}
+                onClick={handlePlay}
               >
                 <img 
                   src={showreelThumbnail} 
