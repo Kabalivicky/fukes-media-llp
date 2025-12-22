@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, memo, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
 import ContentCarousel from './ContentCarousel';
 import SectionTitle from './SectionTitle';
 import { Card, CardContent } from '@/components/ui/card';
@@ -303,4 +302,4 @@ const AnimatedProjectsSection = () => {
   );
 };
 
-export default AnimatedProjectsSection;
+export default memo(AnimatedProjectsSection);

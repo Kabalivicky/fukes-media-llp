@@ -192,8 +192,8 @@ const ARVRShowroom = () => {
               position={[10, 10, 5]}
               intensity={1}
               castShadow
-              shadow-mapSize-width={2048}
-              shadow-mapSize-height={2048}
+              shadow-mapSize-width={1024}
+              shadow-mapSize-height={1024}
             />
             <pointLight position={[-10, -10, -5]} intensity={0.5} />
             
