@@ -1,25 +1,32 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import FloatingThemeToggle from '@/components/FloatingThemeToggle';
 import { Toaster } from '@/components/ui/toaster';
 import LightweightBackground from '@/components/LightweightBackground';
+import PageTransition from '@/components/PageTransition';
 
 interface MainLayoutProps {
   children?: React.ReactNode;
-  pageKey?: string;
 }
 
-const MainLayout = ({ children, pageKey }: MainLayoutProps) => {
+const MainLayout = ({ children }: MainLayoutProps) => {
+  const location = useLocation();
+
   return (
     <div className="min-h-screen flex flex-col w-full relative">
       <LightweightBackground />
       <Navbar />
       <main className="flex-1 pt-16 w-full relative z-10" id="main-content">
-        <div className="w-full max-w-none">
-          {children || <Outlet />}
-        </div>
+        <AnimatePresence mode="wait">
+          <PageTransition key={location.pathname}>
+            <div className="w-full max-w-none">
+              {children || <Outlet />}
+            </div>
+          </PageTransition>
+        </AnimatePresence>
       </main>
       <Footer />
       <ScrollToTop />
