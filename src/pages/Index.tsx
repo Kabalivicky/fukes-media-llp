@@ -53,8 +53,6 @@ const Home = () => {
   const {
     scrollY
   } = useScroll();
-  const y1 = useTransform(scrollY, [0, 1000], [0, -150]);
-  const y2 = useTransform(scrollY, [0, 1000], [0, -50]);
   const opacity = useTransform(scrollY, [0, 200, 300], [1, 0.5, 0]);
 
   // Handle scroll events to update animation values with performance optimization
@@ -89,27 +87,6 @@ const Home = () => {
       <SEOHelmet title="Fuke's Media LLP - Award-Winning AI-Driven VFX Studio" description="Award-caliber VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects, AI-assisted production, and innovative storytelling solutions." keywords="award-winning VFX, AI-driven visual effects, cinematic VFX, neural rendering, machine learning VFX, creative studio, film production, Fuke's Media, AI assistant" canonical="https://fukes-media.com" structuredData={structuredData} />
 
       <div className="relative min-h-screen w-full text-foreground overflow-x-hidden">
-        {/* Floating elements in background with will-change for better performance */}
-        <div className="fixed inset-0 -z-10 w-full" aria-hidden="true">
-          <motion.div className="absolute top-1/4 right-[10%] w-64 h-64 rounded-full bg-fukes-blue/10 blur-[100px]" style={{
-          y: y1,
-          willChange: 'transform'
-        }} />
-          <motion.div className="absolute top-[60%] left-[5%] w-72 h-72 rounded-full bg-fukes-red/10 blur-[120px]" style={{
-          y: y2,
-          willChange: 'transform'
-        }} />
-          <motion.div className="absolute top-[30%] left-[20%] w-48 h-48 rounded-full bg-fukes-green/10 blur-[80px]" animate={{
-          x: [0, 30, 0],
-          y: [0, -20, 0]
-        }} transition={{
-          duration: 15,
-          repeat: Infinity,
-          repeatType: "reverse"
-        }} style={{
-          willChange: 'transform'
-        }} />
-        </div>
         
         {/* Main Content with Motion Effects */}
         <main id="main-content" className="relative z-10">
