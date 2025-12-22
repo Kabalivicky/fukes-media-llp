@@ -1,5 +1,5 @@
 
-import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Calculator, MessagesSquare, Headset, Monitor, Globe, GitBranch, Brain } from 'lucide-react';
+import { UserIcon, FileText, FilmIcon, Palette, ChevronRight, Users, MessagesSquare, Headset, Monitor, Globe, GitBranch, Brain } from 'lucide-react';
 import { DropdownSection } from './types';
 
 // Mega menu dropdown sections
@@ -94,7 +94,7 @@ export const megaMenuSections = {
   },
   resources: {
     title: "Resources",
-    path: "/resources",
+    path: "/vfx-research",
     items: [
       {
         title: "VFX Research",
@@ -149,13 +149,6 @@ export const megaMenuSections = {
         href: "/freelancer-portal",
         description: "Access your freelancer dashboard, projects and payments",
         icon: UserIcon,
-        isAnchor: false
-      },
-      {
-        title: "Advanced Pricing Calculator",
-        href: "/advanced-pricing",
-        description: "Get detailed estimates with our comprehensive pricing tool",
-        icon: Calculator,
         isAnchor: false
       },
       {

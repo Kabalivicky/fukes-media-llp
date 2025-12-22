@@ -92,7 +92,6 @@ const MobileNav = () => {
               { name: "Services", path: "/services" },
               { name: "AI Tools", path: "/ai-tools" },
               { name: "Team", path: "/team" },
-              { name: "Pricing", path: "/pricing" },
               { name: "Contact", path: "/#contact" }
             ].map((link, index) => (
               <a 

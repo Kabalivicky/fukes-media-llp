@@ -14,9 +14,6 @@ const Home = lazy(() => import('@/pages/Index'));
 const About = lazy(() => import('@/pages/About'));
 const Services = lazy(() => import('@/pages/Services'));
 const Team = lazy(() => import('@/pages/Team'));
-const Pricing = lazy(() => import('@/pages/Pricing'));
-const AdvancedPricing = lazy(() => import('@/pages/AdvancedPricing'));
-const Resources = lazy(() => import('@/pages/Resources'));
 const VFXResearch = lazy(() => import('@/pages/VFXResearch'));
 const VFXIndustryInsights = lazy(() => import('@/pages/VFXIndustryInsights'));
 const ContractBuilder = lazy(() => import('@/pages/ContractBuilder'));
@@ -62,9 +59,6 @@ const AppRouter = () => {
         <Route path="/about" element={<MainLayout><About /></MainLayout>} />
         <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
         <Route path="/team" element={<MainLayout><Team /></MainLayout>} />
-        <Route path="/pricing" element={<MainLayout><Pricing /></MainLayout>} />
-        <Route path="/advanced-pricing" element={<MainLayout><AdvancedPricing /></MainLayout>} />
-        <Route path="/resources" element={<MainLayout><Resources /></MainLayout>} />
         <Route path="/vfx-research" element={<MainLayout><VFXResearch /></MainLayout>} />
         <Route path="/vfx-industry-insights" element={<MainLayout><VFXIndustryInsights /></MainLayout>} />
         <Route path="/contract-builder" element={<MainLayout><ContractBuilder /></MainLayout>} />
