@@ -1,13 +1,10 @@
-
-import { useState } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useState, ReactNode } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ExpansibleTabProps {
-  title: React.ReactNode; // Changed from string to ReactNode to accept both strings and elements
-  children: React.ReactNode;
+  title: ReactNode;
+  children: ReactNode;
   defaultOpen?: boolean;
   className?: string;
   titleClassName?: string;
@@ -16,33 +13,36 @@ interface ExpansibleTabProps {
 const ExpansibleTab = ({ 
   title, 
   children, 
-  defaultOpen = false,
+  defaultOpen = false, 
   className = '',
   titleClassName = ''
 }: ExpansibleTabProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <Collapsible 
-      open={isOpen} 
-      onOpenChange={setIsOpen}
-      className={cn("w-full border rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:border-primary/50", className)}
-    >
-      <div className="flex items-center justify-between p-4 bg-muted/30 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
-        <h3 className={cn("text-lg font-medium", titleClassName)}>
-          {title}
-        </h3>
-        <CollapsibleTrigger asChild onClick={(e) => e.stopPropagation()}>
-          <Button variant="ghost" size="sm" className="w-9 p-0 hover:bg-primary/20">
-            {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            <span className="sr-only">Toggle</span>
-          </Button>
-        </CollapsibleTrigger>
-      </div>
-      <CollapsibleContent className="p-4 transition-all duration-300 animate-accordion-down">
-        {children}
-      </CollapsibleContent>
-    </Collapsible>
+    <div className={cn("border rounded-lg overflow-hidden", className)}>
+      <button
+        className={cn(
+          "flex justify-between items-center w-full p-4 bg-muted/30 hover:bg-muted/50 transition-colors text-left",
+          titleClassName
+        )}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div className="font-medium">{title}</div>
+        <ChevronDown 
+          className={cn(
+            "h-5 w-5 transition-transform duration-200",
+            isOpen && "rotate-180"
+          )} 
+        />
+      </button>
+      
+      {isOpen && (
+        <div className="p-4 border-t border-border">
+          {children}
+        </div>
+      )}
+    </div>
   );
 };
 

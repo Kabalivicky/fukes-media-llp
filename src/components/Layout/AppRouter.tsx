@@ -15,7 +15,6 @@ const About = lazy(() => import('@/pages/About'));
 const Services = lazy(() => import('@/pages/Services'));
 const Team = lazy(() => import('@/pages/Team'));
 const VFXResearch = lazy(() => import('@/pages/VFXResearch'));
-const VFXIndustryInsights = lazy(() => import('@/pages/VFXIndustryInsights'));
 const ContractBuilder = lazy(() => import('@/pages/ContractBuilder'));
 const FreelancerPortal = lazy(() => import('@/pages/FreelancerPortal'));
 const Auth = lazy(() => import('@/pages/Auth'));
@@ -25,10 +24,6 @@ const ProductionGuidelines = lazy(() => import('@/pages/ProductionGuidelines'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const News = lazy(() => import('@/pages/News'));
 const ChatAssistant = lazy(() => import('@/pages/ChatAssistant'));
-const VirtualProduction = lazy(() => import('@/pages/VirtualProduction'));
-const ARVRShowroom = lazy(() => import('@/pages/ARVRShowroom'));
-const MetaStudio = lazy(() => import('@/pages/MetaStudio'));
-const RealTimePipeline = lazy(() => import('@/pages/RealTimePipeline'));
 const AITools = lazy(() => import('@/pages/AITools'));
 const VideoConverter = lazy(() => import('@/pages/tools/VideoConverter'));
 const ImageConverter = lazy(() => import('@/pages/tools/ImageConverter'));
@@ -37,8 +32,6 @@ const CodeConverter = lazy(() => import('@/pages/tools/CodeConverter'));
 const ColorConverter = lazy(() => import('@/pages/tools/ColorConverter'));
 const TextConverter = lazy(() => import('@/pages/tools/TextConverter'));
 const DocumentConverter = lazy(() => import('@/pages/tools/DocumentConverter'));
-const BlockchainIntegration = lazy(() => import('@/components/BlockchainIntegration'));
-const GamifiedLearning = lazy(() => import('@/components/GamifiedLearning'));
 const Portfolio = lazy(() => import('@/pages/Portfolio'));
 const Showreel = lazy(() => import('@/pages/Showreel'));
 const Contact = lazy(() => import('@/pages/Contact'));
@@ -46,7 +39,6 @@ const Privacy = lazy(() => import('@/pages/Privacy'));
 const Terms = lazy(() => import('@/pages/Terms'));
 const Legal = lazy(() => import('@/pages/Legal'));
 const Careers = lazy(() => import('@/pages/Careers'));
-const Investors = lazy(() => import('@/pages/Investors'));
 
 const AppRouter = () => {
   return (
@@ -60,7 +52,6 @@ const AppRouter = () => {
         <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
         <Route path="/team" element={<MainLayout><Team /></MainLayout>} />
         <Route path="/vfx-research" element={<MainLayout><VFXResearch /></MainLayout>} />
-        <Route path="/vfx-industry-insights" element={<MainLayout><VFXIndustryInsights /></MainLayout>} />
         <Route path="/contract-builder" element={<MainLayout><ContractBuilder /></MainLayout>} />
         <Route path="/freelancer-portal" element={<MainLayout><FreelancerPortal /></MainLayout>} />
         <Route path="/auth" element={<Auth />} />
@@ -69,10 +60,6 @@ const AppRouter = () => {
         <Route path="/production-guidelines" element={<MainLayout><ProductionGuidelines /></MainLayout>} />
         <Route path="/news" element={<MainLayout><News /></MainLayout>} />
         <Route path="/chat-assistant" element={<MainLayout><ChatAssistant /></MainLayout>} />
-        <Route path="/virtual-production" element={<MainLayout><VirtualProduction /></MainLayout>} />
-        <Route path="/ar-vr-showroom" element={<MainLayout><ARVRShowroom /></MainLayout>} />
-        <Route path="/meta-studio" element={<MainLayout><MetaStudio /></MainLayout>} />
-        <Route path="/real-time-pipeline" element={<MainLayout><RealTimePipeline /></MainLayout>} />
         <Route path="/ai-tools" element={<MainLayout><AITools /></MainLayout>} />
         <Route path="/tools/video-converter" element={<MainLayout><VideoConverter /></MainLayout>} />
         <Route path="/tools/image-converter" element={<MainLayout><ImageConverter /></MainLayout>} />
@@ -81,13 +68,10 @@ const AppRouter = () => {
         <Route path="/tools/color-converter" element={<MainLayout><ColorConverter /></MainLayout>} />
         <Route path="/tools/text-converter" element={<MainLayout><TextConverter /></MainLayout>} />
         <Route path="/tools/document-converter" element={<MainLayout><DocumentConverter /></MainLayout>} />
-        <Route path="/blockchain" element={<MainLayout><BlockchainIntegration /></MainLayout>} />
-        <Route path="/learning" element={<MainLayout><GamifiedLearning /></MainLayout>} />
         <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />
         <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
         <Route path="/legal" element={<MainLayout><Legal /></MainLayout>} />
         <Route path="/careers" element={<MainLayout><Careers /></MainLayout>} />
-        <Route path="/investors" element={<MainLayout><Investors /></MainLayout>} />
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
       </Routes>
     </Suspense>
