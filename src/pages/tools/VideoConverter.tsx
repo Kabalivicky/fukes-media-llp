@@ -3,14 +3,12 @@ import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Upload, Download, FileVideo, Settings, X, PlayCircle, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
-import { mockVideoConversion, formatFileSize, validateFileType } from '@/utils/toolsHelper';
+import { mockVideoConversion, validateFileType } from '@/utils/toolsHelper';
 
 const VideoConverter = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -161,7 +159,7 @@ const VideoConverter = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <SEOHelmet 
         title="Video Converter - Fuke's Media"
         description="Convert video files between different formats with high quality preservation"
@@ -347,7 +345,7 @@ const VideoConverter = () => {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

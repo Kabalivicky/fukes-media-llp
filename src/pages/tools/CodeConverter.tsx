@@ -5,8 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Code, Copy, Download, Settings } from 'lucide-react';
-import MainLayout from '@/components/Layout/MainLayout';
+import { Code, Copy, Settings } from 'lucide-react';
 import SEOHelmet from '@/components/SEOHelmet';
 
 const CodeConverter = () => {
@@ -71,7 +70,7 @@ const CodeConverter = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <SEOHelmet 
         title="Code Converter - Fuke's Media"
         description="Convert code between different programming languages with AI assistance"
@@ -188,7 +187,7 @@ const CodeConverter = () => {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 };
 
