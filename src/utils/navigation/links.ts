@@ -1,5 +1,5 @@
 
-import { UserIcon, FileText, FilmIcon, Code, Palette, ChevronRight, Zap, Users, Home, Calculator, MessagesSquare, Headset, Monitor, Globe, GitBranch, Brain } from 'lucide-react';
+import { UserIcon, FileText, FilmIcon, ChevronRight, Users, Home, MessagesSquare, Headset, Monitor, Globe, GitBranch, Brain } from 'lucide-react';
 import { NavLink } from './types';
 
 // Main navigation links
@@ -10,11 +10,8 @@ export const mainNavLinks: NavLink[] = [
   { name: "AI Tools", path: "/ai-tools", icon: Brain, description: "AI-powered VFX tools and features" },
   { name: "VFX Research", path: "/vfx-research", icon: ChevronRight },
   { name: "VFX Industry Insights", path: "/vfx-industry-insights", icon: ChevronRight },
-  { name: "Resources", path: "/resources", icon: ChevronRight },
   { name: "Help Center", path: "/help-center", icon: ChevronRight },
   { name: "Production Guidelines", path: "/production-guidelines", icon: ChevronRight },
-  { name: "Pricing", path: "/pricing", icon: ChevronRight },
-  { name: "Advanced Pricing", path: "/advanced-pricing", icon: Calculator, description: "Detailed estimate with advanced options" },
   { name: "Contract Builder", path: "/contract-builder", icon: FileText },
   { name: "Freelancer Portal", path: "/freelancer-portal", icon: UserIcon },
   { name: "Team", path: "/team", icon: Users },

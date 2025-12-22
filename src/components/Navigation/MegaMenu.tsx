@@ -8,11 +8,10 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
-import { Home, Calculator, Palette, FileText, Users } from 'lucide-react';
+import { Home, Palette, Users } from 'lucide-react';
 import { handleAnchorClick, isLinkActive } from '@/utils/navigationData';
 import AboutDropdown from './AboutDropdown';
 import ServicesDropdown from './ServicesDropdown';
-import ResourcesDropdown from './ResourcesDropdown';
 import ToolsDropdown from './ToolsDropdown';
 
 const MegaMenu = () => {
@@ -56,9 +55,6 @@ const MegaMenu = () => {
         {/* Services Dropdown */}
         <ServicesDropdown />
 
-        {/* Resources Dropdown */}
-        <ResourcesDropdown />
-
         {/* Tools Dropdown */}
         <ToolsDropdown />
 
@@ -74,21 +70,6 @@ const MegaMenu = () => {
           >
             <Palette className="mr-2 h-4 w-4" />
             Portfolio
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-
-        {/* Pricing */}
-        <NavigationMenuItem>
-          <NavigationMenuLink 
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "cursor-pointer",
-              isLinkActive(currentPath, '/pricing') ? "text-primary font-medium" : ""
-            )}
-            onClick={() => handleNavigation('/pricing')}
-          >
-            <Calculator className="mr-2 h-4 w-4" />
-            Pricing
           </NavigationMenuLink>
         </NavigationMenuItem>
         

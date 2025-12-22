@@ -91,8 +91,7 @@ const Footer = () => {
                 { name: 'VFX Solutions', path: '/services/vfx' },
                 { name: 'Creative Services', path: '/services/creative' },
                 { name: 'Digital Intermediate', path: '/services/di' },
-                { name: 'Tech Innovation', path: '/services/tech' },
-                { name: 'Pricing', path: '/pricing' }
+                { name: 'Tech Innovation', path: '/services/tech' }
               ].map((item, index) => (
                 <li key={index}>
                   <Link 
