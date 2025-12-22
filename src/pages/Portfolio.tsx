@@ -5,10 +5,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Play, Eye, Award, Filter, X } from 'lucide-react';
+import { Play, Award } from 'lucide-react';
 import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
-import AnimatedProjectsSection from '@/components/AnimatedProjectsSection';
 import SEOHelmet from '@/components/SEOHelmet';
 import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
 
@@ -138,8 +137,6 @@ const Portfolio = () => {
       />
 
       <MainLayout pageKey="portfolio">
-        {/* Featured Projects with Animations */}
-        <AnimatedProjectsSection />
         
         <section className="py-20 px-4">
           <SectionTitle

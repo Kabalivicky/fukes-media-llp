@@ -5,7 +5,6 @@ import VFXGlobalMap from '@/components/VFXResearch/VFXGlobalMap';
 import VFXRegionalSpotlight from '@/components/VFXResearch/VFXRegionalSpotlight';
 import VFXDataHighlights from '@/components/VFXResearch/VFXDataHighlights';
 import VFXIndustryTrends from '@/components/VFXResearch/VFXIndustryTrends';
-import IndustryPartnersSection from '@/components/IndustryPartnersSection';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Globe, Database, TrendingUp, MapPin } from 'lucide-react';
 import VFXSponsorsSection from '@/components/VFXResearch/VFXSponsorsSection';
@@ -116,10 +115,7 @@ const VFXResearch = () => {
               <ChevronDown className="h-5 w-5 transform rotate-180 group-hover:translate-y-[-2px] transition-transform" />
             </Button>
           </motion.div>
-          
-          <motion.section variants={itemVariants}>
-            <IndustryPartnersSection />
-          </motion.section>
+        
         </motion.div>
       </main>
     </div>
