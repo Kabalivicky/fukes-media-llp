@@ -53,7 +53,7 @@ const HelpCategoryCard = ({ category }: HelpCategoryCardProps) => {
           <motion.div 
             className="w-14 h-14 rounded-md bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center shrink-0 mr-4 border border-primary/10"
             whileHover={{ scale: 1.1, rotate: 5 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
             aria-hidden="true"
           >
             <img src={generateIcon(name)} alt={`${name} category icon`} className="w-8 h-8 object-contain" />

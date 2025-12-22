@@ -28,10 +28,11 @@ export const logToolUsage = async (usage: ToolUsageData) => {
       });
 
     if (error) {
-      console.error('Error logging tool usage:', error);
+      // Silent fail - tool usage logging is non-critical analytics
+      return;
     }
-  } catch (error) {
-    console.error('Error logging tool usage:', error);
+  } catch {
+    // Silent fail - tool usage logging is non-critical analytics
   }
 };
 

@@ -127,9 +127,9 @@ export const getUserCountry = (): string => {
     }
     
     return 'IN'; // Default to India
-  } catch (error) {
-    console.error("Error detecting user location:", error);
-    return 'IN'; // Default to India
+  } catch {
+    // Silent fallback to India - location detection is non-critical
+    return 'IN';
   }
 };
 

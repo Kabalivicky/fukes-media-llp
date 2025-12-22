@@ -61,7 +61,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
             <motion.div 
               className="flex items-center text-sm font-medium leading-none relative z-10"
               whileHover={{ x: 5 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               {icon && (
                 <motion.span 

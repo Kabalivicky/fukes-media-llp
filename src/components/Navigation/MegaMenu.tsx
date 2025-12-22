@@ -33,7 +33,7 @@ const MegaMenu = () => {
   };
   
   return (
-    <NavigationMenu className="hidden lg:flex">
+    <NavigationMenu className="hidden lg:flex" aria-label="Main navigation">
       <NavigationMenuList>
         {/* Home */}
         <NavigationMenuItem>

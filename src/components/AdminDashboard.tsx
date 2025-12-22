@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { BarChart, Users, Activity, FileVideo, FileImage, FileAudio, TrendingUp, Calendar } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 
 interface ToolUsage {
   id: string;
@@ -47,6 +48,7 @@ const AdminDashboard = () => {
       calculateStats(data || []);
     } catch (error) {
       console.error('Error fetching tool usage:', error);
+      toast.error('Failed to load dashboard data. Please try again.');
     } finally {
       setLoading(false);
     }

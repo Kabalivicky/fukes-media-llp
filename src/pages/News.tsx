@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import SEOHelmet from '@/components/SEOHelmet';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -139,12 +139,39 @@ const News = () => {
     }
   };
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Industry News & Updates",
+    "description": "Stay updated with the latest news and trends in VFX, production, post-production, and creative industries worldwide.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Fuke's Media LLP",
+      "url": "https://fukes-media.com"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": filteredNews.slice(0, 5).map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "NewsArticle",
+          "headline": item.title,
+          "description": item.summary,
+          "datePublished": item.date
+        }
+      }))
+    }
+  };
+
   return (
     <>
-      <Helmet>
-        <title>Industry News | Fuke's Media - VFX & Creative Studio</title>
-        <meta name="description" content="Stay updated with the latest news and trends in VFX, production, post-production, and creative industries worldwide." />
-      </Helmet>
+      <SEOHelmet
+        title="Industry News | Fuke's Media - VFX & Creative Studio"
+        description="Stay updated with the latest news and trends in VFX, production, post-production, and creative industries worldwide."
+        keywords="VFX news, film industry news, post-production news, creative technology, visual effects trends"
+        structuredData={structuredData}
+      />
       
       <main className="container mx-auto px-4 pt-24 pb-16">
         <motion.div

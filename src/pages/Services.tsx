@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Check, Sparkles, Film, Palette, Layers, Code, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import SEOHelmet from '@/components/SEOHelmet';
 
 const Services = () => {
   // Animation variants
@@ -90,12 +90,38 @@ const Services = () => {
     }
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "VFX and Creative Services",
+    "provider": {
+      "@type": "Organization",
+      "name": "Fuke's Media LLP",
+      "url": "https://fukes-media.com"
+    },
+    "areaServed": "Worldwide",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "VFX Services",
+      "itemListElement": services.map(service => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": service.title,
+          "description": service.description
+        }
+      }))
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Helmet>
-        <title>Services | Fuke's Media - AI-Driven VFX & Creative Studio</title>
-        <meta name="description" content="Explore our comprehensive range of VFX, creative, digital intermediate, and technology innovation services." />
-      </Helmet>
+      <SEOHelmet
+        title="Services | Fuke's Media - AI-Driven VFX & Creative Studio"
+        description="Explore our comprehensive range of VFX, creative, digital intermediate, and technology innovation services."
+        keywords="VFX services, visual effects, creative services, digital intermediate, tech innovation, film production"
+        structuredData={structuredData}
+      />
       
       <main className="pb-16">
         <section className="py-16">
