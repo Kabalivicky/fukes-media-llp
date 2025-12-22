@@ -1,4 +1,3 @@
-
 import { cn } from '@/lib/utils';
 // Force TypeScript to refresh interface
 
@@ -11,7 +10,6 @@ interface SectionTitleProps {
   titleClassName?: string;
   subtitleClassName?: string;
 }
-
 const SectionTitle = ({
   title,
   subtitle,
@@ -19,14 +17,13 @@ const SectionTitle = ({
   accent,
   className,
   titleClassName,
-  subtitleClassName,
+  subtitleClassName
 }: SectionTitleProps) => {
   const alignmentClasses = {
     left: 'text-left',
     center: 'text-center',
-    right: 'text-right',
+    right: 'text-right'
   };
-
   const getAccentColor = () => {
     switch (accent) {
       case 'primary':
@@ -43,27 +40,11 @@ const SectionTitle = ({
         return 'from-primary via-secondary to-accent';
     }
   };
-
-  return (
-    <div className={cn('mb-10', alignmentClasses[alignment], className)}>
-      <h2 
-        className={cn(
-          'text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight',
-          'bg-clip-text text-transparent bg-gradient-to-r',
-          getAccentColor(),
-          'animate-gradient',
-          titleClassName
-        )}
-      >
-        {title}
-      </h2>
-      {subtitle && (
-        <p className={cn('mt-4 text-lg text-muted-foreground max-w-3xl mx-auto', subtitleClassName)}>
+  return <div className={cn('mb-10', alignmentClasses[alignment], className)}>
+      
+      {subtitle && <p className={cn('mt-4 text-lg text-muted-foreground max-w-3xl mx-auto', subtitleClassName)}>
           {subtitle}
-        </p>
-      )}
-    </div>
-  );
+        </p>}
+    </div>;
 };
-
 export default SectionTitle;
