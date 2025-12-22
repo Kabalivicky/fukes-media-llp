@@ -9,6 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { Upload, Download, FileImage, Settings } from 'lucide-react';
 import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
+import { toast } from 'sonner';
 
 const ImageConverter = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -54,10 +55,10 @@ const ImageConverter = () => {
 
   const handleConvert = () => {
     if (!selectedFile || !outputFormat) {
-      alert('Please select a file and output format');
+      toast.error('Please select a file and output format');
       return;
     }
-    console.log('Converting:', selectedFile.name, 'to', outputFormat);
+    toast.success(`Converting ${selectedFile.name} to ${outputFormat}...`);
   };
 
   return (

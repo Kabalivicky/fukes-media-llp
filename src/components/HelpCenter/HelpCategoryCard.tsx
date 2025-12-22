@@ -56,7 +56,7 @@ const HelpCategoryCard = ({ category }: HelpCategoryCardProps) => {
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
             aria-hidden="true"
           >
-            <img src={generateIcon(name)} alt="" className="w-8 h-8 object-contain" />
+            <img src={generateIcon(name)} alt={`${name} category icon`} className="w-8 h-8 object-contain" />
           </motion.div>
           <h3 id={`category-title-${id}`} className="text-xl font-medium">{name}</h3>
         </div>

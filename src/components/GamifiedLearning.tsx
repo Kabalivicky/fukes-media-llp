@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -178,8 +179,7 @@ const GamifiedLearning = () => {
   };
 
   const startModule = (moduleId: string) => {
-    // Simulate starting a learning module
-    console.log(`Starting module: ${moduleId}`);
+    toast.info(`Starting module: ${moduleId}`);
   };
 
   return (
