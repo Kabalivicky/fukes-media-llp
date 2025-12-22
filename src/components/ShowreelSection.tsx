@@ -48,7 +48,6 @@ const ShowreelSection = () => {
                   allowFullScreen
                   title="Fuke's Media Official Showreel 2024"
                   onLoad={() => setIframeLoaded(true)}
-                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 />
                 
                 {/* Fallback link - always visible when playing */}
