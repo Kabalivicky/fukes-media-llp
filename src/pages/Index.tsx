@@ -7,6 +7,7 @@ import PricingCalculator from '@/components/PricingCalculator';
 import PortfolioSection from '@/components/PortfolioSection';
 import TeamSection from '@/components/TeamSection';
 import CareersSection from '@/components/CareersSection';
+import ShowreelSection from '@/components/ShowreelSection';
 
 import ContactSection from '@/components/ContactSection';
 import SEOHelmet from '@/components/SEOHelmet';
@@ -136,6 +137,18 @@ const Home = () => {
 
           <ErrorBoundary>
             <HeroSection />
+          </ErrorBoundary>
+
+          {/* Showreel Section */}
+          <ErrorBoundary>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUpVariants}
+            >
+              <ShowreelSection />
+            </motion.div>
           </ErrorBoundary>
           
           <div id="services" ref={(el) => sectionsRef.current.services = el}>
