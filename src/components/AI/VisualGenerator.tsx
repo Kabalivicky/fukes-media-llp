@@ -162,7 +162,7 @@ const VisualGenerator = () => {
                 <div className="relative group">
                   <img
                     src={image}
-                    alt={`Generated image ${index + 1}`}
+                    alt={`AI-generated visual for ${prompt || 'creative project'} - variation ${index + 1}`}
                     className="w-full h-64 object-cover"
                   />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

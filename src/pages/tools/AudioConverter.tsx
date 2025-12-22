@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Upload, Download, FileAudio, Settings } from 'lucide-react';
 import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
+import { toast } from 'sonner';
 
 const AudioConverter = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -57,10 +58,10 @@ const AudioConverter = () => {
 
   const handleConvert = () => {
     if (!selectedFile || !outputFormat) {
-      alert('Please select a file and output format');
+      toast.error('Please select a file and output format');
       return;
     }
-    console.log('Converting:', selectedFile.name, 'to', outputFormat);
+    toast.success(`Converting ${selectedFile.name} to ${outputFormat}...`);
   };
 
   return (

@@ -11,6 +11,7 @@ import { ChevronDown, Globe, Database, TrendingUp, MapPin } from 'lucide-react';
 import VFXSponsorsSection from '@/components/VFXResearch/VFXSponsorsSection';
 import { motion } from 'framer-motion';
 import AnimatedIcon from '@/components/AnimatedIcon';
+import SEOHelmet from '@/components/SEOHelmet';
 
 const VFXResearch = () => {
   const [activeRegion, setActiveRegion] = useState('global');
@@ -32,8 +33,14 @@ const VFXResearch = () => {
   };
   
   return (
-    <div className="min-h-screen text-foreground">
-      <main className="pb-20">
+    <>
+      <SEOHelmet
+        title="VFX Research - Visual Effects World Atlas | Fuke's Media"
+        description="Comprehensive study of the global VFX industry landscape, workforce distribution, and emerging trends in visual effects."
+        keywords="VFX research, visual effects industry, VFX trends, global VFX, VFX workforce, animation industry"
+      />
+      <div className="min-h-screen text-foreground">
+        <main className="pb-20">
         <motion.div 
           className="container mx-auto px-4 py-10"
           initial="hidden"
@@ -116,6 +123,7 @@ const VFXResearch = () => {
         </motion.div>
       </main>
     </div>
+    </>
   );
 };
 

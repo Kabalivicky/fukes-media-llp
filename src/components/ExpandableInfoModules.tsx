@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -113,11 +114,9 @@ const ExpandableInfoModules = () => {
     const hasAllSelections = modules.every(module => selectedOptions[module.id]);
     
     if (hasAllSelections) {
-      // Simulate quote generation
-      console.log('Generating quote for:', selectedOptions);
-      alert('Quote generated! A detailed proposal will be sent to your email.');
+      toast.success('Quote generated! A detailed proposal will be sent to your email.');
     } else {
-      alert('Please select an option from each module to generate a quote.');
+      toast.error('Please select an option from each module to generate a quote.');
     }
   };
 
