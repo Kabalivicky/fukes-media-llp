@@ -1,7 +1,5 @@
 
 import { motion } from 'framer-motion';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -142,9 +140,7 @@ const Resources = () => {
         <meta name="description" content="Access free templates, tutorials, guides, and articles to elevate your VFX and creative production workflows." />
       </Helmet>
       
-      <Navbar />
-      
-      <main className="pt-24 pb-16">
+      <main className="pb-16">
         <section className="py-16">
           <div className="container mx-auto px-4">
             <motion.div 
@@ -340,8 +336,6 @@ const Resources = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   );
 };

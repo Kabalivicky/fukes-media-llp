@@ -1,7 +1,5 @@
 
 import { useState } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import VFXResearchIntro from '@/components/VFXResearch/VFXResearchIntro';
 import VFXGlobalMap from '@/components/VFXResearch/VFXGlobalMap';
 import VFXRegionalSpotlight from '@/components/VFXResearch/VFXRegionalSpotlight';
@@ -35,9 +33,7 @@ const VFXResearch = () => {
   
   return (
     <div className="min-h-screen text-foreground">
-      <Navbar />
-      
-      <main className="pt-20 pb-20">
+      <main className="pb-20">
         <motion.div 
           className="container mx-auto px-4 py-10"
           initial="hidden"
@@ -119,8 +115,6 @@ const VFXResearch = () => {
           </motion.section>
         </motion.div>
       </main>
-      
-      <Footer />
     </div>
   );
 };

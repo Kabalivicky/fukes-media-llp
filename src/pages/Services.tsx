@@ -1,7 +1,5 @@
 
 import { motion } from 'framer-motion';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -99,9 +97,7 @@ const Services = () => {
         <meta name="description" content="Explore our comprehensive range of VFX, creative, digital intermediate, and technology innovation services." />
       </Helmet>
       
-      <Navbar />
-      
-      <main className="pt-24 pb-16">
+      <main className="pb-16">
         <section className="py-16">
           <div className="container mx-auto px-4">
             <motion.div 
@@ -226,8 +222,6 @@ const Services = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   );
 };

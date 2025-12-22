@@ -1,6 +1,4 @@
 
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import ProductionGuidelines from '@/components/HelpCenter/ProductionGuidelines';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from 'react-router-dom';
@@ -8,10 +6,8 @@ import { Link } from 'react-router-dom';
 const ProductionGuidelinesPage = () => {
   return (
     <div className="min-h-screen">
-      <Navbar />
-      
       {/* Hero banner */}
-      <section className="pt-16 bg-gradient-to-r from-red-600 to-red-700 text-white">
+      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white">
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="flex items-center mb-4">
             <Breadcrumb className="text-sm text-white/80">
@@ -47,8 +43,6 @@ const ProductionGuidelinesPage = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
     </div>
   );
 };

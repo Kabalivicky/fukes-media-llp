@@ -2,8 +2,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SectionTitle from '@/components/SectionTitle';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Bookmark, Calendar, Clock, MessageCircle, Search, Share2, TrendingUp } from 'lucide-react';
-import MainLayout from '@/components/Layout/MainLayout';
 
 interface NewsItem {
   id: string;
@@ -143,7 +140,7 @@ const News = () => {
   };
 
   return (
-    <MainLayout pageKey="news">
+    <>
       <Helmet>
         <title>Industry News | Fuke's Media - VFX & Creative Studio</title>
         <meta name="description" content="Stay updated with the latest news and trends in VFX, production, post-production, and creative industries worldwide." />
@@ -254,7 +251,7 @@ const News = () => {
           )}
         </motion.div>
       </main>
-    </MainLayout>
+    </>
   );
 };
 
