@@ -1,11 +1,59 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import MainLayout from '@/components/Layout/MainLayout';
 
-// Loading component
+// Enhanced loading component
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+  <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
+    {/* Background glow */}
+    <div className="absolute w-64 h-64 rounded-full bg-primary/10 blur-3xl animate-pulse" />
+    
+    <div className="relative z-10 flex flex-col items-center gap-6">
+      {/* Animated spinner */}
+      <div className="relative">
+        <motion.div 
+          className="w-16 h-16 rounded-full border-4 border-primary/20"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute inset-0 w-16 h-16 rounded-full border-4 border-transparent border-t-primary"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute inset-2 w-12 h-12 rounded-full border-2 border-transparent border-b-primary/50"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
+      
+      {/* Loading text */}
+      <motion.div 
+        className="flex gap-1"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        {['L', 'o', 'a', 'd', 'i', 'n', 'g'].map((letter, i) => (
+          <motion.span
+            key={i}
+            className="text-muted-foreground text-sm font-medium"
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.1 }}
+          >
+            {letter}
+          </motion.span>
+        ))}
+        <motion.span
+          className="text-muted-foreground text-sm"
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+        >
+          ...
+        </motion.span>
+      </motion.div>
+    </div>
   </div>
 );
 
