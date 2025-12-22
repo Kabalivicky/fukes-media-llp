@@ -8,7 +8,6 @@ import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
 import { Upload, Download, FileImage, Settings, X, Image, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
 
 const ImageConverter = () => {
@@ -162,7 +161,7 @@ const ImageConverter = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <SEOHelmet 
         title="Image Converter - Fuke's Media"
         description="Convert and optimize images between different formats with quality control"
@@ -400,7 +399,7 @@ const ImageConverter = () => {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

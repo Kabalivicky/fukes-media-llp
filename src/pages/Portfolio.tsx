@@ -3,10 +3,9 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Play, Award } from 'lucide-react';
-import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
 import SEOHelmet from '@/components/SEOHelmet';
 import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
@@ -136,9 +135,7 @@ const Portfolio = () => {
         structuredData={structuredData}
       />
 
-      <MainLayout pageKey="portfolio">
-        
-        <section className="py-20 px-4">
+      <section className="py-20 px-4">
           <SectionTitle
             title="Technical Showcase & Archive"
             subtitle="Detailed breakdown of our technical expertise and production capabilities"
@@ -350,7 +347,6 @@ const Portfolio = () => {
             </motion.div>
           </div>
         </section>
-      </MainLayout>
     </>
   );
 };

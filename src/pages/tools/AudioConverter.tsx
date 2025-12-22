@@ -6,7 +6,6 @@ import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Upload, Download, FileAudio, Settings, X, Music, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
 
 const AudioConverter = () => {
@@ -153,7 +152,7 @@ const AudioConverter = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <SEOHelmet 
         title="Audio Converter - Fuke's Media"
         description="Convert audio files between different formats with customizable bitrates"
@@ -340,7 +339,7 @@ const AudioConverter = () => {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

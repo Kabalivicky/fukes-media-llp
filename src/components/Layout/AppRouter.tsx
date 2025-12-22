@@ -45,7 +45,7 @@ const AppRouter = () => {
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/portfolio" element={<MainLayout><Portfolio /></MainLayout>} />
         <Route path="/showreel" element={<MainLayout><Showreel /></MainLayout>} />
         <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
         <Route path="/about" element={<MainLayout><About /></MainLayout>} />

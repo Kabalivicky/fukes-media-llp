@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Copy, Palette } from 'lucide-react';
-import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
 
 const ColorConverter = () => {
@@ -113,7 +112,7 @@ const ColorConverter = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <SEOHelmet 
         title="Color Converter - Fuke's Media"
         description="Convert colors between HEX, RGB, and HSL formats with live preview"
@@ -302,7 +301,7 @@ const ColorConverter = () => {
           </Card>
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

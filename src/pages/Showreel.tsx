@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Play, ArrowLeft, Download, Share2 } from 'lucide-react';
-import MainLayout from '@/components/Layout/MainLayout';
 import SectionTitle from '@/components/SectionTitle';
 import SEOHelmet from '@/components/SEOHelmet';
 import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
@@ -92,7 +91,7 @@ const Showreel = () => {
         structuredData={structuredData}
       />
 
-      <MainLayout pageKey="showreel">
+      <div>
         <section className="py-20 px-4">
           <div className="container mx-auto">
             {/* Back Navigation */}
@@ -315,7 +314,7 @@ const Showreel = () => {
             </motion.div>
           </div>
         </section>
-      </MainLayout>
+      </div>
     </>
   );
 };

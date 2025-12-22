@@ -2,12 +2,10 @@ import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Upload, Download, FileText, Settings, X, File } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
 
 const DocumentConverter = () => {
@@ -123,7 +121,7 @@ const DocumentConverter = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <SEOHelmet 
         title="Document Converter - Fuke's Media"
         description="Convert documents between different formats including PDF, Word, Excel, PowerPoint and more"
@@ -299,7 +297,7 @@ const DocumentConverter = () => {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

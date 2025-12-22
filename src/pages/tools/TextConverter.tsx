@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Copy, FileText, Type } from 'lucide-react';
-import MainLayout from '@/components/Layout/MainLayout';
 import SEOHelmet from '@/components/SEOHelmet';
 
 const TextConverter = () => {
@@ -63,7 +62,7 @@ const TextConverter = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <SEOHelmet 
         title="Text Converter - Fuke's Media"
         description="Convert text formats and encoding with multiple transformation options"
@@ -178,7 +177,7 @@ const TextConverter = () => {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

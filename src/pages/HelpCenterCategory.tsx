@@ -1,13 +1,10 @@
 
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import CategoryPage from '@/components/HelpCenter/CategoryPage';
 import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import BackgroundEffect from '@/components/BackgroundEffect';
 
 const HelpCenterCategory = () => {
-  const { categoryId } = useParams<{ categoryId: string }>();
+  const { category: categoryId } = useParams<{ category: string }>();
   
   // Mock data for the "Imaging" category
   const imagingData = {
@@ -162,11 +159,8 @@ const HelpCenterCategory = () => {
 
   return (
     <div className="min-h-screen">
-      <BackgroundEffect />
-      <Navbar />
-      
       {/* Hero banner */}
-      <section className="pt-16 bg-gradient-to-r from-red-600 to-red-700 text-white">
+      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white">
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="flex items-center mb-4">
             <Breadcrumb className="text-sm text-white/80">
@@ -196,8 +190,6 @@ const HelpCenterCategory = () => {
       <section className="bg-background">
         <CategoryPage categoryData={categoryData} />
       </section>
-      
-      <Footer />
     </div>
   );
 };
