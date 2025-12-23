@@ -172,7 +172,7 @@ const Contact = () => {
           </motion.div>
 
           <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">
-            <AnimatedLetters text="Get In" className="block" delay={0.2} />
+            <AnimatedLetters className="block" delay={0.2}>Get In</AnimatedLetters>
             <span className="block mt-2">
               <GradientText>Touch</GradientText>
             </span>
