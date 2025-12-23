@@ -9,6 +9,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import DynamicPrice from './DynamicPrice';
 import TypewriterText from './TypewriterText';
 import Enhanced3DHoverCards from './Enhanced3DHoverCards';
+import ScrollReveal from './ScrollReveal';
+import FadeInOnScroll from './FadeInOnScroll';
 
 const services = [
   {
@@ -100,10 +102,12 @@ const ServicesSection = () => {
   return (
     <section id="services" className="py-20 relative">
       <div className="container mx-auto px-4">
-        <SectionTitle 
-          title="Our Services" 
-          subtitle="Comprehensive solutions powered by AI and creative excellence"
-        />
+        <ScrollReveal animation="fadeUp" duration={0.7}>
+          <SectionTitle 
+            title="Our Services" 
+            subtitle="Comprehensive solutions powered by AI and creative excellence"
+          />
+        </ScrollReveal>
         
         <Tabs defaultValue="vfx" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full md:w-fit mx-auto grid-cols-2 md:grid-cols-4 gap-2">
@@ -118,10 +122,10 @@ const ServicesSection = () => {
             ))}
           </TabsList>
           
-          {services.map((service) => (
+          {services.map((service, index) => (
             <TabsContent key={service.id} value={service.id} className="mt-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                <div>
+                <FadeInOnScroll direction="left" delay={100} duration={0.6}>
                   <Enhanced3DHoverCards intensity={0.8} glowColor={service.id === 'vfx' ? 'hsl(var(--primary))' : service.id === 'creative' ? 'hsl(var(--secondary))' : service.id === 'di' ? 'hsl(var(--accent))' : 'hsl(var(--neon-green))'}>
                     <Card className="border border-border bg-card/50 backdrop-blur-sm">
                       <CardHeader>
@@ -150,8 +154,8 @@ const ServicesSection = () => {
                           </AccordionTrigger>
                           <AccordionContent>
                             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-                              {service.features.map((feature, index) => (
-                                <li key={index} className="flex items-start">
+                              {service.features.map((feature, idx) => (
+                                <li key={idx} className="flex items-start">
                                   <span className="text-primary mr-2">•</span>
                                   <span>{feature}</span>
                                 </li>
@@ -166,8 +170,8 @@ const ServicesSection = () => {
                           </AccordionTrigger>
                           <AccordionContent>
                             <div className="space-y-3 mt-2">
-                              {service.pricing.map((item, index) => (
-                                <div key={index} className="flex justify-between items-center border-b border-border pb-2">
+                              {service.pricing.map((item, idx) => (
+                                <div key={idx} className="flex justify-between items-center border-b border-border pb-2">
                                   <span>{item.name}</span>
                                   <span><DynamicPrice priceUSD={item.price} showCode={true} /> {item.unit}</span>
                                 </div>
@@ -189,18 +193,20 @@ const ServicesSection = () => {
                     </CardFooter>
                     </Card>
                   </Enhanced3DHoverCards>
-                </div>
+                </FadeInOnScroll>
                 
-                <div className="relative">
-                  <div className="card-3d rounded-lg overflow-hidden">
-                    <img 
-                      src={service.image} 
-                      alt={service.name} 
-                      className="w-full h-auto rounded-lg"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+                <FadeInOnScroll direction="right" delay={200} duration={0.6}>
+                  <div className="relative">
+                    <div className="card-3d rounded-lg overflow-hidden">
+                      <img 
+                        src={service.image} 
+                        alt={service.name} 
+                        className="w-full h-auto rounded-lg"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+                    </div>
                   </div>
-                </div>
+                </FadeInOnScroll>
               </div>
             </TabsContent>
           ))}

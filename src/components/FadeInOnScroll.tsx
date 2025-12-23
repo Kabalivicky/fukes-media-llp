@@ -1,14 +1,15 @@
-
-import { useRef, useEffect, useState, ReactNode } from 'react';
+import { useRef, ReactNode } from 'react';
+import { motion, useInView, Variants } from 'framer-motion';
 
 interface FadeInOnScrollProps {
   children: ReactNode;
   className?: string;
-  threshold?: number; // 0 to 1, percentage of element visible to trigger animation
-  delay?: number; // ms
+  threshold?: number;
+  delay?: number;
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
-  distance?: number; // pixels to travel
-  duration?: number; // ms
+  distance?: number;
+  duration?: number;
+  once?: boolean;
 }
 
 const FadeInOnScroll = ({ 
@@ -17,61 +18,60 @@ const FadeInOnScroll = ({
   threshold = 0.1,
   delay = 0,
   direction = 'up',
-  distance = 30,
-  duration = 700
+  distance = 40,
+  duration = 0.7,
+  once = true
 }: FadeInOnScrollProps) => {
-  const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { 
+    once, 
+    amount: threshold,
+    margin: "-30px 0px"
+  });
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            setIsVisible(true);
-          }, 100); // Small delay before starting animation for smoother scrolling
-          
-          // Once visible, no need to observe anymore
-          if (ref.current) observer.unobserve(ref.current);
-        }
-      },
-      { threshold, rootMargin: '0px 0px -50px 0px' }
-    );
+  const getInitialPosition = () => {
+    switch (direction) {
+      case 'up': return { x: 0, y: distance };
+      case 'down': return { x: 0, y: -distance };
+      case 'left': return { x: distance, y: 0 };
+      case 'right': return { x: -distance, y: 0 };
+      case 'none': return { x: 0, y: 0 };
+      default: return { x: 0, y: distance };
+    }
+  };
 
-    const currentRef = ref.current;
-    if (currentRef) observer.observe(currentRef);
+  const initialPos = getInitialPosition();
 
-    return () => {
-      if (currentRef) observer.unobserve(currentRef);
-    };
-  }, [threshold]);
-
-  // Define the initial and animated states based on direction
-  const getInitialStyles = () => {
-    if (!isVisible) {
-      switch (direction) {
-        case 'up': return `opacity-0 translate-y-[${distance}px]`;
-        case 'down': return `opacity-0 -translate-y-[${distance}px]`;
-        case 'left': return `opacity-0 translate-x-[${distance}px]`;
-        case 'right': return `opacity-0 -translate-x-[${distance}px]`;
-        case 'none': return 'opacity-0';
-        default: return `opacity-0 translate-y-[${distance}px]`;
+  const variants: Variants = {
+    hidden: { 
+      opacity: 0, 
+      x: initialPos.x, 
+      y: initialPos.y,
+      filter: 'blur(4px)'
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      y: 0,
+      filter: 'blur(0px)',
+      transition: {
+        duration,
+        delay: delay / 1000, // Convert ms to seconds
+        ease: [0.25, 0.1, 0.25, 1]
       }
     }
-    return 'opacity-100 translate-x-0 translate-y-0';
   };
 
   return (
-    <div 
+    <motion.div 
       ref={ref} 
-      className={`transition-all ease-out ${getInitialStyles()} ${className}`}
-      style={{ 
-        transitionDelay: `${delay}ms`,
-        transitionDuration: `${duration}ms`
-      }}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={variants}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
