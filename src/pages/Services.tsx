@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import SEOHelmet from '@/components/SEOHelmet';
 import ParallaxSection from '@/components/ParallaxSection';
 import FloatingElements from '@/components/FloatingElements';
+import AnimatedSectionDivider from '@/components/AnimatedSectionDivider';
 
 const Services = () => {
   const services = [
@@ -208,6 +209,9 @@ const Services = () => {
         </div>
       </ParallaxSection>
 
+      {/* Animated Divider */}
+      <AnimatedSectionDivider variant="wave" />
+
       {/* Services Grid with Parallax */}
       <ParallaxSection speed={0.2} fade={false} className="relative">
         <SectionWrapper withDivider>
@@ -263,6 +267,9 @@ const Services = () => {
         </SectionWrapper>
       </ParallaxSection>
 
+      {/* Animated Divider */}
+      <AnimatedSectionDivider variant="geometric" />
+
       {/* Process Section with Parallax */}
       <ParallaxSection speed={0.3} scale className="relative">
         <FloatingElements variant="dots" density="low" colorScheme="primary" />
@@ -310,6 +317,9 @@ const Services = () => {
           </div>
         </SectionWrapper>
       </ParallaxSection>
+
+      {/* Animated Divider */}
+      <AnimatedSectionDivider variant="hexagon" inverted />
 
       {/* CTA Section with Parallax */}
       <ParallaxSection speed={0.4} rotate className="relative">
