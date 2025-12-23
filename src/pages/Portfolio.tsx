@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Play, Award } from 'lucide-react';
-import SectionTitle from '@/components/SectionTitle';
+import { Play, Award, Sparkles, ArrowRight } from 'lucide-react';
+import SectionWrapper from '@/components/SectionWrapper';
+import SectionHeading from '@/components/SectionHeading';
+import LiquidReveal from '@/components/LiquidReveal';
+import { AnimatedLetters, GradientText, AnimatedWords } from '@/components/KineticText';
 import SEOHelmet from '@/components/SEOHelmet';
+import { Link } from 'react-router-dom';
 import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
 
 const SHOWREEL_EMBED_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
@@ -126,7 +130,7 @@ const Portfolio = () => {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-background text-foreground overflow-hidden">
       <SEOHelmet
         title="Portfolio & Showreel - Award-Winning VFX Projects"
         description="Explore our award-winning portfolio of VFX, AI-assisted production, and creative projects. See why we're recognized as industry leaders in visual effects."
@@ -135,219 +139,245 @@ const Portfolio = () => {
         structuredData={structuredData}
       />
 
-      <section className="py-20 px-4">
-          <SectionTitle
-            title="Technical Showcase & Archive"
-            subtitle="Detailed breakdown of our technical expertise and production capabilities"
-          />
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-16 overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-radial from-primary/10 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-radial from-secondary/10 to-transparent rounded-full blur-3xl" />
+        </div>
 
-          {/* Main Showreel Video */}
-          <div className="container mx-auto mt-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="relative max-w-6xl mx-auto mb-16"
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Badge className="mb-6 px-4 py-2 bg-primary/10 border-primary/20 text-primary">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Award-Winning Work
+            </Badge>
+          </motion.div>
+
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">
+            <AnimatedLetters text="Our" className="block" delay={0.2} />
+            <span className="block mt-2">
+              <GradientText>Portfolio</GradientText>
+            </span>
+          </h1>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="max-w-2xl mx-auto"
+          >
+            <AnimatedWords
+              className="text-xl text-muted-foreground"
+              delay={1}
             >
-              <div 
-                className="relative aspect-video rounded-2xl overflow-hidden bg-card border-2 border-primary/20 cursor-pointer group"
-                onClick={() => setIsPlaying(true)}
+              Detailed breakdown of our technical expertise and production capabilities
+            </AnimatedWords>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Showreel Section */}
+      <SectionWrapper variant="dark">
+        <LiquidReveal direction="up">
+          <div 
+            className="relative aspect-video max-w-5xl mx-auto rounded-2xl overflow-hidden bg-card border-2 border-primary/20 cursor-pointer group shadow-2xl"
+            onClick={() => setIsPlaying(true)}
+          >
+            {/* Thumbnail Image */}
+            <img 
+              src={showreelThumbnail} 
+              alt="Showreel Thumbnail" 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+              <motion.div
+                className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-8"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {/* Thumbnail Image */}
-                <img 
-                  src={showreelThumbnail} 
-                  alt="Showreel Thumbnail" 
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-                  <Button
-                    size="lg"
-                    className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-6 group-hover:scale-110 transition-transform duration-300"
-                  >
-                    <Play className="h-8 w-8 ml-1" />
-                  </Button>
-                </div>
-                <div className="absolute bottom-4 left-4 z-10">
-                  <h3 className="text-2xl font-display font-bold text-white mb-2 drop-shadow-lg">
-                    Fuke's Media - Official Showreel 2024
-                  </h3>
-                  <p className="text-white/90 drop-shadow-md">Click to watch our showreel</p>
-                </div>
-              </div>
+                <Play className="h-12 w-12 ml-1" />
+              </motion.div>
+            </div>
+            <div className="absolute bottom-6 left-6 z-10">
+              <h3 className="text-3xl font-display font-bold text-white mb-2 drop-shadow-lg">
+                Fuke's Media - Official Showreel 2024
+              </h3>
+              <p className="text-white/90 drop-shadow-md">Click to watch our showreel</p>
+            </div>
+            {/* Award Badge */}
+            <div className="absolute top-6 right-6">
+              <Badge className="bg-accent text-accent-foreground shadow-lg">
+                <Award className="w-4 h-4 mr-1" />
+                Award Winning
+              </Badge>
+            </div>
+          </div>
+        </LiquidReveal>
 
-              {/* Video Modal */}
-              <Dialog open={isPlaying} onOpenChange={setIsPlaying}>
-                <DialogContent className="max-w-5xl w-[95vw] p-0 bg-black border-none">
-                  <DialogTitle className="sr-only">Fuke's Media Official Showreel 2024</DialogTitle>
-                  <div className="relative aspect-video w-full bg-black">
-                    <iframe
-                      src={SHOWREEL_EMBED_URL}
-                      className="w-full h-full"
-                      allow="autoplay; encrypted-media"
-                      allowFullScreen
-                      title="Fuke's Media Official Showreel 2024"
-                    />
-                    {/* Fallback link if embed doesn't work */}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-                      <a 
-                        href={SHOWREEL_VIEW_URL} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-white/70 hover:text-white text-sm underline"
-                      >
-                        Video not loading? Click here to watch on Google Drive
-                      </a>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </motion.div>
-
-            {/* Filter Tabs */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex justify-center mb-12"
-            >
-              <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full max-w-4xl">
-                <TabsList className="grid grid-cols-3 lg:grid-cols-7 w-full bg-card/50">
-                  {categories.map((category) => (
-                    <TabsTrigger 
-                      key={category} 
-                      value={category}
-                      className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-medium"
-                    >
-                      {category === 'all' ? 'All Projects' : category}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </Tabs>
-            </motion.div>
-
-            {/* Portfolio Grid */}
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              layout
-            >
-              {filteredItems.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+        {/* Video Modal */}
+        <Dialog open={isPlaying} onOpenChange={setIsPlaying}>
+          <DialogContent className="max-w-5xl w-[95vw] p-0 bg-black border-none">
+            <DialogTitle className="sr-only">Fuke's Media Official Showreel 2024</DialogTitle>
+            <div className="relative aspect-video w-full bg-black">
+              <iframe
+                src={SHOWREEL_EMBED_URL}
+                className="w-full h-full"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                title="Fuke's Media Official Showreel 2024"
+              />
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                <a 
+                  href={SHOWREEL_VIEW_URL} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white/70 hover:text-white text-sm underline"
                 >
-                  <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-500 border-border/50 hover:border-primary/50">
-                    <div className="relative aspect-video overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      {/* Play button overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <Button
-                          size="lg"
-                          className="bg-primary/90 hover:bg-primary text-primary-foreground rounded-full p-4"
-                        >
-                          <Play className="h-6 w-6 ml-1" />
-                        </Button>
-                      </div>
+                  Video not loading? Click here to watch on Google Drive
+                </a>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </SectionWrapper>
 
-                      {/* Awards badge */}
-                      {item.awards && (
-                        <div className="absolute top-4 right-4">
-                          <Badge variant="secondary" className="bg-accent text-accent-foreground">
-                            <Award className="h-3 w-3 mr-1" />
-                            Award Winner
-                          </Badge>
-                        </div>
-                      )}
+      {/* Portfolio Grid */}
+      <SectionWrapper withDivider>
+        {/* Filter Tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-center mb-12"
+        >
+          <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full max-w-4xl">
+            <TabsList className="grid grid-cols-3 lg:grid-cols-7 w-full bg-card/50 border border-border/30">
+              {categories.map((category) => (
+                <TabsTrigger 
+                  key={category} 
+                  value={category}
+                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-medium transition-all duration-300"
+                >
+                  {category === 'all' ? 'All Projects' : category}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        </motion.div>
+
+        {/* Grid */}
+        <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" layout>
+          <AnimatePresence mode="popLayout">
+            {filteredItems.map((item, index) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <Card className="group h-full overflow-hidden hover:shadow-2xl transition-all duration-500 border-border/50 hover:border-primary/50">
+                  <div className="relative aspect-video overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Play button overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <motion.div
+                        className="bg-primary/90 rounded-full p-4"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <Play className="h-8 w-8 text-primary-foreground ml-1" />
+                      </motion.div>
+                    </div>
+
+                    {/* Awards badge */}
+                    {item.awards && (
+                      <div className="absolute top-4 right-4">
+                        <Badge className="bg-accent text-accent-foreground shadow-lg">
+                          <Award className="h-3 w-3 mr-1" />
+                          Award Winner
+                        </Badge>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h3 className="text-xl font-display font-bold mb-1 group-hover:text-primary transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">{item.type} • {item.year}</p>
+                      </div>
+                      <Badge variant="outline" className="bg-background/50">{item.category}</Badge>
                     </div>
                     
-                    <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h3 className="text-xl font-display font-bold mb-1">{item.title}</h3>
-                          <p className="text-sm text-muted-foreground">{item.type} • {item.year}</p>
-                        </div>
-                        <Badge variant="outline">{item.category}</Badge>
-                      </div>
-                      
-                      <p className="text-muted-foreground mb-4 leading-relaxed">{item.description}</p>
-                      
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {item.tags.map((tag, tagIndex) => (
-                          <Badge key={tagIndex} variant="secondary" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
+                    <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-2">{item.description}</p>
+                    
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {item.tags.slice(0, 3).map((tag, tagIndex) => (
+                        <Badge key={tagIndex} variant="secondary" className="text-xs bg-secondary/10">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
 
-                      {item.awards && (
-                        <div className="mb-4">
-                          <p className="text-sm font-medium text-accent mb-1">Awards:</p>
-                          {item.awards.map((award, awardIndex) => (
-                            <p key={awardIndex} className="text-xs text-muted-foreground">{award}</p>
-                          ))}
-                        </div>
-                      )}
-
-                      <div className="space-y-2 text-sm">
-                        {item.challenge && (
-                          <div>
-                            <span className="font-medium text-primary">Challenge:</span>
-                            <p className="text-muted-foreground">{item.challenge}</p>
-                          </div>
-                        )}
-                        {item.solution && (
-                          <div>
-                            <span className="font-medium text-secondary">Solution:</span>
-                            <p className="text-muted-foreground">{item.solution}</p>
-                          </div>
-                        )}
-                        {item.results && (
-                          <div>
-                            <span className="font-medium text-accent">Results:</span>
-                            <p className="text-muted-foreground">{item.results}</p>
-                          </div>
-                        )}
+                    {item.results && (
+                      <div className="pt-4 border-t border-border/30">
+                        <p className="text-sm">
+                          <span className="font-medium text-accent">Results: </span>
+                          <span className="text-muted-foreground">{item.results}</span>
+                        </p>
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
+                    )}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </SectionWrapper>
 
-            {/* Call to Action */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-center mt-16"
-            >
-              <Card className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
-                <h3 className="text-2xl font-display font-bold mb-4">Ready to Create Award-Winning Content?</h3>
-                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                  Let's collaborate to bring your vision to life with our award-winning team and cutting-edge AI technology.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90">
-                    Start Your Project
-                  </Button>
-                  <Button size="lg" variant="outline">
-                    View Pricing
-                  </Button>
-                </div>
-              </Card>
-            </motion.div>
-          </div>
-        </section>
-    </>
+      {/* CTA Section */}
+      <SectionWrapper variant="gradient" withDivider>
+        <div className="max-w-3xl mx-auto text-center">
+          <LiquidReveal direction="up">
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
+              Ready to Create <GradientText>Award-Winning Content</GradientText>?
+            </h2>
+
+            <p className="text-lg text-muted-foreground mb-8">
+              Let's collaborate to bring your vision to life with our award-winning team and cutting-edge AI technology.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 group">
+                <Link to="/contact">
+                  Start Your Project
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="text-lg px-8">
+                <Link to="/pricing">View Pricing</Link>
+              </Button>
+            </div>
+          </LiquidReveal>
+        </div>
+      </SectionWrapper>
+    </div>
   );
 };
 
