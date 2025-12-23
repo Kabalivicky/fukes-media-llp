@@ -1,8 +1,11 @@
+# Robots.txt for Fuke's Media
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Twitterbot
 Allow: /
@@ -12,3 +15,8 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /auth
+
+# Sitemap
+Sitemap: https://fukes-media.com/sitemap.xml
