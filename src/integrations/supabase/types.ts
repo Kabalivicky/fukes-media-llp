@@ -14,6 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
+      companies: {
+        Row: {
+          city: string | null
+          country: string | null
+          cover_url: string | null
+          created_at: string | null
+          description: string | null
+          founded_year: number | null
+          id: string
+          industries: Database["public"]["Enums"]["industry_category"][] | null
+          is_hiring: boolean | null
+          is_verified: boolean | null
+          location: string | null
+          logo_url: string | null
+          name: string
+          owner_id: string | null
+          size: string | null
+          slug: string
+          social_links: Json | null
+          updated_at: string | null
+          website: string | null
+        }
+        Insert: {
+          city?: string | null
+          country?: string | null
+          cover_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          founded_year?: number | null
+          id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_hiring?: boolean | null
+          is_verified?: boolean | null
+          location?: string | null
+          logo_url?: string | null
+          name: string
+          owner_id?: string | null
+          size?: string | null
+          slug: string
+          social_links?: Json | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Update: {
+          city?: string | null
+          country?: string | null
+          cover_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          founded_year?: number | null
+          id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_hiring?: boolean | null
+          is_verified?: boolean | null
+          location?: string | null
+          logo_url?: string | null
+          name?: string
+          owner_id?: string | null
+          size?: string | null
+          slug?: string
+          social_links?: Json | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
+      connections: {
+        Row: {
+          created_at: string | null
+          follower_id: string
+          following_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string | null
+          follower_id: string
+          following_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string | null
+          follower_id?: string
+          following_id?: string
+          id?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           company: string | null
@@ -131,6 +218,154 @@ export type Database = {
         }
         Relationships: []
       }
+      job_applications: {
+        Row: {
+          applicant_id: string
+          cover_letter: string | null
+          created_at: string | null
+          id: string
+          job_id: string
+          notes: string | null
+          portfolio_url: string | null
+          resume_url: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          applicant_id: string
+          cover_letter?: string | null
+          created_at?: string | null
+          id?: string
+          job_id: string
+          notes?: string | null
+          portfolio_url?: string | null
+          resume_url?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          applicant_id?: string
+          cover_letter?: string | null
+          created_at?: string | null
+          id?: string
+          job_id?: string
+          notes?: string | null
+          portfolio_url?: string | null
+          resume_url?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_applications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          application_email: string | null
+          application_url: string | null
+          applications_count: number | null
+          company_id: string | null
+          created_at: string | null
+          description: string
+          experience_level:
+            | Database["public"]["Enums"]["experience_level"]
+            | null
+          expires_at: string | null
+          id: string
+          industries: Database["public"]["Enums"]["industry_category"][] | null
+          is_active: boolean | null
+          is_featured: boolean | null
+          is_remote: boolean | null
+          job_type: Database["public"]["Enums"]["job_type"] | null
+          location: string | null
+          posted_by: string | null
+          requirements: string[] | null
+          responsibilities: string[] | null
+          salary_currency: string | null
+          salary_max: number | null
+          salary_min: number | null
+          skills: string[] | null
+          slug: string
+          title: string
+          updated_at: string | null
+          views_count: number | null
+        }
+        Insert: {
+          application_email?: string | null
+          application_url?: string | null
+          applications_count?: number | null
+          company_id?: string | null
+          created_at?: string | null
+          description: string
+          experience_level?:
+            | Database["public"]["Enums"]["experience_level"]
+            | null
+          expires_at?: string | null
+          id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          is_remote?: boolean | null
+          job_type?: Database["public"]["Enums"]["job_type"] | null
+          location?: string | null
+          posted_by?: string | null
+          requirements?: string[] | null
+          responsibilities?: string[] | null
+          salary_currency?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          skills?: string[] | null
+          slug: string
+          title: string
+          updated_at?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          application_email?: string | null
+          application_url?: string | null
+          applications_count?: number | null
+          company_id?: string | null
+          created_at?: string | null
+          description?: string
+          experience_level?:
+            | Database["public"]["Enums"]["experience_level"]
+            | null
+          expires_at?: string | null
+          id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          is_remote?: boolean | null
+          job_type?: Database["public"]["Enums"]["job_type"] | null
+          location?: string | null
+          posted_by?: string | null
+          requirements?: string[] | null
+          responsibilities?: string[] | null
+          salary_currency?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          skills?: string[] | null
+          slug?: string
+          title?: string
+          updated_at?: string | null
+          views_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       news: {
         Row: {
           category: string | null
@@ -170,6 +405,66 @@ export type Database = {
           slug?: string
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      portfolio_items: {
+        Row: {
+          client: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          industries: Database["public"]["Enums"]["industry_category"][] | null
+          is_featured: boolean | null
+          likes_count: number | null
+          project_url: string | null
+          role: string | null
+          thumbnail_url: string | null
+          title: string
+          tools_used: string[] | null
+          updated_at: string | null
+          user_id: string
+          video_url: string | null
+          views_count: number | null
+          year: number | null
+        }
+        Insert: {
+          client?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_featured?: boolean | null
+          likes_count?: number | null
+          project_url?: string | null
+          role?: string | null
+          thumbnail_url?: string | null
+          title: string
+          tools_used?: string[] | null
+          updated_at?: string | null
+          user_id: string
+          video_url?: string | null
+          views_count?: number | null
+          year?: number | null
+        }
+        Update: {
+          client?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_featured?: boolean | null
+          likes_count?: number | null
+          project_url?: string | null
+          role?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          tools_used?: string[] | null
+          updated_at?: string | null
+          user_id?: string
+          video_url?: string | null
+          views_count?: number | null
+          year?: number | null
         }
         Relationships: []
       }
@@ -239,48 +534,75 @@ export type Database = {
       profiles: {
         Row: {
           availability: string | null
+          avatar_url: string | null
           bio: string | null
           company: string | null
+          cover_url: string | null
           created_at: string
           display_name: string | null
           hourly_rate: number | null
           id: string
+          industries: Database["public"]["Enums"]["industry_category"][] | null
+          is_available_for_hire: boolean | null
           linkedin_url: string | null
+          location: string | null
           phone: string | null
           portfolio_url: string | null
           skills: string[] | null
+          subscription_tier:
+            | Database["public"]["Enums"]["subscription_tier"]
+            | null
+          title: string | null
           updated_at: string
           user_id: string
           years_experience: number | null
         }
         Insert: {
           availability?: string | null
+          avatar_url?: string | null
           bio?: string | null
           company?: string | null
+          cover_url?: string | null
           created_at?: string
           display_name?: string | null
           hourly_rate?: number | null
           id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_available_for_hire?: boolean | null
           linkedin_url?: string | null
+          location?: string | null
           phone?: string | null
           portfolio_url?: string | null
           skills?: string[] | null
+          subscription_tier?:
+            | Database["public"]["Enums"]["subscription_tier"]
+            | null
+          title?: string | null
           updated_at?: string
           user_id: string
           years_experience?: number | null
         }
         Update: {
           availability?: string | null
+          avatar_url?: string | null
           bio?: string | null
           company?: string | null
+          cover_url?: string | null
           created_at?: string
           display_name?: string | null
           hourly_rate?: number | null
           id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_available_for_hire?: boolean | null
           linkedin_url?: string | null
+          location?: string | null
           phone?: string | null
           portfolio_url?: string | null
           skills?: string[] | null
+          subscription_tier?:
+            | Database["public"]["Enums"]["subscription_tier"]
+            | null
+          title?: string | null
           updated_at?: string
           user_id?: string
           years_experience?: number | null
@@ -365,6 +687,144 @@ export type Database = {
         }
         Relationships: []
       }
+      resources: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          download_url: string | null
+          features: string[] | null
+          id: string
+          image_url: string | null
+          industries: Database["public"]["Enums"]["industry_category"][] | null
+          is_approved: boolean | null
+          is_featured: boolean | null
+          name: string
+          price: number | null
+          price_currency: string | null
+          pricing_type: string | null
+          rating: number | null
+          resource_type: Database["public"]["Enums"]["resource_type"]
+          reviews_count: number | null
+          short_description: string | null
+          slug: string
+          submitted_by: string | null
+          tags: string[] | null
+          updated_at: string | null
+          website_url: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          download_url?: string | null
+          features?: string[] | null
+          id?: string
+          image_url?: string | null
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_approved?: boolean | null
+          is_featured?: boolean | null
+          name: string
+          price?: number | null
+          price_currency?: string | null
+          pricing_type?: string | null
+          rating?: number | null
+          resource_type: Database["public"]["Enums"]["resource_type"]
+          reviews_count?: number | null
+          short_description?: string | null
+          slug: string
+          submitted_by?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          download_url?: string | null
+          features?: string[] | null
+          id?: string
+          image_url?: string | null
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_approved?: boolean | null
+          is_featured?: boolean | null
+          name?: string
+          price?: number | null
+          price_currency?: string | null
+          pricing_type?: string | null
+          rating?: number | null
+          resource_type?: Database["public"]["Enums"]["resource_type"]
+          reviews_count?: number | null
+          short_description?: string | null
+          slug?: string
+          submitted_by?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Relationships: []
+      }
+      saved_items: {
+        Row: {
+          created_at: string | null
+          id: string
+          item_id: string
+          item_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          item_id: string
+          item_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          item_id?: string
+          item_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          cancel_at_period_end: boolean | null
+          created_at: string | null
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          tier: Database["public"]["Enums"]["subscription_tier"] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          cancel_at_period_end?: boolean | null
+          created_at?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          tier?: Database["public"]["Enums"]["subscription_tier"] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          cancel_at_period_end?: boolean | null
+          created_at?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          tier?: Database["public"]["Enums"]["subscription_tier"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       tool_usage: {
         Row: {
           created_at: string
@@ -444,6 +904,42 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
+      experience_level:
+        | "entry"
+        | "junior"
+        | "mid"
+        | "senior"
+        | "lead"
+        | "executive"
+      industry_category:
+        | "vfx"
+        | "animation"
+        | "film"
+        | "tv"
+        | "gaming"
+        | "advertising"
+        | "virtual-production"
+        | "ar-vr"
+        | "youtube"
+        | "ai-ml"
+      job_type:
+        | "full-time"
+        | "part-time"
+        | "contract"
+        | "freelance"
+        | "internship"
+        | "remote"
+      resource_type:
+        | "software"
+        | "plugin"
+        | "asset"
+        | "tutorial"
+        | "template"
+        | "stock-footage"
+        | "stock-image"
+        | "stock-audio"
+        | "3d-model"
+      subscription_tier: "free" | "artist" | "studio" | "enterprise"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -572,6 +1068,46 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
+      experience_level: [
+        "entry",
+        "junior",
+        "mid",
+        "senior",
+        "lead",
+        "executive",
+      ],
+      industry_category: [
+        "vfx",
+        "animation",
+        "film",
+        "tv",
+        "gaming",
+        "advertising",
+        "virtual-production",
+        "ar-vr",
+        "youtube",
+        "ai-ml",
+      ],
+      job_type: [
+        "full-time",
+        "part-time",
+        "contract",
+        "freelance",
+        "internship",
+        "remote",
+      ],
+      resource_type: [
+        "software",
+        "plugin",
+        "asset",
+        "tutorial",
+        "template",
+        "stock-footage",
+        "stock-image",
+        "stock-audio",
+        "3d-model",
+      ],
+      subscription_tier: ["free", "artist", "studio", "enterprise"],
     },
   },
 } as const
