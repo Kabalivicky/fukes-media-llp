@@ -14,6 +14,7 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import EnhancedModularInfo from '@/components/EnhancedModularInfo';
 import useScrollSync from '@/hooks/useScrollSync';
 import ScrollReveal from '@/components/ScrollReveal';
+import { ParallaxBackground, ParallaxLayer } from '@/components/ParallaxWrapper';
 
 // Animation variants for scroll-triggered animations
 const fadeInUpVariants = {
@@ -89,6 +90,10 @@ const Home = () => {
 
       <div className="relative min-h-screen w-full text-foreground overflow-x-hidden">
         
+        {/* Parallax Background Effects */}
+        <ParallaxBackground variant="orbs" className="z-0" />
+        <ParallaxBackground variant="lines" className="z-0 opacity-50" />
+        
         {/* Main Content with Motion Effects */}
         <main id="main-content" className="relative z-10">
           {/* Animated logo that follows scroll */}
@@ -135,31 +140,43 @@ const Home = () => {
           {/* Featured Content & Awards Section */}
           <ErrorBoundary>
             <ScrollReveal animation="blur" duration={0.9}>
-              <section className="py-20 px-4 bg-muted/20">
-                <div className="container mx-auto">
+              <section className="py-20 px-4 bg-muted/20 relative overflow-hidden">
+                {/* Parallax decorative elements */}
+                <ParallaxLayer depth={2} className="absolute -top-20 -left-20 w-40 h-40">
+                  <div className="w-full h-full rounded-full bg-primary/10 blur-3xl" />
+                </ParallaxLayer>
+                <ParallaxLayer depth={3} className="absolute top-1/2 -right-32 w-64 h-64">
+                  <div className="w-full h-full rounded-full bg-accent/10 blur-3xl" />
+                </ParallaxLayer>
+                
+                <div className="container mx-auto relative z-10">
                   <SectionTitle title="Award-Winning Excellence" subtitle="Recognition from industry leaders and creative festivals worldwide" />
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
                     
-                    <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-secondary/20 hover:border-secondary/40 transition-colors" whileHover={{
-                    scale: 1.05
-                  }} transition={{
-                    type: "spring",
-                    stiffness: 300
-                  }}>
-                      <div className="text-4xl font-display font-bold text-secondary mb-2">500+</div>
-                      <p className="text-muted-foreground font-medium">Projects Completed</p>
-                      <p className="text-xs text-muted-foreground mt-1">Global Reach</p>
-                    </motion.div>
-                    <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-accent/20 hover:border-accent/40 transition-colors" whileHover={{
-                    scale: 1.05
-                  }} transition={{
-                    type: "spring",
-                    stiffness: 300
-                  }}>
-                      <div className="text-4xl font-display font-bold text-accent mb-2">98%</div>
-                      <p className="text-muted-foreground font-medium">Client Satisfaction</p>
-                      <p className="text-xs text-muted-foreground mt-1">Proven Excellence</p>
-                    </motion.div>
+                    <ParallaxLayer depth={1}>
+                      <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-secondary/20 hover:border-secondary/40 transition-colors" whileHover={{
+                      scale: 1.05
+                    }} transition={{
+                      type: "spring",
+                      stiffness: 300
+                    }}>
+                        <div className="text-4xl font-display font-bold text-secondary mb-2">500+</div>
+                        <p className="text-muted-foreground font-medium">Projects Completed</p>
+                        <p className="text-xs text-muted-foreground mt-1">Global Reach</p>
+                      </motion.div>
+                    </ParallaxLayer>
+                    <ParallaxLayer depth={1.5}>
+                      <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-accent/20 hover:border-accent/40 transition-colors" whileHover={{
+                      scale: 1.05
+                    }} transition={{
+                      type: "spring",
+                      stiffness: 300
+                    }}>
+                        <div className="text-4xl font-display font-bold text-accent mb-2">98%</div>
+                        <p className="text-muted-foreground font-medium">Client Satisfaction</p>
+                        <p className="text-xs text-muted-foreground mt-1">Proven Excellence</p>
+                      </motion.div>
+                    </ParallaxLayer>
                   </div>
                   
                   {/* Client Testimonials Carousel */}

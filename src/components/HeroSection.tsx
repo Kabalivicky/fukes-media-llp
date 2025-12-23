@@ -1,14 +1,43 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Sparkles, Zap, Brain, PlayCircle } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Sparkles, Zap, Brain } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import VisualGenerator from './AI/VisualGenerator';
+
 const HeroSection = () => {
   const [showAIDemo, setShowAIDemo] = useState(false);
-  return <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-16">
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start']
+  });
+  
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 250]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  
+  return (
+    <section ref={sectionRef} className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-16">
+      {/* Parallax Background Elements */}
       <div className="absolute inset-0 w-full bg-background" />
+      <motion.div 
+        className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-primary/5 blur-3xl"
+        style={{ y: y1 }}
+      />
+      <motion.div 
+        className="absolute top-1/4 -right-48 w-[500px] h-[500px] rounded-full bg-accent/5 blur-3xl"
+        style={{ y: y2 }}
+      />
+      <motion.div 
+        className="absolute bottom-0 left-1/4 w-72 h-72 rounded-full bg-secondary/10 blur-2xl"
+        style={{ y: y3 }}
+      />
 
-      <div className="container relative z-10 px-4 mx-auto w-full">
+      <motion.div className="container relative z-10 px-4 mx-auto w-full" style={{ opacity, scale }}>
         <div className="text-center space-y-10 max-w-5xl mx-auto w-full">
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight leading-tight">
@@ -61,7 +90,8 @@ const HeroSection = () => {
               <VisualGenerator />
             </div>}
         </div>
-      </div>
-    </section>;
+      </motion.div>
+    </section>
+  );
 };
 export default HeroSection;
