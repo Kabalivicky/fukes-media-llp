@@ -1,9 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useState, useRef } from 'react';
-import { Sparkles, Zap, Brain } from 'lucide-react';
+import { Sparkles, Zap, Brain, Play, ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import VisualGenerator from './AI/VisualGenerator';
+import { AnimatedLetters, AnimatedWords, GradientText } from './KineticText';
+import MarqueeText from './MarqueeText';
 
 const HeroSection = () => {
   const [showAIDemo, setShowAIDemo] = useState(false);
@@ -14,136 +16,260 @@ const HeroSection = () => {
     offset: ['start start', 'end start']
   });
   
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 250]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
+
+  // Stagger animation for feature cards
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.8,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
+  const features = [
+    { icon: Sparkles, title: 'AI Visual Generation', desc: 'Create stunning visuals with AI', color: 'text-primary' },
+    { icon: Brain, title: 'Emotion Detection', desc: 'Real-time facial analysis', color: 'text-secondary' },
+    { icon: Zap, title: 'Neural Rendering', desc: 'AI-optimized rendering', color: 'text-accent' },
+  ];
   
   return (
     <section 
       ref={sectionRef} 
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-16"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden"
       aria-labelledby="hero-heading"
       role="banner"
     >
-      {/* Parallax Background Elements - decorative */}
-      <div className="absolute inset-0 w-full bg-background" aria-hidden="true" />
+      {/* Atmospheric Background - Inspired by Uncommon Studio */}
+      <div className="absolute inset-0 bg-background" aria-hidden="true" />
+      
+      {/* Animated gradient orbs */}
       <motion.div 
-        className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-primary/5 blur-3xl"
+        className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-gradient-radial from-primary/20 via-primary/5 to-transparent blur-3xl"
         style={{ y: y1 }}
         aria-hidden="true"
       />
       <motion.div 
-        className="absolute top-1/4 -right-48 w-[500px] h-[500px] rounded-full bg-accent/5 blur-3xl"
+        className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-radial from-secondary/15 via-secondary/5 to-transparent blur-3xl"
         style={{ y: y2 }}
         aria-hidden="true"
       />
       <motion.div 
-        className="absolute bottom-0 left-1/4 w-72 h-72 rounded-full bg-secondary/10 blur-2xl"
-        style={{ y: y3 }}
+        className="absolute -bottom-20 left-1/3 w-[400px] h-[400px] rounded-full bg-gradient-radial from-accent/15 via-accent/5 to-transparent blur-3xl"
         aria-hidden="true"
       />
 
-      <motion.div className="container relative z-10 px-4 mx-auto w-full" style={{ opacity, scale }}>
-        <div className="text-center space-y-10 max-w-5xl mx-auto w-full">
-          <header className="space-y-4">
+      {/* Grid overlay for depth */}
+      <div 
+        className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black_70%,transparent_100%)]"
+        aria-hidden="true"
+      />
+
+      {/* Main Content */}
+      <motion.div 
+        className="container relative z-10 px-4 mx-auto w-full pt-24 pb-8" 
+        style={{ opacity, scale }}
+      >
+        <div className="text-center space-y-8 max-w-5xl mx-auto w-full">
+          
+          {/* Kinetic Typography Hero - Award-winning style */}
+          <header className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border/50 bg-card/50 backdrop-blur-sm"
+            >
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-sm text-muted-foreground font-medium">Award-Winning VFX Studio</span>
+            </motion.div>
+
             <h1 
               id="hero-heading"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight leading-tight"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-bold tracking-tighter leading-[0.9]"
             >
-              FUKE'S MEDIA
+              <AnimatedLetters delay={0.3}>FUKE'S</AnimatedLetters>
+              <br />
+              <span className="relative inline-block">
+                <GradientText className="font-display">
+                  <AnimatedLetters delay={0.5}>MEDIA</AnimatedLetters>
+                </GradientText>
+              </span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 text-center font-body">
-              VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects that push the boundaries of what's possible.
-            </p>
+
+            <motion.p 
+              className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 font-body"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+            >
+              <AnimatedWords delay={1}>
+                We craft cinematic visual effects that push the boundaries of what's possible.
+              </AnimatedWords>
+            </motion.p>
           </header>
 
-          {/* Feature cards */}
-          <div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto w-full px-4"
+          {/* Feature Cards - Hover effects inspired by CSSDA winners */}
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto w-full px-4 pt-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
             role="list"
             aria-label="Key features"
           >
-            <article 
-              className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full hover:border-primary/50 transition-colors focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
-              role="listitem"
-            >
-              <Sparkles className="w-6 h-6 mx-auto mb-3 text-primary" aria-hidden="true" />
-              <h3 className="font-semibold text-sm mb-2">AI Visual Generation</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">Create stunning visuals with AI</p>
-            </article>
-            <article 
-              className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full hover:border-primary/50 transition-colors focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
-              role="listitem"
-            >
-              <Brain className="w-6 h-6 mx-auto mb-3 text-primary" aria-hidden="true" />
-              <h3 className="font-semibold text-sm mb-2">Emotion Detection</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">Real-time facial analysis</p>
-            </article>
-            <article 
-              className="p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-border text-center w-full hover:border-primary/50 transition-colors focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
-              role="listitem"
-            >
-              <Zap className="w-6 h-6 mx-auto mb-3 text-primary" aria-hidden="true" />
-              <h3 className="font-semibold text-sm mb-2">Neural Rendering</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">AI-optimized rendering</p>
-            </article>
-          </div>
+            {features.map((feature, index) => (
+              <motion.article 
+                key={index}
+                variants={cardVariants}
+                className="group relative p-6 rounded-xl bg-card/30 backdrop-blur-sm border border-border/50 text-center overflow-hidden transition-all duration-500 hover:border-primary/50 hover:bg-card/50"
+                role="listitem"
+                whileHover={{ y: -5 }}
+              >
+                {/* Hover glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <feature.icon className={`w-8 h-8 mx-auto mb-4 ${feature.color} transition-transform duration-300 group-hover:scale-110`} aria-hidden="true" />
+                <h3 className="font-semibold text-base mb-2 font-display">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>
+              </motion.article>
+            ))}
+          </motion.div>
 
-          {/* CTA Buttons */}
-          <nav 
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4"
+          {/* CTA Buttons - Strong, clear calls to action */}
+          <motion.nav 
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4 pt-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.3, duration: 0.6 }}
             aria-label="Get started actions"
           >
             <Link to="/contact">
               <Button 
-                size="lg" 
+                size="xl" 
                 variant="cta"
-                className="text-lg px-8 py-4 w-full sm:w-auto"
-                aria-label="Start working with us - contact our team"
+                className="group text-lg px-10 py-6 w-full sm:w-auto relative overflow-hidden"
+                aria-label="Start working with us"
               >
-                Work With Us
+                <span className="relative z-10 flex items-center gap-2">
+                  Work With Us
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </span>
               </Button>
             </Link>
 
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-8 py-4 w-full sm:w-auto" 
+              className="group text-lg px-8 py-4 w-full sm:w-auto border-2" 
               onClick={() => setShowAIDemo(!showAIDemo)}
               aria-expanded={showAIDemo}
               aria-controls="ai-demo-section"
             >
-              {showAIDemo ? 'Hide AI Demo' : 'Try AI Demo'}
+              <Play className="w-5 h-5 mr-2 transition-transform group-hover:scale-110" />
+              {showAIDemo ? 'Hide Demo' : 'Try AI Demo'}
             </Button>
 
             <Link to="/advanced-pricing">
               <Button 
                 size="lg" 
                 variant="ghost" 
-                className="text-lg px-8 py-4 w-full sm:w-auto"
+                className="text-lg px-8 py-4 w-full sm:w-auto hover:text-primary"
                 aria-label="View our pricing plans"
               >
                 View Pricing
               </Button>
             </Link>
-          </nav>
-
-          {/* AI Demo Section */}
-          {showAIDemo && (
-            <div 
-              id="ai-demo-section"
-              className="mt-12 w-full max-w-6xl mx-auto"
-              role="region"
-              aria-label="AI Visual Generator Demo"
-            >
-              <VisualGenerator />
-            </div>
-          )}
+          </motion.nav>
         </div>
+      </motion.div>
+
+      {/* AI Demo Section */}
+      {showAIDemo && (
+        <motion.div 
+          id="ai-demo-section"
+          className="container relative z-10 px-4 py-8 w-full max-w-6xl mx-auto"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          role="region"
+          aria-label="AI Visual Generator Demo"
+        >
+          <VisualGenerator />
+        </motion.div>
+      )}
+
+      {/* Scrolling Marquee - Inspired by Zeit Media */}
+      <div className="absolute bottom-0 left-0 right-0 py-6 border-t border-border/20 bg-background/50 backdrop-blur-sm">
+        <MarqueeText speed={25} className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
+          <span className="flex items-center gap-4">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            Visual Effects
+          </span>
+          <span className="flex items-center gap-4">
+            <span className="w-2 h-2 rounded-full bg-secondary" />
+            AI Technology
+          </span>
+          <span className="flex items-center gap-4">
+            <span className="w-2 h-2 rounded-full bg-accent" />
+            Creative Excellence
+          </span>
+          <span className="flex items-center gap-4">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            Neural Rendering
+          </span>
+          <span className="flex items-center gap-4">
+            <span className="w-2 h-2 rounded-full bg-secondary" />
+            Film Production
+          </span>
+          <span className="flex items-center gap-4">
+            <span className="w-2 h-2 rounded-full bg-accent" />
+            Award-Winning
+          </span>
+        </MarqueeText>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div 
+        className="absolute bottom-24 left-1/2 -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+      >
+        <motion.div
+          className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2"
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <motion.div
+            className="w-1 h-2 rounded-full bg-primary"
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </motion.div>
       </motion.div>
     </section>
   );
 };
+
 export default HeroSection;
