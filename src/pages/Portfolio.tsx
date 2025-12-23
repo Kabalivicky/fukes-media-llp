@@ -13,6 +13,8 @@ import { AnimatedLetters, GradientText, AnimatedWords } from '@/components/Kinet
 import SEOHelmet from '@/components/SEOHelmet';
 import { Link } from 'react-router-dom';
 import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
+import ParallaxSection from '@/components/ParallaxSection';
+import FloatingElements from '@/components/FloatingElements';
 
 const SHOWREEL_EMBED_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
 const SHOWREEL_VIEW_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view";
@@ -140,7 +142,13 @@ const Portfolio = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
+      <ParallaxSection 
+        className="relative pt-32 pb-16"
+        speed={0.25}
+        fade
+      >
+        <FloatingElements variant="particles" count={6} />
+        
         {/* Background effects */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-radial from-primary/10 to-transparent rounded-full blur-3xl" />
@@ -180,7 +188,7 @@ const Portfolio = () => {
             </AnimatedWords>
           </motion.div>
         </div>
-      </section>
+      </ParallaxSection>
 
       {/* Showreel Section */}
       <SectionWrapper variant="dark">
@@ -352,7 +360,8 @@ const Portfolio = () => {
       </SectionWrapper>
 
       {/* CTA Section */}
-      <SectionWrapper variant="gradient" withDivider>
+      <ParallaxSection speed={0.2} className="py-0">
+        <SectionWrapper variant="gradient" withDivider>
         <div className="max-w-3xl mx-auto text-center">
           <LiquidReveal direction="up">
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
@@ -377,6 +386,7 @@ const Portfolio = () => {
           </LiquidReveal>
         </div>
       </SectionWrapper>
+      </ParallaxSection>
     </div>
   );
 };

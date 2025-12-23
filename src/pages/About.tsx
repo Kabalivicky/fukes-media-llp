@@ -10,6 +10,8 @@ import { Badge } from '@/components/ui/badge';
 import { Sparkles, Zap, Globe, Award, Users, Lightbulb, Target, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import ParallaxSection from '@/components/ParallaxSection';
+import FloatingElements from '@/components/FloatingElements';
 
 const About = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -87,7 +89,13 @@ const About = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+      <ParallaxSection 
+        className="relative min-h-[80vh] flex items-center justify-center"
+        speed={0.3}
+        fade
+      >
+        <FloatingElements variant="orbs" count={4} />
+        
         {/* Animated background orbs */}
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-radial from-primary/20 to-transparent rounded-full blur-3xl"
@@ -132,20 +140,11 @@ const About = () => {
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center">
-            <div className="w-1.5 h-3 bg-primary rounded-full mt-2" />
-          </div>
-        </motion.div>
-      </section>
+      </ParallaxSection>
 
       {/* Vision & Mission */}
-      <SectionWrapper variant="gradient" withDivider>
+      <ParallaxSection speed={0.15} className="py-0">
+        <SectionWrapper variant="gradient" withDivider>
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <LiquidReveal direction="left">
             <div className="space-y-8">
@@ -194,6 +193,7 @@ const About = () => {
           </LiquidReveal>
         </div>
       </SectionWrapper>
+      </ParallaxSection>
 
       {/* Stats Section */}
       <SectionWrapper variant="dark">

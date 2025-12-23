@@ -15,6 +15,8 @@ import LiquidReveal, { StaggerReveal } from '@/components/LiquidReveal';
 import { AnimatedLetters, GradientText, AnimatedWords } from '@/components/KineticText';
 import SEOHelmet from '@/components/SEOHelmet';
 import { useToast } from '@/hooks/use-toast';
+import ParallaxSection from '@/components/ParallaxSection';
+import FloatingElements from '@/components/FloatingElements';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -152,7 +154,13 @@ const Contact = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <ParallaxSection 
+        className="relative pt-32 pb-20"
+        speed={0.25}
+        fade
+      >
+        <FloatingElements variant="geometric" count={5} />
+        
         {/* Background effects */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-radial from-primary/10 to-transparent rounded-full blur-3xl" />
@@ -192,7 +200,7 @@ const Contact = () => {
             </AnimatedWords>
           </motion.div>
         </div>
-      </section>
+      </ParallaxSection>
 
       {/* Contact Methods */}
       <SectionWrapper variant="dark">

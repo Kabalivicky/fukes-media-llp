@@ -3,9 +3,10 @@ import { useRef } from 'react';
 
 interface FloatingElementsProps {
   className?: string;
-  variant?: 'circles' | 'lines' | 'dots' | 'mixed';
+  variant?: 'circles' | 'lines' | 'dots' | 'mixed' | 'orbs' | 'particles' | 'geometric';
   density?: 'low' | 'medium' | 'high';
   colorScheme?: 'primary' | 'accent' | 'mixed';
+  count?: number;
 }
 
 const FloatingElements = ({
@@ -13,6 +14,7 @@ const FloatingElements = ({
   variant = 'mixed',
   density = 'medium',
   colorScheme = 'mixed',
+  count: customCount,
 }: FloatingElementsProps) => {
   const ref = useRef<HTMLDivElement>(null);
   
@@ -21,7 +23,7 @@ const FloatingElements = ({
     offset: ['start end', 'end start'],
   });
 
-  const count = density === 'low' ? 5 : density === 'medium' ? 10 : 15;
+  const count = customCount ?? (density === 'low' ? 5 : density === 'medium' ? 10 : 15);
   
   const getColor = (index: number) => {
     if (colorScheme === 'primary') return 'bg-primary/20';
@@ -54,11 +56,27 @@ const FloatingElements = ({
     const delay = i * 0.1;
 
     const getShape = () => {
-      if (variant === 'circles') return 'rounded-full';
+      if (variant === 'circles' || variant === 'orbs') return 'rounded-full';
       if (variant === 'lines') return 'rounded-full h-1';
-      if (variant === 'dots') return 'rounded-full w-2 h-2';
-      // Mixed
-      return i % 3 === 0 ? 'rounded-full' : i % 3 === 1 ? 'rounded-lg' : 'rounded-full h-1';
+      if (variant === 'dots' || variant === 'particles') return 'rounded-full';
+      if (variant === 'geometric') {
+        return i % 4 === 0 ? 'rounded-full' : i % 4 === 1 ? 'rounded-lg' : i % 4 === 2 ? 'rounded-none rotate-45' : 'rounded-full';
+      }
+      return i % 3 === 0 ? 'rounded-full' : i % 3 === 1 ? 'rounded-lg' : 'rounded-full';
+    };
+
+    const getWidth = () => {
+      if (variant === 'dots' || variant === 'particles') return 8;
+      if (variant === 'lines') return size * 2;
+      if (variant === 'orbs') return size * 1.5;
+      return size;
+    };
+
+    const getHeight = () => {
+      if (variant === 'lines') return 4;
+      if (variant === 'dots' || variant === 'particles') return 8;
+      if (variant === 'orbs') return size * 1.5;
+      return size;
     };
 
     return (
@@ -66,8 +84,8 @@ const FloatingElements = ({
         key={i}
         className={`absolute ${getColor(i)} ${getShape()} blur-sm`}
         style={{
-          width: variant === 'dots' ? 8 : variant === 'lines' ? size * 2 : size,
-          height: variant === 'lines' ? 4 : variant === 'dots' ? 8 : size,
+          width: getWidth(),
+          height: getHeight(),
           left: `${left}%`,
           top: `${top}%`,
           y: baseY,
