@@ -8,7 +8,7 @@ import { ArrowRight, Camera, Palette, Video, MonitorPlay, Code } from 'lucide-re
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import DynamicPrice from './DynamicPrice';
 import TypewriterText from './TypewriterText';
-import Enhanced3DHoverCards from './Enhanced3DHoverCards';
+import TiltCard from './TiltCard';
 import ScrollReveal from './ScrollReveal';
 import FadeInOnScroll from './FadeInOnScroll';
 
@@ -126,7 +126,7 @@ const ServicesSection = () => {
             <TabsContent key={service.id} value={service.id} className="mt-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <FadeInOnScroll direction="left" delay={100} duration={0.6}>
-                  <Enhanced3DHoverCards intensity={0.8} glowColor={service.id === 'vfx' ? 'hsl(var(--primary))' : service.id === 'creative' ? 'hsl(var(--secondary))' : service.id === 'di' ? 'hsl(var(--accent))' : 'hsl(var(--neon-green))'}>
+                  <TiltCard tiltIntensity={10} glareEnabled={true}>
                     <Card className="border border-border bg-card/50 backdrop-blur-sm">
                       <CardHeader>
                         <div className="mb-4">{service.icon}</div>
@@ -192,7 +192,7 @@ const ServicesSection = () => {
                       </Button>
                     </CardFooter>
                     </Card>
-                  </Enhanced3DHoverCards>
+                  </TiltCard>
                 </FadeInOnScroll>
                 
                 <FadeInOnScroll direction="right" delay={200} duration={0.6}>
