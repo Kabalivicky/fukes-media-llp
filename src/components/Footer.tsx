@@ -1,175 +1,250 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
 import { useTheme } from '@/components/ui/theme-provider';
 import logoDarkTheme from '@/assets/logo-dark-theme.png';
 import logoLightTheme from '@/assets/logo-light-theme.png';
+import MarqueeText from './MarqueeText';
+
+const footerLinks = {
+  services: [
+    { name: 'VFX Solutions', path: '/services#vfx' },
+    { name: 'Creative Services', path: '/services#creative' },
+    { name: 'Digital Intermediate', path: '/services#di' },
+    { name: 'Tech Innovation', path: '/services#tech' },
+  ],
+  company: [
+    { name: 'About Us', path: '/about' },
+    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Team', path: '/team' },
+    { name: 'Careers', path: '/careers' },
+    { name: 'Contact', path: '/contact' },
+  ],
+  resources: [
+    { name: 'Help Center', path: '/help' },
+    { name: 'AI Tools', path: '/ai-tools' },
+    { name: 'Industry News', path: '/news' },
+    { name: 'VFX Research', path: '/vfx-research' },
+  ],
+  legal: [
+    { name: 'Privacy Policy', path: '/privacy' },
+    { name: 'Terms of Service', path: '/terms' },
+    { name: 'Legal', path: '/legal' },
+  ],
+};
+
+const socialLinks = [
+  { icon: Facebook, href: 'https://www.facebook.com/profile.php?viewas=100000686899395&id=61575800197616', label: 'Facebook' },
+  { icon: Twitter, href: 'https://x.com/FukesMedia', label: 'Twitter' },
+  { icon: Instagram, href: 'https://www.instagram.com/fukes_media/', label: 'Instagram' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/company/fukesmedia/', label: 'LinkedIn' },
+  { icon: Youtube, href: 'https://www.youtube.com/@FukesMedia', label: 'YouTube' },
+];
 
 const Footer = () => {
   const { theme } = useTheme();
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
   
   return (
-    <footer className="bg-card/30 backdrop-blur-md border-t border-border">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand Section - Fixed alignment */}
-          <div className="lg:col-span-1 space-y-4">
-            <Link to="/" className="flex items-center space-x-3 mb-4">
-              <div className="relative flex-shrink-0">
+    <footer className="relative bg-card/50 backdrop-blur-xl border-t border-border/50 overflow-hidden">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-primary/[0.05] pointer-events-none" />
+      
+      {/* Main Footer Content */}
+      <motion.div
+        className="container mx-auto px-4 pt-16 pb-8 relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-12">
+          {/* Brand Section */}
+          <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
+            <Link to="/" className="flex items-center space-x-3 group">
+              <motion.div 
+                className="relative flex-shrink-0"
+                whileHover={{ rotate: 5, scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 400 }}
+              >
                 <img 
                   alt="Fuke's Media Logo" 
                   className="h-10 w-auto" 
                   src={theme === 'dark' ? logoLightTheme : logoDarkTheme}
                 />
-              </div>
-              <span className="font-bold text-lg">Fuke's Media</span>
+              </motion.div>
+              <span className="font-display font-bold text-xl group-hover:text-primary transition-colors">
+                Fuke's Media
+              </span>
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Pioneering AI-driven VFX and creative services for the digital media landscape.
+            
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
+              Pioneering AI-driven VFX and creative services for the digital media landscape. 
+              Award-winning excellence in every frame.
             </p>
-            <div className="flex space-x-2">
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="h-8 w-8 rounded-full hover:bg-primary/10"
-                asChild
+
+            {/* Contact Info */}
+            <div className="space-y-3">
+              <a 
+                href="mailto:hello@fukes-media.com" 
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
               >
-                <a href="https://www.facebook.com/profile.php?viewas=100000686899395&id=61575800197616" target="_blank" rel="noopener noreferrer">
-                  <Facebook className="h-4 w-4" />
-                </a>
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="h-8 w-8 rounded-full hover:bg-primary/10"
-                asChild
-              >
-                <a href="https://x.com/FukesMedia" target="_blank" rel="noopener noreferrer">
-                  <Twitter className="h-4 w-4" />
-                </a>
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="h-8 w-8 rounded-full hover:bg-primary/10"
-                asChild
-              >
-                <a href="https://www.instagram.com/fukes_media/" target="_blank" rel="noopener noreferrer">
-                  <Instagram className="h-4 w-4" />
-                </a>
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="h-8 w-8 rounded-full hover:bg-primary/10"
-                asChild
-              >
-                <a href="https://www.linkedin.com/company/fukesmedia/" target="_blank" rel="noopener noreferrer">
-                  <Linkedin className="h-4 w-4" />
-                </a>
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="h-8 w-8 rounded-full hover:bg-primary/10"
-                asChild
-              >
-                <a href="https://www.youtube.com/@FukesMedia" target="_blank" rel="noopener noreferrer">
-                  <Youtube className="h-4 w-4" />
-                </a>
-              </Button>
+                <Mail className="w-4 h-4" />
+                hello@fukes-media.com
+              </a>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <MapPin className="w-4 h-4" />
+                Global Operations
+              </div>
             </div>
-          </div>
-          
-          {/* Services Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Services</h3>
+
+            {/* Social Links */}
+            <div className="flex gap-2">
+              {socialLinks.map((social) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-full bg-muted/50 hover:bg-primary/20 hover:text-primary transition-all"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-4 h-4" />
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Services */}
+          <motion.div variants={itemVariants} className="space-y-4">
+            <h3 className="font-display font-semibold text-sm uppercase tracking-wider">Services</h3>
             <ul className="space-y-3">
-              {[
-                { name: 'VFX Solutions', path: '/services/vfx' },
-                { name: 'Creative Services', path: '/services/creative' },
-                { name: 'Digital Intermediate', path: '/services/di' },
-                { name: 'Tech Innovation', path: '/services/tech' }
-              ].map((item, index) => (
-                <li key={index}>
+              {footerLinks.services.map((link) => (
+                <li key={link.name}>
                   <Link 
-                    to={item.path} 
-                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                    to={link.path}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 group"
                   >
-                    {item.name}
+                    <span>{link.name}</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
-          
-          {/* Company Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Company</h3>
+          </motion.div>
+
+          {/* Company */}
+          <motion.div variants={itemVariants} className="space-y-4">
+            <h3 className="font-display font-semibold text-sm uppercase tracking-wider">Company</h3>
             <ul className="space-y-3">
-              {[
-                { name: 'About Us', path: '/about' },
-                { name: 'Portfolio', path: '/portfolio' },
-                { name: 'Careers', path: '/careers' },
-                { name: 'Investors', path: '/investors' },
-                { name: 'Contact', path: '/contact' }
-              ].map((item, index) => (
-                <li key={index}>
+              {footerLinks.company.map((link) => (
+                <li key={link.name}>
                   <Link 
-                    to={item.path} 
-                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                    to={link.path}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 group"
                   >
-                    {item.name}
+                    <span>{link.name}</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
-          
-          {/* Newsletter Section - Fixed alignment */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Stay Connected</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Subscribe to our newsletter for the latest updates and insights.
+          </motion.div>
+
+          {/* Resources */}
+          <motion.div variants={itemVariants} className="space-y-4">
+            <h3 className="font-display font-semibold text-sm uppercase tracking-wider">Resources</h3>
+            <ul className="space-y-3">
+              {footerLinks.resources.map((link) => (
+                <li key={link.name}>
+                  <Link 
+                    to={link.path}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 group"
+                  >
+                    <span>{link.name}</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Newsletter */}
+          <motion.div variants={itemVariants} className="lg:col-span-1 space-y-4">
+            <h3 className="font-display font-semibold text-sm uppercase tracking-wider">Stay Updated</h3>
+            <p className="text-sm text-muted-foreground">
+              Get the latest news and insights.
             </p>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <form className="space-y-2" onSubmit={(e) => e.preventDefault()}>
               <Input 
-                placeholder="Your email address" 
-                className="bg-background border-border flex-1" 
+                type="email"
+                placeholder="Your email" 
+                className="bg-background/50 border-border/50 focus:border-primary" 
               />
-              <Button variant="default" className="gradient-button px-3 sm:px-4">
-                <ArrowRight className="h-4 w-4" />
+              <Button type="submit" className="w-full group">
+                Subscribe
+                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
+            </form>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* Bottom Bar */}
+      <div className="border-t border-border/50">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-muted-foreground text-center md:text-left">
+              &copy; {new Date().getFullYear()} Fuke's Media LLP. All rights reserved.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-6 text-sm">
+              {footerLinks.legal.map((link) => (
+                <Link 
+                  key={link.name}
+                  to={link.path}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
-        
-        <Separator className="my-8 bg-border" />
-        
-        {/* Bottom section - Fixed alignment */}
-        <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-          <div className="text-muted-foreground text-sm text-center md:text-left">
-            &copy; {new Date().getFullYear()} Fuke's Media LLP. All rights reserved.
-          </div>
-          
-          <div className="flex flex-wrap justify-center md:justify-end space-x-6 text-sm">
-            {[
-              { name: 'Privacy Policy', path: '/privacy' },
-              { name: 'Terms of Service', path: '/terms' },
-              { name: 'Legal', path: '/legal' }
-            ].map((item, index) => (
-              <Link 
-                key={index}
-                to={item.path} 
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </div>
+      </div>
+
+      {/* Marquee Footer Accent */}
+      <div className="border-t border-border/30 py-3 bg-muted/20">
+        <MarqueeText speed={20} className="text-xs font-medium text-muted-foreground/50 uppercase tracking-widest">
+          <span>Visual Effects</span>
+          <span>•</span>
+          <span>AI Technology</span>
+          <span>•</span>
+          <span>Creative Excellence</span>
+          <span>•</span>
+          <span>Award-Winning</span>
+          <span>•</span>
+          <span>Global Reach</span>
+          <span>•</span>
+          <span>Innovation</span>
+          <span>•</span>
+        </MarqueeText>
       </div>
     </footer>
   );
