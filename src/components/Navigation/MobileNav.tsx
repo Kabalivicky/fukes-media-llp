@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { mainNavLinks, homeAnchorLinks } from '@/utils/navigationData';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import AnimatedHamburger from './AnimatedHamburger';
 
 const MobileNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,15 +66,10 @@ const MobileNav = () => {
 
   return (
     <>
-      <button 
-        className="lg:hidden p-3 min-w-[44px] min-h-[44px] rounded-md text-foreground/70 hover:text-foreground hover:bg-muted/30 transition focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-        aria-expanded={isMenuOpen}
-        aria-controls="mobile-menu"
-      >
-        {isMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
-      </button>
+      <AnimatedHamburger 
+        isOpen={isMenuOpen} 
+        toggle={() => setIsMenuOpen(!isMenuOpen)} 
+      />
       
       {/* Mobile menu overlay */}
       {isMenuOpen && (
