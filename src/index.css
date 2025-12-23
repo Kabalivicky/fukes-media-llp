@@ -5,81 +5,89 @@
 
 @layer base {
   :root {
-    /* Light mode */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    /* Light mode - Clean, editorial inspired by Zeit Media */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 5%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card-foreground: 0 0% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover-foreground: 0 0% 5%;
 
-    /* Fuke's Media Brand Colors - Award Caliber Design */
-    --primary: 0 100% 50%;     /* Pure Red (#FF0000) */
+    /* Refined Brand Colors - Award Caliber */
+    --primary: 0 84% 50%;          /* Rich Red #E31B23 */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 100% 50%; /* Pure Blue (#0000FF) */
+    --secondary: 220 90% 56%;      /* Vibrant Blue #1E5FE6 */
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 120 100% 50%;    /* Pure Green (#00FF00) */
-    --accent-foreground: 0 0% 0%;
+    --accent: 152 76% 44%;         /* Emerald Green #1BB85D */
+    --accent-foreground: 0 0% 100%;
 
-    --muted: 0 0% 90%;
+    --muted: 0 0% 94%;
     --muted-foreground: 0 0% 40%;
 
-    --destructive: 345 100% 41%;
+    --destructive: 0 84% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 80%;
-    --input: 0 0% 80%;
-    --ring: 214 100% 36%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 220 90% 56%;
 
-    --neon-green: 120 100% 50%;  /* Pure Green for brand consistency */
-    --neon-blue: 240 100% 50%;   /* Pure Blue for brand consistency */
-    --neon-red: 0 100% 50%;      /* Pure Red for brand consistency */
-    --neon-gold: 48 100% 50%;
-    --neon-cyan: 195 100% 50%;
+    /* Glowing accents */
+    --glow-primary: 0 84% 50%;
+    --glow-secondary: 220 90% 56%;
+    --glow-accent: 152 76% 44%;
+    
+    /* Gradient stops */
+    --gradient-start: 0 84% 50%;
+    --gradient-mid: 280 84% 50%;
+    --gradient-end: 220 90% 56%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   .dark {
-    /* Dark mode */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    /* Dark mode - Atmospheric, immersive inspired by Uncommon Studio */
+    --background: 0 0% 2%;
+    --foreground: 0 0% 98%;
     
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
     
     --popover: 0 0% 3%;
-    --popover-foreground: 0 0% 100%;
+    --popover-foreground: 0 0% 98%;
     
-    /* Fuke's Media Brand Colors - Dark Mode */
-    --primary: 0 100% 50%;       /* Pure Red for consistency */
+    /* Award-Caliber Brand Colors - Dark Mode Glow */
+    --primary: 0 84% 55%;          /* Glowing Red */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 240 100% 60%;   /* Brighter Blue for dark mode */
+    --secondary: 220 90% 62%;      /* Vibrant Blue */
     --secondary-foreground: 0 0% 100%;
     
-    --accent: 120 100% 50%;      /* Pure Green maintained */
-    --accent-foreground: 0 0% 0%;
+    --accent: 152 76% 50%;         /* Glowing Green */
+    --accent-foreground: 0 0% 100%;
     
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
     
-    --destructive: 345 100% 41%;
+    --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 0 0% 20%;
-    --input: 0 0% 15%;
-    --ring: 214 100% 46%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 220 90% 62%;
 
-    --neon-green: 120 100% 50%;  /* Pure Green consistency */
-    --neon-blue: 240 100% 60%;   /* Brighter Blue for dark mode */
-    --neon-red: 0 100% 50%;      /* Pure Red consistency */
-    --neon-gold: 48 100% 60%;
-    --neon-cyan: 195 100% 60%;
+    /* Enhanced glowing accents for dark mode */
+    --glow-primary: 0 84% 55%;
+    --glow-secondary: 220 90% 62%;
+    --glow-accent: 152 76% 50%;
+    
+    /* Gradient stops */
+    --gradient-start: 0 84% 55%;
+    --gradient-mid: 280 84% 55%;
+    --gradient-end: 220 90% 62%;
   }
 
   * {

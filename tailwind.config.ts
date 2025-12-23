@@ -57,13 +57,11 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Fuke's Media Award-Caliber Brand Colors
-				fukes: {
-					red: '#FF0000',      /* Pure Brand Red */
-					blue: '#0000FF',     /* Pure Brand Blue */
-					green: '#00FF00',    /* Pure Brand Green */
-					black: '#000000',    /* Pure Black */
-					white: '#FFFFFF'     /* Pure White */
+				// Glow colors for award-winning effects
+				glow: {
+					primary: 'hsl(var(--glow-primary))',
+					secondary: 'hsl(var(--glow-secondary))',
+					accent: 'hsl(var(--glow-accent))'
 				}
 			},
 			borderRadius: {
