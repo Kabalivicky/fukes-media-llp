@@ -70,7 +70,7 @@ const Privacy = () => {
           </motion.div>
 
           <h1 className="font-display text-5xl md:text-6xl font-bold mb-6">
-            <AnimatedLetters text="Privacy" className="block" delay={0.2} />
+            <AnimatedLetters className="block" delay={0.2}>Privacy</AnimatedLetters>
             <span className="block mt-2">
               <GradientText>Policy</GradientText>
             </span>

@@ -111,7 +111,7 @@ const About = () => {
           </motion.div>
 
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6">
-            <AnimatedLetters text="About" className="block" delay={0.2} />
+            <AnimatedLetters className="block" delay={0.2}>About</AnimatedLetters>
             <span className="block mt-2">
               <GradientText>Fuke's Media</GradientText>
             </span>
