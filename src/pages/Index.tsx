@@ -13,6 +13,7 @@ import AnimatedLogo from '@/components/AnimatedLogo';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import EnhancedModularInfo from '@/components/EnhancedModularInfo';
 import useScrollSync from '@/hooks/useScrollSync';
+import ScrollReveal from '@/components/ScrollReveal';
 
 // Animation variants for scroll-triggered animations
 const fadeInUpVariants = {
@@ -25,7 +26,7 @@ const fadeInUpVariants = {
     y: 0,
     transition: {
       duration: 0.8,
-      ease: "easeOut"
+      ease: [0.25, 0.1, 0.25, 1]
     }
   }
 };
@@ -105,143 +106,111 @@ const Home = () => {
           
           <div id="services" ref={el => sectionsRef.current.services = el}>
             <ErrorBoundary>
-              <motion.div initial="hidden" whileInView="visible" viewport={{
-              once: true,
-              margin: "-100px"
-            }} variants={fadeInUpVariants}>
+              <ScrollReveal animation="fadeUp" duration={0.7}>
                 <ServicesSection />
-              </motion.div>
+              </ScrollReveal>
             </ErrorBoundary>
           </div>
           
           <ErrorBoundary>
-            <motion.div initial="hidden" whileInView="visible" viewport={{
-            once: true,
-            margin: "-100px"
-          }} variants={fadeInUpVariants}>
+            <ScrollReveal animation="zoomIn" duration={0.8} delay={0.1}>
               <EnhancedModularInfo />
-            </motion.div>
+            </ScrollReveal>
           </ErrorBoundary>
           
           <ErrorBoundary>
-            <motion.div initial="hidden" whileInView="visible" viewport={{
-            once: true,
-            margin: "-100px"
-          }} variants={fadeInUpVariants}>
+            <ScrollReveal animation="slideUp" duration={0.7}>
               <PricingCalculator />
-            </motion.div>
+            </ScrollReveal>
           </ErrorBoundary>
           
           <div id="portfolio" ref={el => sectionsRef.current.portfolio = el}>
             <ErrorBoundary>
-              <motion.div initial="hidden" whileInView="visible" viewport={{
-              once: true,
-              margin: "-100px"
-            }} variants={fadeInUpVariants}>
+              <ScrollReveal animation="fadeLeft" duration={0.8}>
                 <PortfolioSection />
-              </motion.div>
+              </ScrollReveal>
             </ErrorBoundary>
           </div>
           
           {/* Featured Content & Awards Section */}
           <ErrorBoundary>
-            <motion.section initial="hidden" whileInView="visible" viewport={{
-            once: true,
-            margin: "-100px"
-          }} variants={fadeInUpVariants} className="py-20 px-4 bg-muted/20">
-              <div className="container mx-auto">
-                <SectionTitle title="Award-Winning Excellence" subtitle="Recognition from industry leaders and creative festivals worldwide" />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
+            <ScrollReveal animation="blur" duration={0.9}>
+              <section className="py-20 px-4 bg-muted/20">
+                <div className="container mx-auto">
+                  <SectionTitle title="Award-Winning Excellence" subtitle="Recognition from industry leaders and creative festivals worldwide" />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
+                    
+                    <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-secondary/20 hover:border-secondary/40 transition-colors" whileHover={{
+                    scale: 1.05
+                  }} transition={{
+                    type: "spring",
+                    stiffness: 300
+                  }}>
+                      <div className="text-4xl font-display font-bold text-secondary mb-2">500+</div>
+                      <p className="text-muted-foreground font-medium">Projects Completed</p>
+                      <p className="text-xs text-muted-foreground mt-1">Global Reach</p>
+                    </motion.div>
+                    <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-accent/20 hover:border-accent/40 transition-colors" whileHover={{
+                    scale: 1.05
+                  }} transition={{
+                    type: "spring",
+                    stiffness: 300
+                  }}>
+                      <div className="text-4xl font-display font-bold text-accent mb-2">98%</div>
+                      <p className="text-muted-foreground font-medium">Client Satisfaction</p>
+                      <p className="text-xs text-muted-foreground mt-1">Proven Excellence</p>
+                    </motion.div>
+                  </div>
                   
-                  <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-secondary/20 hover:border-secondary/40 transition-colors" whileHover={{
-                  scale: 1.05
-                }} transition={{
-                  type: "spring",
-                  stiffness: 300
-                }}>
-                    <div className="text-4xl font-display font-bold text-secondary mb-2">500+</div>
-                    <p className="text-muted-foreground font-medium">Projects Completed</p>
-                    <p className="text-xs text-muted-foreground mt-1">Global Reach</p>
-                  </motion.div>
-                  <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-accent/20 hover:border-accent/40 transition-colors" whileHover={{
-                  scale: 1.05
-                }} transition={{
-                  type: "spring",
-                  stiffness: 300
-                }}>
-                    <div className="text-4xl font-display font-bold text-accent mb-2">98%</div>
-                    <p className="text-muted-foreground font-medium">Client Satisfaction</p>
-                    <p className="text-xs text-muted-foreground mt-1">Proven Excellence</p>
-                  </motion.div>
-                </div>
-                
-                {/* Client Testimonials Carousel */}
-                <motion.div className="mt-16 max-w-4xl mx-auto" initial={{
-                opacity: 0,
-                y: 20
-              }} whileInView={{
-                opacity: 1,
-                y: 0
-              }} viewport={{
-                once: true
-              }} transition={{
-                duration: 0.8,
-                delay: 0.3
-              }}>
-                  <div className="text-center">
-                    <h3 className="text-2xl font-display font-bold mb-8">What Industry Leaders Say</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="p-6 bg-card rounded-lg border border-border/50">
-                        <p className="text-muted-foreground italic mb-4">
-                          "Fuke's Media's AI-driven approach revolutionized our post-production workflow. Their innovation is unmatched."
-                        </p>
-                        <div className="flex items-center">
-                          <div className="w-12 h-12 bg-primary/20 rounded-full mr-3" />
-                          <div>
-                            <p className="font-semibold">Sarah Chen</p>
-                            <p className="text-sm text-muted-foreground">Director, Quantum Films</p>
+                  {/* Client Testimonials Carousel */}
+                  <ScrollReveal animation="fadeRight" delay={0.2} duration={0.7}>
+                    <div className="mt-16 max-w-4xl mx-auto">
+                      <div className="text-center">
+                        <h3 className="text-2xl font-display font-bold mb-8">What Industry Leaders Say</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="p-6 bg-card rounded-lg border border-border/50">
+                            <p className="text-muted-foreground italic mb-4">
+                              "Fuke's Media's AI-driven approach revolutionized our post-production workflow. Their innovation is unmatched."
+                            </p>
+                            <div className="flex items-center">
+                              <div className="w-12 h-12 bg-primary/20 rounded-full mr-3" />
+                              <div>
+                                <p className="font-semibold">Sarah Chen</p>
+                                <p className="text-sm text-muted-foreground">Director, Quantum Films</p>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      
                     </div>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.section>
+                  </ScrollReveal>
+                </div>
+              </section>
+            </ScrollReveal>
           </ErrorBoundary>
           
           <div id="team" ref={el => sectionsRef.current.team = el}>
             <ErrorBoundary>
-              <motion.div initial="hidden" whileInView="visible" viewport={{
-              once: true,
-              margin: "-100px"
-            }} variants={fadeInUpVariants}>
+              <ScrollReveal animation="fadeUp" duration={0.7}>
                 <TeamSection />
-              </motion.div>
+              </ScrollReveal>
             </ErrorBoundary>
           </div>
           
           <div id="careers" ref={el => sectionsRef.current.careers = el}>
             <ErrorBoundary>
-              <motion.div initial="hidden" whileInView="visible" viewport={{
-              once: true,
-              margin: "-100px"
-            }} variants={fadeInUpVariants}>
+              <ScrollReveal animation="zoomIn" duration={0.8}>
                 <CareersSection />
-              </motion.div>
+              </ScrollReveal>
             </ErrorBoundary>
           </div>
           
           
           <div id="contact" ref={el => sectionsRef.current.contact = el}>
             <ErrorBoundary>
-              <motion.div initial="hidden" whileInView="visible" viewport={{
-              once: true,
-              margin: "-100px"
-            }} variants={fadeInUpVariants}>
+              <ScrollReveal animation="slideUp" duration={0.7}>
                 <ContactSection />
-              </motion.div>
+              </ScrollReveal>
             </ErrorBoundary>
           </div>
           
