@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Eye, ExternalLink } from 'lucide-react';
 import FadeInOnScroll from '@/components/FadeInOnScroll';
-import Interactive3DCard from './Interactive3DCard';
+import TiltCard from './TiltCard';
 import {
   Dialog,
   DialogContent,
@@ -130,8 +130,8 @@ const PortfolioSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project, index) => (
                 <FadeInOnScroll key={project.id} delay={100 * index}>
-                  <Interactive3DCard intensity={0.5} className="h-full">
-                    <Card className="overflow-hidden border border-border bg-card/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300 group h-full">
+                  <TiltCard tiltIntensity={12} className="h-full">
+                    <Card className="overflow-hidden border border-border bg-card/50 backdrop-blur-sm transition-all duration-300 group h-full">
                     <div className="relative overflow-hidden aspect-video">
                       <img 
                         src={project.image} 
@@ -194,7 +194,7 @@ const PortfolioSection = () => {
                       <p className="text-sm text-muted-foreground">{project.description}</p>
                     </CardContent>
                   </Card>
-                  </Interactive3DCard>
+                  </TiltCard>
                 </FadeInOnScroll>
               ))}
             </div>
