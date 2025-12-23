@@ -12,12 +12,10 @@ import ScrollToTop from "./components/ScrollToTop";
 import LoadingIntro from "./components/LoadingIntro";
 import AccessibilityProvider from "./components/AccessibilityProvider";
 import { MotionConfig } from "framer-motion";
+import CursorFollower from "./components/CursorFollower";
 
 // Lazy loaded components for better performance
 const AppRouter = lazy(() => import("./components/Layout/AppRouter"));
-
-// Hooks
-import useCursorEffect from "./hooks/useCursorEffect";
 
 // Create QueryClient with optimized settings
 const queryClient = new QueryClient({
@@ -33,15 +31,6 @@ const queryClient = new QueryClient({
 
 const App = () => {
   const [isAppReady, setIsAppReady] = useState(false);
-  
-  // Enable custom cursor effect
-  useCursorEffect({
-    trailLength: 0,
-    trailColor: 'rgba(0, 87, 183, 0.0)',
-    trailSize: 0,
-    hideNativeCursor: false,
-    enabled: false
-  });
   
   // Check if intro has been seen and set app ready state
   useEffect(() => {
@@ -81,26 +70,31 @@ const App = () => {
           <ThemeProvider defaultTheme="dark">
             <AccessibilityProvider>
               <TooltipProvider>
-                <MotionConfig reducedMotion="always" transition={{ duration: 0 }}><div className="min-h-screen bg-background">
-                  <Toaster />
-                  <Sonner />
-                  <BrowserRouter>
-                    {/* Loading Intro - Always render but handles its own visibility */}
-                    <LoadingIntro />
+                <MotionConfig reducedMotion="user">
+                  <div className="min-h-screen bg-background">
+                    {/* Custom Cursor Follower */}
+                    <CursorFollower size={24} mixBlendMode="difference" />
                     
-                    {/* Navigation Controls */}
-                    <ScrollToTop showBelow={400} />
-                    
-                    {/* Main Application Routes - Always render when app is ready */}
-                    {isAppReady && (
-                      <Suspense fallback={<LoadingFallback />}>
-                        <ErrorBoundary>
-                          <AppRouter />
-                        </ErrorBoundary>
-                      </Suspense>
-                    )}
-                  </BrowserRouter>
-                </div></MotionConfig>
+                    <Toaster />
+                    <Sonner />
+                    <BrowserRouter>
+                      {/* Loading Intro - Always render but handles its own visibility */}
+                      <LoadingIntro />
+                      
+                      {/* Navigation Controls */}
+                      <ScrollToTop showBelow={400} />
+                      
+                      {/* Main Application Routes - Always render when app is ready */}
+                      {isAppReady && (
+                        <Suspense fallback={<LoadingFallback />}>
+                          <ErrorBoundary>
+                            <AppRouter />
+                          </ErrorBoundary>
+                        </Suspense>
+                      )}
+                    </BrowserRouter>
+                  </div>
+                </MotionConfig>
               </TooltipProvider>
             </AccessibilityProvider>
           </ThemeProvider>
