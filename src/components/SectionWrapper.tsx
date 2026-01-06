@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ReactNode, useRef } from 'react';
 import { useInView } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface SectionWrapperProps {
   children: ReactNode;
@@ -11,10 +12,6 @@ interface SectionWrapperProps {
   fullHeight?: boolean;
 }
 
-/**
- * Award-winning section wrapper with atmospheric effects
- * Inspired by WOTD winners - creates distinct "chapters" with smooth transitions
- */
 const SectionWrapper = ({
   children,
   className = '',
@@ -37,21 +34,16 @@ const SectionWrapper = ({
     <motion.section
       ref={ref}
       id={id}
-      className={`relative py-24 md:py-32 overflow-hidden ${variants[variant]} ${fullHeight ? 'min-h-screen flex items-center' : ''} ${className}`}
+      className={cn(
+        'relative py-24 md:py-32 overflow-hidden',
+        variants[variant],
+        fullHeight && 'min-h-screen flex items-center',
+        className
+      )}
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Subtle noise texture overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.015] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Top divider */}
       {withDivider && (
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       )}
@@ -60,7 +52,6 @@ const SectionWrapper = ({
         {children}
       </div>
 
-      {/* Bottom divider */}
       {withDivider && (
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       )}

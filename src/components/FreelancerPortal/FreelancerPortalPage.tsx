@@ -1,9 +1,6 @@
-
 import { motion } from 'framer-motion';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { Helmet } from 'react-helmet-async';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import LoginForm from './LoginForm';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
@@ -19,26 +16,23 @@ const FreelancerPortalPage = () => {
   ];
   
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <>
       <Helmet>
         <title>Freelancer Portal | Fuke's Media - VFX Talent Network</title>
         <meta name="description" content="Join our network of VFX professionals and gain access to exclusive opportunities, resources, and community support." />
       </Helmet>
       
-      <Navbar />
-      
-      <main className="pt-24 pb-16">
-        <section className="py-16">
+      <main className="py-16">
+        <section className="py-8">
           <div className="container mx-auto px-4">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <SectionTitle 
+              <SectionHeading 
                 title="Freelancer Portal" 
                 subtitle="Access exclusive opportunities and resources for VFX professionals"
-                accent="primary"
               />
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
@@ -84,9 +78,7 @@ const FreelancerPortalPage = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

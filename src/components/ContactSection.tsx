@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -68,7 +68,7 @@ const ContactSection = () => {
   return (
     <section id="contact" className="py-20 relative">
       <div className="container mx-auto px-4">
-        <SectionTitle 
+        <SectionHeading 
           title="Contact Us" 
           subtitle="Get in touch with our team to discuss your project or inquire about our services"
         />

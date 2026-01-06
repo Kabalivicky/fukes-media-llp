@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Play, ArrowLeft, Download, Share2 } from 'lucide-react';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import SEOHelmet from '@/components/SEOHelmet';
 import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
 
@@ -109,7 +109,7 @@ const Showreel = () => {
               </Link>
             </motion.div>
 
-            <SectionTitle
+            <SectionHeading
               title="Official Showreel 2024"
               subtitle="60 seconds of pure visual excellence showcasing our award-winning work"
             />

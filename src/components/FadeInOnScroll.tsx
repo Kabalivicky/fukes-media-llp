@@ -47,16 +47,14 @@ const FadeInOnScroll = ({
       opacity: 0, 
       x: initialPos.x, 
       y: initialPos.y,
-      filter: 'blur(4px)'
     },
     visible: { 
       opacity: 1, 
       x: 0, 
       y: 0,
-      filter: 'blur(0px)',
       transition: {
         duration,
-        delay: delay / 1000, // Convert ms to seconds
+        delay: delay / 1000,
         ease: [0.25, 0.1, 0.25, 1]
       }
     }
