@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -242,7 +242,7 @@ const PricingCalculator = () => {
   return (
     <section id="pricing-calculator" className="py-16 relative overflow-hidden">
       <div className="container mx-auto px-4">
-        <SectionTitle 
+        <SectionHeading 
           title="Pricing Calculator" 
           subtitle="Get an instant estimate for your project based on your specific requirements"
         />

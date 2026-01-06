@@ -1,5 +1,5 @@
 
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -112,7 +112,7 @@ const CareersSection = () => {
   return (
     <section id="careers" className="py-20 relative">
       <div className="container mx-auto px-4">
-        <SectionTitle 
+        <SectionHeading 
           title="Careers" 
           subtitle="Join our team and be part of the revolution in digital media"
         />

@@ -1,33 +1,27 @@
-
 import { motion } from 'framer-motion';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { Helmet } from 'react-helmet-async';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import ContractForm from './ContractForm';
 
 const ContractBuilderPage = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <>
       <Helmet>
         <title>Contract Builder | Fuke's Media - AI-Driven Contract Creation</title>
         <meta name="description" content="Create customized VFX and creative services contracts with our AI-powered contract builder." />
       </Helmet>
       
-      <Navbar />
-      
-      <main className="pt-24 pb-16">
-        <section className="py-16">
+      <main className="py-16">
+        <section className="py-8">
           <div className="container mx-auto px-4">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <SectionTitle 
+              <SectionHeading 
                 title="Smart Contract Builder" 
                 subtitle="Generate customized VFX service contracts with our AI-powered contract builder"
-                accent="primary"
               />
               
               <div className="max-w-4xl mx-auto mb-10 text-center">
@@ -76,9 +70,7 @@ const ContractBuilderPage = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

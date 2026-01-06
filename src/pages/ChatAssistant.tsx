@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import AIChat from '@/components/ChatAssistant/AIChat';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import { motion } from 'framer-motion';
 import SEOHelmet from '@/components/SEOHelmet';
 
@@ -34,7 +34,7 @@ const ChatAssistant = () => {
       />
 
       <section className="py-20 px-4">
-        <SectionTitle
+        <SectionHeading
           title="AI Assistant"
           subtitle="Get immediate answers to your VFX production questions"
         />

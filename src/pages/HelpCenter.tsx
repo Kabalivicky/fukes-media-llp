@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Search } from 'lucide-react';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import HelpCategoryCard from '@/components/HelpCenter/HelpCategoryCard';
@@ -162,7 +162,7 @@ const HelpCenter = () => {
       {/* Categories grid */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <SectionTitle
+          <SectionHeading
             title="Help Center Categories"
             subtitle="Find resources, specifications, and guidelines for Fuke's Media partnership"
             className="mb-12"

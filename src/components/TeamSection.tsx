@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import FadeInOnScroll from '@/components/FadeInOnScroll';
 import { ArrowRight, Linkedin, Mail, Phone, User } from 'lucide-react';
 
@@ -89,7 +89,7 @@ const TeamSection = () => {
     <section id="team" className="py-24" aria-labelledby="team-section-title">
       <div className="container mx-auto px-4">
         <FadeInOnScroll>
-          <SectionTitle 
+          <SectionHeading 
             title="Our Team" 
             subtitle="Meet the experts behind our exceptional VFX solutions" 
           />

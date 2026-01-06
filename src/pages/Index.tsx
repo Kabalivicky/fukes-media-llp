@@ -8,7 +8,7 @@ import TeamSection from '@/components/TeamSection';
 import CareersSection from '@/components/CareersSection';
 import ContactSection from '@/components/ContactSection';
 import SEOHelmet from '@/components/SEOHelmet';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import AnimatedLogo from '@/components/AnimatedLogo';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import EnhancedModularInfo from '@/components/EnhancedModularInfo';
@@ -150,7 +150,7 @@ const Home = () => {
                 </ParallaxLayer>
                 
                 <div className="container mx-auto relative z-10">
-                  <SectionTitle title="Award-Winning Excellence" subtitle="Recognition from industry leaders and creative festivals worldwide" />
+                  <SectionHeading title="Excellence in VFX" subtitle="Recognition from industry leaders and creative festivals worldwide" />
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
                     
                     <ParallaxLayer depth={1}>

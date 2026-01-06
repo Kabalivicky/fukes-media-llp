@@ -9,8 +9,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { Lock, Mail, User, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import Navbar from '@/components/Navbar';
+import DynamicHeader from '@/components/DynamicHeader';
 import Footer from '@/components/Footer';
+import LightweightBackground from '@/components/LightweightBackground';
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
@@ -99,9 +100,10 @@ const Auth = () => {
       </Helmet>
 
       <div className="min-h-screen flex flex-col">
-        <Navbar />
+        <LightweightBackground />
+        <DynamicHeader />
         
-        <main className="flex-1 flex items-center justify-center py-12 px-4">
+        <main className="flex-1 flex items-center justify-center py-12 px-4 pt-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

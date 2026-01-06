@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import SEOHelmet from '@/components/SEOHelmet';
-import SectionTitle from '@/components/SectionTitle';
+import SectionHeading from '@/components/SectionHeading';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -209,10 +209,9 @@ const News = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <SectionTitle 
+          <SectionHeading 
             title="Industry News & Updates" 
             subtitle="Real-time news from VFX, AI, and entertainment industries"
-            accent="primary"
           />
 
           {/* Source selector and last updated */}
