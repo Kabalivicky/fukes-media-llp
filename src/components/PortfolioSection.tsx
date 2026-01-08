@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Eye, ExternalLink, Play, X } from 'lucide-react';
+import { ArrowRight, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TiltCard from './TiltCard';
 import SectionHeading from './SectionHeading';
 import SectionWrapper from './SectionWrapper';
+import OptimizedImage from './OptimizedImage';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +15,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
 
 // Portfolio projects with enhanced data
@@ -162,15 +162,12 @@ const PortfolioSection = () => {
                 <Card className="group relative overflow-hidden border-border/50 bg-card/30 backdrop-blur-sm h-full">
                   {/* Image Container */}
                   <div className="relative aspect-[4/3] overflow-hidden">
-                    <motion.img 
+                    <OptimizedImage 
                       src={project.image} 
                       alt={project.title}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      animate={{
-                        scale: hoveredId === project.id ? 1.1 : 1,
-                      }}
-                      transition={{ duration: 0.5 }}
+                      placeholder="shimmer"
+                      aspectRatio="4/3"
+                      hoverScale={hoveredId === project.id ? 1.1 : 1}
                     />
                     
                     {/* Overlay */}
@@ -212,10 +209,11 @@ const PortfolioSection = () => {
                           {selectedProject && (
                             <>
                               <div className="relative aspect-video">
-                                <img 
+                                <OptimizedImage 
                                   src={selectedProject.image} 
                                   alt={selectedProject.title}
-                                  className="w-full h-full object-cover"
+                                  aspectRatio="16/9"
+                                  priority
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
                               </div>
