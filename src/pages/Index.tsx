@@ -2,37 +2,32 @@ import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
-import PortfolioSection from '@/components/PortfolioSection';
-
-// Lazy load heavy components
-const PricingCalculator = lazy(() => import('@/components/PricingCalculator'));
-import TeamSection from '@/components/TeamSection';
-import CareersSection from '@/components/CareersSection';
 import ContactSection from '@/components/ContactSection';
 import SEOHelmet from '@/components/SEOHelmet';
 import SectionHeading from '@/components/SectionHeading';
 import AnimatedLogo from '@/components/AnimatedLogo';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import EnhancedModularInfo from '@/components/EnhancedModularInfo';
 import useScrollSync from '@/hooks/useScrollSync';
 import ScrollReveal from '@/components/ScrollReveal';
 import { ParallaxBackground, ParallaxLayer } from '@/components/ParallaxWrapper';
 
-// Animation variants for scroll-triggered animations
-const fadeInUpVariants = {
-  hidden: {
-    opacity: 0,
-    y: 30
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.25, 0.1, 0.25, 1]
-    }
-  }
-};
+// Lazy load heavy components for better initial load time
+const PricingCalculator = lazy(() => import('@/components/PricingCalculator'));
+const PortfolioSection = lazy(() => import('@/components/PortfolioSection'));
+const TeamSection = lazy(() => import('@/components/TeamSection'));
+const CareersSection = lazy(() => import('@/components/CareersSection'));
+const EnhancedModularInfo = lazy(() => import('@/components/EnhancedModularInfo'));
+
+// Lightweight section loader for lazy components
+const SectionLoader = ({ text = "Loading..." }: { text?: string }) => (
+  <div className="h-96 flex items-center justify-center">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      <span className="text-muted-foreground text-sm animate-pulse">{text}</span>
+    </div>
+  </div>
+);
+
 const Home = () => {
   // State for scroll progress
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -121,13 +116,15 @@ const Home = () => {
           
           <ErrorBoundary>
             <ScrollReveal animation="zoomIn" duration={0.8} delay={0.1}>
-              <EnhancedModularInfo />
+              <Suspense fallback={<SectionLoader text="Loading content..." />}>
+                <EnhancedModularInfo />
+              </Suspense>
             </ScrollReveal>
           </ErrorBoundary>
           
           <ErrorBoundary>
             <ScrollReveal animation="slideUp" duration={0.7}>
-              <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Loading calculator...</div></div>}>
+              <Suspense fallback={<SectionLoader text="Loading calculator..." />}>
                 <PricingCalculator />
               </Suspense>
             </ScrollReveal>
@@ -136,7 +133,9 @@ const Home = () => {
           <div id="portfolio" ref={el => sectionsRef.current.portfolio = el}>
             <ErrorBoundary>
               <ScrollReveal animation="fadeLeft" duration={0.8}>
-                <PortfolioSection />
+                <Suspense fallback={<SectionLoader text="Loading portfolio..." />}>
+                  <PortfolioSection />
+                </Suspense>
               </ScrollReveal>
             </ErrorBoundary>
           </div>
@@ -213,7 +212,9 @@ const Home = () => {
           <div id="team" ref={el => sectionsRef.current.team = el}>
             <ErrorBoundary>
               <ScrollReveal animation="fadeUp" duration={0.7}>
-                <TeamSection />
+                <Suspense fallback={<SectionLoader text="Loading team..." />}>
+                  <TeamSection />
+                </Suspense>
               </ScrollReveal>
             </ErrorBoundary>
           </div>
@@ -221,7 +222,9 @@ const Home = () => {
           <div id="careers" ref={el => sectionsRef.current.careers = el}>
             <ErrorBoundary>
               <ScrollReveal animation="zoomIn" duration={0.8}>
-                <CareersSection />
+                <Suspense fallback={<SectionLoader text="Loading careers..." />}>
+                  <CareersSection />
+                </Suspense>
               </ScrollReveal>
             </ErrorBoundary>
           </div>

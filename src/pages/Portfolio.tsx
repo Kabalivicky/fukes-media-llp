@@ -11,6 +11,7 @@ import SectionHeading from '@/components/SectionHeading';
 import LiquidReveal from '@/components/LiquidReveal';
 import { AnimatedLetters, GradientText, AnimatedWords } from '@/components/KineticText';
 import SEOHelmet from '@/components/SEOHelmet';
+import OptimizedImage from '@/components/OptimizedImage';
 import { Link } from 'react-router-dom';
 import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
 import ParallaxSection from '@/components/ParallaxSection';
@@ -294,10 +295,12 @@ const Portfolio = () => {
               >
                 <Card className="group h-full overflow-hidden hover:shadow-2xl transition-all duration-500 border-border/50 hover:border-primary/50">
                   <div className="relative aspect-video overflow-hidden">
-                    <img
+                    <OptimizedImage
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      aspectRatio="16/9"
+                      placeholder="shimmer"
+                      hoverScale={1.1}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
