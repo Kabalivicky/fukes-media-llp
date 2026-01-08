@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
-import PricingCalculator from '@/components/PricingCalculator';
 import PortfolioSection from '@/components/PortfolioSection';
+
+// Lazy load heavy components
+const PricingCalculator = lazy(() => import('@/components/PricingCalculator'));
 import TeamSection from '@/components/TeamSection';
 import CareersSection from '@/components/CareersSection';
 import ContactSection from '@/components/ContactSection';
@@ -125,7 +127,9 @@ const Home = () => {
           
           <ErrorBoundary>
             <ScrollReveal animation="slideUp" duration={0.7}>
-              <PricingCalculator />
+              <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Loading calculator...</div></div>}>
+                <PricingCalculator />
+              </Suspense>
             </ScrollReveal>
           </ErrorBoundary>
           
