@@ -1,125 +1,168 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Play, Award, Sparkles, ArrowRight } from 'lucide-react';
+import { Play, Award, Sparkles, ArrowRight, Plus, Loader2 } from 'lucide-react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { useAdmin } from '@/hooks/useAdmin';
 import SectionWrapper from '@/components/SectionWrapper';
 import SectionHeading from '@/components/SectionHeading';
 import LiquidReveal from '@/components/LiquidReveal';
 import { AnimatedLetters, GradientText, AnimatedWords } from '@/components/KineticText';
 import SEOHelmet from '@/components/SEOHelmet';
-import OptimizedImage from '@/components/OptimizedImage';
 import { Link } from 'react-router-dom';
 import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
 import ParallaxSection from '@/components/ParallaxSection';
 import FloatingElements from '@/components/FloatingElements';
+import { ProjectCard } from '@/components/Portfolio/ProjectCard';
+import { ProjectFormDialog } from '@/components/Portfolio/ProjectFormDialog';
+import { DeleteConfirmDialog } from '@/components/Portfolio/DeleteConfirmDialog';
 
 const SHOWREEL_EMBED_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
 const SHOWREEL_VIEW_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view";
 
+interface Project {
+  id: string;
+  title: string;
+  description: string | null;
+  client: string | null;
+  category: string | null;
+  year: number | null;
+  image_url: string | null;
+  video_url: string | null;
+  imdb_url: string | null;
+  featured: boolean | null;
+  status: string | null;
+  technologies: string[] | null;
+  services: string[] | null;
+}
+
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [formDialogOpen, setFormDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [deletingProject, setDeletingProject] = useState<Project | null>(null);
+  
+  const { isAdmin } = useAdmin();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const portfolioItems = [
-    {
-      id: 1,
-      title: "Neural Depths",
-      category: "VFX",
-      type: "Short Film",
-      year: "2024",
-      description: "AI-driven underwater world creation with volumetric lighting and neural rendering.",
-      image: "/lovable-uploads/173b4ebf-d33a-4c15-bd6e-9038e214c933.png",
-      video: "/lovable-uploads/showreel-sample.mp4",
-      tags: ["Neural Rendering", "Volumetric VFX", "AI Assistance"],
-      awards: ["Best VFX - Digital Arts Festival 2024"],
-      challenge: "Creating photorealistic underwater environments with complex lighting",
-      solution: "Implemented AI-assisted neural rendering for dynamic light caustics",
-      results: "40% faster rendering times with unprecedented realism"
+  // Fetch projects from database
+  const { data: projects = [], isLoading } = useQuery({
+    queryKey: ['portfolio-projects'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('year', { ascending: false });
+      
+      if (error) throw error;
+      return data as Project[];
     },
-    {
-      id: 2,
-      title: "Quantum Horizons",
-      category: "Compositing",
-      type: "Commercial",
-      year: "2024",
-      description: "Complex multi-dimensional compositing for futuristic tech commercial.",
-      image: "/lovable-uploads/4ea8b97d-d1e3-4753-a973-13cc19993e16.png",
-      video: "/lovable-uploads/commercial-sample.mp4",
-      tags: ["Multi-dimensional", "Tech Commercial", "Motion Graphics"],
-      awards: ["Gold - Creative Excellence Awards"],
-      challenge: "Seamlessly blending multiple reality layers",
-      solution: "Advanced compositing with AI-enhanced edge detection",
-      results: "Achieved impossible camera movements with perfect realism"
-    },
-    {
-      id: 3,
-      title: "Biomechanical Symphony",
-      category: "3D",
-      type: "Music Video",
-      year: "2024",
-      description: "Full 3D biomechanical creatures with procedural animation.",
-      image: "/lovable-uploads/6f4b1c81-acc3-4ad7-b5bb-fc537f6f91eb.png",
-      video: "/lovable-uploads/music-video-sample.mp4",
-      tags: ["Procedural Animation", "Biomechanical", "Character Design"],
-      awards: ["Best Animation - Music Video Awards"],
-      challenge: "Creating lifelike biomechanical movements",
-      solution: "ML-driven procedural animation with organic motion patterns",
-      results: "Revolutionary character animation praised by industry leaders"
-    },
-    {
-      id: 4,
-      title: "Digital Souls",
-      category: "Roto & Paint",
-      type: "Feature Film",
-      year: "2024",
-      description: "Precise rotoscoping and digital makeup for supernatural thriller.",
-      image: "/lovable-uploads/7aa001b2-00ae-4aed-9551-897de83da325.png",
-      tags: ["Precision Roto", "Digital Makeup", "Supernatural"],
-      challenge: "Frame-perfect rotoscoping for complex transformation sequences",
-      solution: "AI-assisted edge detection with manual refinement",
-      results: "Invisible VFX that seamlessly blended practical and digital"
-    },
-    {
-      id: 5,
-      title: "Ethereal Landscapes",
-      category: "Matte Painting",
-      type: "TV Series",
-      year: "2024",
-      description: "Expansive otherworldly environments for fantasy series.",
-      image: "/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png",
-      tags: ["Environment Design", "Fantasy", "Digital Painting"],
-      challenge: "Creating believable alien landscapes with Earth-like appeal",
-      solution: "Hybrid approach combining photography and digital painting",
-      results: "Breathtaking environments that became series defining imagery"
-    },
-    {
-      id: 6,
-      title: "AI Vision",
-      category: "AI-Assisted",
-      type: "Tech Demo",
-      year: "2024",
-      description: "Showcasing AI capabilities in real-time VFX generation.",
-      image: "/lovable-uploads/98a66a3b-d5b0-4b14-891c-e5ee0f6dcbc3.png",
-      tags: ["Real-time AI", "Tech Demo", "Innovation"],
-      challenge: "Demonstrating AI VFX capabilities in real-time",
-      solution: "Custom neural networks trained on VFX datasets",
-      results: "Industry-first real-time AI VFX generation platform"
-    }
-  ];
+  });
 
-  const categories = ['all', 'VFX', 'Compositing', '3D', 'Roto & Paint', 'Matte Painting', 'AI-Assisted'];
+  // Create/Update mutation
+  const saveMutation = useMutation({
+    mutationFn: async (project: Partial<Project>) => {
+      if (editingProject?.id) {
+        const { error } = await supabase
+          .from('projects')
+          .update(project)
+          .eq('id', editingProject.id);
+        if (error) throw error;
+      } else {
+        if (!project.title) throw new Error('Title is required');
+        const { error } = await supabase
+          .from('projects')
+          .insert([{ ...project, title: project.title }]);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['portfolio-projects'] });
+      setFormDialogOpen(false);
+      setEditingProject(null);
+      toast({
+        title: editingProject ? 'Project updated' : 'Project added',
+        description: 'Your changes have been saved successfully.',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Error saving project',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from('projects')
+        .delete()
+        .eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['portfolio-projects'] });
+      setDeleteDialogOpen(false);
+      setDeletingProject(null);
+      toast({
+        title: 'Project deleted',
+        description: 'The project has been removed successfully.',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Error deleting project',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
+  const handleAddProject = useCallback(() => {
+    setEditingProject(null);
+    setFormDialogOpen(true);
+  }, []);
+
+  const handleEditProject = useCallback((project: Project) => {
+    setEditingProject(project);
+    setFormDialogOpen(true);
+  }, []);
+
+  const handleDeleteProject = useCallback((project: Project) => {
+    setDeletingProject(project);
+    setDeleteDialogOpen(true);
+  }, []);
+
+  const handleSaveProject = async (projectData: Partial<Project>) => {
+    await saveMutation.mutateAsync(projectData);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (deletingProject?.id) {
+      await deleteMutation.mutateAsync(deletingProject.id);
+    }
+  };
+
+  // Get unique categories from projects
+  const categories = ['all', ...Array.from(new Set(projects.map(p => p.category).filter(Boolean)))];
   
-  const filteredItems = selectedCategory === 'all' 
-    ? portfolioItems 
-    : portfolioItems.filter(item => item.category === selectedCategory);
+  const filteredProjects = selectedCategory === 'all' 
+    ? projects 
+    : projects.filter(item => item.category === selectedCategory);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -259,6 +302,20 @@ const Portfolio = () => {
 
       {/* Portfolio Grid */}
       <SectionWrapper withDivider>
+        {/* Admin Add Button */}
+        {isAdmin && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-end mb-6"
+          >
+            <Button onClick={handleAddProject} className="gap-2">
+              <Plus className="w-4 h-4" />
+              Add Project
+            </Button>
+          </motion.div>
+        )}
+
         {/* Filter Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -267,7 +324,7 @@ const Portfolio = () => {
           className="flex justify-center mb-12"
         >
           <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full max-w-4xl">
-            <TabsList className="grid grid-cols-3 lg:grid-cols-7 w-full bg-card/50 border border-border/30">
+            <TabsList className="flex flex-wrap justify-center gap-2 bg-card/50 border border-border/30 h-auto p-2">
               {categories.map((category) => (
                 <TabsTrigger 
                   key={category} 
@@ -281,85 +338,42 @@ const Portfolio = () => {
           </Tabs>
         </motion.div>
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && filteredProjects.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-muted-foreground text-lg mb-4">No projects found.</p>
+            {isAdmin && (
+              <Button onClick={handleAddProject} variant="outline">
+                Add your first project
+              </Button>
+            )}
+          </div>
+        )}
+
         {/* Grid */}
-        <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" layout>
-          <AnimatePresence mode="popLayout">
-            {filteredItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <Card className="group h-full overflow-hidden hover:shadow-2xl transition-all duration-500 border-border/50 hover:border-primary/50">
-                  <div className="relative aspect-video overflow-hidden">
-                    <OptimizedImage
-                      src={item.image}
-                      alt={item.title}
-                      aspectRatio="16/9"
-                      placeholder="shimmer"
-                      hoverScale={1.1}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
-                    {/* Play button overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <motion.div
-                        className="bg-primary/90 rounded-full p-4"
-                        whileHover={{ scale: 1.1 }}
-                      >
-                        <Play className="h-8 w-8 text-primary-foreground ml-1" />
-                      </motion.div>
-                    </div>
-
-                    {/* Awards badge */}
-                    {item.awards && (
-                      <div className="absolute top-4 right-4">
-                        <Badge className="bg-accent text-accent-foreground shadow-lg">
-                          <Award className="h-3 w-3 mr-1" />
-                          Award Winner
-                        </Badge>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h3 className="text-xl font-display font-bold mb-1 group-hover:text-primary transition-colors">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">{item.type} • {item.year}</p>
-                      </div>
-                      <Badge variant="outline" className="bg-background/50">{item.category}</Badge>
-                    </div>
-                    
-                    <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-2">{item.description}</p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {item.tags.slice(0, 3).map((tag, tagIndex) => (
-                        <Badge key={tagIndex} variant="secondary" className="text-xs bg-secondary/10">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    {item.results && (
-                      <div className="pt-4 border-t border-border/30">
-                        <p className="text-sm">
-                          <span className="font-medium text-accent">Results: </span>
-                          <span className="text-muted-foreground">{item.results}</span>
-                        </p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        {!isLoading && filteredProjects.length > 0 && (
+          <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" layout>
+            <AnimatePresence mode="popLayout">
+              {filteredProjects.map((project, index) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={index}
+                  isAdmin={isAdmin}
+                  onEdit={handleEditProject}
+                  onDelete={handleDeleteProject}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
       </SectionWrapper>
 
       {/* CTA Section */}
@@ -390,6 +404,23 @@ const Portfolio = () => {
         </div>
       </SectionWrapper>
       </ParallaxSection>
+
+      {/* Admin Dialogs */}
+      <ProjectFormDialog
+        open={formDialogOpen}
+        onOpenChange={setFormDialogOpen}
+        project={editingProject}
+        onSave={handleSaveProject}
+        isLoading={saveMutation.isPending}
+      />
+
+      <DeleteConfirmDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        projectTitle={deletingProject?.title || ''}
+        onConfirm={handleConfirmDelete}
+        isLoading={deleteMutation.isPending}
+      />
     </div>
   );
 };
