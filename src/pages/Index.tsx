@@ -14,7 +14,7 @@ import { ParallaxBackground, ParallaxLayer } from '@/components/ParallaxWrapper'
 // Lazy load heavy components for better initial load time
 const PricingCalculator = lazy(() => import('@/components/PricingCalculator'));
 const PortfolioSection = lazy(() => import('@/components/PortfolioSection'));
-const TeamSection = lazy(() => import('@/components/TeamSection'));
+const TeamSection = lazy(() => import('@/components/TeamSection/TeamPage'));
 const CareersSection = lazy(() => import('@/components/CareersSection'));
 const EnhancedModularInfo = lazy(() => import('@/components/EnhancedModularInfo'));
 
