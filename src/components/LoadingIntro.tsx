@@ -40,16 +40,16 @@ const LoadingIntro = () => {
 
   if (!shouldShow) return null;
 
-  // RGB colors for the lines
+  // Fuke's Media brand RGB colors from the logo
   const rgbColors = [
-    '#FF0000', // Red
-    '#00FF00', // Green
-    '#0000FF', // Blue
-    '#FF0000',
-    '#00FF00',
-    '#0000FF',
-    '#FF0000',
-    '#00FF00',
+    '#C8102E', // Fuke's Red (crimson)
+    '#0077B6', // Fuke's Blue (vibrant blue)
+    '#00A651', // Fuke's Green (emerald green)
+    '#C8102E', // Red
+    '#0077B6', // Blue  
+    '#00A651', // Green
+    '#C8102E', // Red
+    '#0077B6', // Blue
   ];
 
   return (
