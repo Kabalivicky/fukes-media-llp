@@ -66,11 +66,18 @@ const LoadingIntro = () => {
             {rgbColors.map((color, i) => (
               <motion.div
                 key={`h-${i}`}
-                className="absolute left-0 right-0 h-[3px]"
+                className="absolute left-0 right-0"
                 style={{
                   top: '50%',
-                  background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
-                  boxShadow: `0 0 20px ${color}, 0 0 40px ${color}`,
+                  height: '8px',
+                  background: `linear-gradient(90deg, transparent 5%, ${color} 30%, ${color} 70%, transparent 95%)`,
+                  boxShadow: `
+                    0 0 20px 4px ${color},
+                    0 0 40px 8px ${color},
+                    0 0 80px 16px ${color},
+                    0 0 120px 24px ${color}80
+                  `,
+                  filter: 'blur(0.5px)',
                 }}
                 initial={{ 
                   scaleX: 0, 
@@ -80,13 +87,13 @@ const LoadingIntro = () => {
                 animate={{ 
                   scaleX: phase === 'lines' ? [0, 1.5] : 1.5,
                   y: phase === 'lines' 
-                    ? [0, (i - rgbColors.length / 2) * 60] 
-                    : (i - rgbColors.length / 2) * 60,
-                  opacity: phase === 'lines' ? [0, 1, 0.8] : phase === 'logo' ? 0.3 : 0
+                    ? [0, (i - rgbColors.length / 2) * 70] 
+                    : (i - rgbColors.length / 2) * 70,
+                  opacity: phase === 'lines' ? [0, 1, 0.9] : phase === 'logo' ? 0.4 : 0
                 }}
                 transition={{ 
                   duration: 1.2,
-                  delay: i * 0.08,
+                  delay: i * 0.06,
                   ease: [0.22, 1, 0.36, 1]
                 }}
               />
@@ -96,11 +103,18 @@ const LoadingIntro = () => {
             {rgbColors.map((color, i) => (
               <motion.div
                 key={`v-${i}`}
-                className="absolute top-0 bottom-0 w-[3px]"
+                className="absolute top-0 bottom-0"
                 style={{
                   left: '50%',
-                  background: `linear-gradient(180deg, transparent, ${color}, transparent)`,
-                  boxShadow: `0 0 20px ${color}, 0 0 40px ${color}`,
+                  width: '8px',
+                  background: `linear-gradient(180deg, transparent 5%, ${color} 30%, ${color} 70%, transparent 95%)`,
+                  boxShadow: `
+                    0 0 20px 4px ${color},
+                    0 0 40px 8px ${color},
+                    0 0 80px 16px ${color},
+                    0 0 120px 24px ${color}80
+                  `,
+                  filter: 'blur(0.5px)',
                 }}
                 initial={{ 
                   scaleY: 0, 
@@ -110,38 +124,71 @@ const LoadingIntro = () => {
                 animate={{ 
                   scaleY: phase === 'lines' ? [0, 1.5] : 1.5,
                   x: phase === 'lines' 
-                    ? [0, (i - rgbColors.length / 2) * 80] 
-                    : (i - rgbColors.length / 2) * 80,
-                  opacity: phase === 'lines' ? [0, 1, 0.6] : phase === 'logo' ? 0.2 : 0
+                    ? [0, (i - rgbColors.length / 2) * 90] 
+                    : (i - rgbColors.length / 2) * 90,
+                  opacity: phase === 'lines' ? [0, 1, 0.7] : phase === 'logo' ? 0.3 : 0
                 }}
                 transition={{ 
                   duration: 1.2,
-                  delay: i * 0.08,
+                  delay: i * 0.06,
                   ease: [0.22, 1, 0.36, 1]
                 }}
               />
             ))}
 
-            {/* Diagonal RGB lines */}
-            {[...Array(6)].map((_, i) => (
+            {/* Diagonal RGB lines - Enhanced */}
+            {[...Array(8)].map((_, i) => (
               <motion.div
                 key={`d-${i}`}
-                className="absolute w-[600px] h-[3px] origin-center"
+                className="absolute origin-center"
                 style={{
                   top: '50%',
                   left: '50%',
-                  transform: `translate(-50%, -50%) rotate(${i * 30}deg)`,
-                  background: `linear-gradient(90deg, transparent, ${rgbColors[i % 3]}, transparent)`,
-                  boxShadow: `0 0 15px ${rgbColors[i % 3]}`,
+                  width: '800px',
+                  height: '6px',
+                  transform: `translate(-50%, -50%) rotate(${i * 22.5}deg)`,
+                  background: `linear-gradient(90deg, transparent 10%, ${rgbColors[i % 3]} 40%, ${rgbColors[i % 3]} 60%, transparent 90%)`,
+                  boxShadow: `
+                    0 0 15px 3px ${rgbColors[i % 3]},
+                    0 0 30px 6px ${rgbColors[i % 3]},
+                    0 0 60px 12px ${rgbColors[i % 3]}60
+                  `,
                 }}
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={{ 
-                  scaleX: phase === 'lines' ? [0, 2] : 2,
-                  opacity: phase === 'lines' ? [0, 0.8, 0.5] : phase === 'logo' ? 0.1 : 0
+                  scaleX: phase === 'lines' ? [0, 2.5] : 2.5,
+                  opacity: phase === 'lines' ? [0, 0.9, 0.6] : phase === 'logo' ? 0.15 : 0
                 }}
                 transition={{ 
-                  duration: 1,
-                  delay: 0.3 + i * 0.1,
+                  duration: 1.1,
+                  delay: 0.2 + i * 0.08,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              />
+            ))}
+
+            {/* Extra dramatic outer ring lines */}
+            {[...Array(12)].map((_, i) => (
+              <motion.div
+                key={`outer-${i}`}
+                className="absolute origin-center"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  width: '150vw',
+                  height: '4px',
+                  transform: `translate(-50%, -50%) rotate(${i * 15}deg)`,
+                  background: `linear-gradient(90deg, transparent, ${rgbColors[i % 3]}40, ${rgbColors[i % 3]}, ${rgbColors[i % 3]}40, transparent)`,
+                  boxShadow: `0 0 30px 5px ${rgbColors[i % 3]}50`,
+                }}
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ 
+                  scaleX: phase === 'lines' ? [0, 1] : 1,
+                  opacity: phase === 'lines' ? [0, 0.5, 0.3] : phase === 'logo' ? 0.1 : 0
+                }}
+                transition={{ 
+                  duration: 1.3,
+                  delay: 0.4 + i * 0.04,
                   ease: [0.22, 1, 0.36, 1]
                 }}
               />
