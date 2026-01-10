@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Play, ArrowLeft, Download, Share2 } from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
 import SEOHelmet from '@/components/SEOHelmet';
-import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
+import showreelThumbnail from '@/assets/projects/kalki-2898-ad-new.png';
 
 const SHOWREEL_EMBED_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
 const SHOWREEL_VIEW_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view";
