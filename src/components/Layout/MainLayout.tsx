@@ -3,7 +3,6 @@ import { AnimatePresence } from 'framer-motion';
 import DynamicHeader from '@/components/DynamicHeader';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
-import FloatingThemeToggle from '@/components/FloatingThemeToggle';
 import { Toaster } from '@/components/ui/toaster';
 import LightweightBackground from '@/components/LightweightBackground';
 import PageTransition from '@/components/PageTransition';
@@ -33,7 +32,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       </main>
       <Footer />
       <ScrollToTop />
-      <FloatingThemeToggle />
       <ScrollPercentageIndicator />
       <Toaster />
     </div>

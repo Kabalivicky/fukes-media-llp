@@ -15,7 +15,7 @@ import LiquidReveal from '@/components/LiquidReveal';
 import { AnimatedLetters, GradientText, AnimatedWords } from '@/components/KineticText';
 import SEOHelmet from '@/components/SEOHelmet';
 import { Link } from 'react-router-dom';
-import showreelThumbnail from '@/assets/projects/kalki-2898-ad.png';
+import showreelThumbnail from '@/assets/projects/kalki-2898-ad-new.png';
 import ParallaxSection from '@/components/ParallaxSection';
 import FloatingElements from '@/components/FloatingElements';
 import { ProjectCard } from '@/components/Portfolio/ProjectCard';
