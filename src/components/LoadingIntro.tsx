@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const LoadingIntro = () => {
-  const [phase, setPhase] = useState<'logo' | 'zoom' | 'done'>('logo');
+  const [phase, setPhase] = useState<'lines' | 'logo' | 'zoom' | 'done'>('lines');
   const [shouldShow, setShouldShow] = useState(() => {
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem('hasSeenIntro') !== 'true';
@@ -13,18 +13,22 @@ const LoadingIntro = () => {
   useEffect(() => {
     if (!shouldShow) return;
     
-    // Auto-play the Netflix-style animation
-    const timer1 = setTimeout(() => setPhase('zoom'), 2000);
-    const timer2 = setTimeout(() => {
+    // Phase 1: RGB lines spread (0-1.5s)
+    // Phase 2: Logo appears (1.5-3s)
+    // Phase 3: Zoom out (3-4s)
+    const timer1 = setTimeout(() => setPhase('logo'), 1500);
+    const timer2 = setTimeout(() => setPhase('zoom'), 3500);
+    const timer3 = setTimeout(() => {
       setPhase('done');
       sessionStorage.setItem('hasSeenIntro', 'true');
-    }, 3200);
-    const timer3 = setTimeout(() => setShouldShow(false), 3500);
+    }, 4500);
+    const timer4 = setTimeout(() => setShouldShow(false), 4800);
     
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
+      clearTimeout(timer4);
     };
   }, [shouldShow]);
 
@@ -36,6 +40,18 @@ const LoadingIntro = () => {
 
   if (!shouldShow) return null;
 
+  // RGB colors for the lines
+  const rgbColors = [
+    '#FF0000', // Red
+    '#00FF00', // Green
+    '#0000FF', // Blue
+    '#FF0000',
+    '#00FF00',
+    '#0000FF',
+    '#FF0000',
+    '#00FF00',
+  ];
+
   return (
     <AnimatePresence>
       {shouldShow && (
@@ -45,185 +61,239 @@ const LoadingIntro = () => {
           animate={{ opacity: phase === 'done' ? 0 : 1 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Netflix-style horizontal light streaks */}
+          {/* RGB Lines spreading from center - Horizontal */}
           <div className="absolute inset-0 overflow-hidden">
-            {[...Array(5)].map((_, i) => (
+            {rgbColors.map((color, i) => (
               <motion.div
-                key={i}
-                className="absolute h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent"
+                key={`h-${i}`}
+                className="absolute left-0 right-0 h-[3px]"
                 style={{
-                  top: `${20 + i * 15}%`,
-                  left: '-100%',
-                  right: '200%',
+                  top: '50%',
+                  background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
+                  boxShadow: `0 0 20px ${color}, 0 0 40px ${color}`,
                 }}
-                initial={{ x: '-100%', opacity: 0 }}
+                initial={{ 
+                  scaleX: 0, 
+                  y: 0,
+                  opacity: 0 
+                }}
                 animate={{ 
-                  x: phase === 'logo' ? '100%' : '200%',
-                  opacity: phase === 'logo' ? [0, 1, 0] : 0
+                  scaleX: phase === 'lines' ? [0, 1.5] : 1.5,
+                  y: phase === 'lines' 
+                    ? [0, (i - rgbColors.length / 2) * 60] 
+                    : (i - rgbColors.length / 2) * 60,
+                  opacity: phase === 'lines' ? [0, 1, 0.8] : phase === 'logo' ? 0.3 : 0
                 }}
                 transition={{ 
-                  duration: 1.5,
-                  delay: i * 0.15,
-                  ease: 'easeOut'
+                  duration: 1.2,
+                  delay: i * 0.08,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              />
+            ))}
+
+            {/* Vertical RGB lines */}
+            {rgbColors.map((color, i) => (
+              <motion.div
+                key={`v-${i}`}
+                className="absolute top-0 bottom-0 w-[3px]"
+                style={{
+                  left: '50%',
+                  background: `linear-gradient(180deg, transparent, ${color}, transparent)`,
+                  boxShadow: `0 0 20px ${color}, 0 0 40px ${color}`,
+                }}
+                initial={{ 
+                  scaleY: 0, 
+                  x: 0,
+                  opacity: 0 
+                }}
+                animate={{ 
+                  scaleY: phase === 'lines' ? [0, 1.5] : 1.5,
+                  x: phase === 'lines' 
+                    ? [0, (i - rgbColors.length / 2) * 80] 
+                    : (i - rgbColors.length / 2) * 80,
+                  opacity: phase === 'lines' ? [0, 1, 0.6] : phase === 'logo' ? 0.2 : 0
+                }}
+                transition={{ 
+                  duration: 1.2,
+                  delay: i * 0.08,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              />
+            ))}
+
+            {/* Diagonal RGB lines */}
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={`d-${i}`}
+                className="absolute w-[600px] h-[3px] origin-center"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  transform: `translate(-50%, -50%) rotate(${i * 30}deg)`,
+                  background: `linear-gradient(90deg, transparent, ${rgbColors[i % 3]}, transparent)`,
+                  boxShadow: `0 0 15px ${rgbColors[i % 3]}`,
+                }}
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ 
+                  scaleX: phase === 'lines' ? [0, 2] : 2,
+                  opacity: phase === 'lines' ? [0, 0.8, 0.5] : phase === 'logo' ? 0.1 : 0
+                }}
+                transition={{ 
+                  duration: 1,
+                  delay: 0.3 + i * 0.1,
+                  ease: [0.22, 1, 0.36, 1]
                 }}
               />
             ))}
           </div>
 
-          {/* Ambient glow behind logo */}
+          {/* Center burst effect */}
           <motion.div
-            className="absolute w-[800px] h-[400px] rounded-full"
+            className="absolute w-[400px] h-[400px] rounded-full"
             style={{
-              background: 'radial-gradient(ellipse, hsl(var(--primary) / 0.3) 0%, transparent 70%)',
-              filter: 'blur(60px)'
+              background: 'radial-gradient(circle, rgba(255,0,0,0.3), rgba(0,255,0,0.3), rgba(0,0,255,0.3), transparent 70%)',
+              filter: 'blur(40px)',
             }}
-            initial={{ opacity: 0, scale: 0.5 }}
+            initial={{ scale: 0, opacity: 0 }}
             animate={{ 
-              opacity: phase === 'zoom' ? 0 : 0.6,
-              scale: phase === 'zoom' ? 2 : 1
+              scale: phase === 'lines' ? [0, 3] : phase === 'logo' ? 2 : 0,
+              opacity: phase === 'lines' ? [0, 0.8, 0.4] : phase === 'logo' ? 0.3 : 0
             }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
           />
 
-          {/* Main Netflix-style logo animation */}
+          {/* Main logo animation */}
           <motion.div
             className="relative z-10 flex flex-col items-center"
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 0.5, opacity: 0 }}
             animate={{ 
-              scale: phase === 'zoom' ? 15 : 1,
-              opacity: phase === 'zoom' ? 0 : 1
+              scale: phase === 'zoom' ? 20 : phase === 'logo' || phase === 'lines' ? 1 : 1,
+              opacity: phase === 'lines' ? 0 : phase === 'zoom' ? 0 : 1
             }}
             transition={{ 
-              scale: { duration: 1.2, ease: [0.76, 0, 0.24, 1] },
-              opacity: { duration: 0.8 }
+              scale: { duration: 1, ease: [0.76, 0, 0.24, 1] },
+              opacity: { duration: 0.5, delay: phase === 'logo' ? 0 : 0 }
             }}
           >
-            {/* Logo container with Netflix-style shadow */}
+            {/* Ambient glow */}
             <motion.div
-              className="relative"
-              initial={{ y: 20 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="absolute -inset-32 rounded-full"
+              style={{
+                background: 'radial-gradient(ellipse, rgba(255,0,0,0.2), rgba(0,255,0,0.2), rgba(0,0,255,0.2), transparent 60%)',
+                filter: 'blur(60px)'
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: phase === 'logo' ? 0.8 : 0 }}
+              transition={{ duration: 0.8 }}
+            />
+
+            {/* Logo with RGB border effect */}
+            <motion.div
+              className="relative p-1 rounded-2xl"
+              style={{
+                background: 'linear-gradient(135deg, #FF0000, #00FF00, #0000FF, #FF0000)',
+                backgroundSize: '300% 300%',
+              }}
+              initial={{ opacity: 0, rotate: -10 }}
+              animate={{ 
+                opacity: phase === 'logo' ? 1 : 0,
+                rotate: 0,
+                backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
+              }}
+              transition={{ 
+                opacity: { duration: 0.5 },
+                rotate: { duration: 0.8 },
+                backgroundPosition: { duration: 3, repeat: Infinity, ease: 'linear' }
+              }}
             >
-              {/* RGB ribbon effects */}
-              <motion.div
-                className="absolute -inset-8 opacity-60"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: phase === 'logo' ? 0.6 : 0 }}
-              >
-                {/* Left ribbon */}
-                <motion.div
-                  className="absolute left-0 top-1/2 w-2 h-32 -translate-y-1/2 rounded-full"
-                  style={{ background: 'linear-gradient(180deg, #0057B7, #D50032, #009639)' }}
-                  initial={{ scaleY: 0, x: -20 }}
-                  animate={{ scaleY: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
+              <div className="bg-black rounded-xl p-4">
+                <motion.img 
+                  src="/lovable-uploads/98a66a3b-d5b0-4b14-891c-e5ee0f6dcbc3.png"
+                  alt="Fuke's Media"
+                  className="w-48 md:w-64 h-auto"
+                  style={{
+                    filter: 'drop-shadow(0 0 30px rgba(255,0,0,0.5)) drop-shadow(0 0 30px rgba(0,255,0,0.5)) drop-shadow(0 0 30px rgba(0,0,255,0.5))'
+                  }}
                 />
-                {/* Right ribbon */}
-                <motion.div
-                  className="absolute right-0 top-1/2 w-2 h-32 -translate-y-1/2 rounded-full"
-                  style={{ background: 'linear-gradient(180deg, #009639, #D50032, #0057B7)' }}
-                  initial={{ scaleY: 0, x: 20 }}
-                  animate={{ scaleY: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                />
-              </motion.div>
-
-              {/* Main logo with dramatic shadow */}
-              <motion.img 
-                src="/lovable-uploads/98a66a3b-d5b0-4b14-891c-e5ee0f6dcbc3.png"
-                alt="Fuke's Media"
-                className="w-40 md:w-56 h-auto relative z-10"
-                style={{
-                  filter: 'drop-shadow(0 0 40px hsl(var(--primary) / 0.5))'
-                }}
-                initial={{ filter: 'drop-shadow(0 0 0px transparent)' }}
-                animate={{ 
-                  filter: phase === 'logo' 
-                    ? 'drop-shadow(0 0 40px hsl(var(--primary) / 0.5))' 
-                    : 'drop-shadow(0 0 100px hsl(var(--primary)))'
-                }}
-                transition={{ duration: 0.5 }}
-              />
-
-              {/* Shine sweep effect */}
-              <motion.div
-                className="absolute inset-0 overflow-hidden rounded-lg"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
-                  initial={{ x: '-200%' }}
-                  animate={{ x: '200%' }}
-                  transition={{ duration: 1.5, delay: 0.5, ease: 'easeInOut' }}
-                />
-              </motion.div>
+              </div>
             </motion.div>
 
-            {/* Brand name with letter animation */}
+            {/* Brand name */}
             <motion.h1
-              className="mt-8 text-3xl md:text-5xl font-bold tracking-wider text-white"
-              initial={{ opacity: 0, y: 20, letterSpacing: '0.5em' }}
+              className="mt-8 text-4xl md:text-6xl font-bold tracking-wider"
+              initial={{ opacity: 0, y: 30 }}
               animate={{ 
-                opacity: phase === 'zoom' ? 0 : 1, 
-                y: 0,
-                letterSpacing: '0.2em'
+                opacity: phase === 'logo' ? 1 : 0, 
+                y: phase === 'logo' ? 0 : 30
               }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-primary to-white">
+              <span 
+                className="bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #FF0000, #FFFFFF, #00FF00, #FFFFFF, #0000FF)',
+                  backgroundSize: '200% auto',
+                }}
+              >
                 FUKE'S MEDIA
               </span>
             </motion.h1>
 
             {/* Tagline */}
             <motion.p
-              className="mt-4 text-sm md:text-base text-white/50 tracking-[0.3em] uppercase"
+              className="mt-4 text-sm md:text-base text-white/60 tracking-[0.4em] uppercase"
               initial={{ opacity: 0 }}
-              animate={{ opacity: phase === 'zoom' ? 0 : 0.6 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
+              animate={{ opacity: phase === 'logo' ? 1 : 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
             >
               AI-Driven VFX Studio
             </motion.p>
           </motion.div>
 
-          {/* Bottom loading bar - Netflix style */}
+          {/* RGB Loading bar */}
           <motion.div
-            className="absolute bottom-16 left-1/2 -translate-x-1/2 w-48"
+            className="absolute bottom-20 left-1/2 -translate-x-1/2 w-64"
             initial={{ opacity: 0 }}
-            animate={{ opacity: phase === 'logo' ? 1 : 0 }}
+            animate={{ opacity: phase !== 'zoom' && phase !== 'done' ? 1 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="h-[3px] bg-white/10 rounded-full overflow-hidden">
+            <div className="h-1 bg-white/10 rounded-full overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
                 style={{
-                  background: 'linear-gradient(90deg, #0057B7, #D50032, #009639)'
+                  background: 'linear-gradient(90deg, #FF0000, #00FF00, #0000FF, #FF0000)',
+                  backgroundSize: '200% 100%',
                 }}
-                initial={{ width: '0%' }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 2, ease: 'linear' }}
+                initial={{ width: '0%', backgroundPosition: '0% 0%' }}
+                animate={{ 
+                  width: '100%',
+                  backgroundPosition: ['0% 0%', '100% 0%']
+                }}
+                transition={{ 
+                  width: { duration: 3.5, ease: 'linear' },
+                  backgroundPosition: { duration: 1, repeat: Infinity, ease: 'linear' }
+                }}
               />
             </div>
           </motion.div>
 
           {/* Skip button */}
           <motion.button 
-            className="absolute bottom-8 right-8 text-white/30 hover:text-white/60 text-xs tracking-widest uppercase transition-colors duration-300"
+            className="absolute bottom-8 right-8 text-white/40 hover:text-white text-xs tracking-widest uppercase transition-colors duration-300 border border-white/20 px-4 py-2 rounded hover:border-white/40"
             onClick={handleSkip}
             initial={{ opacity: 0 }}
-            animate={{ opacity: phase === 'logo' ? 1 : 0 }}
-            transition={{ delay: 1 }}
+            animate={{ opacity: phase !== 'zoom' && phase !== 'done' ? 1 : 0 }}
+            transition={{ delay: 0.5 }}
           >
-            Skip
+            Skip Intro
           </motion.button>
 
           {/* Vignette overlay */}
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%)'
+              background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.8) 100%)'
             }}
           />
         </motion.div>
