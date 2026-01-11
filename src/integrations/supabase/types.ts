@@ -623,6 +623,7 @@ export type Database = {
           id: string
           image_url: string | null
           imdb_url: string | null
+          order_index: number | null
           results: string[] | null
           services: string[] | null
           solutions: string[] | null
@@ -649,6 +650,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           imdb_url?: string | null
+          order_index?: number | null
           results?: string[] | null
           services?: string[] | null
           solutions?: string[] | null
@@ -675,6 +677,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           imdb_url?: string | null
+          order_index?: number | null
           results?: string[] | null
           services?: string[] | null
           solutions?: string[] | null

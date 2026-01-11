@@ -336,6 +336,43 @@ const LoadingIntro = () => {
             Skip Intro
           </motion.button>
 
+          {/* Scanline overlay for cinematic TV effect */}
+          <div 
+            className="absolute inset-0 pointer-events-none opacity-[0.04]"
+            style={{
+              backgroundImage: `repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 1px,
+                rgba(0, 0, 0, 0.3) 1px,
+                rgba(0, 0, 0, 0.3) 2px
+              )`,
+              backgroundSize: '100% 4px',
+            }}
+          />
+          
+          {/* Additional horizontal scanline flicker */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: `linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255, 255, 255, 0.02) 50%,
+                transparent 100%
+              )`,
+              backgroundSize: '100% 8px',
+            }}
+            animate={{
+              backgroundPosition: ['0% 0%', '0% 100%'],
+            }}
+            transition={{
+              duration: 0.1,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          />
+
           {/* Vignette overlay */}
           <div 
             className="absolute inset-0 pointer-events-none"
