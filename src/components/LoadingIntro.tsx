@@ -2,7 +2,8 @@ import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const LoadingIntro = () => {
-  const [phase, setPhase] = useState<'blackout' | 'flare' | 'reveal' | 'done'>('blackout');
+  const [phase, setPhase] = useState<'flicker' | 'blackout' | 'flare' | 'reveal' | 'done'>('flicker');
+  const [flickerOpacity, setFlickerOpacity] = useState(0);
   const [shouldShow, setShouldShow] = useState(() => {
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem('hasSeenIntro') !== 'true';
@@ -10,22 +11,65 @@ const LoadingIntro = () => {
     return true;
   });
 
+  // Film reel flicker effect
+  useEffect(() => {
+    if (!shouldShow || phase !== 'flicker') return;
+    
+    // Randomized flicker pattern like old film projector
+    const flickerPattern = [
+      { opacity: 0.1, duration: 50 },
+      { opacity: 0.4, duration: 80 },
+      { opacity: 0.05, duration: 40 },
+      { opacity: 0.6, duration: 100 },
+      { opacity: 0.15, duration: 60 },
+      { opacity: 0.8, duration: 120 },
+      { opacity: 0.2, duration: 50 },
+      { opacity: 0.5, duration: 90 },
+      { opacity: 0.1, duration: 40 },
+      { opacity: 0.9, duration: 150 },
+      { opacity: 0.3, duration: 70 },
+      { opacity: 1, duration: 200 },
+    ];
+    
+    let currentIndex = 0;
+    let totalTime = 0;
+    
+    const runFlicker = () => {
+      if (currentIndex >= flickerPattern.length) return;
+      
+      const { opacity, duration } = flickerPattern[currentIndex];
+      setFlickerOpacity(opacity);
+      
+      totalTime += duration;
+      currentIndex++;
+      
+      if (currentIndex < flickerPattern.length) {
+        setTimeout(runFlicker, duration);
+      }
+    };
+    
+    runFlicker();
+  }, [shouldShow, phase]);
+
   useEffect(() => {
     if (!shouldShow) return;
     
-    // Phase 1: Blackout with dust (0-0.5s)
-    // Phase 2: Camera flare burst (0.5-2.5s)
-    // Phase 3: Logo reveal (2.5-4.5s)
-    // Phase 4: Done (4.5s+)
-    const timer1 = setTimeout(() => setPhase('flare'), 500);
-    const timer2 = setTimeout(() => setPhase('reveal'), 2500);
+    // Phase 0: Film flicker (0-1s)
+    // Phase 1: Blackout (1-1.3s)
+    // Phase 2: Camera flare burst (1.3-3s)
+    // Phase 3: Logo reveal (3-5s)
+    // Phase 4: Done (5s+)
+    const timer0 = setTimeout(() => setPhase('blackout'), 1000);
+    const timer1 = setTimeout(() => setPhase('flare'), 1300);
+    const timer2 = setTimeout(() => setPhase('reveal'), 3000);
     const timer3 = setTimeout(() => {
       setPhase('done');
       sessionStorage.setItem('hasSeenIntro', 'true');
-    }, 4500);
-    const timer4 = setTimeout(() => setShouldShow(false), 4800);
+    }, 5000);
+    const timer4 = setTimeout(() => setShouldShow(false), 5300);
     
     return () => {
+      clearTimeout(timer0);
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
@@ -81,12 +125,109 @@ const LoadingIntro = () => {
           animate={{ opacity: phase === 'done' ? 0 : 1 }}
           transition={{ duration: 0.5 }}
         >
+          {/* Film reel flicker overlay */}
+          {phase === 'flicker' && (
+            <>
+              {/* Warm sepia flicker */}
+              <motion.div
+                className="absolute inset-0 z-50 pointer-events-none"
+                style={{
+                  background: `radial-gradient(ellipse at center, 
+                    rgba(255, 230, 180, ${flickerOpacity * 0.3}) 0%, 
+                    rgba(180, 140, 80, ${flickerOpacity * 0.2}) 50%,
+                    rgba(60, 40, 20, ${flickerOpacity * 0.4}) 100%
+                  )`,
+                }}
+              />
+              
+              {/* Film burn marks */}
+              <motion.div
+                className="absolute inset-0 z-50 pointer-events-none"
+                style={{
+                  opacity: flickerOpacity > 0.5 ? (flickerOpacity - 0.5) * 0.3 : 0,
+                  background: `
+                    radial-gradient(ellipse at 20% 30%, rgba(255, 200, 150, 0.4) 0%, transparent 30%),
+                    radial-gradient(ellipse at 80% 70%, rgba(255, 180, 120, 0.3) 0%, transparent 25%),
+                    radial-gradient(ellipse at 60% 20%, rgba(255, 220, 180, 0.2) 0%, transparent 20%)
+                  `,
+                }}
+              />
+              
+              {/* Sprocket holes / frame edge simulation */}
+              <motion.div
+                className="absolute left-0 top-0 bottom-0 w-8 z-50"
+                style={{
+                  opacity: flickerOpacity * 0.6,
+                  background: `repeating-linear-gradient(
+                    180deg,
+                    transparent 0px,
+                    transparent 40px,
+                    rgba(0, 0, 0, 0.8) 40px,
+                    rgba(0, 0, 0, 0.8) 60px
+                  )`,
+                }}
+              />
+              <motion.div
+                className="absolute right-0 top-0 bottom-0 w-8 z-50"
+                style={{
+                  opacity: flickerOpacity * 0.6,
+                  background: `repeating-linear-gradient(
+                    180deg,
+                    transparent 0px,
+                    transparent 40px,
+                    rgba(0, 0, 0, 0.8) 40px,
+                    rgba(0, 0, 0, 0.8) 60px
+                  )`,
+                }}
+              />
+              
+              {/* Film scratches */}
+              <motion.div
+                className="absolute inset-0 z-50 pointer-events-none overflow-hidden"
+                style={{ opacity: flickerOpacity * 0.15 }}
+              >
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute h-full"
+                    style={{
+                      left: `${15 + i * 18}%`,
+                      width: '1px',
+                      background: 'linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.5) 20%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.5) 80%, transparent 100%)',
+                      transform: `translateY(${Math.random() * 20 - 10}%)`,
+                    }}
+                  />
+                ))}
+              </motion.div>
+              
+              {/* Countdown circle hint */}
+              <motion.div
+                className="absolute z-50"
+                style={{
+                  width: '150px',
+                  height: '150px',
+                  border: `3px solid rgba(255, 255, 255, ${flickerOpacity * 0.3})`,
+                  borderRadius: '50%',
+                  opacity: flickerOpacity > 0.6 ? 1 : 0,
+                }}
+              />
+              
+              {/* Cross hairs */}
+              {flickerOpacity > 0.7 && (
+                <>
+                  <div className="absolute w-[100px] h-[2px] bg-white/20 z-50" />
+                  <div className="absolute w-[2px] h-[100px] bg-white/20 z-50" />
+                </>
+              )}
+            </>
+          )}
+
           {/* Film grain texture overlay */}
           <motion.div
             className="absolute inset-0 pointer-events-none z-50"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-              opacity: 0.04,
+              opacity: phase === 'flicker' ? 0.08 : 0.04,
             }}
           />
 
@@ -408,7 +549,7 @@ const LoadingIntro = () => {
                 className="h-full bg-white/60 rounded-full"
                 initial={{ width: '0%' }}
                 animate={{ width: '100%' }}
-                transition={{ duration: 4, ease: 'linear' }}
+                transition={{ duration: 4.5, ease: 'linear' }}
               />
             </div>
           </motion.div>
