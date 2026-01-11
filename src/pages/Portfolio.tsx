@@ -1,10 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Reorder } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Play, Award, Sparkles, ArrowRight, Plus, Loader2 } from 'lucide-react';
+import { Play, Award, Sparkles, ArrowRight, Plus, Loader2, GripVertical, Save } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
@@ -21,6 +21,7 @@ import FloatingElements from '@/components/FloatingElements';
 import { ProjectCard } from '@/components/Portfolio/ProjectCard';
 import { ProjectFormDialog } from '@/components/Portfolio/ProjectFormDialog';
 import { DeleteConfirmDialog } from '@/components/Portfolio/DeleteConfirmDialog';
+import { DraggableProjectCard } from '@/components/Portfolio/DraggableProjectCard';
 
 const SHOWREEL_EMBED_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/preview";
 const SHOWREEL_VIEW_URL = "https://drive.google.com/file/d/1DPiU-XsPOEOgCOOgQh0n2P-rIH_Idfyk/view";
@@ -39,6 +40,7 @@ interface Project {
   status: string | null;
   technologies: string[] | null;
   services: string[] | null;
+  order_index: number | null;
 }
 
 const Portfolio = () => {
@@ -48,6 +50,9 @@ const Portfolio = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [deletingProject, setDeletingProject] = useState<Project | null>(null);
+  const [isReorderMode, setIsReorderMode] = useState(false);
+  const [reorderedProjects, setReorderedProjects] = useState<Project[]>([]);
+  const [hasOrderChanges, setHasOrderChanges] = useState(false);
   
   const { isAdmin } = useAdmin();
   const queryClient = useQueryClient();
@@ -63,12 +68,19 @@ const Portfolio = () => {
       const { data, error } = await supabase
         .from('projects')
         .select('*')
-        .order('year', { ascending: false });
+        .order('order_index', { ascending: true });
       
       if (error) throw error;
       return data as Project[];
     },
   });
+
+  // Update reorderedProjects when projects change
+  useEffect(() => {
+    if (projects.length > 0 && !isReorderMode) {
+      setReorderedProjects(projects);
+    }
+  }, [projects, isReorderMode]);
 
   // Create/Update mutation
   const saveMutation = useMutation({
@@ -155,6 +167,55 @@ const Portfolio = () => {
     if (deletingProject?.id) {
       await deleteMutation.mutateAsync(deletingProject.id);
     }
+  };
+
+  // Reorder mutation
+  const reorderMutation = useMutation({
+    mutationFn: async (orderedProjects: Project[]) => {
+      const updates = orderedProjects.map((project, index) => ({
+        id: project.id,
+        order_index: index + 1,
+      }));
+      
+      for (const update of updates) {
+        const { error } = await supabase
+          .from('projects')
+          .update({ order_index: update.order_index })
+          .eq('id', update.id);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['portfolio-projects'] });
+      setIsReorderMode(false);
+      setHasOrderChanges(false);
+      toast({
+        title: 'Order saved',
+        description: 'Project display order has been updated.',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Error saving order',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
+  const handleReorder = useCallback((newOrder: Project[]) => {
+    setReorderedProjects(newOrder);
+    setHasOrderChanges(true);
+  }, []);
+
+  const handleSaveOrder = async () => {
+    await reorderMutation.mutateAsync(reorderedProjects);
+  };
+
+  const handleCancelReorder = () => {
+    setIsReorderMode(false);
+    setReorderedProjects(projects);
+    setHasOrderChanges(false);
   };
 
   // Get unique categories from projects
@@ -302,17 +363,67 @@ const Portfolio = () => {
 
       {/* Portfolio Grid */}
       <SectionWrapper withDivider>
-        {/* Admin Add Button */}
+        {/* Admin Controls */}
         {isAdmin && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex justify-end mb-6"
+            className="flex flex-wrap justify-between items-center gap-4 mb-6"
           >
+            <div className="flex gap-2">
+              {!isReorderMode ? (
+                <Button 
+                  onClick={() => setIsReorderMode(true)} 
+                  variant="outline" 
+                  className="gap-2"
+                  disabled={selectedCategory !== 'all'}
+                >
+                  <GripVertical className="w-4 h-4" />
+                  Reorder Projects
+                </Button>
+              ) : (
+                <>
+                  <Button 
+                    onClick={handleSaveOrder} 
+                    className="gap-2"
+                    disabled={!hasOrderChanges || reorderMutation.isPending}
+                  >
+                    {reorderMutation.isPending ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Save className="w-4 h-4" />
+                    )}
+                    Save Order
+                  </Button>
+                  <Button 
+                    onClick={handleCancelReorder} 
+                    variant="outline"
+                    disabled={reorderMutation.isPending}
+                  >
+                    Cancel
+                  </Button>
+                </>
+              )}
+            </div>
             <Button onClick={handleAddProject} className="gap-2">
               <Plus className="w-4 h-4" />
               Add Project
             </Button>
+          </motion.div>
+        )}
+
+        {/* Reorder mode info */}
+        {isReorderMode && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mb-6 p-4 bg-primary/10 border border-primary/20 rounded-lg text-center"
+          >
+            <p className="text-sm text-muted-foreground">
+              <GripVertical className="w-4 h-4 inline-block mr-1" />
+              Drag projects using the grip handle to reorder them. Click "Save Order" when done.
+            </p>
           </motion.div>
         )}
 
@@ -357,8 +468,8 @@ const Portfolio = () => {
           </div>
         )}
 
-        {/* Grid */}
-        {!isLoading && filteredProjects.length > 0 && (
+        {/* Grid - Normal Mode */}
+        {!isLoading && filteredProjects.length > 0 && !isReorderMode && (
           <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" layout>
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project, index) => (
@@ -373,6 +484,26 @@ const Portfolio = () => {
               ))}
             </AnimatePresence>
           </motion.div>
+        )}
+
+        {/* Grid - Reorder Mode */}
+        {!isLoading && reorderedProjects.length > 0 && isReorderMode && (
+          <Reorder.Group
+            axis="y"
+            values={reorderedProjects}
+            onReorder={handleReorder}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            layoutScroll
+          >
+            {reorderedProjects.map((project) => (
+              <DraggableProjectCard
+                key={project.id}
+                project={project}
+                onEdit={handleEditProject}
+                onDelete={handleDeleteProject}
+              />
+            ))}
+          </Reorder.Group>
         )}
       </SectionWrapper>
 
