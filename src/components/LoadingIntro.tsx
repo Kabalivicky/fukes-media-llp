@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const LoadingIntro = () => {
-  const [phase, setPhase] = useState<'burst' | 'converge' | 'logo' | 'done'>('burst');
+  const [phase, setPhase] = useState<'blackout' | 'flare' | 'reveal' | 'done'>('blackout');
   const [shouldShow, setShouldShow] = useState(() => {
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem('hasSeenIntro') !== 'true';
@@ -13,17 +13,17 @@ const LoadingIntro = () => {
   useEffect(() => {
     if (!shouldShow) return;
     
-    // Phase 1: Lens burst (0-1.2s)
-    // Phase 2: Rays converge to center (1.2-2.2s)
-    // Phase 3: Logo reveal (2.2-4s)
-    // Phase 4: Done (4s+)
-    const timer1 = setTimeout(() => setPhase('converge'), 1200);
-    const timer2 = setTimeout(() => setPhase('logo'), 2200);
+    // Phase 1: Blackout with dust (0-0.5s)
+    // Phase 2: Camera flare burst (0.5-2.5s)
+    // Phase 3: Logo reveal (2.5-4.5s)
+    // Phase 4: Done (4.5s+)
+    const timer1 = setTimeout(() => setPhase('flare'), 500);
+    const timer2 = setTimeout(() => setPhase('reveal'), 2500);
     const timer3 = setTimeout(() => {
       setPhase('done');
       sessionStorage.setItem('hasSeenIntro', 'true');
-    }, 4000);
-    const timer4 = setTimeout(() => setShouldShow(false), 4300);
+    }, 4500);
+    const timer4 = setTimeout(() => setShouldShow(false), 4800);
     
     return () => {
       clearTimeout(timer1);
@@ -41,34 +41,35 @@ const LoadingIntro = () => {
 
   if (!shouldShow) return null;
 
-  // Fuke's Media brand RGB colors
-  const brandColors = {
-    red: '#C8102E',
-    blue: '#0077B6', 
-    green: '#00A651',
+  // Cinematic color palette - warmer, more filmic
+  const colors = {
+    warmWhite: '#FFF8F0',
+    amber: '#FFBE0B',
+    orange: '#FB5607',
+    magenta: '#FF006E',
+    cyan: '#3A86FF',
+    coolBlue: '#4CC9F0',
   };
 
-  // Generate lens flare rays at various angles
-  const lensRays = [
-    { angle: 0, color: brandColors.red, length: '120vw', thickness: 3, delay: 0 },
-    { angle: 30, color: brandColors.green, length: '100vw', thickness: 2, delay: 0.05 },
-    { angle: 60, color: brandColors.blue, length: '110vw', thickness: 2.5, delay: 0.1 },
-    { angle: 90, color: brandColors.red, length: '120vw', thickness: 3, delay: 0.02 },
-    { angle: 120, color: brandColors.green, length: '100vw', thickness: 2, delay: 0.08 },
-    { angle: 150, color: brandColors.blue, length: '110vw', thickness: 2.5, delay: 0.12 },
-    { angle: 180, color: brandColors.red, length: '120vw', thickness: 3, delay: 0.03 },
-    { angle: 210, color: brandColors.green, length: '100vw', thickness: 2, delay: 0.07 },
-    { angle: 240, color: brandColors.blue, length: '110vw', thickness: 2.5, delay: 0.11 },
-    { angle: 270, color: brandColors.red, length: '120vw', thickness: 3, delay: 0.04 },
-    { angle: 300, color: brandColors.green, length: '100vw', thickness: 2, delay: 0.09 },
-    { angle: 330, color: brandColors.blue, length: '110vw', thickness: 2.5, delay: 0.06 },
-  ];
+  // Generate dust particles for realism
+  const dustParticles = [...Array(40)].map((_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 3 + 1,
+    opacity: Math.random() * 0.4 + 0.1,
+    delay: Math.random() * 2,
+    duration: Math.random() * 3 + 2,
+  }));
 
-  // Secondary thinner rays for depth
-  const secondaryRays = [...Array(24)].map((_, i) => ({
-    angle: i * 15,
-    color: [brandColors.red, brandColors.green, brandColors.blue][i % 3],
-    delay: 0.15 + i * 0.02,
+  // Realistic lens bokeh circles
+  const bokehCircles = [...Array(12)].map((_, i) => ({
+    id: i,
+    x: (Math.random() - 0.5) * 80,
+    y: (Math.random() - 0.5) * 60,
+    size: Math.random() * 80 + 40,
+    color: [colors.cyan, colors.amber, colors.magenta, colors.orange][i % 4],
+    delay: Math.random() * 0.5,
   }));
 
   return (
@@ -78,348 +79,384 @@ const LoadingIntro = () => {
           className="fixed inset-0 flex items-center justify-center bg-black w-screen h-screen overflow-hidden z-[10000]"
           initial={{ opacity: 1 }}
           animate={{ opacity: phase === 'done' ? 0 : 1 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.5 }}
         >
-          {/* Deep space background with subtle grain */}
-          <div 
-            className="absolute inset-0"
+          {/* Film grain texture overlay */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none z-50"
             style={{
-              background: 'radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%)',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+              opacity: 0.04,
             }}
           />
 
-          {/* Camera lens aperture effect - outer ring */}
+          {/* Floating dust particles */}
+          {dustParticles.map((particle) => (
+            <motion.div
+              key={particle.id}
+              className="absolute rounded-full bg-white/80"
+              style={{
+                left: `${particle.x}%`,
+                top: `${particle.y}%`,
+                width: particle.size,
+                height: particle.size,
+              }}
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: phase !== 'done' ? [0, particle.opacity, 0] : 0,
+                y: [0, -30, -60],
+                x: [0, Math.random() * 20 - 10],
+              }}
+              transition={{
+                duration: particle.duration,
+                delay: particle.delay,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+            />
+          ))}
+
+          {/* Main light source - cinematic warm flare */}
           <motion.div
-            className="absolute w-[200vmax] h-[200vmax] rounded-full"
+            className="absolute"
             style={{
-              background: `conic-gradient(
-                from 0deg,
-                ${brandColors.red}10,
-                ${brandColors.green}10,
-                ${brandColors.blue}10,
-                ${brandColors.red}10
-              )`,
-              filter: 'blur(100px)',
-            }}
-            initial={{ scale: 0, opacity: 0, rotate: 0 }}
-            animate={{ 
-              scale: phase === 'burst' ? [0, 1.5] : phase === 'converge' ? 0.8 : 0,
-              opacity: phase === 'burst' ? [0, 0.6] : phase === 'converge' ? 0.3 : 0,
-              rotate: phase === 'burst' ? [0, 45] : 45,
-            }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          />
-
-          {/* Primary lens flare rays - dramatic burst */}
-          <div className="absolute inset-0 overflow-hidden">
-            {lensRays.map((ray, i) => (
-              <motion.div
-                key={`ray-${i}`}
-                className="absolute origin-center"
-                style={{
-                  top: '50%',
-                  left: '50%',
-                  width: ray.length,
-                  height: `${ray.thickness}px`,
-                  transform: `translate(-50%, -50%) rotate(${ray.angle}deg)`,
-                  background: `linear-gradient(90deg, 
-                    transparent 0%, 
-                    ${ray.color}00 10%,
-                    ${ray.color}40 25%,
-                    ${ray.color} 50%, 
-                    ${ray.color}40 75%,
-                    ${ray.color}00 90%,
-                    transparent 100%
-                  )`,
-                  boxShadow: `
-                    0 0 ${ray.thickness * 8}px ${ray.thickness * 2}px ${ray.color}60,
-                    0 0 ${ray.thickness * 20}px ${ray.thickness * 4}px ${ray.color}30,
-                    0 0 ${ray.thickness * 40}px ${ray.thickness * 8}px ${ray.color}15
-                  `,
-                }}
-                initial={{ scaleX: 0, opacity: 0 }}
-                animate={{ 
-                  scaleX: phase === 'burst' ? [0, 1.2, 1] : phase === 'converge' ? 0.3 : 0,
-                  opacity: phase === 'burst' ? [0, 1, 0.8] : phase === 'converge' ? [0.8, 0] : 0,
-                }}
-                transition={{ 
-                  duration: phase === 'burst' ? 0.8 : 0.6,
-                  delay: ray.delay,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              />
-            ))}
-
-            {/* Secondary rays for depth and complexity */}
-            {secondaryRays.map((ray, i) => (
-              <motion.div
-                key={`secondary-${i}`}
-                className="absolute origin-center"
-                style={{
-                  top: '50%',
-                  left: '50%',
-                  width: '80vw',
-                  height: '1px',
-                  transform: `translate(-50%, -50%) rotate(${ray.angle}deg)`,
-                  background: `linear-gradient(90deg, 
-                    transparent 0%, 
-                    ${ray.color}30 30%,
-                    ${ray.color}80 50%, 
-                    ${ray.color}30 70%,
-                    transparent 100%
-                  )`,
-                  boxShadow: `0 0 15px 2px ${ray.color}40`,
-                }}
-                initial={{ scaleX: 0, opacity: 0 }}
-                animate={{ 
-                  scaleX: phase === 'burst' ? [0, 1] : phase === 'converge' ? 0.2 : 0,
-                  opacity: phase === 'burst' ? [0, 0.6] : phase === 'converge' ? 0 : 0,
-                }}
-                transition={{ 
-                  duration: 0.6,
-                  delay: ray.delay,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Central lens flare hotspot */}
-          <motion.div
-            className="absolute w-32 h-32 rounded-full"
-            style={{
+              width: '400px',
+              height: '400px',
               background: `radial-gradient(circle, 
-                rgba(255,255,255,0.9) 0%, 
-                rgba(255,255,255,0.4) 20%,
-                ${brandColors.red}40 40%,
-                ${brandColors.green}30 60%,
-                ${brandColors.blue}20 80%,
-                transparent 100%
+                ${colors.warmWhite} 0%, 
+                ${colors.amber}80 15%, 
+                ${colors.orange}40 35%, 
+                transparent 70%
               )`,
-              filter: 'blur(2px)',
             }}
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ 
-              scale: phase === 'burst' ? [0, 2, 1.5] : phase === 'converge' ? [1.5, 0.5] : phase === 'logo' ? 0 : 0,
-              opacity: phase === 'burst' ? [0, 1, 0.9] : phase === 'converge' ? [0.9, 1, 0] : 0,
+            animate={{
+              scale: phase === 'flare' ? [0, 3, 2] : phase === 'reveal' ? [2, 0.5, 0] : 0,
+              opacity: phase === 'flare' ? [0, 1, 0.8] : phase === 'reveal' ? [0.8, 0.3, 0] : 0,
             }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: phase === 'flare' ? 1.5 : 1,
+              ease: [0.16, 1, 0.3, 1],
+            }}
           />
 
-          {/* Hexagonal lens flare artifacts */}
-          {[...Array(6)].map((_, i) => (
+          {/* Realistic anamorphic horizontal streak */}
+          <motion.div
+            className="absolute w-[300vw] h-[3px]"
+            style={{
+              background: `linear-gradient(90deg, 
+                transparent 0%,
+                ${colors.coolBlue}00 10%,
+                ${colors.coolBlue}40 25%,
+                ${colors.cyan}80 40%,
+                ${colors.warmWhite} 50%,
+                ${colors.cyan}80 60%,
+                ${colors.coolBlue}40 75%,
+                ${colors.coolBlue}00 90%,
+                transparent 100%
+              )`,
+              boxShadow: `
+                0 0 60px 15px ${colors.cyan}50,
+                0 0 120px 30px ${colors.coolBlue}30,
+                0 -2px 40px 5px ${colors.cyan}40,
+                0 2px 40px 5px ${colors.cyan}40
+              `,
+            }}
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{
+              scaleX: phase === 'flare' ? [0, 1.2, 1] : phase === 'reveal' ? [1, 0] : 0,
+              opacity: phase === 'flare' ? [0, 0.9, 0.7] : phase === 'reveal' ? [0.7, 0] : 0,
+            }}
+            transition={{
+              duration: phase === 'flare' ? 1.2 : 0.8,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          />
+
+          {/* Secondary anamorphic streak - offset */}
+          <motion.div
+            className="absolute w-[200vw] h-[1px]"
+            style={{
+              top: 'calc(50% + 8px)',
+              background: `linear-gradient(90deg, 
+                transparent 0%,
+                ${colors.magenta}30 30%,
+                ${colors.magenta}60 50%,
+                ${colors.magenta}30 70%,
+                transparent 100%
+              )`,
+              boxShadow: `0 0 30px 5px ${colors.magenta}40`,
+            }}
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{
+              scaleX: phase === 'flare' ? [0, 1] : phase === 'reveal' ? 0 : 0,
+              opacity: phase === 'flare' ? [0, 0.5] : 0,
+            }}
+            transition={{
+              duration: 1,
+              delay: 0.2,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          />
+
+          {/* Vertical light leak */}
+          <motion.div
+            className="absolute w-[2px] h-[150vh]"
+            style={{
+              background: `linear-gradient(180deg, 
+                transparent 0%,
+                ${colors.amber}40 30%,
+                ${colors.warmWhite}80 50%,
+                ${colors.amber}40 70%,
+                transparent 100%
+              )`,
+              boxShadow: `0 0 40px 10px ${colors.amber}30`,
+            }}
+            initial={{ scaleY: 0, opacity: 0 }}
+            animate={{
+              scaleY: phase === 'flare' ? [0, 1] : phase === 'reveal' ? [1, 0] : 0,
+              opacity: phase === 'flare' ? [0, 0.6] : phase === 'reveal' ? [0.6, 0] : 0,
+            }}
+            transition={{
+              duration: 1,
+              delay: 0.1,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          />
+
+          {/* Bokeh circles - realistic lens artifacts */}
+          {bokehCircles.map((circle) => (
             <motion.div
-              key={`hex-${i}`}
-              className="absolute"
+              key={circle.id}
+              className="absolute rounded-full"
               style={{
-                width: '60px',
-                height: '60px',
-                clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                background: `linear-gradient(135deg, ${[brandColors.red, brandColors.green, brandColors.blue][i % 3]}30, transparent)`,
-                filter: 'blur(1px)',
+                width: circle.size,
+                height: circle.size,
+                border: `1px solid ${circle.color}30`,
+                background: `radial-gradient(circle at 30% 30%, 
+                  ${circle.color}15 0%, 
+                  transparent 60%
+                )`,
+                boxShadow: `inset 0 0 20px ${circle.color}10`,
               }}
-              initial={{ 
-                x: 0, 
-                y: 0, 
-                scale: 0, 
-                opacity: 0 
+              initial={{
+                x: 0,
+                y: 0,
+                scale: 0,
+                opacity: 0,
               }}
-              animate={{ 
-                x: phase === 'burst' ? [0, (i - 2.5) * 80] : (i - 2.5) * 80,
-                y: phase === 'burst' ? [0, Math.sin(i * 1.2) * 40] : Math.sin(i * 1.2) * 40,
-                scale: phase === 'burst' ? [0, 1] : phase === 'converge' ? [1, 0] : 0,
-                opacity: phase === 'burst' ? [0, 0.5] : phase === 'converge' ? [0.5, 0] : 0,
+              animate={{
+                x: phase === 'flare' || phase === 'reveal' ? circle.x : 0,
+                y: phase === 'flare' || phase === 'reveal' ? circle.y : 0,
+                scale: phase === 'flare' ? [0, 1.2, 1] : phase === 'reveal' ? [1, 0] : 0,
+                opacity: phase === 'flare' ? [0, 0.4, 0.3] : phase === 'reveal' ? [0.3, 0] : 0,
               }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 0.3 + i * 0.05,
+              transition={{
+                duration: 1.2,
+                delay: circle.delay,
                 ease: [0.16, 1, 0.3, 1],
               }}
             />
           ))}
 
-          {/* Anamorphic streak effect */}
+          {/* Chromatic aberration ring */}
           <motion.div
-            className="absolute w-[200vw] h-1"
+            className="absolute w-[600px] h-[600px] rounded-full"
             style={{
-              background: `linear-gradient(90deg, 
-                transparent 0%,
-                ${brandColors.blue}20 20%,
-                ${brandColors.blue}60 35%,
-                rgba(255,255,255,0.8) 50%,
-                ${brandColors.blue}60 65%,
-                ${brandColors.blue}20 80%,
-                transparent 100%
-              )`,
-              boxShadow: `
-                0 0 40px 10px ${brandColors.blue}40,
-                0 0 80px 20px ${brandColors.blue}20
+              border: `2px solid transparent`,
+              background: `
+                linear-gradient(black, black) padding-box,
+                linear-gradient(135deg, ${colors.cyan}, ${colors.magenta}, ${colors.amber}) border-box
               `,
-              filter: 'blur(0.5px)',
+              filter: 'blur(1px)',
             }}
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ 
-              scaleX: phase === 'burst' ? [0, 1.2] : phase === 'converge' ? [1.2, 0] : 0,
-              opacity: phase === 'burst' ? [0, 0.7] : phase === 'converge' ? [0.7, 0] : 0,
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{
+              scale: phase === 'flare' ? [0.5, 1.5, 1.2] : phase === 'reveal' ? [1.2, 2, 0] : 0,
+              opacity: phase === 'flare' ? [0, 0.4, 0.2] : phase === 'reveal' ? [0.2, 0] : 0,
             }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 1.5,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+          />
+
+          {/* Light leak from edge - warm */}
+          <motion.div
+            className="absolute top-0 right-0 w-1/2 h-full"
+            style={{
+              background: `linear-gradient(135deg, 
+                transparent 0%,
+                ${colors.orange}10 50%,
+                ${colors.amber}20 100%
+              )`,
+            }}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{
+              opacity: phase === 'flare' ? [0, 0.4, 0.2] : phase === 'reveal' ? [0.2, 0] : 0,
+              x: phase === 'flare' ? [100, 0] : 0,
+            }}
+            transition={{
+              duration: 1.5,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+          />
+
+          {/* Inner lens glow ring */}
+          <motion.div
+            className="absolute w-[200px] h-[200px] rounded-full"
+            style={{
+              background: 'transparent',
+              boxShadow: `
+                inset 0 0 60px 20px ${colors.warmWhite}20,
+                0 0 80px 40px ${colors.amber}15
+              `,
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{
+              scale: phase === 'flare' ? [0, 1.5] : phase === 'reveal' ? [1.5, 0] : 0,
+              opacity: phase === 'flare' ? [0, 0.6] : phase === 'reveal' ? [0.6, 0] : 0,
+            }}
+            transition={{
+              duration: 1.2,
+              ease: [0.16, 1, 0.3, 1],
+            }}
           />
 
           {/* Logo reveal */}
           <motion.div
             className="relative z-10 flex flex-col items-center"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ 
-              scale: phase === 'logo' ? 1 : 0.8,
-              opacity: phase === 'logo' ? 1 : 0,
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{
+              scale: phase === 'reveal' ? 1 : 0.9,
+              opacity: phase === 'reveal' ? 1 : 0,
             }}
-            transition={{ 
-              duration: 0.8,
+            transition={{
+              duration: 1,
+              delay: 0.2,
               ease: [0.16, 1, 0.3, 1],
             }}
           >
-            {/* Logo glow */}
+            {/* Subtle glow behind logo */}
             <motion.div
-              className="absolute -inset-20 rounded-full"
+              className="absolute -inset-32 rounded-full"
               style={{
                 background: `radial-gradient(ellipse, 
-                  ${brandColors.red}20 0%, 
-                  ${brandColors.green}15 33%, 
-                  ${brandColors.blue}10 66%, 
-                  transparent 100%
+                  ${colors.warmWhite}10 0%, 
+                  transparent 70%
                 )`,
-                filter: 'blur(40px)',
               }}
-              animate={{ 
-                scale: [1, 1.1, 1],
-                opacity: [0.6, 0.8, 0.6],
+              animate={{
+                scale: [1, 1.05, 1],
+                opacity: [0.5, 0.7, 0.5],
               }}
-              transition={{ 
-                duration: 2,
+              transition={{
+                duration: 3,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}
             />
 
-            {/* Logo container with RGB border */}
-            <motion.div
-              className="relative p-[2px] rounded-2xl overflow-hidden"
+            {/* Logo */}
+            <motion.img
+              src="/lovable-uploads/98a66a3b-d5b0-4b14-891c-e5ee0f6dcbc3.png"
+              alt="Fuke's Media"
+              className="w-48 md:w-64 h-auto"
               style={{
-                background: `linear-gradient(135deg, ${brandColors.red}, ${brandColors.green}, ${brandColors.blue}, ${brandColors.red})`,
-                backgroundSize: '300% 300%',
+                filter: `
+                  drop-shadow(0 0 30px ${colors.warmWhite}40)
+                  drop-shadow(0 0 60px ${colors.amber}20)
+                `,
               }}
-              animate={{ 
-                backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
-              }}
-              transition={{ 
-                duration: 3,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
-            >
-              <div className="bg-black rounded-2xl p-6">
-                <motion.img 
-                  src="/lovable-uploads/98a66a3b-d5b0-4b14-891c-e5ee0f6dcbc3.png"
-                  alt="Fuke's Media"
-                  className="w-40 md:w-56 h-auto"
-                  style={{
-                    filter: `
-                      drop-shadow(0 0 20px ${brandColors.red}60) 
-                      drop-shadow(0 0 40px ${brandColors.green}40) 
-                      drop-shadow(0 0 60px ${brandColors.blue}30)
-                    `,
-                  }}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                />
-              </div>
-            </motion.div>
-
-            {/* Brand name with shimmer */}
-            <motion.h1
-              className="mt-6 text-3xl md:text-5xl font-bold tracking-[0.2em]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            />
+
+            {/* Brand name */}
+            <motion.h1
+              className="mt-8 text-3xl md:text-5xl font-light tracking-[0.3em] text-white"
+              style={{
+                textShadow: `0 0 40px ${colors.warmWhite}30`,
+              }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <span 
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(90deg, 
-                    ${brandColors.red}, 
-                    #ffffff, 
-                    ${brandColors.green}, 
-                    #ffffff, 
-                    ${brandColors.blue}
-                  )`,
-                  backgroundSize: '200% auto',
-                }}
-              >
-                FUKE'S MEDIA
-              </span>
+              FUKE'S MEDIA
             </motion.h1>
 
             {/* Tagline */}
             <motion.p
-              className="mt-3 text-xs md:text-sm text-white/50 tracking-[0.5em] uppercase"
+              className="mt-4 text-xs md:text-sm text-white/40 tracking-[0.5em] uppercase"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
             >
-              AI-Driven VFX Studio
+              Visual Effects Studio
             </motion.p>
           </motion.div>
 
-          {/* Loading progress bar */}
+          {/* Elegant loading bar */}
           <motion.div
-            className="absolute bottom-16 left-1/2 -translate-x-1/2 w-48"
+            className="absolute bottom-20 left-1/2 -translate-x-1/2 w-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: phase !== 'done' ? 1 : 0 }}
           >
-            <div className="h-[2px] bg-white/10 rounded-full overflow-hidden">
+            <div className="h-[1px] bg-white/10 rounded-full overflow-hidden">
               <motion.div
-                className="h-full rounded-full"
-                style={{
-                  background: `linear-gradient(90deg, ${brandColors.red}, ${brandColors.green}, ${brandColors.blue})`,
-                }}
+                className="h-full bg-white/60 rounded-full"
                 initial={{ width: '0%' }}
                 animate={{ width: '100%' }}
-                transition={{ duration: 3.5, ease: 'linear' }}
+                transition={{ duration: 4, ease: 'linear' }}
               />
             </div>
           </motion.div>
 
           {/* Skip button */}
-          <motion.button 
-            className="absolute bottom-6 right-6 text-white/30 hover:text-white/60 text-[10px] tracking-[0.3em] uppercase transition-colors duration-300 border border-white/10 px-3 py-1.5 rounded hover:border-white/30"
+          <motion.button
+            className="absolute bottom-8 right-8 text-white/20 hover:text-white/50 text-[10px] tracking-[0.3em] uppercase transition-colors duration-300"
             onClick={handleSkip}
             initial={{ opacity: 0 }}
             animate={{ opacity: phase !== 'done' ? 1 : 0 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 1 }}
           >
             Skip
           </motion.button>
 
+          {/* Cinematic letterbox bars */}
+          <motion.div
+            className="absolute top-0 left-0 right-0 h-[8%] bg-black z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          />
+          <motion.div
+            className="absolute bottom-0 left-0 right-0 h-[8%] bg-black z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          />
+
           {/* Subtle scanlines */}
-          <div 
-            className="absolute inset-0 pointer-events-none opacity-[0.02]"
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.015] z-30"
             style={{
               backgroundImage: `repeating-linear-gradient(
                 0deg,
                 transparent,
-                transparent 2px,
-                rgba(255, 255, 255, 0.1) 2px,
-                rgba(255, 255, 255, 0.1) 4px
+                transparent 1px,
+                rgba(255, 255, 255, 0.03) 1px,
+                rgba(255, 255, 255, 0.03) 2px
               )`,
             }}
           />
 
           {/* Vignette */}
-          <div 
-            className="absolute inset-0 pointer-events-none"
+          <div
+            className="absolute inset-0 pointer-events-none z-20"
             style={{
-              background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%)',
+              background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.8) 100%)',
             }}
           />
         </motion.div>
