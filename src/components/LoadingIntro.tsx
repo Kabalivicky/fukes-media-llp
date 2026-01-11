@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const LoadingIntro = () => {
   const [phase, setPhase] = useState<'flicker' | 'blackout' | 'flare' | 'reveal' | 'done'>('flicker');
   const [flickerOpacity, setFlickerOpacity] = useState(0);
+  const [countdownNumber, setCountdownNumber] = useState(5);
   const [shouldShow, setShouldShow] = useState(() => {
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem('hasSeenIntro') !== 'true';
@@ -11,62 +12,48 @@ const LoadingIntro = () => {
     return true;
   });
 
-  // Film reel flicker effect
+  // Film reel flicker effect with countdown
   useEffect(() => {
     if (!shouldShow || phase !== 'flicker') return;
     
-    // Randomized flicker pattern like old film projector
-    const flickerPattern = [
-      { opacity: 0.1, duration: 50 },
-      { opacity: 0.4, duration: 80 },
-      { opacity: 0.05, duration: 40 },
-      { opacity: 0.6, duration: 100 },
-      { opacity: 0.15, duration: 60 },
-      { opacity: 0.8, duration: 120 },
-      { opacity: 0.2, duration: 50 },
-      { opacity: 0.5, duration: 90 },
-      { opacity: 0.1, duration: 40 },
-      { opacity: 0.9, duration: 150 },
-      { opacity: 0.3, duration: 70 },
-      { opacity: 1, duration: 200 },
-    ];
+    // Countdown timer - each number shows for ~400ms
+    const countdownInterval = setInterval(() => {
+      setCountdownNumber(prev => {
+        if (prev <= 1) {
+          clearInterval(countdownInterval);
+          return 1;
+        }
+        return prev - 1;
+      });
+    }, 400);
     
-    let currentIndex = 0;
-    let totalTime = 0;
+    // Continuous flicker throughout countdown
+    const flickerInterval = setInterval(() => {
+      setFlickerOpacity(Math.random() * 0.6 + 0.4);
+    }, 80);
     
-    const runFlicker = () => {
-      if (currentIndex >= flickerPattern.length) return;
-      
-      const { opacity, duration } = flickerPattern[currentIndex];
-      setFlickerOpacity(opacity);
-      
-      totalTime += duration;
-      currentIndex++;
-      
-      if (currentIndex < flickerPattern.length) {
-        setTimeout(runFlicker, duration);
-      }
+    return () => {
+      clearInterval(countdownInterval);
+      clearInterval(flickerInterval);
     };
-    
-    runFlicker();
   }, [shouldShow, phase]);
 
   useEffect(() => {
     if (!shouldShow) return;
     
-    // Phase 0: Film flicker (0-1s)
-    // Phase 1: Blackout (1-1.3s)
-    // Phase 2: Camera flare burst (1.3-3s)
-    // Phase 3: Logo reveal (3-5s)
-    // Phase 4: Done (5s+)
-    const timer0 = setTimeout(() => setPhase('blackout'), 1000);
-    const timer1 = setTimeout(() => setPhase('flare'), 1300);
-    const timer2 = setTimeout(() => setPhase('reveal'), 3000);
+    // Phase 0: Film flicker with countdown (0-2.2s)
+    // Phase 1: Blackout (2.2-2.5s)
+    // Phase 2: Camera flare burst (2.5-4.2s)
+    // Phase 3: Logo reveal (4.2-6.2s)
+    // Phase 4: Done (6.2s+)
+    const timer0 = setTimeout(() => setPhase('blackout'), 2200);
+    const timer1 = setTimeout(() => setPhase('flare'), 2500);
+    const timer2 = setTimeout(() => setPhase('reveal'), 4200);
     const timer3 = setTimeout(() => {
       setPhase('done');
       sessionStorage.setItem('hasSeenIntro', 'true');
-    }, 5000);
-    const timer4 = setTimeout(() => setShouldShow(false), 5300);
+    }, 6200);
+    const timer4 = setTimeout(() => setShouldShow(false), 6500);
     
     return () => {
       clearTimeout(timer0);
@@ -200,25 +187,75 @@ const LoadingIntro = () => {
                 ))}
               </motion.div>
               
-              {/* Countdown circle hint */}
+              {/* Countdown circle with number */}
               <motion.div
-                className="absolute z-50"
+                className="absolute z-50 flex items-center justify-center"
                 style={{
-                  width: '150px',
-                  height: '150px',
-                  border: `3px solid rgba(255, 255, 255, ${flickerOpacity * 0.3})`,
-                  borderRadius: '50%',
-                  opacity: flickerOpacity > 0.6 ? 1 : 0,
+                  width: '180px',
+                  height: '180px',
                 }}
-              />
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ 
+                  opacity: flickerOpacity > 0.4 ? 1 : 0.3,
+                  scale: [0.95, 1.05, 0.95],
+                }}
+                transition={{
+                  scale: { duration: 0.4, repeat: Infinity, ease: "easeInOut" }
+                }}
+              >
+                {/* Outer circle */}
+                <div 
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    border: `3px solid rgba(255, 255, 255, ${flickerOpacity * 0.5})`,
+                  }}
+                />
+                
+                {/* Spinning arc indicator */}
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    border: '3px solid transparent',
+                    borderTopColor: `rgba(255, 255, 255, ${flickerOpacity * 0.8})`,
+                  }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 0.4, repeat: Infinity, ease: "linear" }}
+                />
+                
+                {/* Inner countdown number */}
+                <motion.span
+                  key={countdownNumber}
+                  className="text-white font-bold z-10"
+                  style={{
+                    fontSize: '72px',
+                    fontFamily: 'Georgia, serif',
+                    textShadow: '0 0 20px rgba(255,255,255,0.5)',
+                    opacity: flickerOpacity,
+                  }}
+                  initial={{ scale: 1.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: flickerOpacity }}
+                  transition={{ duration: 0.15, ease: "easeOut" }}
+                >
+                  {countdownNumber}
+                </motion.span>
+              </motion.div>
               
               {/* Cross hairs */}
-              {flickerOpacity > 0.7 && (
-                <>
-                  <div className="absolute w-[100px] h-[2px] bg-white/20 z-50" />
-                  <div className="absolute w-[2px] h-[100px] bg-white/20 z-50" />
-                </>
-              )}
+              <div 
+                className="absolute z-40"
+                style={{ opacity: flickerOpacity * 0.3 }}
+              >
+                <div className="absolute w-[200px] h-[2px] bg-white/40 -translate-x-1/2" />
+                <div className="absolute w-[2px] h-[200px] bg-white/40 -translate-y-1/2" />
+              </div>
+              
+              {/* Corner frame marks */}
+              <div className="absolute z-40" style={{ opacity: flickerOpacity * 0.4 }}>
+                <div className="absolute w-6 h-6 border-l-2 border-t-2 border-white/50" style={{ top: '-100px', left: '-100px' }} />
+                <div className="absolute w-6 h-6 border-r-2 border-t-2 border-white/50" style={{ top: '-100px', right: '-100px' }} />
+                <div className="absolute w-6 h-6 border-l-2 border-b-2 border-white/50" style={{ bottom: '-100px', left: '-100px' }} />
+                <div className="absolute w-6 h-6 border-r-2 border-b-2 border-white/50" style={{ bottom: '-100px', right: '-100px' }} />
+              </div>
             </>
           )}
 
