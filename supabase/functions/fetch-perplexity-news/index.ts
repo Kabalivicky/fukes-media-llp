@@ -8,6 +8,58 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Simple in-memory rate limiting
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 10; // 10 requests per minute per IP
+
+function getRateLimitKey(req: Request): string {
+  // Use X-Forwarded-For header or fall back to a default
+  const forwarded = req.headers.get('x-forwarded-for');
+  const ip = forwarded ? forwarded.split(',')[0].trim() : 'anonymous';
+  return ip;
+}
+
+function checkRateLimit(key: string): { allowed: boolean; remaining: number } {
+  const now = Date.now();
+  const record = rateLimitStore.get(key);
+  
+  if (!record || now > record.resetTime) {
+    rateLimitStore.set(key, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - 1 };
+  }
+  
+  if (record.count >= MAX_REQUESTS_PER_WINDOW) {
+    return { allowed: false, remaining: 0 };
+  }
+  
+  record.count++;
+  return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - record.count };
+}
+
+// Input validation
+function validateInput(searchQuery: unknown, category: unknown): { valid: boolean; error?: string } {
+  if (searchQuery !== undefined && searchQuery !== null) {
+    if (typeof searchQuery !== 'string') {
+      return { valid: false, error: 'searchQuery must be a string' };
+    }
+    if (searchQuery.length > 200) {
+      return { valid: false, error: 'searchQuery must be 200 characters or less' };
+    }
+  }
+  
+  if (category !== undefined && category !== null) {
+    if (typeof category !== 'string') {
+      return { valid: false, error: 'category must be a string' };
+    }
+    if (category.length > 50) {
+      return { valid: false, error: 'category must be 50 characters or less' };
+    }
+  }
+  
+  return { valid: true };
+}
+
 interface NewsItem {
   id: string;
   title: string;
@@ -26,15 +78,49 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Rate limiting check
+  const rateLimitKey = getRateLimitKey(req);
+  const rateLimit = checkRateLimit(rateLimitKey);
+  
+  if (!rateLimit.allowed) {
+    return new Response(JSON.stringify({ 
+      success: false, 
+      error: 'Rate limit exceeded. Please try again later.',
+      news: [] 
+    }), {
+      status: 429,
+      headers: { 
+        ...corsHeaders, 
+        'Content-Type': 'application/json',
+        'X-RateLimit-Remaining': '0',
+        'Retry-After': '60'
+      },
+    });
+  }
+
   try {
-    const { searchQuery, category } = await req.json().catch(() => ({}));
+    const body = await req.json().catch(() => ({}));
+    const { searchQuery, category } = body;
+    
+    // Validate input
+    const validation = validateInput(searchQuery, category);
+    if (!validation.valid) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: validation.error,
+        news: [] 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
     
     if (!perplexityApiKey) {
       throw new Error('PERPLEXITY_API_KEY is not configured');
     }
 
-    const query = searchQuery || 'latest VFX visual effects post-production entertainment industry news';
-    const categoryFilter = category ? ` ${category}` : '';
+    const query = (searchQuery as string) || 'latest VFX visual effects post-production entertainment industry news';
+    const categoryFilter = (category as string) ? ` ${category}` : '';
 
     console.log(`Fetching news with query: ${query}${categoryFilter}`);
 
@@ -103,7 +189,7 @@ serve(async (req) => {
         id: `perplexity-${Date.now()}-${index}`,
         title: (item.title || 'Industry Update').substring(0, 100),
         summary: (item.summary || item.description || 'Read more about the latest industry developments.').substring(0, 200),
-        category: category || itemCategory,
+        category: categoryFilter.trim() || itemCategory,
         image: `https://images.unsplash.com/photo-${1518770660439 + index}-4636190af475?w=800&h=600&fit=crop`,
         date: new Date().toISOString().split('T')[0],
         readTime: `${Math.floor(Math.random() * 5) + 3} min read`,
@@ -121,14 +207,18 @@ serve(async (req) => {
       citations,
       fetchedAt: new Date().toISOString(),
     }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { 
+        ...corsHeaders, 
+        'Content-Type': 'application/json',
+        'X-RateLimit-Remaining': String(rateLimit.remaining)
+      },
     });
 
   } catch (error) {
     console.error('Error fetching news from Perplexity:', error);
     return new Response(JSON.stringify({ 
       success: false, 
-      error: error.message,
+      error: 'An error occurred while fetching news',
       news: [] 
     }), {
       status: 500,
