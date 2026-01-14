@@ -1,14 +1,41 @@
 import { useState } from 'react';
+import { z } from 'zod';
 import SectionHeading from '@/components/SectionHeading';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/components/ui/use-toast';
-import { Mail, Phone, MapPin, MessageSquare, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageSquare } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+
+// Input validation schema
+const contactFormSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(1, 'Name is required')
+    .max(100, 'Name must be 100 characters or less')
+    .regex(/^[a-zA-Z\s\-'\.]+$/, 'Name contains invalid characters'),
+  email: z.string()
+    .trim()
+    .min(1, 'Email is required')
+    .max(255, 'Email must be 255 characters or less')
+    .email('Please enter a valid email address'),
+  phone: z.string()
+    .trim()
+    .max(20, 'Phone number must be 20 characters or less')
+    .regex(/^[\d\s\+\-\(\)]*$/, 'Phone number contains invalid characters')
+    .optional()
+    .or(z.literal('')),
+  message: z.string()
+    .trim()
+    .min(10, 'Message must be at least 10 characters')
+    .max(2000, 'Message must be 2000 characters or less'),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -17,19 +44,50 @@ const ContactSection = () => {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
+
+  const validateForm = (): ContactFormData | null => {
+    const result = contactFormSchema.safeParse({ name, email, phone, message });
+    
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
+      result.error.errors.forEach((err) => {
+        const field = err.path[0] as keyof ContactFormData;
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return null;
+    }
+    
+    setErrors({});
+    return result.data;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const validatedData = validateForm();
+    if (!validatedData) {
+      toast({
+        title: "Validation Error",
+        description: "Please check the form for errors and try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     
     try {
       const { error } = await supabase
         .from('contact_submissions')
         .insert({
-          name,
-          email,
-          phone: phone || null,
-          message,
+          name: validatedData.name,
+          email: validatedData.email,
+          phone: validatedData.phone || null,
+          message: validatedData.message,
           inquiry_type: 'general'
         });
 
@@ -53,6 +111,7 @@ const ContactSection = () => {
       setEmail('');
       setPhone('');
       setMessage('');
+      setErrors({});
     } catch (error) {
       console.error('Error saving contact submission:', error);
       toast({
@@ -90,8 +149,15 @@ const ContactSection = () => {
                     placeholder="Your name" 
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    maxLength={100}
                     required
+                    aria-invalid={!!errors.name}
+                    aria-describedby={errors.name ? 'name-error' : undefined}
+                    className={errors.name ? 'border-destructive' : ''}
                   />
+                  {errors.name && (
+                    <p id="name-error" className="text-sm text-destructive">{errors.name}</p>
+                  )}
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -103,8 +169,15 @@ const ContactSection = () => {
                       placeholder="Your email" 
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      maxLength={255}
                       required
+                      aria-invalid={!!errors.email}
+                      aria-describedby={errors.email ? 'email-error' : undefined}
+                      className={errors.email ? 'border-destructive' : ''}
                     />
+                    {errors.email && (
+                      <p id="email-error" className="text-sm text-destructive">{errors.email}</p>
+                    )}
                   </div>
                   
                   <div className="space-y-2">
@@ -114,7 +187,14 @@ const ContactSection = () => {
                       placeholder="Your phone number" 
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
+                      maxLength={20}
+                      aria-invalid={!!errors.phone}
+                      aria-describedby={errors.phone ? 'phone-error' : undefined}
+                      className={errors.phone ? 'border-destructive' : ''}
                     />
+                    {errors.phone && (
+                      <p id="phone-error" className="text-sm text-destructive">{errors.phone}</p>
+                    )}
                   </div>
                 </div>
                 
@@ -126,8 +206,18 @@ const ContactSection = () => {
                     rows={5}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    maxLength={2000}
                     required
+                    aria-invalid={!!errors.message}
+                    aria-describedby={errors.message ? 'message-error' : undefined}
+                    className={errors.message ? 'border-destructive' : ''}
                   />
+                  {errors.message && (
+                    <p id="message-error" className="text-sm text-destructive">{errors.message}</p>
+                  )}
+                  <p className="text-xs text-muted-foreground text-right">
+                    {message.length}/2000
+                  </p>
                 </div>
                 
                 <Button 
