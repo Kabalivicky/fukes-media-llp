@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { useRef, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
@@ -29,9 +29,6 @@ const SectionLoader = ({ text = "Loading..." }: { text?: string }) => (
 );
 
 const Home = () => {
-  // State for scroll progress
-  const [scrollProgress, setScrollProgress] = useState(0);
-
   // Use our custom hook for scroll sync
   useScrollSync({
     offset: 80
@@ -53,24 +50,6 @@ const Home = () => {
     scrollY
   } = useScroll();
   const opacity = useTransform(scrollY, [0, 200, 300], [1, 0.5, 0]);
-
-  // Handle scroll events to update animation values with performance optimization
-  useEffect(() => {
-    const handleScroll = () => {
-      // Use requestAnimationFrame for better performance
-      window.requestAnimationFrame(() => {
-        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
-        setScrollProgress(progress);
-      });
-    };
-    window.addEventListener('scroll', handleScroll, {
-      passive: true
-    });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   // SEO Structured Data
   const structuredData = {
@@ -238,27 +217,7 @@ const Home = () => {
             </ErrorBoundary>
           </div>
           
-          {/* Enhanced progress indicator */}
-          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 hidden md:block">
-            <div className="h-1 w-60 bg-muted rounded-full overflow-hidden">
-              <motion.div className="h-full bg-gradient-to-r from-fukes-blue via-fukes-red to-fukes-green" style={{
-              width: `${scrollProgress * 100}%`,
-              willChange: 'width'
-            }} initial={{
-              width: '0%'
-            }} animate={{
-              width: `${scrollProgress * 100}%`
-            }} transition={{
-              type: 'spring',
-              stiffness: 50
-            }} />
-            </div>
-            
-            <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-              <span>Top</span>
-              <span>Bottom</span>
-            </div>
-          </div>
+          {/* Progress indicator removed - using global ScrollPercentageIndicator */}
         </main>
       </div>
     </>;

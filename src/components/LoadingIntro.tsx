@@ -1,10 +1,12 @@
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Play } from 'lucide-react';
 
 const LoadingIntro = () => {
-  const [phase, setPhase] = useState<'flicker' | 'blackout' | 'flare' | 'reveal' | 'done'>('flicker');
+  const [phase, setPhase] = useState<'flicker' | 'blackout' | 'flare' | 'reveal' | 'waiting' | 'done'>('flicker');
   const [flickerOpacity, setFlickerOpacity] = useState(0);
   const [countdownNumber, setCountdownNumber] = useState(5);
+  const [showEnterButton, setShowEnterButton] = useState(false);
   const [shouldShow, setShouldShow] = useState(() => {
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem('hasSeenIntro') !== 'true';
@@ -44,25 +46,30 @@ const LoadingIntro = () => {
     // Phase 0: Film flicker with countdown (0-2.2s)
     // Phase 1: Blackout (2.2-2.5s)
     // Phase 2: Camera flare burst (2.5-4.2s)
-    // Phase 3: Logo reveal (4.2-6.2s)
-    // Phase 4: Done (6.2s+)
+    // Phase 3: Logo reveal (4.2-5.5s)
+    // Phase 4: Wait for user click (5.5s+)
     const timer0 = setTimeout(() => setPhase('blackout'), 2200);
     const timer1 = setTimeout(() => setPhase('flare'), 2500);
     const timer2 = setTimeout(() => setPhase('reveal'), 4200);
     const timer3 = setTimeout(() => {
-      setPhase('done');
-      sessionStorage.setItem('hasSeenIntro', 'true');
-    }, 6200);
-    const timer4 = setTimeout(() => setShouldShow(false), 6500);
+      setPhase('waiting');
+      setShowEnterButton(true);
+    }, 5500);
     
     return () => {
       clearTimeout(timer0);
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
-      clearTimeout(timer4);
     };
   }, [shouldShow]);
+
+  // Netflix-style enter button handler
+  const handleEnter = useCallback(() => {
+    setPhase('done');
+    sessionStorage.setItem('hasSeenIntro', 'true');
+    setTimeout(() => setShouldShow(false), 600);
+  }, []);
 
   const handleSkip = useCallback(() => {
     setPhase('done');
@@ -575,11 +582,53 @@ const LoadingIntro = () => {
             </motion.p>
           </motion.div>
 
-          {/* Elegant loading bar */}
+          {/* Netflix-style Enter Button */}
+          <AnimatePresence>
+            {showEnterButton && phase === 'waiting' && (
+              <motion.div
+                className="absolute z-50 flex flex-col items-center"
+                style={{ bottom: '15%' }}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 1.1 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <motion.button
+                  onClick={handleEnter}
+                  className="group relative flex items-center gap-3 px-10 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full overflow-hidden transition-all duration-300 hover:bg-white/20 hover:border-white/40 hover:scale-105"
+                  whileHover={{ boxShadow: '0 0 40px rgba(255,255,255,0.2)' }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {/* Animated background glow */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-primary/20 via-white/10 to-secondary/20"
+                    animate={{ x: ['-100%', '100%'] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                  />
+                  
+                  <Play className="w-5 h-5 text-white fill-white relative z-10" />
+                  <span className="text-white text-sm md:text-base font-medium tracking-[0.2em] uppercase relative z-10">
+                    Enter Site
+                  </span>
+                </motion.button>
+                
+                <motion.p
+                  className="mt-4 text-white/30 text-xs tracking-widest uppercase"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  Click to explore
+                </motion.p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Loading bar - only show before waiting phase */}
           <motion.div
             className="absolute bottom-20 left-1/2 -translate-x-1/2 w-40"
             initial={{ opacity: 0 }}
-            animate={{ opacity: phase !== 'done' ? 1 : 0 }}
+            animate={{ opacity: phase !== 'done' && phase !== 'waiting' ? 1 : 0 }}
           >
             <div className="h-[1px] bg-white/10 rounded-full overflow-hidden">
               <motion.div
