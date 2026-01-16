@@ -109,7 +109,7 @@ const News = () => {
   // Initial fetch
   useEffect(() => {
     fetchNews();
-  }, []);
+  }, [fetchNews]);
 
   // Filter news based on active tab
   useEffect(() => {
