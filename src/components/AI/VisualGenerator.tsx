@@ -1,21 +1,20 @@
-
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Wand2, Download, Palette, Camera, Sparkles, Zap } from 'lucide-react';
+import { Wand2, Download, Palette, Camera, Sparkles, Zap, Loader2, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const VisualGenerator = () => {
   const [prompt, setPrompt] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImages, setGeneratedImages] = useState<string[]>([]);
   const [selectedStyle, setSelectedStyle] = useState('cinematic');
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
   const styles = [
@@ -44,30 +43,74 @@ const VisualGenerator = () => {
     }
 
     setIsGenerating(true);
-    
-    // Simulate AI generation process
-    setTimeout(() => {
-      const mockImages = [
-        'https://images.unsplash.com/photo-1518770660439-4636190af475?w=512&h=512&fit=crop',
-        'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=512&h=512&fit=crop',
-        'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=512&h=512&fit=crop'
-      ];
-      
-      setGeneratedImages(mockImages);
-      setIsGenerating(false);
-      
-      toast({
-        title: "Images Generated!",
-        description: "Your AI-generated visuals are ready",
+    setError(null);
+    setGeneratedImages([]);
+
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke('generate-visual', {
+        body: { 
+          prompt: prompt.trim(),
+          style: selectedStyle,
+          count: 3
+        }
       });
-    }, 3000);
+
+      if (fnError) {
+        throw new Error(fnError.message || 'Failed to generate images');
+      }
+
+      if (data?.error) {
+        throw new Error(data.error);
+      }
+
+      if (data?.images && data.images.length > 0) {
+        setGeneratedImages(data.images);
+        toast({
+          title: "Images Generated!",
+          description: `${data.images.length} AI-generated visual${data.images.length > 1 ? 's are' : ' is'} ready`,
+        });
+      } else {
+        throw new Error('No images were generated');
+      }
+    } catch (err: any) {
+      console.error('Image generation error:', err);
+      const errorMessage = err?.message || 'Failed to generate images. Please try again.';
+      setError(errorMessage);
+      toast({
+        title: "Generation Failed",
+        description: errorMessage,
+        variant: "destructive"
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
-  const handleDownload = (imageUrl: string, index: number) => {
-    const link = document.createElement('a');
-    link.href = imageUrl;
-    link.download = `ai-generated-${index + 1}.jpg`;
-    link.click();
+  const handleDownload = async (imageUrl: string, index: number) => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `ai-generated-${selectedStyle}-${index + 1}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+      toast({
+        title: "Download Started",
+        description: "Your image is being downloaded.",
+      });
+    } catch (err) {
+      // Fallback for base64 or cross-origin images
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.download = `ai-generated-${selectedStyle}-${index + 1}.png`;
+      link.target = '_blank';
+      link.click();
+    }
   };
 
   return (
@@ -128,16 +171,23 @@ const VisualGenerator = () => {
             </TabsList>
           </Tabs>
 
+          {error && (
+            <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+              <AlertCircle className="h-4 w-4 flex-shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
+
           <Button
             onClick={handleGenerate}
-            disabled={isGenerating}
+            disabled={isGenerating || !prompt.trim()}
             className="w-full gradient-button"
             size="lg"
           >
             {isGenerating ? (
               <div className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                Generating...
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Generating with AI...
               </div>
             ) : (
               <div className="flex items-center gap-2">
@@ -146,6 +196,10 @@ const VisualGenerator = () => {
               </div>
             )}
           </Button>
+          
+          <p className="text-xs text-muted-foreground text-center">
+            Powered by Lovable AI • Gemini Image Generation
+          </p>
         </CardContent>
       </Card>
 

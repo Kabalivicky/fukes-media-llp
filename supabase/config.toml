@@ -5,3 +5,15 @@ verify_jwt = false
 
 [functions.fetch-perplexity-news]
 verify_jwt = false
+
+[functions.ai-chat]
+verify_jwt = false
+
+[functions.generate-contract]
+verify_jwt = false
+
+[functions.newsletter-subscribe]
+verify_jwt = false
+
+[functions.generate-visual]
+verify_jwt = false
