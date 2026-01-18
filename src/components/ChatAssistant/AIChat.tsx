@@ -10,6 +10,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { toast } from '@/hooks/use-toast';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import AnimatedLogo from '@/components/AnimatedLogo';
+import { supabase } from '@/integrations/supabase/client';
 
 // Define the types for our messages
 type MessageRole = 'user' | 'assistant' | 'system';
@@ -27,22 +28,27 @@ interface AIStatus {
   isSpeaking: boolean;
 }
 
-// Mock API for now - would be replaced with actual API implementation
+// Real API call to edge function
 const fetchAIResponse = async (messages: Message[]): Promise<string> => {
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
-  const lastMessage = messages[messages.length - 1];
-  
-  // Simple response logic - would be replaced with actual AI API
-  if (lastMessage.content.toLowerCase().includes('hello')) {
-    return "Hello there! How can I help with your VFX project today?";
-  } else if (lastMessage.content.toLowerCase().includes('price')) {
-    return "Our pricing is based on several factors including complexity, number of shots, and timeline. I can help you get a detailed quote using our pricing calculator, or connect you with our sales team.";
-  } else if (lastMessage.content.toLowerCase().includes('portfolio')) {
-    return "We have worked on projects ranging from Hollywood blockbusters to indie films. Our portfolio includes work for Marvel, Disney, HBO, and many independent studios. Would you like me to show you specific examples of our work?";
-  } else {
-    return "Thanks for your message. Our team specializes in high-end VFX, AI-driven creative solutions, and production support. Is there a specific project you'd like to discuss?";
+  try {
+    const { data, error } = await supabase.functions.invoke('ai-chat', {
+      body: { 
+        messages: messages.map(m => ({ 
+          role: m.role, 
+          content: m.content 
+        }))
+      }
+    });
+
+    if (error) {
+      console.error('AI Chat error:', error);
+      throw new Error(error.message || 'Failed to get AI response');
+    }
+
+    return data?.response || 'I apologize, but I was unable to generate a response. Please try again.';
+  } catch (error) {
+    console.error('Error calling AI chat:', error);
+    throw error;
   }
 };
 

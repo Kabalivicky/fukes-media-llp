@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -15,41 +14,91 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
-import { FileText, ChevronRight, ChevronLeft, Save, Check } from 'lucide-react';
+import { FileText, ChevronRight, ChevronLeft, Save, Check, Download, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const ContractForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     clientName: '',
+    clientEmail: '',
     projectName: '',
     projectType: '',
+    projectDescription: '',
     startDate: '',
     deadlineDate: '',
+    totalAmount: '',
+    currency: 'USD',
     paymentTerms: '',
     revisionRounds: '2',
     ipRights: 'client',
+    deliverables: '',
     specialClauses: '',
     agreedToTerms: false
   });
   
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedContract, setGeneratedContract] = useState<string | null>(null);
   
   const handleChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsGenerating(true);
     
-    // Simulate API call for contract generation
-    setTimeout(() => {
-      setIsGenerating(false);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-contract', {
+        body: {
+          clientName: formData.clientName,
+          clientEmail: formData.clientEmail,
+          projectName: formData.projectName,
+          projectType: formData.projectType,
+          projectDescription: formData.projectDescription,
+          startDate: formData.startDate,
+          endDate: formData.deadlineDate,
+          totalAmount: parseFloat(formData.totalAmount) || 0,
+          currency: formData.currency,
+          paymentTerms: formData.paymentTerms,
+          revisionRounds: parseInt(formData.revisionRounds) || 2,
+          ipRights: formData.ipRights,
+          deliverables: formData.deliverables.split('\n').filter(d => d.trim()),
+          specialClauses: formData.specialClauses.split('\n').filter(c => c.trim())
+        }
+      });
+
+      if (error) throw error;
+
+      setGeneratedContract(data?.contractTerms || '');
       toast({
         title: "Contract Generated",
-        description: "Your contract has been created and is ready to review",
+        description: "Your contract has been created and saved!",
       });
-    }, 2000);
+    } catch (error: any) {
+      console.error('Contract generation error:', error);
+      toast({
+        title: "Generation Failed",
+        description: error?.message || "Failed to generate contract. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const downloadContract = () => {
+    if (!generatedContract) return;
+    
+    const blob = new Blob([generatedContract], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${formData.projectName.replace(/\s+/g, '-')}-contract.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
   
   const goToNextStep = () => {
@@ -92,6 +141,19 @@ const ContractForm = () => {
                   />
                 </div>
                 
+                <div className="space-y-2">
+                  <Label htmlFor="clientEmail">Client Email</Label>
+                  <Input 
+                    id="clientEmail"
+                    type="email"
+                    value={formData.clientEmail}
+                    onChange={e => handleChange('clientEmail', e.target.value)}
+                    placeholder="client@example.com"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="projectName">Project Name</Label>
                   <Input 
