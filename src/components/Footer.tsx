@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight, Mail, MapPin, Loader2 } from 'lucide-react';
 import { useTheme } from '@/components/ui/theme-provider';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import logoDarkTheme from '@/assets/logo-dark-theme.png';
 import logoLightTheme from '@/assets/logo-light-theme.png';
 import MarqueeText from './MarqueeText';
@@ -45,6 +48,44 @@ const socialLinks = [
 
 const Footer = () => {
   const { theme } = useTheme();
+  const [email, setEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !email.includes('@')) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubscribing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+        body: { email }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Subscribed!",
+        description: data?.message || "Welcome to our newsletter!",
+      });
+      setEmail('');
+    } catch (error: any) {
+      toast({
+        title: "Subscription failed",
+        description: error?.message || "Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -191,15 +232,27 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground">
               Get the latest news and insights.
             </p>
-            <form className="space-y-2" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-2" onSubmit={handleNewsletterSubmit}>
               <Input 
                 type="email"
-                placeholder="Your email" 
-                className="bg-background/50 border-border/50 focus:border-primary" 
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-background/50 border-border/50 focus:border-primary"
+                disabled={isSubscribing}
               />
-              <Button type="submit" className="w-full group">
-                Subscribe
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              <Button type="submit" className="w-full group" disabled={isSubscribing}>
+                {isSubscribing ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Subscribing...
+                  </>
+                ) : (
+                  <>
+                    Subscribe
+                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                  </>
+                )}
               </Button>
             </form>
           </motion.div>
