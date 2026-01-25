@@ -13,22 +13,21 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
   Search, Users, UserPlus, MapPin, Briefcase, Star,
   MessageCircle, Play, Heart, Eye, ArrowRight,
-  Award, TrendingUp, Crown, Sparkles, Globe
+  Award, TrendingUp, Crown, Sparkles, Globe, Loader2
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ParallaxSection from '@/components/ParallaxSection';
 import FloatingElements from '@/components/FloatingElements';
 import AnimatedSectionDivider from '@/components/AnimatedSectionDivider';
-import { sampleMembers, samplePortfolio } from '@/data/communityData';
+import { useCommunityData } from '@/hooks/useCommunityData';
 
 const Community = () => {
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('members');
 
-  // Using sample data - ready for real DB integration via profiles_public view
-  const allMembers = sampleMembers;
-  const allPortfolio = samplePortfolio;
+  // Fetch real data from database with sample fallback
+  const { members: allMembers, portfolio: allPortfolio, isLoading } = useCommunityData();
 
   const featuredMembers = allMembers.filter(m => m.featured);
   const hiringMembers = allMembers.filter(m => m.is_available_for_hire);
@@ -59,7 +58,7 @@ const Community = () => {
     );
   };
 
-  const MemberCard = ({ member, featured = false }: { member: typeof sampleMembers[0], featured?: boolean }) => (
+  const MemberCard = ({ member, featured = false }: { member: typeof allMembers[0], featured?: boolean }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -137,7 +136,7 @@ const Community = () => {
     </motion.div>
   );
 
-  const PortfolioCard = ({ item }: { item: typeof samplePortfolio[0] }) => (
+  const PortfolioCard = ({ item }: { item: typeof allPortfolio[0] }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}

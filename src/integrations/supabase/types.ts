@@ -926,6 +926,75 @@ export type Database = {
       }
     }
     Views: {
+      profiles_public: {
+        Row: {
+          availability: string | null
+          avatar_url: string | null
+          bio: string | null
+          cover_url: string | null
+          created_at: string | null
+          display_name: string | null
+          hourly_rate: number | null
+          id: string | null
+          industries: Database["public"]["Enums"]["industry_category"][] | null
+          is_available_for_hire: boolean | null
+          linkedin_url: string | null
+          location: string | null
+          portfolio_url: string | null
+          skills: string[] | null
+          subscription_tier:
+            | Database["public"]["Enums"]["subscription_tier"]
+            | null
+          title: string | null
+          user_id: string | null
+          years_experience: number | null
+        }
+        Insert: {
+          availability?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          cover_url?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          hourly_rate?: number | null
+          id?: string | null
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_available_for_hire?: boolean | null
+          linkedin_url?: string | null
+          location?: string | null
+          portfolio_url?: string | null
+          skills?: string[] | null
+          subscription_tier?:
+            | Database["public"]["Enums"]["subscription_tier"]
+            | null
+          title?: string | null
+          user_id?: string | null
+          years_experience?: number | null
+        }
+        Update: {
+          availability?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          cover_url?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          hourly_rate?: number | null
+          id?: string | null
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_available_for_hire?: boolean | null
+          linkedin_url?: string | null
+          location?: string | null
+          portfolio_url?: string | null
+          skills?: string[] | null
+          subscription_tier?:
+            | Database["public"]["Enums"]["subscription_tier"]
+            | null
+          title?: string | null
+          user_id?: string | null
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
       subscriptions_public: {
         Row: {
           cancel_at_period_end: boolean | null

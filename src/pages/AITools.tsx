@@ -1,19 +1,21 @@
 import { motion } from 'framer-motion';
 import SEOHelmet from '@/components/SEOHelmet';
 import VisualGenerator from '@/components/AI/VisualGenerator';
+import VideoGenerator from '@/components/AI/VideoGenerator';
+import AudioGenerator from '@/components/AI/AudioGenerator';
 import EmotionDetection from '@/components/AI/EmotionDetection';
 import AssetLibrary from '@/components/Interactive/3DAssetLibrary';
 import CaseStudies from '@/components/Content/CaseStudies';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Brain, Wand2, Box, FileText } from 'lucide-react';
+import { Brain, Wand2, Box, FileText, Film, Music } from 'lucide-react';
 
 const AITools = () => {
   return (
     <>
       <SEOHelmet
         title="AI Tools - Fuke's Media"
-        description="Explore our cutting-edge AI-powered tools for VFX production, emotion detection, 3D asset management, and more."
-        keywords="AI tools, VFX, emotion detection, 3D assets, visual generation"
+        description="Explore our cutting-edge AI-powered tools for VFX production including image, video, and audio generation, emotion detection, and more."
+        keywords="AI tools, VFX, video generation, audio generation, image generation, emotion detection, 3D assets"
       />
 
       <div className="min-h-screen bg-background">
@@ -22,38 +24,54 @@ const AITools = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-12"
+              className="text-center mb-12 pt-8"
             >
               <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
                 AI-Powered Tools
               </h1>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Experience the future of VFX production with our revolutionary AI tools
+                Experience the future of VFX production with our revolutionary AI tools for images, videos, and audio
               </p>
             </motion.div>
 
             <Tabs defaultValue="visual-generator" className="space-y-8">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-3 md:grid-cols-6">
                 <TabsTrigger value="visual-generator" className="flex items-center gap-2">
                   <Wand2 className="h-4 w-4" />
-                  Visual Generator
+                  <span className="hidden sm:inline">Images</span>
+                </TabsTrigger>
+                <TabsTrigger value="video-generator" className="flex items-center gap-2">
+                  <Film className="h-4 w-4" />
+                  <span className="hidden sm:inline">Videos</span>
+                </TabsTrigger>
+                <TabsTrigger value="audio-generator" className="flex items-center gap-2">
+                  <Music className="h-4 w-4" />
+                  <span className="hidden sm:inline">Audio</span>
                 </TabsTrigger>
                 <TabsTrigger value="emotion-detection" className="flex items-center gap-2">
                   <Brain className="h-4 w-4" />
-                  Emotion Detection
+                  <span className="hidden sm:inline">Emotions</span>
                 </TabsTrigger>
                 <TabsTrigger value="asset-library" className="flex items-center gap-2">
                   <Box className="h-4 w-4" />
-                  3D Assets
+                  <span className="hidden sm:inline">3D Assets</span>
                 </TabsTrigger>
                 <TabsTrigger value="case-studies" className="flex items-center gap-2">
                   <FileText className="h-4 w-4" />
-                  Case Studies
+                  <span className="hidden sm:inline">Cases</span>
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value="visual-generator">
                 <VisualGenerator />
+              </TabsContent>
+
+              <TabsContent value="video-generator">
+                <VideoGenerator />
+              </TabsContent>
+
+              <TabsContent value="audio-generator">
+                <AudioGenerator />
               </TabsContent>
 
               <TabsContent value="emotion-detection">
