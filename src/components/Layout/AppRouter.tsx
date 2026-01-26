@@ -95,6 +95,9 @@ const Messages = lazy(() => import('@/pages/Messages'));
 const Notifications = lazy(() => import('@/pages/Notifications'));
 const PortfolioManagerPage = lazy(() => import('@/pages/PortfolioManager'));
 const ProjectBriefs = lazy(() => import('@/pages/ProjectBriefs'));
+const Onboarding = lazy(() => import('@/pages/Onboarding'));
+const Pricing = lazy(() => import('@/pages/Pricing'));
+const Jobs = lazy(() => import('@/pages/Jobs'));
 
 const AppRouter = () => {
   return (
@@ -136,6 +139,9 @@ const AppRouter = () => {
         <Route path="/notifications" element={<MainLayout><Notifications /></MainLayout>} />
         <Route path="/portfolio-manager" element={<MainLayout><PortfolioManagerPage /></MainLayout>} />
         <Route path="/projects" element={<MainLayout><ProjectBriefs /></MainLayout>} />
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/pricing" element={<MainLayout><Pricing /></MainLayout>} />
+        <Route path="/jobs" element={<MainLayout><Jobs /></MainLayout>} />
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
       </Routes>
     </Suspense>
