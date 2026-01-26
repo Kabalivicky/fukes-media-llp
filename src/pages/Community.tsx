@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
-  Search, Users, UserPlus, MapPin, Briefcase, Star,
+  Search, Users, MapPin, Briefcase, Star,
   MessageCircle, Play, Heart, Eye, ArrowRight,
   Award, TrendingUp, Crown, Sparkles, Globe, Loader2
 } from 'lucide-react';
@@ -20,6 +20,7 @@ import ParallaxSection from '@/components/ParallaxSection';
 import FloatingElements from '@/components/FloatingElements';
 import AnimatedSectionDivider from '@/components/AnimatedSectionDivider';
 import { useCommunityData } from '@/hooks/useCommunityData';
+import FollowButton from '@/components/Community/FollowButton';
 
 const Community = () => {
   const { user } = useAuth();
@@ -125,10 +126,12 @@ const Community = () => {
                 <MessageCircle className="w-4 h-4 mr-1" />
                 Message
               </Button>
-              <Button size="sm" className="flex-1">
-                <UserPlus className="w-4 h-4 mr-1" />
-                Follow
-              </Button>
+              {member.id && (
+                <FollowButton 
+                  targetUserId={member.id} 
+                  className="flex-1"
+                />
+              )}
             </div>
           </div>
         </CardContent>
