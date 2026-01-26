@@ -833,6 +833,62 @@ export type Database = {
           },
         ]
       }
+      project_workspaces: {
+        Row: {
+          artist_id: string
+          brief_id: string | null
+          budget: number | null
+          budget_currency: string | null
+          client_id: string
+          created_at: string | null
+          deadline: string | null
+          description: string | null
+          id: string
+          start_date: string | null
+          status: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          artist_id: string
+          brief_id?: string | null
+          budget?: number | null
+          budget_currency?: string | null
+          client_id: string
+          created_at?: string | null
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          start_date?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          artist_id?: string
+          brief_id?: string | null
+          budget?: number | null
+          budget_currency?: string | null
+          client_id?: string
+          created_at?: string | null
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          start_date?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_workspaces_brief_id_fkey"
+            columns: ["brief_id"]
+            isOneToOne: false
+            referencedRelation: "project_briefs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           budget_range: string | null
@@ -1164,6 +1220,148 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      workspace_files: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          file_name: string
+          file_size: number | null
+          file_type: string | null
+          file_url: string
+          id: string
+          milestone_id: string | null
+          uploaded_by: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          file_name: string
+          file_size?: number | null
+          file_type?: string | null
+          file_url: string
+          id?: string
+          milestone_id?: string | null
+          uploaded_by: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          file_name?: string
+          file_size?: number | null
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          milestone_id?: string | null
+          uploaded_by?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_files_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_milestones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workspace_files_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "project_workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_messages: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          is_read: boolean | null
+          message_type: string | null
+          sender_id: string
+          workspace_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message_type?: string | null
+          sender_id: string
+          workspace_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message_type?: string | null
+          sender_id?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_messages_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "project_workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_milestones: {
+        Row: {
+          amount: number | null
+          completed_at: string | null
+          created_at: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          order_index: number | null
+          status: string | null
+          title: string
+          updated_at: string | null
+          workspace_id: string
+        }
+        Insert: {
+          amount?: number | null
+          completed_at?: string | null
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          order_index?: number | null
+          status?: string | null
+          title: string
+          updated_at?: string | null
+          workspace_id: string
+        }
+        Update: {
+          amount?: number | null
+          completed_at?: string | null
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          order_index?: number | null
+          status?: string | null
+          title?: string
+          updated_at?: string | null
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_milestones_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "project_workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
