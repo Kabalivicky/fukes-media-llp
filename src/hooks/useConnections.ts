@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { notifyNewFollower } from './useNotificationActions';
 
 interface Connection {
   id: string;
@@ -100,6 +101,16 @@ export const useConnections = (targetUserId?: string) => {
 
       setIsFollowing(true);
       setFollowersCount(prev => prev + 1);
+
+      // Notify the user being followed
+      const { data: followerProfile } = await supabase
+        .from('profiles')
+        .select('display_name')
+        .eq('user_id', user.id)
+        .single();
+
+      await notifyNewFollower(followingId, followerProfile?.display_name || 'Someone');
+
       toast.success('Following!');
       return true;
     } catch (error: any) {

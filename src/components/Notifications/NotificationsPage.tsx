@@ -6,7 +6,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { 
   Bell, Check, CheckCheck, Trash2, Loader2,
-  UserPlus, MessageCircle, Briefcase, FileText, AlertCircle
+  UserPlus, MessageCircle, Briefcase, FileText, AlertCircle,
+  DollarSign, Milestone
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -15,12 +16,19 @@ const NotificationIcon = ({ type }: { type: string }) => {
     case 'follow':
       return <UserPlus className="w-5 h-5 text-blue-500" />;
     case 'message':
+    case 'workspace_message':
       return <MessageCircle className="w-5 h-5 text-green-500" />;
     case 'job_application':
-    case 'proposal':
       return <Briefcase className="w-5 h-5 text-purple-500" />;
-    case 'project_invite':
+    case 'proposal':
+    case 'proposal_update':
       return <FileText className="w-5 h-5 text-orange-500" />;
+    case 'project_invite':
+      return <AlertCircle className="w-5 h-5 text-teal-500" />;
+    case 'milestone':
+      return <Milestone className="w-5 h-5 text-indigo-500" />;
+    case 'payment':
+      return <DollarSign className="w-5 h-5 text-emerald-500" />;
     default:
       return <AlertCircle className="w-5 h-5 text-muted-foreground" />;
   }

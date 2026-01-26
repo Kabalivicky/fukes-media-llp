@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { notifyMilestoneUpdate, notifyPaymentReleased } from './useNotificationActions';
 
 export interface EscrowMilestone {
   id: string;
@@ -170,6 +171,18 @@ export const useEscrow = (workspaceId: string) => {
       };
 
       toast.success(statusMessages[status] || 'Status updated');
+
+      // Send notification to the other party
+      if (workspace) {
+        const recipientId = isArtist ? workspace.client_id : workspace.artist_id;
+        await notifyMilestoneUpdate(recipientId, workspaceId, milestone.title, status, !isArtist);
+        
+        // If payment released, also notify artist with amount
+        if (status === 'paid' && milestone.amount && isClient) {
+          await notifyPaymentReleased(workspace.artist_id, milestone.amount, workspaceId);
+        }
+      }
+
       return true;
     } catch (error) {
       console.error('Error updating milestone:', error);
