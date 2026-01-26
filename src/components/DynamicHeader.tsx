@@ -4,9 +4,10 @@ import MegaMenu from './Navigation/MegaMenu';
 import AnimatedLogo from './AnimatedLogo';
 import MobileNav from './Navigation/MobileNav';
 import { Button } from './ui/button';
-import { Headset, User, LogOut } from 'lucide-react';
+import { Headset, User, LogOut, LayoutDashboard, FolderOpen, MessageCircle } from 'lucide-react';
 import ThemeToggle from './Navigation/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
+import NotificationBell from '@/components/Notifications/NotificationBell';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -130,36 +131,48 @@ const DynamicHeader = () => {
             </Link>
             
             {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="flex items-center gap-2"
-                    aria-label="User menu"
-                    aria-haspopup="menu"
-                  >
-                    <User className="h-4 w-4" aria-hidden="true" />
-                    <span className="hidden sm:inline">
-                      {user.user_metadata?.display_name || user.email?.split('@')[0] || 'Account'}
-                    </span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem onClick={() => navigate('/freelancer-portal')}>
-                    <User className="mr-2 h-4 w-4" aria-hidden="true" />
-                    Freelancer Portal
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate('/contract-builder')}>
-                    Contract Builder
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut}>
-                    <LogOut className="mr-2 h-4 w-4" aria-hidden="true" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <>
+                <NotificationBell />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex items-center gap-2"
+                      aria-label="User menu"
+                      aria-haspopup="menu"
+                    >
+                      <User className="h-4 w-4" aria-hidden="true" />
+                      <span className="hidden sm:inline">
+                        {user.user_metadata?.display_name || user.email?.split('@')[0] || 'Account'}
+                      </span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={() => navigate('/dashboard')}>
+                      <LayoutDashboard className="mr-2 h-4 w-4" aria-hidden="true" />
+                      Dashboard
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/messages')}>
+                      <MessageCircle className="mr-2 h-4 w-4" aria-hidden="true" />
+                      Messages
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/portfolio-manager')}>
+                      <FolderOpen className="mr-2 h-4 w-4" aria-hidden="true" />
+                      Portfolio
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/freelancer-portal')}>
+                      <User className="mr-2 h-4 w-4" aria-hidden="true" />
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="mr-2 h-4 w-4" aria-hidden="true" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
             ) : (
               <Link to="/auth">
                 <Button size="sm" variant="outline" aria-label="Sign in to your account">
