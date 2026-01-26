@@ -366,6 +366,39 @@ export type Database = {
           },
         ]
       }
+      messages: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          is_read: boolean | null
+          read_at: string | null
+          receiver_id: string
+          sender_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          read_at?: string | null
+          receiver_id: string
+          sender_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          read_at?: string | null
+          receiver_id?: string
+          sender_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       news: {
         Row: {
           category: string | null
@@ -435,6 +468,45 @@ export type Database = {
           source?: string | null
           subscribed_at?: string
           unsubscribed_at?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          id: string
+          is_read: boolean | null
+          read_at: string | null
+          reference_id: string | null
+          reference_type: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          read_at?: string | null
+          reference_id?: string | null
+          reference_type?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          read_at?: string | null
+          reference_id?: string | null
+          reference_type?: string | null
+          title?: string
+          type?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -639,6 +711,128 @@ export type Database = {
         }
         Relationships: []
       }
+      project_briefs: {
+        Row: {
+          attachments: string[] | null
+          budget_currency: string | null
+          budget_max: number | null
+          budget_min: number | null
+          budget_type: string | null
+          category: string | null
+          client_id: string
+          created_at: string | null
+          deadline: string | null
+          description: string
+          duration_estimate: string | null
+          id: string
+          industries: Database["public"]["Enums"]["industry_category"][] | null
+          is_featured: boolean | null
+          is_remote: boolean | null
+          location: string | null
+          proposals_count: number | null
+          required_skills: string[] | null
+          status: string | null
+          title: string
+          updated_at: string | null
+          views_count: number | null
+        }
+        Insert: {
+          attachments?: string[] | null
+          budget_currency?: string | null
+          budget_max?: number | null
+          budget_min?: number | null
+          budget_type?: string | null
+          category?: string | null
+          client_id: string
+          created_at?: string | null
+          deadline?: string | null
+          description: string
+          duration_estimate?: string | null
+          id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_featured?: boolean | null
+          is_remote?: boolean | null
+          location?: string | null
+          proposals_count?: number | null
+          required_skills?: string[] | null
+          status?: string | null
+          title: string
+          updated_at?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          attachments?: string[] | null
+          budget_currency?: string | null
+          budget_max?: number | null
+          budget_min?: number | null
+          budget_type?: string | null
+          category?: string | null
+          client_id?: string
+          created_at?: string | null
+          deadline?: string | null
+          description?: string
+          duration_estimate?: string | null
+          id?: string
+          industries?: Database["public"]["Enums"]["industry_category"][] | null
+          is_featured?: boolean | null
+          is_remote?: boolean | null
+          location?: string | null
+          proposals_count?: number | null
+          required_skills?: string[] | null
+          status?: string | null
+          title?: string
+          updated_at?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      project_proposals: {
+        Row: {
+          artist_id: string
+          brief_id: string
+          cover_letter: string
+          created_at: string | null
+          id: string
+          portfolio_samples: string[] | null
+          proposed_budget: number | null
+          proposed_timeline: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          artist_id: string
+          brief_id: string
+          cover_letter: string
+          created_at?: string | null
+          id?: string
+          portfolio_samples?: string[] | null
+          proposed_budget?: number | null
+          proposed_timeline?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          artist_id?: string
+          brief_id?: string
+          cover_letter?: string
+          created_at?: string | null
+          id?: string
+          portfolio_samples?: string[] | null
+          proposed_budget?: number | null
+          proposed_timeline?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_proposals_brief_id_fkey"
+            columns: ["brief_id"]
+            isOneToOne: false
+            referencedRelation: "project_briefs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           budget_range: string | null
@@ -797,6 +991,53 @@ export type Database = {
           website_url?: string | null
         }
         Relationships: []
+      }
+      reviews: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          id: string
+          is_verified: boolean | null
+          project_brief_id: string | null
+          rating: number
+          reviewed_user_id: string
+          reviewer_id: string
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          is_verified?: boolean | null
+          project_brief_id?: string | null
+          rating: number
+          reviewed_user_id: string
+          reviewer_id: string
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          is_verified?: boolean | null
+          project_brief_id?: string | null
+          rating?: number
+          reviewed_user_id?: string
+          reviewer_id?: string
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_project_brief_id_fkey"
+            columns: ["project_brief_id"]
+            isOneToOne: false
+            referencedRelation: "project_briefs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       saved_items: {
         Row: {

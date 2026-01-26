@@ -90,6 +90,11 @@ const Careers = lazy(() => import('@/pages/Careers'));
 const Shop = lazy(() => import('@/pages/Shop'));
 const Community = lazy(() => import('@/pages/Community'));
 const ProfileEditor = lazy(() => import('@/pages/ProfileEditor'));
+const Dashboard = lazy(() => import('@/pages/Dashboard'));
+const Messages = lazy(() => import('@/pages/Messages'));
+const Notifications = lazy(() => import('@/pages/Notifications'));
+const PortfolioManagerPage = lazy(() => import('@/pages/PortfolioManager'));
+const ProjectBriefs = lazy(() => import('@/pages/ProjectBriefs'));
 
 const AppRouter = () => {
   return (
@@ -126,6 +131,11 @@ const AppRouter = () => {
         <Route path="/shop" element={<MainLayout><Shop /></MainLayout>} />
         <Route path="/community" element={<MainLayout><Community /></MainLayout>} />
         <Route path="/profile/edit" element={<MainLayout><ProfileEditor /></MainLayout>} />
+        <Route path="/dashboard" element={<MainLayout><Dashboard /></MainLayout>} />
+        <Route path="/messages" element={<MainLayout><Messages /></MainLayout>} />
+        <Route path="/notifications" element={<MainLayout><Notifications /></MainLayout>} />
+        <Route path="/portfolio-manager" element={<MainLayout><PortfolioManagerPage /></MainLayout>} />
+        <Route path="/projects" element={<MainLayout><ProjectBriefs /></MainLayout>} />
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
       </Routes>
     </Suspense>
