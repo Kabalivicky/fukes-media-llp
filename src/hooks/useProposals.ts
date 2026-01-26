@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { notifyNewProposal, notifyProposalUpdate } from './useNotificationActions';
 
 export interface Proposal {
   id: string;
@@ -156,6 +157,28 @@ export const useProposals = (briefId?: string) => {
 
       if (error) throw error;
 
+      // Notify the client about new proposal
+      const { data: brief } = await supabase
+        .from('project_briefs')
+        .select('client_id, title')
+        .eq('id', input.brief_id)
+        .single();
+
+      if (brief) {
+        const { data: artistProfile } = await supabase
+          .from('profiles')
+          .select('display_name')
+          .eq('user_id', user.id)
+          .single();
+
+        await notifyNewProposal(
+          brief.client_id,
+          artistProfile?.display_name || 'An artist',
+          input.brief_id,
+          brief.title
+        );
+      }
+
       toast.success('Proposal submitted successfully!');
       return data;
     } catch (error: any) {
@@ -171,6 +194,9 @@ export const useProposals = (briefId?: string) => {
     if (!user) return false;
 
     try {
+      // Get proposal to find artist and brief
+      const proposal = proposals.find(p => p.id === proposalId);
+      
       const { error } = await supabase
         .from('project_proposals')
         .update({ status })
@@ -181,6 +207,21 @@ export const useProposals = (briefId?: string) => {
       setProposals(prev => prev.map(p => 
         p.id === proposalId ? { ...p, status } : p
       ));
+
+      // Notify the artist about proposal status update
+      if (proposal) {
+        const { data: brief } = await supabase
+          .from('project_briefs')
+          .select('title')
+          .eq('id', proposal.brief_id)
+          .single();
+
+        await notifyProposalUpdate(
+          proposal.artist_id,
+          brief?.title || 'Project',
+          status
+        );
+      }
 
       toast.success(`Proposal ${status}`);
       return true;

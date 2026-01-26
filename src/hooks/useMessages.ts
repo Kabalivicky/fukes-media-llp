@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { notifyNewMessage } from './useNotificationActions';
 
 export interface Message {
   id: string;
@@ -157,15 +158,19 @@ export const useMessages = () => {
 
       setMessages(prev => [...prev, data]);
       
-      // Create notification for receiver
-      await supabase.from('notifications').insert({
-        user_id: receiverId,
-        type: 'message',
-        title: 'New Message',
-        content: `You have a new message`,
-        reference_id: data.id,
-        reference_type: 'message',
-      });
+      // Get sender profile for notification
+      const { data: senderProfile } = await supabase
+        .from('profiles')
+        .select('display_name')
+        .eq('user_id', user.id)
+        .single();
+
+      // Notify receiver
+      await notifyNewMessage(
+        receiverId,
+        senderProfile?.display_name || 'Someone',
+        content.trim()
+      );
 
       return true;
     } catch (error: any) {

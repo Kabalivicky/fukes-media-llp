@@ -12,9 +12,10 @@ import {
 } from '@/components/ui/popover';
 import {
   Bell, MessageCircle, Users, Briefcase, FileText,
-  CheckCircle, Clock, ArrowRight, Trash2, X
+  CheckCircle, Clock, ArrowRight, X, DollarSign, 
+  Milestone, UserPlus
 } from 'lucide-react';
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 
 const NotificationBell = () => {
   const {
@@ -30,13 +31,21 @@ const NotificationBell = () => {
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case 'message':
+      case 'workspace_message':
         return <MessageCircle className="w-4 h-4 text-blue-500" />;
       case 'follow':
-        return <Users className="w-4 h-4 text-green-500" />;
-      case 'job':
+        return <UserPlus className="w-4 h-4 text-green-500" />;
+      case 'job_application':
         return <Briefcase className="w-4 h-4 text-amber-500" />;
-      case 'workspace':
+      case 'proposal':
+      case 'proposal_update':
         return <FileText className="w-4 h-4 text-purple-500" />;
+      case 'project_invite':
+        return <Users className="w-4 h-4 text-teal-500" />;
+      case 'milestone':
+        return <Milestone className="w-4 h-4 text-indigo-500" />;
+      case 'payment':
+        return <DollarSign className="w-4 h-4 text-emerald-500" />;
       default:
         return <Bell className="w-4 h-4 text-muted-foreground" />;
     }
@@ -47,9 +56,14 @@ const NotificationBell = () => {
       case 'message':
         return '/messages';
       case 'workspace':
-        return `/workspace/${notification.reference_id}`;
-      case 'job':
-        return `/jobs?id=${notification.reference_id}`;
+        return notification.reference_id ? `/workspace/${notification.reference_id}` : '/workspace';
+      case 'job_application':
+        return '/jobs';
+      case 'brief':
+      case 'proposal':
+        return '/project-briefs';
+      case 'profile':
+        return '/community';
       default:
         return '/notifications';
     }
