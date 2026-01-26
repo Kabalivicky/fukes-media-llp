@@ -88,6 +88,8 @@ const Terms = lazy(() => import('@/pages/Terms'));
 const Legal = lazy(() => import('@/pages/Legal'));
 const Careers = lazy(() => import('@/pages/Careers'));
 const Shop = lazy(() => import('@/pages/Shop'));
+const Community = lazy(() => import('@/pages/Community'));
+const ProfileEditor = lazy(() => import('@/pages/ProfileEditor'));
 
 const AppRouter = () => {
   return (
@@ -122,6 +124,8 @@ const AppRouter = () => {
         <Route path="/legal" element={<MainLayout><Legal /></MainLayout>} />
         <Route path="/careers" element={<MainLayout><Careers /></MainLayout>} />
         <Route path="/shop" element={<MainLayout><Shop /></MainLayout>} />
+        <Route path="/community" element={<MainLayout><Community /></MainLayout>} />
+        <Route path="/profile/edit" element={<MainLayout><ProfileEditor /></MainLayout>} />
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
       </Routes>
     </Suspense>
