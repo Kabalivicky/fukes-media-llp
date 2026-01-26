@@ -37,9 +37,11 @@ const Auth = () => {
   // Redirect authenticated users
   useEffect(() => {
     if (user && !loading) {
-      navigate('/');
+      // Check if new user (no profile completed) - redirect to onboarding
+      const isNewSignup = searchParams.get('new') === 'true';
+      navigate(isNewSignup ? '/onboarding' : '/dashboard');
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, searchParams]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,7 +68,8 @@ const Auth = () => {
     const { error } = await signUp(signUpEmail, signUpPassword, displayName);
     
     if (!error) {
-      setActiveTab('signin');
+      // Redirect to onboarding after successful signup
+      navigate('/onboarding');
     }
 
     setIsSubmitting(false);
