@@ -7,11 +7,13 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import { Lock, Mail, User, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import DynamicHeader from '@/components/DynamicHeader';
 import Footer from '@/components/Footer';
 import LightweightBackground from '@/components/LightweightBackground';
+import { GoogleAuthButton } from '@/components/Auth/GoogleAuthButton';
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
@@ -180,6 +182,17 @@ const Auth = () => {
                       >
                         {isSubmitting ? "Signing in..." : "Sign In"}
                       </Button>
+
+                      <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                          <Separator className="w-full" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+                        </div>
+                      </div>
+
+                      <GoogleAuthButton />
 
                       <div className="text-center">
                         <Button 

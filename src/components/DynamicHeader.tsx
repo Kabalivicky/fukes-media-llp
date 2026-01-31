@@ -4,10 +4,11 @@ import MegaMenu from './Navigation/MegaMenu';
 import AnimatedLogo from './AnimatedLogo';
 import MobileNav from './Navigation/MobileNav';
 import { Button } from './ui/button';
-import { Headset, User, LogOut, LayoutDashboard, FolderOpen, MessageCircle } from 'lucide-react';
+import { Headset, User, LogOut, LayoutDashboard, FolderOpen, MessageCircle, BarChart3 } from 'lucide-react';
 import ThemeToggle from './Navigation/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
 import NotificationBell from '@/components/Notifications/NotificationBell';
+import { GlobalSearch } from '@/components/Search/GlobalSearch';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -108,6 +109,7 @@ const DynamicHeader = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
+            <GlobalSearch />
             <ThemeToggle />
             
             <Link to="/shop" className="hidden sm:block">

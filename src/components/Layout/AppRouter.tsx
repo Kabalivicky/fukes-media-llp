@@ -100,8 +100,10 @@ const Pricing = lazy(() => import('@/pages/Pricing'));
 const Jobs = lazy(() => import('@/pages/Jobs'));
 const Workspace = lazy(() => import('@/pages/Workspace'));
 const ArtistSearch = lazy(() => import('@/pages/ArtistSearch'));
+const ArtistProfile = lazy(() => import('@/pages/ArtistProfile'));
 const CompanyProfile = lazy(() => import('@/pages/CompanyProfile'));
 const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'));
+const Analytics = lazy(() => import('@/pages/Analytics'));
 
 const AppRouter = () => {
   return (
@@ -148,8 +150,10 @@ const AppRouter = () => {
         <Route path="/jobs" element={<MainLayout><Jobs /></MainLayout>} />
         <Route path="/workspace/:id" element={<MainLayout><Workspace /></MainLayout>} />
         <Route path="/artists" element={<MainLayout><ArtistSearch /></MainLayout>} />
+        <Route path="/artist/:username" element={<MainLayout><ArtistProfile /></MainLayout>} />
         <Route path="/company/:slug" element={<MainLayout><CompanyProfile /></MainLayout>} />
         <Route path="/admin" element={<MainLayout><AdminDashboard /></MainLayout>} />
+        <Route path="/analytics" element={<MainLayout><Analytics /></MainLayout>} />
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
       </Routes>
     </Suspense>
