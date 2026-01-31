@@ -13,6 +13,7 @@ import LoadingIntro from "./components/LoadingIntro";
 import AccessibilityProvider from "./components/AccessibilityProvider";
 import { MotionConfig } from "framer-motion";
 import CursorFollower from "./components/CursorFollower";
+import { AuthProvider } from "./contexts/AuthContext";
 
 // Lazy loaded components for better performance
 const AppRouter = lazy(() => import("./components/Layout/AppRouter"));
@@ -71,29 +72,31 @@ const App = () => {
             <AccessibilityProvider>
               <TooltipProvider>
                 <MotionConfig reducedMotion="user">
-                  <div className="min-h-screen bg-background">
-                    {/* Custom Cursor Follower */}
-                    <CursorFollower size={24} mixBlendMode="difference" />
-                    
-                    <Toaster />
-                    <Sonner />
-                    <BrowserRouter>
-                      {/* Loading Intro - Always render but handles its own visibility */}
-                      <LoadingIntro />
-                      
-                      {/* Navigation Controls */}
-                      <ScrollToTop showBelow={400} />
-                      
-                      {/* Main Application Routes - Always render when app is ready */}
-                      {isAppReady && (
-                        <Suspense fallback={<LoadingFallback />}>
-                          <ErrorBoundary>
-                            <AppRouter />
-                          </ErrorBoundary>
-                        </Suspense>
-                      )}
-                    </BrowserRouter>
-                  </div>
+                  <BrowserRouter>
+                    <AuthProvider>
+                      <div className="min-h-screen bg-background">
+                        {/* Custom Cursor Follower */}
+                        <CursorFollower size={24} mixBlendMode="difference" />
+                        
+                        <Toaster />
+                        <Sonner />
+                        {/* Loading Intro - Always render but handles its own visibility */}
+                        <LoadingIntro />
+                        
+                        {/* Navigation Controls */}
+                        <ScrollToTop showBelow={400} />
+                        
+                        {/* Main Application Routes - Always render when app is ready */}
+                        {isAppReady && (
+                          <Suspense fallback={<LoadingFallback />}>
+                            <ErrorBoundary>
+                              <AppRouter />
+                            </ErrorBoundary>
+                          </Suspense>
+                        )}
+                      </div>
+                    </AuthProvider>
+                  </BrowserRouter>
                 </MotionConfig>
               </TooltipProvider>
             </AccessibilityProvider>
