@@ -76,6 +76,8 @@ const AITools = lazy(() => import('@/pages/AITools'));
 const VideoConverter = lazy(() => import('@/pages/tools/VideoConverter'));
 const ImageConverter = lazy(() => import('@/pages/tools/ImageConverter'));
 const AudioConverter = lazy(() => import('@/pages/tools/AudioConverter'));
+const ImageUpscaler = lazy(() => import('@/pages/tools/ImageUpscaler'));
+const VideoUpscaler = lazy(() => import('@/pages/tools/VideoUpscaler'));
 const CodeConverter = lazy(() => import('@/pages/tools/CodeConverter'));
 const ColorConverter = lazy(() => import('@/pages/tools/ColorConverter'));
 const TextConverter = lazy(() => import('@/pages/tools/TextConverter'));
@@ -133,6 +135,8 @@ const AppRouter = () => {
         <Route path="/tools/color-converter" element={<MainLayout><ColorConverter /></MainLayout>} />
         <Route path="/tools/text-converter" element={<MainLayout><TextConverter /></MainLayout>} />
         <Route path="/tools/document-converter" element={<MainLayout><DocumentConverter /></MainLayout>} />
+        <Route path="/tools/image-upscaler" element={<MainLayout><ImageUpscaler /></MainLayout>} />
+        <Route path="/tools/video-upscaler" element={<MainLayout><VideoUpscaler /></MainLayout>} />
         <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />
         <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
         <Route path="/legal" element={<MainLayout><Legal /></MainLayout>} />
