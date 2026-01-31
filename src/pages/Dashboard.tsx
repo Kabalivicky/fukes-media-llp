@@ -72,16 +72,16 @@ const Dashboard = () => {
       description: `${portfolioItems.length} items`
     },
     { 
+      label: 'Analytics', 
+      icon: TrendingUp, 
+      href: '/analytics',
+      description: 'Track your growth'
+    },
+    { 
       label: 'Browse Projects', 
       icon: Briefcase, 
       href: '/projects',
       description: 'Find work'
-    },
-    { 
-      label: 'Post a Project', 
-      icon: Plus, 
-      href: '/projects',
-      description: 'Hire talent'
     },
   ];
 
