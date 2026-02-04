@@ -64,14 +64,18 @@ const Auth = () => {
     if (signUpPassword !== confirmPassword) {
       return;
     }
+    
+    if (signUpPassword.length < 6) {
+      return;
+    }
 
     setIsSubmitting(true);
     
     const { error } = await signUp(signUpEmail, signUpPassword, displayName);
     
     if (!error) {
-      // Redirect to onboarding after successful signup
-      navigate('/onboarding');
+      // Show confirmation message - user needs to verify email
+      setActiveTab('signin');
     }
 
     setIsSubmitting(false);

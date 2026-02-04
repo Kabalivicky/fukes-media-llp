@@ -26,7 +26,7 @@ const footerLinks = {
     { name: 'Contact', path: '/contact' },
   ],
   resources: [
-    { name: 'Help Center', path: '/help' },
+    { name: 'Help Center', path: '/help-center' },
     { name: 'AI Tools', path: '/ai-tools' },
     { name: 'Industry News', path: '/news' },
     { name: 'VFX Research', path: '/vfx-research' },

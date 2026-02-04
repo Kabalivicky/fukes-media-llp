@@ -162,10 +162,10 @@ export const GlobalSearch = () => {
 
   const getTypeColor = (type: SearchResult['type']) => {
     switch (type) {
-      case 'artist': return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
-      case 'job': return 'bg-green-500/10 text-green-500 border-green-500/20';
-      case 'company': return 'bg-purple-500/10 text-purple-500 border-purple-500/20';
-      case 'resource': return 'bg-orange-500/10 text-orange-500 border-orange-500/20';
+      case 'artist': return 'bg-secondary/10 text-secondary border-secondary/20';
+      case 'job': return 'bg-accent/10 text-accent border-accent/20';
+      case 'company': return 'bg-primary/10 text-primary border-primary/20';
+      case 'resource': return 'bg-muted text-muted-foreground border-border';
     }
   };
 

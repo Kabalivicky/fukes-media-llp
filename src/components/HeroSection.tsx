@@ -191,7 +191,7 @@ const HeroSection = () => {
               {showAIDemo ? 'Hide Demo' : 'Try AI Demo'}
             </Button>
 
-            <Link to="/advanced-pricing">
+            <Link to="/pricing">
               <Button 
                 size="lg" 
                 variant="ghost" 

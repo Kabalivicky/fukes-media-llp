@@ -7,7 +7,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
+  signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any; data: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   resetPassword: (email: string) => Promise<{ error: any }>;
@@ -50,9 +50,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, displayName?: string) => {
     try {
-      const redirectUrl = `${window.location.origin}/`;
+      const redirectUrl = `${window.location.origin}/onboarding`;
       
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -69,21 +69,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           description: error.message,
           variant: "destructive",
         });
-      } else {
+      } else if (data.user && !data.session) {
+        // Email confirmation is required
+        toast({
+          title: "Check your email",
+          description: "We've sent you a confirmation link. Please verify your email to continue.",
+        });
+      } else if (data.session) {
+        // No email confirmation required, user is signed in
         toast({
           title: "Account created successfully",
-          description: "Please check your email to verify your account.",
+          description: "Welcome to Fuke's Media!",
         });
       }
 
-      return { error };
+      return { error, data };
     } catch (error: any) {
       toast({
         title: "Sign up failed",
         description: error.message,
         variant: "destructive",
       });
-      return { error };
+      return { error, data: null };
     }
   };
 
