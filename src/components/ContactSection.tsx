@@ -251,17 +251,15 @@ const ContactSection = () => {
                           <div>
                             <h4 className="font-medium text-sm text-primary mb-1">Register Address:</h4>
                             <p className="text-muted-foreground text-sm">
-                              Omkara Nilaya, 7th Main,<br />
                               Kumaraswamy Layout, 2nd Stage,<br />
-                              Bengaluru, Karnataka - 560078
+                              Bengaluru, Karnataka – 560078
                             </p>
                           </div>
                           <div>
                             <h4 className="font-medium text-sm text-primary mb-1">Office Address:</h4>
                             <p className="text-muted-foreground text-sm">
-                              2nd Floor, 10th Main, 6th Cross,<br />
-                              Kathriguppe IV Phase, Gururaja Layout,<br />
-                              Banashankari, Bengaluru, Karnataka - 560070
+                              Kathriguppe IV Phase, Banashankari,<br />
+                              Bengaluru, Karnataka – 560070
                             </p>
                           </div>
                         </div>
@@ -279,13 +277,16 @@ const ContactSection = () => {
                       <div>
                         <h3 className="font-semibold text-lg mb-1">Email Us</h3>
                         <p className="text-muted-foreground mb-1">
-                          General: <a href="mailto:Fukesmedia@gmail.com" className="text-secondary hover:underline">Fukesmedia@gmail.com</a>
+                          General: <a href="mailto:Fukesmedia@gmail.com" className="text-secondary hover:underline">Fukesmedia@gmail.com</a> / <a href="mailto:info@fukesmedia.com" className="text-secondary hover:underline">Info@fukesmedia.com</a>
+                        </p>
+                        <p className="text-muted-foreground mb-1">
+                          Business Requests: <a href="mailto:business@fukesmedia.com" className="text-secondary hover:underline">Business@fukesmedia.com</a>
                         </p>
                         <p className="text-muted-foreground mb-1">
                           Project Requests: <a href="mailto:projects@fukesmedia.com" className="text-secondary hover:underline">projects@fukesmedia.com</a>
                         </p>
                         <p className="text-muted-foreground">
-                          Careers: <a href="mailto:careers@fukesmedia.com" className="text-secondary hover:underline">careers@fukesmedia.com</a>
+                          Careers: <a href="mailto:hr@fukesmedia.com" className="text-secondary hover:underline">hr@fukesmedia.com</a>
                         </p>
                       </div>
                     </div>
