@@ -104,26 +104,26 @@ const Contact = () => {
   const contactMethods = [
     {
       icon: MapPin,
-      title: 'Studio Location',
-      content: ['123 Creative District', 'Innovation Hub, Tech City', 'Los Angeles, CA 90210'],
+      title: 'Our Locations',
+      content: ['Kumaraswamy Layout, 2nd Stage, Bengaluru – 560078', 'Kathriguppe IV Phase, Banashankari, Bengaluru – 560070'],
       color: 'from-primary to-secondary',
     },
     {
       icon: Phone,
-      title: 'Phone',
-      content: ['+1 (555) 123-FUKES', '24/7 Emergency Line'],
+      title: 'Call Us',
+      content: ['Main Office: +91 636 228 1003', 'Support: +91 991 625 4096', 'Inquiry: +91 966 362 5519'],
       color: 'from-secondary to-accent',
     },
     {
       icon: Mail,
-      title: 'Email',
-      content: ['hello@fukes-media.com', 'Response within 2 hours'],
+      title: 'Email Us',
+      content: ['General: Fukesmedia@gmail.com', 'Business: Business@fukesmedia.com', 'Projects: projects@fukesmedia.com'],
       color: 'from-accent to-primary',
     },
     {
       icon: Clock,
       title: 'Business Hours',
-      content: ['Mon-Fri: 9:00 AM - 8:00 PM PST', 'Sat-Sun: Emergency Projects Only'],
+      content: ['Mon–Sat: 10:00 AM – 7:00 PM IST', 'Sunday: Closed'],
       color: 'from-primary to-accent',
     },
   ];

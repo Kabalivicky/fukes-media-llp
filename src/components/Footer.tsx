@@ -141,11 +141,11 @@ const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-3">
               <a 
-                href="mailto:hello@fukes-media.com" 
+                href="mailto:Fukesmedia@gmail.com" 
                 className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                hello@fukes-media.com
+                Fukesmedia@gmail.com
               </a>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4" />
