@@ -251,7 +251,7 @@ const ContactSection = () => {
                           <div>
                             <h4 className="font-medium text-sm text-primary mb-1">Register Address:</h4>
                             <p className="text-muted-foreground text-sm">
-                              #2108, Omkara Nilaya, 7th Main,<br />
+                              Omkara Nilaya, 7th Main,<br />
                               Kumaraswamy Layout, 2nd Stage,<br />
                               Bengaluru, Karnataka - 560078
                             </p>
@@ -259,7 +259,7 @@ const ContactSection = () => {
                           <div>
                             <h4 className="font-medium text-sm text-primary mb-1">Office Address:</h4>
                             <p className="text-muted-foreground text-sm">
-                              #13, 2nd Floor, 10th Main, 6th Cross,<br />
+                              2nd Floor, 10th Main, 6th Cross,<br />
                               Kathriguppe IV Phase, Gururaja Layout,<br />
                               Banashankari, Bengaluru, Karnataka - 560070
                             </p>
