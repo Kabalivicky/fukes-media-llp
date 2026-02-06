@@ -117,7 +117,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: 'Email Us',
-      content: ['General: Fukesmedia@gmail.com', 'Business: Business@fukesmedia.com', 'Projects: projects@fukesmedia.com'],
+      content: ['General: Fukesmedia@gmail.com / info@fukesmedia.com', 'Business: Business@fukesmedia.com', 'Projects: projects@fukesmedia.com', 'Careers: hr@fukesmedia.com'],
       color: 'from-accent to-primary',
     },
     {
@@ -459,30 +459,34 @@ const Contact = () => {
         <LiquidReveal direction="up">
           <Card className="overflow-hidden border-border/50">
             <CardContent className="p-0">
-              <div className="h-80 bg-gradient-to-br from-card via-card/80 to-muted relative">
-                {/* Decorative grid */}
-                <div 
-                  className="absolute inset-0 opacity-10"
-                  style={{
-                    backgroundImage: 'linear-gradient(hsl(var(--primary) / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.3) 1px, transparent 1px)',
-                    backgroundSize: '50px 50px',
-                  }}
+              <div className="relative">
+                <iframe
+                  title="Fuke's Media Office Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6!2d77.5550!3d12.9200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBanashankari%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1700000000000"
+                  width="100%"
+                  height="400"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full"
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <motion.div
-                      className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-6">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="text-center sm:text-left">
+                      <h3 className="text-xl font-display font-bold">Visit Our Studio</h3>
+                      <p className="text-muted-foreground text-sm">Banashankari, Bengaluru, Karnataka</p>
+                    </div>
+                    <a
+                      href="https://www.google.com/maps/search/Kathriguppe+IV+Phase+Banashankari+Bengaluru+Karnataka+560070"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <MapPin className="h-10 w-10 text-primary" />
-                    </motion.div>
-                    <h3 className="text-2xl font-display font-bold mb-2">Visit Our Studio</h3>
-                    <p className="text-muted-foreground">Los Angeles Creative District</p>
-                    <Button variant="outline" className="mt-4">
-                      Get Directions
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
+                      <Button variant="outline" size="sm">
+                        Get Directions
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </a>
                   </div>
                 </div>
               </div>
