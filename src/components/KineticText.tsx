@@ -12,13 +12,14 @@ interface AnimatedLetterProps {
   children: string;
   className?: string;
   delay?: number;
+  style?: React.CSSProperties;
 }
 
 /**
  * Kinetic text animation - letters animate in with stagger effect
  * Inspired by award-winning typography from CSSDA winners
  */
-export const AnimatedLetters = ({ children, className = '', delay = 0 }: AnimatedLetterProps) => {
+export const AnimatedLetters = ({ children, className = '', delay = 0, style }: AnimatedLetterProps) => {
   const letters = children.split('');
 
   const containerVariants = {
@@ -56,7 +57,7 @@ export const AnimatedLetters = ({ children, className = '', delay = 0 }: Animate
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      style={{ perspective: '1000px' }}
+      style={{ perspective: '1000px', ...style }}
     >
       {letters.map((letter, index) => (
         <motion.span
