@@ -112,7 +112,7 @@ const HeroSection = () => {
             >
               <AnimatedLetters delay={0.3}>FUKE'S</AnimatedLetters>
               <br />
-              <AnimatedLetters delay={0.5} className="bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #C8102E, #0077B6, #00A651, #C8102E)' }}>MEDIA</AnimatedLetters>
+              <AnimatedLetters delay={0.5} className="tracking-normal bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #C8102E, #0077B6, #00A651, #C8102E)' }}>MEDIA</AnimatedLetters>
             </h1>
 
             <motion.p 
