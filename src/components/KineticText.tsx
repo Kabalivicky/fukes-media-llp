@@ -136,12 +136,15 @@ export const AnimatedWords = ({ children, className = '', delay = 0 }: AnimatedL
 export const GradientText = ({ children, className = '' }: KineticTextProps) => {
   return (
     <motion.span
-      className={`bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent bg-[length:200%_auto] ${className}`}
+      className={`bg-clip-text text-transparent bg-[length:200%_auto] ${className}`}
+      style={{
+        backgroundImage: 'linear-gradient(90deg, #C8102E, #0077B6, #00A651, #C8102E)',
+      }}
       animate={{
         backgroundPosition: ['0% center', '200% center'],
       }}
       transition={{
-        duration: 3,
+        duration: 4,
         repeat: Infinity,
         ease: 'linear',
       }}
