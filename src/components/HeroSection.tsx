@@ -7,6 +7,7 @@ import VisualGenerator from './AI/VisualGenerator';
 import { AnimatedLetters, AnimatedWords, GradientText } from './KineticText';
 import MarqueeText from './MarqueeText';
 import ScrollIndicator from './ScrollIndicator';
+import ProjectShowcaseStrip from './ProjectShowcaseStrip';
 
 const HeroSection = () => {
   const [showAIDemo, setShowAIDemo] = useState(false);
@@ -220,40 +221,13 @@ const HeroSection = () => {
         </motion.div>
       )}
 
-      {/* Scrolling Marquee - Inspired by Zeit Media */}
-      <div className="absolute bottom-0 left-0 right-0 py-6 border-t border-border/20 bg-background/50 backdrop-blur-sm">
-        <MarqueeText speed={25} className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
-          <span className="flex items-center gap-4">
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            Visual Effects
-          </span>
-          <span className="flex items-center gap-4">
-            <span className="w-2 h-2 rounded-full bg-secondary" />
-            AI Technology
-          </span>
-          <span className="flex items-center gap-4">
-            <span className="w-2 h-2 rounded-full bg-accent" />
-            Creative Excellence
-          </span>
-          <span className="flex items-center gap-4">
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            Neural Rendering
-          </span>
-          <span className="flex items-center gap-4">
-            <span className="w-2 h-2 rounded-full bg-secondary" />
-            Film Production
-          </span>
-          <span className="flex items-center gap-4">
-            <span className="w-2 h-2 rounded-full bg-accent" />
-            Award-Winning
-          </span>
-        </MarqueeText>
-      </div>
+      {/* Project Showcase Film Strip */}
+      <ProjectShowcaseStrip />
 
       {/* Scroll indicator */}
       <ScrollIndicator 
         targetId="services" 
-        className="absolute bottom-24 left-1/2 -translate-x-1/2" 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20" 
       />
     </section>
   );
