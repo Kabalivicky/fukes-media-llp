@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { Sparkles, Zap, Brain, Play, ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import VisualGenerator from './AI/VisualGenerator';
-import { AnimatedLetters, AnimatedWords, GradientText } from './KineticText';
+import { AnimatedLetters, AnimatedWords } from './KineticText';
 import MarqueeText from './MarqueeText';
 import ScrollIndicator from './ScrollIndicator';
 import ProjectShowcaseStrip from './ProjectShowcaseStrip';
@@ -112,11 +112,7 @@ const HeroSection = () => {
             >
               <AnimatedLetters delay={0.3}>FUKE'S</AnimatedLetters>
               <br />
-              <span className="relative inline-block">
-                <GradientText className="font-display">
-                  <AnimatedLetters delay={0.5}>MEDIA</AnimatedLetters>
-                </GradientText>
-              </span>
+              <AnimatedLetters delay={0.5} className="bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #C8102E, #0077B6, #00A651, #C8102E)' }}>MEDIA</AnimatedLetters>
             </h1>
 
             <motion.p 
