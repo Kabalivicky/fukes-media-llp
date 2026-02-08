@@ -51,22 +51,26 @@ export const AnimatedLetters = ({ children, className = '', delay = 0, style }: 
     },
   };
 
+  // Check if gradient text styles are being applied (bg-clip-text)
+  const isGradient = className.includes('bg-clip-text');
+
   return (
     <motion.span
-      className={`inline-block ${className}`}
+      className={`inline-block ${isGradient ? '' : className}`}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      style={{ perspective: '1000px', ...style }}
+      style={{ perspective: '1000px', ...(isGradient ? {} : style) }}
     >
       {letters.map((letter, index) => (
         <motion.span
           key={index}
           variants={letterVariants}
-          className="inline-block"
+          className={`inline-block ${isGradient ? className : ''}`}
           style={{ 
             transformStyle: 'preserve-3d',
             display: letter === ' ' ? 'inline' : 'inline-block',
+            ...(isGradient ? style : {}),
           }}
         >
           {letter === ' ' ? '\u00A0' : letter}
