@@ -7,7 +7,7 @@ import VisualGenerator from './AI/VisualGenerator';
 import { AnimatedLetters, AnimatedWords } from './KineticText';
 import MarqueeText from './MarqueeText';
 import ScrollIndicator from './ScrollIndicator';
-import ProjectShowcaseStrip from './ProjectShowcaseStrip';
+
 
 const HeroSection = () => {
   const [showAIDemo, setShowAIDemo] = useState(false);
@@ -217,8 +217,8 @@ const HeroSection = () => {
         </motion.div>
       )}
 
-      {/* Project Showcase Film Strip */}
-      <ProjectShowcaseStrip />
+
+
 
       {/* Scroll indicator */}
       <ScrollIndicator 
