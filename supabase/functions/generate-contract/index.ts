@@ -6,6 +6,11 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const MAX_TEXT_LENGTH = 500;
+const MAX_DESCRIPTION_LENGTH = 2000;
+const MAX_DELIVERABLES = 20;
+const MAX_CLAUSES = 10;
+
 interface ContractData {
   clientName: string;
   clientEmail: string;
@@ -23,31 +28,93 @@ interface ContractData {
   specialClauses: string[];
 }
 
+function validateContractData(data: ContractData): string | null {
+  if (!data.clientName || typeof data.clientName !== 'string' || data.clientName.length > MAX_TEXT_LENGTH) {
+    return `Client name is required and must be under ${MAX_TEXT_LENGTH} characters`;
+  }
+  if (!data.projectName || typeof data.projectName !== 'string' || data.projectName.length > MAX_TEXT_LENGTH) {
+    return `Project name is required and must be under ${MAX_TEXT_LENGTH} characters`;
+  }
+  if (!data.projectType || typeof data.projectType !== 'string' || data.projectType.length > MAX_TEXT_LENGTH) {
+    return `Project type is required and must be under ${MAX_TEXT_LENGTH} characters`;
+  }
+  if (data.projectDescription && data.projectDescription.length > MAX_DESCRIPTION_LENGTH) {
+    return `Project description must be under ${MAX_DESCRIPTION_LENGTH} characters`;
+  }
+  if (data.clientEmail && typeof data.clientEmail === 'string') {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (data.clientEmail.length > 0 && !emailRegex.test(data.clientEmail)) {
+      return 'Invalid email format';
+    }
+  }
+  if (data.totalAmount !== undefined && (typeof data.totalAmount !== 'number' || data.totalAmount < 0 || data.totalAmount > 100000000)) {
+    return 'Total amount must be a positive number';
+  }
+  if (data.revisionRounds !== undefined && (typeof data.revisionRounds !== 'number' || data.revisionRounds < 0 || data.revisionRounds > 100)) {
+    return 'Revision rounds must be between 0 and 100';
+  }
+  if (data.deliverables && (!Array.isArray(data.deliverables) || data.deliverables.length > MAX_DELIVERABLES)) {
+    return `Maximum ${MAX_DELIVERABLES} deliverables allowed`;
+  }
+  if (data.specialClauses && (!Array.isArray(data.specialClauses) || data.specialClauses.length > MAX_CLAUSES)) {
+    return `Maximum ${MAX_CLAUSES} special clauses allowed`;
+  }
+  // Validate individual array items
+  if (data.deliverables) {
+    for (const d of data.deliverables) {
+      if (typeof d !== 'string' || d.length > MAX_TEXT_LENGTH) {
+        return `Each deliverable must be a string under ${MAX_TEXT_LENGTH} characters`;
+      }
+    }
+  }
+  if (data.specialClauses) {
+    for (const c of data.specialClauses) {
+      if (typeof c !== 'string' || c.length > MAX_TEXT_LENGTH) {
+        return `Each clause must be a string under ${MAX_TEXT_LENGTH} characters`;
+      }
+    }
+  }
+  return null;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-    // Get user from auth header
+    // Require authentication
     const authHeader = req.headers.get('Authorization');
-    let userId = null;
-    
-    if (authHeader) {
-      const token = authHeader.replace('Bearer ', '');
-      const { data: { user } } = await supabase.auth.getUser(token);
-      userId = user?.id || null;
+    if (!authHeader?.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({ error: 'Authentication required' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+
+    const authSupabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const token = authHeader.replace('Bearer ', '');
+    const { data: claimsData, error: claimsError } = await authSupabase.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(JSON.stringify({ error: 'Invalid or expired session' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    const userId = claimsData.claims.sub;
     const contractData: ContractData = await req.json();
 
-    // Validate required fields
-    if (!contractData.clientName || !contractData.projectName || !contractData.projectType) {
-      throw new Error('Missing required contract fields');
+    // Validate input
+    const validationError = validateContractData(contractData);
+    if (validationError) {
+      return new Response(JSON.stringify({ error: validationError }), {
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
     // Generate contract terms using AI
@@ -66,17 +133,7 @@ serve(async (req) => {
           messages: [
             {
               role: 'system',
-              content: `You are a legal contract writer specializing in VFX and creative services contracts. Generate professional, legally-sound contract terms based on the provided details. Include standard clauses for:
-- Scope of work
-- Payment terms
-- Intellectual property rights
-- Revision policy
-- Confidentiality
-- Termination conditions
-- Force majeure
-- Dispute resolution
-
-Format the contract professionally with numbered sections.`
+              content: `You are a legal contract writer specializing in VFX and creative services contracts. Generate professional, legally-sound contract terms based on the provided details. Include standard clauses for scope of work, payment terms, intellectual property rights, revision policy, confidentiality, termination conditions, force majeure, and dispute resolution. Format the contract professionally with numbered sections.`
             },
             {
               role: 'user',
@@ -106,13 +163,13 @@ Format the contract professionally with numbered sections.`
       }
     }
 
-    // If AI generation failed, use a template
     if (!contractTerms) {
       contractTerms = generateFallbackContract(contractData);
     }
 
-    // Save contract to database
-    const { data: contract, error } = await supabase
+    const adminSupabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    const { data: contract, error } = await adminSupabase
       .from('contracts')
       .insert({
         user_id: userId,
@@ -138,25 +195,21 @@ Format the contract professionally with numbered sections.`
 
     if (error) {
       console.error('Database error:', error);
-      throw new Error('Failed to save contract');
+      return new Response(
+        JSON.stringify({ error: 'Failed to save contract. Please try again.' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        contract: contract,
-        contractTerms: contractTerms
-      }),
+      JSON.stringify({ success: true, contract, contractTerms }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
     console.error('Error generating contract:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
+      JSON.stringify({ error: 'An unexpected error occurred. Please try again later.' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });
