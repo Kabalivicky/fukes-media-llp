@@ -1,0 +1,22 @@
+
+INSERT INTO public.projects (title, description, client, category, year, image_url, featured, status, order_index) VALUES
+('Jailer', 'High-end VFX compositing, environment creation and CG integration for the blockbuster action film.', 'Sun Pictures', 'VFX', 2023, '/lovable-uploads/projects/jailer-new.jpg', true, 'completed', 1),
+('Kalki 2898 AD', 'Futuristic sci-fi VFX including environment creation, particle simulations and CG character integration.', 'Vyjayanthi Movies', 'VFX', 2024, '/lovable-uploads/projects/kalki-2898-ad-new.png', true, 'completed', 2),
+('Jawan', 'Action-packed VFX sequences with complex compositing, wire removal and environment extensions.', 'Red Chillies Entertainment', 'VFX', 2023, '/lovable-uploads/projects/jawan-new.png', true, 'completed', 3),
+('Leo', 'VFX compositing, color grading and digital intermediate for the action thriller.', 'Seven Screen Studio', 'VFX', 2023, '/lovable-uploads/projects/leo-new.jpg', false, 'completed', 4),
+('KGF Chapter 2', 'Massive-scale VFX work including environment creation, crowd simulation and destruction effects.', 'Hombale Films', 'VFX', 2022, '/lovable-uploads/projects/kgf-chapter-2-new.jpg', true, 'completed', 5),
+('Adipurush', 'Full CG character creation and VFX compositing for the mythological epic.', 'T-Series', 'VFX', 2023, '/lovable-uploads/projects/adipurush-new.png', false, 'completed', 6),
+('Indian 2', 'Complete digital intermediate, color grading and VFX integration for the sequel.', 'Lyca Productions', 'DI', 2024, '/lovable-uploads/projects/indian-2-new.png', false, 'completed', 7),
+('Salaar', 'VFX and post-production work for the action epic.', 'Hombale Films', 'VFX', 2023, '/lovable-uploads/projects/salaar.jpg', false, 'completed', 8),
+('Vikram', 'VFX compositing and environment extensions for the action thriller.', 'Raaj Kamal Films', 'VFX', 2022, '/lovable-uploads/projects/vikram.jpg', false, 'completed', 9),
+('Cobra', 'VFX and post-production for the action film.', 'Seven Screen Studio', 'VFX', 2022, '/lovable-uploads/projects/cobra-new.jpg', false, 'completed', 10),
+('Pushpa', 'VFX compositing and crowd simulation for the blockbuster.', 'Mythri Movie Makers', 'VFX', 2021, '/lovable-uploads/projects/pushpa.jpg', false, 'completed', 11),
+('Bheema', 'VFX and digital intermediate work.', NULL, 'VFX', 2022, '/lovable-uploads/projects/bheema-new.jpg', false, 'completed', 12),
+('Ek Villain Returns', 'VFX compositing and post-production.', 'Balaji Motion Pictures', 'VFX', 2022, '/lovable-uploads/projects/ek-villain-returns-new.jpg', false, 'completed', 13),
+('Acharya', 'VFX and post-production for the action drama.', 'Konidela Production Company', 'VFX', 2022, '/lovable-uploads/projects/acharya-new.jpg', false, 'completed', 14),
+('Bhagavanth Kesari', 'VFX compositing for the action film.', NULL, 'VFX', 2023, '/lovable-uploads/projects/bhagavanth-kesari.jpg', false, 'completed', 15),
+('Annapoorani', 'VFX and digital intermediate work.', NULL, 'VFX', 2023, '/lovable-uploads/projects/annapoorani.png', false, 'completed', 16),
+('Kushi', 'VFX compositing and post-production.', NULL, 'VFX', 2023, '/lovable-uploads/projects/kushi.jpg', false, 'completed', 17),
+('Thalaivi', 'VFX and digital intermediate for the biographical film.', NULL, 'DI', 2021, '/lovable-uploads/projects/thalaivi.png', false, 'completed', 18),
+('Mafia', 'VFX and post-production work.', NULL, 'VFX', 2020, '/lovable-uploads/projects/mafia.png', false, 'completed', 19),
+('Kick', 'VFX compositing and post-production.', NULL, 'VFX', 2020, '/lovable-uploads/projects/kick.png', false, 'completed', 20);
