@@ -1,60 +1,30 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useState, useRef } from 'react';
-import { Sparkles, Zap, Brain, Play, ArrowRight } from 'lucide-react';
+import { Play, ArrowRight, ChevronDown } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useTheme } from '@/components/ui/theme-provider';
 import VisualGenerator from './AI/VisualGenerator';
-import { AnimatedLetters, AnimatedWords } from './KineticText';
-import MarqueeText from './MarqueeText';
-import ScrollIndicator from './ScrollIndicator';
-
+import logoBlack from '@/assets/logo-black.png';
+import logoWhite from '@/assets/logo-white.png';
 
 const HeroSection = () => {
   const [showAIDemo, setShowAIDemo] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const { theme } = useTheme();
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start']
   });
   
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 250]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
 
-  // Stagger animation for feature cards
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.8,
-      },
-    },
-  };
+  const logoSrc = theme === 'dark' ? logoWhite : logoBlack;
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100,
-        damping: 15,
-      },
-    },
-  };
-
-  const features = [
-    { icon: Sparkles, title: 'AI Visual Generation', desc: 'Create stunning visuals with AI', color: 'text-primary' },
-    { icon: Brain, title: 'Emotion Detection', desc: 'Real-time facial analysis', color: 'text-secondary' },
-    { icon: Zap, title: 'Neural Rendering', desc: 'AI-optimized rendering', color: 'text-accent' },
-  ];
-  
   return (
     <section 
       ref={sectionRef} 
@@ -62,28 +32,47 @@ const HeroSection = () => {
       aria-labelledby="hero-heading"
       role="banner"
     >
-      {/* Atmospheric Background - Inspired by Uncommon Studio */}
+      {/* Gemini-style atmospheric background */}
       <div className="absolute inset-0 bg-background" aria-hidden="true" />
       
-      {/* Animated gradient orbs */}
+      {/* RGB Gradient Orbs - Gemini inspired */}
       <motion.div 
-        className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-gradient-radial from-primary/20 via-primary/5 to-transparent blur-3xl"
-        style={{ y: y1 }}
+        className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full opacity-30 blur-[100px]"
+        style={{ 
+          y: y1,
+          background: 'radial-gradient(circle, hsl(354 87% 50% / 0.6), transparent 70%)'
+        }}
+        animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.35, 0.2] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         aria-hidden="true"
       />
       <motion.div 
-        className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-radial from-secondary/15 via-secondary/5 to-transparent blur-3xl"
-        style={{ y: y2 }}
+        className="absolute top-1/4 -right-32 w-[450px] h-[450px] rounded-full opacity-30 blur-[100px]"
+        style={{ 
+          y: y2,
+          background: 'radial-gradient(circle, hsl(200 100% 45% / 0.6), transparent 70%)'
+        }}
+        animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.4, 0.25] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
         aria-hidden="true"
       />
       <motion.div 
-        className="absolute -bottom-20 left-1/3 w-[400px] h-[400px] rounded-full bg-gradient-radial from-accent/15 via-accent/5 to-transparent blur-3xl"
+        className="absolute bottom-1/4 left-1/4 w-[350px] h-[350px] rounded-full opacity-25 blur-[100px]"
+        style={{ 
+          background: 'radial-gradient(circle, hsl(150 100% 40% / 0.5), transparent 70%)'
+        }}
+        animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.3, 0.15] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
         aria-hidden="true"
       />
 
-      {/* Grid overlay for depth */}
+      {/* Subtle dot grid - Google Design style */}
       <div 
-        className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black_70%,transparent_100%)]"
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)',
+          backgroundSize: '32px 32px'
+        }}
         aria-hidden="true"
       />
 
@@ -92,112 +81,122 @@ const HeroSection = () => {
         className="container relative z-10 px-4 mx-auto w-full pt-24 pb-8" 
         style={{ opacity, scale }}
       >
-        <div className="text-center space-y-8 max-w-5xl mx-auto w-full">
+        <div className="text-center space-y-10 max-w-5xl mx-auto w-full">
           
-          {/* Kinetic Typography Hero - Award-winning style */}
-          <header className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border/50 bg-card/50 backdrop-blur-sm"
-            >
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-sm text-muted-foreground font-medium">Award-Winning VFX Studio</span>
-            </motion.div>
-
-            <h1 
-              id="hero-heading"
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-bold tracking-tighter leading-[0.9]"
-            >
-              <AnimatedLetters delay={0.3}>FUKE'S</AnimatedLetters>
-              <br />
-              <AnimatedLetters delay={0.5} className="tracking-normal bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #C8102E, #0077B6, #00A651, #C8102E)' }}>MEDIA</AnimatedLetters>
-            </h1>
-
-            <motion.p 
-              className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 font-body"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.6 }}
-            >
-              <AnimatedWords delay={1}>
-                We craft cinematic visual effects that push the boundaries of what's possible.
-              </AnimatedWords>
-            </motion.p>
-          </header>
-
-          {/* Feature Cards - Hover effects inspired by CSSDA winners */}
-          <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto w-full px-4 pt-4"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            role="list"
-            aria-label="Key features"
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-border/50 bg-card/60 backdrop-blur-xl shadow-material"
           >
-            {features.map((feature, index) => (
-              <motion.article 
-                key={index}
-                variants={cardVariants}
-                className="group relative p-6 rounded-xl bg-card/30 backdrop-blur-sm border border-border/50 text-center overflow-hidden transition-all duration-500 hover:border-primary/50 hover:bg-card/50"
-                role="listitem"
-                whileHover={{ y: -5 }}
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+            </span>
+            <span className="text-sm text-muted-foreground font-medium">End-to-End Visual Production Studio</span>
+          </motion.div>
+
+          {/* Logo - replacing text */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, duration: 0.8, type: 'spring', stiffness: 100 }}
+            className="flex justify-center"
+          >
+            <motion.img
+              src={logoSrc}
+              alt="Fuke's Media"
+              className="h-32 sm:h-40 md:h-48 lg:h-56 xl:h-64 w-auto object-contain"
+              id="hero-heading"
+              animate={{
+                filter: [
+                  'drop-shadow(0 0 20px hsl(354 87% 50% / 0.15))',
+                  'drop-shadow(0 0 30px hsl(200 100% 45% / 0.2))',
+                  'drop-shadow(0 0 25px hsl(150 100% 40% / 0.15))',
+                  'drop-shadow(0 0 20px hsl(354 87% 50% / 0.15))',
+                ]
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </motion.div>
+
+          {/* Tagline */}
+          <motion.p 
+            className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 font-body"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            Expert VFX & CGI at the Core — From graphic design and video editing to advanced VFX and CGI, we craft complete visual experiences for film, brand, television, and digital.
+          </motion.p>
+
+          {/* Stats Row - Google Material style */}
+          <motion.div 
+            className="grid grid-cols-3 max-w-2xl mx-auto gap-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.6 }}
+          >
+            {[
+              { value: '500+', label: 'Projects Completed' },
+              { value: '200+', label: 'Happy Clients' },
+              { value: '5+', label: 'Years of Excellence' },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                className="text-center p-4 rounded-2xl bg-card/40 backdrop-blur-sm border border-border/30"
+                whileHover={{ y: -4, boxShadow: '0 20px 40px -15px hsl(var(--foreground) / 0.1)' }}
+                transition={{ type: 'spring', stiffness: 300 }}
               >
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <feature.icon className={`w-8 h-8 mx-auto mb-4 ${feature.color} transition-transform duration-300 group-hover:scale-110`} aria-hidden="true" />
-                <h3 className="font-semibold text-base mb-2 font-display">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>
-              </motion.article>
+                <div className="text-2xl sm:text-3xl font-display font-bold gradient-text">{stat.value}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground mt-1">{stat.label}</div>
+              </motion.div>
             ))}
           </motion.div>
 
-          {/* CTA Buttons - Strong, clear calls to action */}
+          {/* CTA Buttons - Gemini style */}
           <motion.nav 
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4 pt-6"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4 pt-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.6 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
             aria-label="Get started actions"
           >
+            <Link to="/portfolio">
+              <Button 
+                size="lg" 
+                className="gradient-button group text-base px-8 py-6 rounded-full shadow-glow-blue w-full sm:w-auto"
+              >
+                <span className="flex items-center gap-2">
+                  View Portfolio
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Button>
+            </Link>
+
             <Link to="/contact">
               <Button 
-                size="xl" 
-                variant="cta"
-                className="group text-lg px-10 py-6 w-full sm:w-auto relative overflow-hidden"
-                aria-label="Start working with us"
+                size="lg" 
+                variant="outline" 
+                className="group text-base px-8 py-6 rounded-full border-2 w-full sm:w-auto hover:bg-card/80"
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  Work With Us
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </span>
+                Start a Project
+                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
 
             <Button 
               size="lg" 
-              variant="outline" 
-              className="group text-lg px-8 py-4 w-full sm:w-auto border-2" 
+              variant="ghost" 
+              className="group text-base px-6 py-4 rounded-full w-full sm:w-auto" 
               onClick={() => setShowAIDemo(!showAIDemo)}
               aria-expanded={showAIDemo}
               aria-controls="ai-demo-section"
             >
-              <Play className="w-5 h-5 mr-2 transition-transform group-hover:scale-110" />
+              <Play className="w-4 h-4 mr-2 transition-transform group-hover:scale-110" />
               {showAIDemo ? 'Hide Demo' : 'Try AI Demo'}
             </Button>
-
-            <Link to="/pricing">
-              <Button 
-                size="lg" 
-                variant="ghost" 
-                className="text-lg px-8 py-4 w-full sm:w-auto hover:text-primary"
-                aria-label="View our pricing plans"
-              >
-                View Pricing
-              </Button>
-            </Link>
           </motion.nav>
         </div>
       </motion.div>
@@ -217,14 +216,21 @@ const HeroSection = () => {
         </motion.div>
       )}
 
-
-
-
       {/* Scroll indicator */}
-      <ScrollIndicator 
-        targetId="services" 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20" 
-      />
+      <motion.div
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <button
+          onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+          className="flex flex-col items-center gap-2 text-muted-foreground/60 hover:text-muted-foreground transition-colors"
+          aria-label="Scroll to services"
+        >
+          <span className="text-xs tracking-widest uppercase">Explore</span>
+          <ChevronDown className="w-5 h-5" />
+        </button>
+      </motion.div>
     </section>
   );
 };

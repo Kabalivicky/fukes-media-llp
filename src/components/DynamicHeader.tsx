@@ -1,14 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
 import MegaMenu from './Navigation/MegaMenu';
-import AnimatedLogo from './AnimatedLogo';
 import MobileNav from './Navigation/MobileNav';
 import { Button } from './ui/button';
-import { Headset, User, LogOut, LayoutDashboard, FolderOpen, MessageCircle, BarChart3 } from 'lucide-react';
+import { Headset, User, LogOut, LayoutDashboard, FolderOpen, MessageCircle } from 'lucide-react';
 import ThemeToggle from './Navigation/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
 import NotificationBell from '@/components/Notifications/NotificationBell';
 import { GlobalSearch } from '@/components/Search/GlobalSearch';
+import { useTheme } from '@/components/ui/theme-provider';
+import logoBlack from '@/assets/logo-black.png';
+import logoWhite from '@/assets/logo-white.png';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,25 +23,17 @@ const DynamicHeader = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const { scrollY } = useScroll();
+  const { theme } = useTheme();
 
-  // Transform scroll position to visual properties
-  const backgroundOpacity = useTransform(scrollY, [0, 100], [0.6, 0.95]);
-  const blurAmount = useTransform(scrollY, [0, 100], [8, 20]);
-  const shadowOpacity = useTransform(scrollY, [0, 100], [0, 0.15]);
+  const backgroundOpacity = useTransform(scrollY, [0, 100], [0.7, 0.95]);
+  const blurAmount = useTransform(scrollY, [0, 100], [12, 24]);
+  const shadowOpacity = useTransform(scrollY, [0, 100], [0, 0.08]);
 
-  // Create motion templates for CSS values
-  const backdropFilter = useMotionTemplate`blur(${blurAmount}px)`;
-  const boxShadow = useMotionTemplate`0 4px 30px rgba(0, 0, 0, ${shadowOpacity})`;
+  const backdropFilter = useMotionTemplate`blur(${blurAmount}px) saturate(180%)`;
+  const boxShadow = useMotionTemplate`0 1px 3px rgba(0, 0, 0, ${shadowOpacity})`;
   const bgColor = useMotionTemplate`hsl(var(--background) / ${backgroundOpacity})`;
 
-  const handleGetStartedClick = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-      navigate('/#contact');
-    }
-  };
+  const logoSrc = theme === 'dark' ? logoWhite : logoBlack;
 
   const handleSignOut = async () => {
     await signOut();
@@ -47,50 +41,40 @@ const DynamicHeader = () => {
   };
 
   return (
-    <motion.header 
-      className="fixed top-0 left-0 right-0 z-50"
-      role="banner"
-    >
-      {/* Dynamic background layer */}
+    <motion.header className="fixed top-0 left-0 right-0 z-50" role="banner">
       <motion.div 
-        className="absolute inset-0 border-b border-border/20"
-        style={{
-          backgroundColor: bgColor,
-          backdropFilter,
-          boxShadow,
-        }}
+        className="absolute inset-0 border-b border-border/10"
+        style={{ backgroundColor: bgColor, backdropFilter, boxShadow }}
       />
       
-      {/* Gradient accent line at top */}
+      {/* RGB accent line */}
       <motion.div 
-        className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"
+        className="absolute top-0 left-0 right-0 h-[2px]"
+        style={{ background: 'linear-gradient(90deg, #C8102E, #0077B6, #00A651)' }}
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
       />
 
       <div className="container mx-auto px-4 relative z-10">
-        <nav 
-          className="flex items-center justify-between h-16"
-          aria-label="Main navigation"
-        >
-          {/* Logo & Branding - Left aligned */}
+        <nav className="flex items-center justify-between h-16" aria-label="Main navigation">
+          {/* Logo */}
           <motion.div 
-            className="flex items-center gap-3"
+            className="flex items-center"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
             <Link 
               to="/" 
-              className="flex items-center gap-3 hover:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
-              aria-label="Fuke's Media - Go to homepage"
+              className="flex items-center hover:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-ring rounded-md"
+              aria-label="Fuke's Media - Home"
             >
-              <AnimatedLogo size="sm" showGlow={false} withParticles={false} showStrip={false} />
+              <img src={logoSrc} alt="Fuke's Media" className="h-10 w-auto object-contain" />
             </Link>
           </motion.div>
           
-          {/* Desktop Navigation - Center */}
+          {/* Desktop Nav */}
           <motion.div 
             className="hidden lg:flex items-center justify-center flex-1 max-w-2xl mx-8"
             initial={{ opacity: 0, y: -10 }}
@@ -100,9 +84,9 @@ const DynamicHeader = () => {
             <MegaMenu />
           </motion.div>
           
-          {/* Action Buttons - Right aligned */}
+          {/* Actions */}
           <motion.div 
-            className="flex items-center gap-3" 
+            className="flex items-center gap-2" 
             role="group" 
             aria-label="User actions"
             initial={{ opacity: 0, x: 20 }}
@@ -112,23 +96,10 @@ const DynamicHeader = () => {
             <GlobalSearch />
             <ThemeToggle />
             
-            <Link to="/shop" className="hidden sm:block">
-              <Button variant="outline" size="sm" aria-label="Visit our shop">
-                Shop
-              </Button>
-            </Link>
-            
-            <Link to="/news" className="hidden sm:block">
-              <Button variant="ghost" size="sm" aria-label="Read industry news">
-                Industry News
-              </Button>
-            </Link>
-            
-            <Link to="/chat-assistant">
-              <Button size="sm" className="gradient-button" aria-label="Open AI Assistant chat">
-                <Headset className="mr-2 h-4 w-4" aria-hidden="true" />
-                <span className="hidden sm:inline">AI Assistant</span>
-                <span className="sm:hidden" aria-hidden="true">AI</span>
+            <Link to="/chat-assistant" className="hidden sm:block">
+              <Button size="sm" className="gradient-button rounded-full text-xs" aria-label="AI Assistant">
+                <Headset className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
+                <span className="hidden md:inline">AI Assistant</span>
               </Button>
             </Link>
             
@@ -137,63 +108,42 @@ const DynamicHeader = () => {
                 <NotificationBell />
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="flex items-center gap-2"
-                      aria-label="User menu"
-                      aria-haspopup="menu"
-                    >
+                    <Button variant="outline" size="sm" className="rounded-full" aria-label="User menu">
                       <User className="h-4 w-4" aria-hidden="true" />
-                      <span className="hidden sm:inline">
+                      <span className="hidden sm:inline ml-1.5">
                         {user.user_metadata?.display_name || user.email?.split('@')[0] || 'Account'}
                       </span>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuContent align="end" className="w-48 rounded-xl">
                     <DropdownMenuItem onClick={() => navigate('/dashboard')}>
-                      <LayoutDashboard className="mr-2 h-4 w-4" aria-hidden="true" />
-                      Dashboard
+                      <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => navigate('/messages')}>
-                      <MessageCircle className="mr-2 h-4 w-4" aria-hidden="true" />
-                      Messages
+                      <MessageCircle className="mr-2 h-4 w-4" /> Messages
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => navigate('/portfolio-manager')}>
-                      <FolderOpen className="mr-2 h-4 w-4" aria-hidden="true" />
-                      Portfolio
+                      <FolderOpen className="mr-2 h-4 w-4" /> Portfolio
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => navigate('/freelancer-portal')}>
-                      <User className="mr-2 h-4 w-4" aria-hidden="true" />
-                      Profile
+                      <User className="mr-2 h-4 w-4" /> Profile
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleSignOut}>
-                      <LogOut className="mr-2 h-4 w-4" aria-hidden="true" />
-                      Sign Out
+                      <LogOut className="mr-2 h-4 w-4" /> Sign Out
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </>
             ) : (
               <Link to="/auth">
-                <Button size="sm" variant="outline" aria-label="Sign in to your account">
-                  <User className="mr-2 h-4 w-4" aria-hidden="true" />
+                <Button size="sm" variant="outline" className="rounded-full" aria-label="Sign in">
+                  <User className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
                   <span className="hidden sm:inline">Sign In</span>
                 </Button>
               </Link>
             )}
             
-            <Button 
-              size="sm" 
-              className="gradient-button hidden md:flex"
-              onClick={handleGetStartedClick}
-              aria-label="Get started - scroll to contact section"
-            >
-              Get Started
-            </Button>
-            
-            {/* Mobile Navigation */}
             <div className="lg:hidden">
               <MobileNav />
             </div>
