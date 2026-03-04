@@ -25,9 +25,9 @@ const SectionWrapper = ({
 
   const variants = {
     default: 'bg-background',
-    dark: 'bg-card',
-    gradient: 'bg-gradient-to-b from-background via-card/50 to-background',
-    glass: 'bg-card/30 backdrop-blur-xl',
+    dark: 'bg-surface-elevated',
+    gradient: 'bg-gradient-to-b from-background via-surface-elevated/50 to-background',
+    glass: 'bg-surface-elevated/30 backdrop-blur-xl',
   };
 
   return (
@@ -45,7 +45,7 @@ const SectionWrapper = ({
       transition={{ duration: 0.6 }}
     >
       {withDivider && (
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
       )}
 
       <div className="container mx-auto px-4 relative z-10">
@@ -53,7 +53,7 @@ const SectionWrapper = ({
       </div>
 
       {withDivider && (
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
       )}
     </motion.section>
   );
