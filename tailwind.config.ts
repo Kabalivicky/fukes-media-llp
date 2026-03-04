@@ -58,16 +58,22 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				glow: {
+			glow: {
 					red: 'hsl(var(--glow-red))',
 					blue: 'hsl(var(--glow-blue))',
 					green: 'hsl(var(--glow-green))'
+				},
+				brand: {
+					red: '#C8102E',
+					blue: '#0077B6',
+					green: '#00A651',
 				},
 				surface: {
 					dim: 'hsl(var(--surface-dim))',
 					bright: 'hsl(var(--surface-bright))',
 					container: 'hsl(var(--surface-container))',
-					'container-high': 'hsl(var(--surface-container-high))'
+					'container-high': 'hsl(var(--surface-container-high))',
+					elevated: 'hsl(var(--surface-elevated))',
 				}
 			},
 			borderRadius: {

@@ -1,11 +1,6 @@
-
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
+  NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { Home, Palette, Users } from 'lucide-react';
@@ -21,11 +16,7 @@ const MegaMenu = () => {
   
   const handleNavigation = (path: string) => {
     if (path.includes('#')) {
-      handleAnchorClick(
-        { preventDefault: () => {} } as any,
-        path,
-        currentPath
-      );
+      handleAnchorClick({ preventDefault: () => {} } as any, path, currentPath);
     } else {
       navigate(path);
     }
@@ -34,57 +25,31 @@ const MegaMenu = () => {
   return (
     <NavigationMenu className="hidden lg:flex" aria-label="Main navigation">
       <NavigationMenuList>
-        {/* Home */}
         <NavigationMenuItem>
           <NavigationMenuLink 
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "cursor-pointer",
-              isLinkActive(currentPath, '/') ? "text-primary font-medium" : ""
-            )}
+            className={cn(navigationMenuTriggerStyle(), "cursor-pointer rounded-full", isLinkActive(currentPath, '/') ? "text-brand-red font-medium" : "")}
             onClick={() => handleNavigation('/')}
           >
-            <Home className="mr-2 h-4 w-4" />
-            Home
+            <Home className="mr-2 h-4 w-4" />Home
           </NavigationMenuLink>
         </NavigationMenuItem>
-
-        {/* About Dropdown */}
         <AboutDropdown />
-
-        {/* Services Dropdown */}
         <ServicesDropdown />
-
-        {/* Tools Dropdown */}
         <ToolsDropdown />
-
-        {/* Portfolio */}
         <NavigationMenuItem>
           <NavigationMenuLink 
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "cursor-pointer",
-              isLinkActive(currentPath, '/portfolio') ? "text-primary font-medium" : ""
-            )}
+            className={cn(navigationMenuTriggerStyle(), "cursor-pointer rounded-full", isLinkActive(currentPath, '/portfolio') ? "text-brand-red font-medium" : "")}
             onClick={() => handleNavigation('/portfolio')}
           >
-            <Palette className="mr-2 h-4 w-4" />
-            Portfolio
+            <Palette className="mr-2 h-4 w-4" />Portfolio
           </NavigationMenuLink>
         </NavigationMenuItem>
-        
-        {/* Contact */}
         <NavigationMenuItem>
           <NavigationMenuLink 
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "cursor-pointer",
-              isLinkActive(currentPath, '/#contact') ? "text-primary font-medium" : ""
-            )}
+            className={cn(navigationMenuTriggerStyle(), "cursor-pointer rounded-full", isLinkActive(currentPath, '/#contact') ? "text-brand-red font-medium" : "")}
             onClick={() => handleNavigation('/#contact')}
           >
-            <Users className="mr-2 h-4 w-4" />
-            Contact
+            <Users className="mr-2 h-4 w-4" />Contact
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
