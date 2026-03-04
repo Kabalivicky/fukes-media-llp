@@ -1,86 +1,78 @@
 import { useRef, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
 import ContactSection from '@/components/ContactSection';
 import SEOHelmet from '@/components/SEOHelmet';
 import SectionHeading from '@/components/SectionHeading';
-import AnimatedLogo from '@/components/AnimatedLogo';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import useScrollSync from '@/hooks/useScrollSync';
 import ScrollReveal from '@/components/ScrollReveal';
-import { ParallaxBackground, ParallaxLayer } from '@/components/ParallaxWrapper';
+import { Button } from '@/components/ui/button';
 
-// Lazy load heavy components for better initial load time
 const PricingCalculator = lazy(() => import('@/components/PricingCalculator'));
 const PortfolioSection = lazy(() => import('@/components/PortfolioSection'));
-const TeamSection = lazy(() => import('@/components/TeamSection/TeamPage'));
 const CareersSection = lazy(() => import('@/components/CareersSection'));
-const EnhancedModularInfo = lazy(() => import('@/components/EnhancedModularInfo'));
 
-// Lightweight section loader for lazy components
 const SectionLoader = ({ text = "Loading..." }: { text?: string }) => (
   <div className="h-96 flex items-center justify-center">
     <div className="flex flex-col items-center gap-4">
-      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-      <span className="text-muted-foreground text-sm animate-pulse">{text}</span>
+      <div className="w-8 h-8 border-2 border-secondary border-t-transparent rounded-full animate-spin" />
+      <span className="text-muted-foreground text-sm">{text}</span>
     </div>
   </div>
 );
 
 const Home = () => {
-  // Use our custom hook for scroll sync
-  useScrollSync({
-    offset: 80
-  });
+  useScrollSync({ offset: 80 });
 
-  // Create refs for the sections to scroll to
-  const sectionsRef = useRef<{
-    [key: string]: HTMLDivElement | null;
-  }>({
+  const sectionsRef = useRef<{ [key: string]: HTMLDivElement | null }>({
     services: null,
     portfolio: null,
-    team: null,
     careers: null,
     contact: null
   });
 
-  // Parallax scroll effects
-  const {
-    scrollY
-  } = useScroll();
-  const opacity = useTransform(scrollY, [0, 200, 300], [1, 0.5, 0]);
-
-  // SEO Structured Data
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Fuke's Media",
-    "url": "https://fukes-media.com",
+    "name": "Fuke's Media LLP",
+    "url": "https://fukesmedia.com",
     "logo": "/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png",
-    "description": "AI-Driven VFX & Creative Studio delivering exceptional visual effects and creative solutions",
-    "sameAs": ["https://twitter.com/fukesmedia", "https://www.linkedin.com/company/fukes-media", "https://www.instagram.com/fukesmedia"]
+    "description": "End-to-End Visual Production Studio — Expert VFX & CGI, Creative Services, Digital Intermediate, and Tech Innovation",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kathriguppe IV Phase, Banashankari",
+      "addressLocality": "Bengaluru",
+      "addressRegion": "Karnataka",
+      "postalCode": "560070",
+      "addressCountry": "IN"
+    },
+    "telephone": "+916362281003",
+    "email": "info@fukesmedia.com",
+    "sameAs": [
+      "https://www.instagram.com/fukes_media/",
+      "https://www.linkedin.com/company/fukesmedia/",
+      "https://x.com/FukesMedia",
+      "https://www.youtube.com/@FukesMedia"
+    ]
   };
-  return <>
-      <SEOHelmet title="Fuke's Media LLP - Award-Winning AI-Driven VFX Studio" description="Award-caliber VFX studio combining cutting-edge AI technology with creative excellence. We deliver cinematic visual effects, AI-assisted production, and innovative storytelling solutions." keywords="award-winning VFX, AI-driven visual effects, cinematic VFX, neural rendering, machine learning VFX, creative studio, film production, Fuke's Media, AI assistant" canonical="https://fukes-media.com" structuredData={structuredData} />
+
+  return (
+    <>
+      <SEOHelmet 
+        title="Fuke's Media LLP — End-to-End Visual Production Studio" 
+        description="Expert VFX & CGI at the Core. From graphic design and video editing to advanced VFX and CGI — we craft complete visual experiences for film, brand, television, and digital." 
+        keywords="VFX studio, CGI, visual effects, color grading, DI, motion graphics, 3D animation, post production, Fuke's Media" 
+        canonical="https://fukesmedia.com" 
+        structuredData={structuredData} 
+      />
 
       <div className="relative min-h-screen w-full text-foreground overflow-x-hidden">
-        
-        {/* Parallax Background Effects */}
-        <ParallaxBackground variant="orbs" className="z-0" />
-        <ParallaxBackground variant="lines" className="z-0 opacity-50" />
-        
-        {/* Main Content with Motion Effects */}
         <main id="main-content" className="relative z-10">
-          {/* Animated logo that follows scroll */}
-          <motion.div className="hidden md:block fixed top-20 right-[5%] z-10" style={{
-          opacity,
-          scale: useTransform(scrollY, [0, 300], [1, 0.8]),
-          willChange: 'transform, opacity'
-        }}>
-            <AnimatedLogo size="md" />
-          </motion.div>
-
+          
           <ErrorBoundary>
             <HeroSection />
           </ErrorBoundary>
@@ -93,114 +85,55 @@ const Home = () => {
             </ErrorBoundary>
           </div>
           
-          <ErrorBoundary>
-            <ScrollReveal animation="zoomIn" duration={0.8} delay={0.1}>
-              <Suspense fallback={<SectionLoader text="Loading content..." />}>
-                <EnhancedModularInfo />
-              </Suspense>
-            </ScrollReveal>
-          </ErrorBoundary>
-          
-          <ErrorBoundary>
-            <ScrollReveal animation="slideUp" duration={0.7}>
-              <Suspense fallback={<SectionLoader text="Loading calculator..." />}>
-                <PricingCalculator />
-              </Suspense>
-            </ScrollReveal>
-          </ErrorBoundary>
-          
           <div id="portfolio" ref={el => sectionsRef.current.portfolio = el}>
             <ErrorBoundary>
-              <ScrollReveal animation="fadeLeft" duration={0.8}>
+              <ScrollReveal animation="fadeUp" duration={0.8}>
                 <Suspense fallback={<SectionLoader text="Loading portfolio..." />}>
                   <PortfolioSection />
                 </Suspense>
               </ScrollReveal>
             </ErrorBoundary>
           </div>
-          
-          {/* Featured Content & Awards Section */}
+
+          {/* CTA Section */}
           <ErrorBoundary>
-            <ScrollReveal animation="blur" duration={0.9}>
-              <section className="py-20 px-4 bg-muted/20 relative overflow-hidden">
-                {/* Parallax decorative elements */}
-                <ParallaxLayer depth={2} className="absolute -top-20 -left-20 w-40 h-40">
-                  <div className="w-full h-full rounded-full bg-primary/10 blur-3xl" />
-                </ParallaxLayer>
-                <ParallaxLayer depth={3} className="absolute top-1/2 -right-32 w-64 h-64">
-                  <div className="w-full h-full rounded-full bg-accent/10 blur-3xl" />
-                </ParallaxLayer>
-                
-                <div className="container mx-auto relative z-10">
-                  <SectionHeading title="Excellence in VFX" subtitle="Recognition from industry leaders and creative festivals worldwide" />
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
-                    
-                    <ParallaxLayer depth={1}>
-                      <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-secondary/20 hover:border-secondary/40 transition-colors" whileHover={{
-                      scale: 1.05
-                    }} transition={{
-                      type: "spring",
-                      stiffness: 300
-                    }}>
-                        <div className="text-4xl font-display font-bold text-secondary mb-2">500+</div>
-                        <p className="text-muted-foreground font-medium">Projects Completed</p>
-                        <p className="text-xs text-muted-foreground mt-1">Global Reach</p>
-                      </motion.div>
-                    </ParallaxLayer>
-                    <ParallaxLayer depth={1.5}>
-                      <motion.div className="text-center p-6 rounded-lg bg-card/50 border border-accent/20 hover:border-accent/40 transition-colors" whileHover={{
-                      scale: 1.05
-                    }} transition={{
-                      type: "spring",
-                      stiffness: 300
-                    }}>
-                        <div className="text-4xl font-display font-bold text-accent mb-2">98%</div>
-                        <p className="text-muted-foreground font-medium">Client Satisfaction</p>
-                        <p className="text-xs text-muted-foreground mt-1">Proven Excellence</p>
-                      </motion.div>
-                    </ParallaxLayer>
+            <ScrollReveal animation="fadeUp" duration={0.7}>
+              <section className="section-padding relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/[0.02] to-transparent pointer-events-none" />
+                <div className="container mx-auto px-4 relative z-10">
+                  <SectionHeading 
+                    title="Ready to Create Something Extraordinary?" 
+                    subtitle="Let's collaborate to bring your vision to life with cutting-edge VFX and post-production"
+                  />
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10">
+                    <Link to="/contact">
+                      <Button size="lg" className="gradient-button rounded-full px-10 text-base">
+                        Get in Touch
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </Link>
+                    <Link to="/pricing">
+                      <Button size="lg" variant="outline" className="rounded-full px-10 text-base">
+                        View Pricing
+                      </Button>
+                    </Link>
                   </div>
-                  
-                  {/* Client Testimonials Carousel */}
-                  <ScrollReveal animation="fadeRight" delay={0.2} duration={0.7}>
-                    <div className="mt-16 max-w-4xl mx-auto">
-                      <div className="text-center">
-                        <h3 className="text-2xl font-display font-bold mb-8">What Industry Leaders Say</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div className="p-6 bg-card rounded-lg border border-border/50">
-                            <p className="text-muted-foreground italic mb-4">
-                              "Fuke's Media's AI-driven approach revolutionized our post-production workflow. Their innovation is unmatched."
-                            </p>
-                            <div className="flex items-center">
-                              <div className="w-12 h-12 bg-primary/20 rounded-full mr-3" />
-                              <div>
-                                <p className="font-semibold">Sarah Chen</p>
-                                <p className="text-sm text-muted-foreground">Director, Quantum Films</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </ScrollReveal>
                 </div>
               </section>
             </ScrollReveal>
           </ErrorBoundary>
           
-          <div id="team" ref={el => sectionsRef.current.team = el}>
-            <ErrorBoundary>
-              <ScrollReveal animation="fadeUp" duration={0.7}>
-                <Suspense fallback={<SectionLoader text="Loading team..." />}>
-                  <TeamSection />
-                </Suspense>
-              </ScrollReveal>
-            </ErrorBoundary>
-          </div>
+          <ErrorBoundary>
+            <ScrollReveal animation="fadeUp" duration={0.7}>
+              <Suspense fallback={<SectionLoader text="Loading calculator..." />}>
+                <PricingCalculator />
+              </Suspense>
+            </ScrollReveal>
+          </ErrorBoundary>
           
           <div id="careers" ref={el => sectionsRef.current.careers = el}>
             <ErrorBoundary>
-              <ScrollReveal animation="zoomIn" duration={0.8}>
+              <ScrollReveal animation="fadeUp" duration={0.8}>
                 <Suspense fallback={<SectionLoader text="Loading careers..." />}>
                   <CareersSection />
                 </Suspense>
@@ -208,18 +141,17 @@ const Home = () => {
             </ErrorBoundary>
           </div>
           
-          
           <div id="contact" ref={el => sectionsRef.current.contact = el}>
             <ErrorBoundary>
-              <ScrollReveal animation="slideUp" duration={0.7}>
+              <ScrollReveal animation="fadeUp" duration={0.7}>
                 <ContactSection />
               </ScrollReveal>
             </ErrorBoundary>
           </div>
-          
-          {/* Progress indicator removed - using global ScrollPercentageIndicator */}
         </main>
       </div>
-    </>;
+    </>
+  );
 };
+
 export default Home;
