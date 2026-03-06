@@ -2,47 +2,65 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Film, Palette, MonitorPlay, Cpu } from 'lucide-react';
+import { ArrowRight, Scissors, Camera, Layers, Mountain, Eye, Cpu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SectionHeading from './SectionHeading';
 import SectionWrapper from './SectionWrapper';
 
 const services = [
   {
-    id: 'vfx',
-    name: 'CGI & VFX Solutions',
-    description: '2D & 3D Compositing, Rotoscoping & Clean-up, Digital Matte Painting, 3D Modeling & Animation, Simulation & FX, Match Move & Tracking',
-    icon: Film,
+    id: 'roto',
+    name: 'Rotoscopy & Paint',
+    description: 'Precise isolation. Edge integrity. Hair-level detail.',
+    icon: Scissors,
     color: 'text-primary',
     glowClass: 'shadow-glow-red',
-    features: ['2D & 3D Compositing', 'Rotoscoping & Clean-up', 'Digital Matte Painting', '3D Modeling & Animation', 'Simulation & FX', 'Match Move & Tracking'],
+    features: ['Frame-accurate isolation', 'Edge refinement', 'Hair & fine detail', 'Paint & clean-up', 'Roto-prep for comp', 'Batch pipeline delivery'],
   },
   {
-    id: 'creative',
-    name: 'Creative Services',
-    description: 'Graphic Design, Logo Design, Poster Design, Motion Posters, MGFX, Lyrical Video, Video Editing, Title Sequence Design, Motion Graphics, Podcast, Digital Marketing',
-    icon: Palette,
+    id: 'matchmove',
+    name: 'Matchmove & Body Tracking',
+    description: 'Camera reconstruction, 3D tracking, CG integration.',
+    icon: Camera,
     color: 'text-secondary',
     glowClass: 'shadow-glow-blue',
-    features: ['Graphic & Logo Design', 'Motion Posters & MGFX', 'Video Editing', 'Title Sequence Design', 'Motion Graphics', 'Digital Marketing'],
+    features: ['Camera solve & reconstruction', '3D object tracking', 'Body & face tracking', 'Survey data integration', 'Lens distortion solve', 'CG element alignment'],
   },
   {
-    id: 'di',
-    name: 'Digital Intermediate DI',
-    description: 'Basic & Advanced Colour Grading, HDR Grading, Look Development, VFX Supervision during DI, Final Delivery Masters, Quality Control',
-    icon: MonitorPlay,
+    id: 'compositing',
+    name: '3D Compositing',
+    description: 'Physically accurate integration. Light matching. Depth realism.',
+    icon: Layers,
     color: 'text-accent',
     glowClass: 'shadow-glow-green',
-    features: ['Basic & Advanced Colour Grading', 'HDR Grading', 'Look Development', 'VFX Supervision during DI', 'Final Delivery Masters', 'Quality Control'],
+    features: ['Multi-pass rendering', 'Light & shadow matching', 'Depth integration', 'Atmospheric effects', 'Color consistency', 'Final pixel delivery'],
   },
   {
-    id: 'tech',
-    name: 'Tech Innovation',
-    description: 'AI-Assisted Workflows, Custom Pipeline Development, Automation Solutions, Cloud Rendering, Real-time Collaboration Tools, Asset Management Systems',
-    icon: Cpu,
+    id: 'matte',
+    name: 'Matte Painting',
+    description: 'Production-scale environments, not static wallpapers.',
+    icon: Mountain,
+    color: 'text-primary',
+    glowClass: 'shadow-glow-red',
+    features: ['Set extensions', 'Full CG environments', '2.5D projections', 'Sky replacements', 'Period & world building', 'Camera-ready assets'],
+  },
+  {
+    id: 'previs',
+    name: 'Previsualization',
+    description: 'Shot planning to reduce on-set confusion and post chaos.',
+    icon: Eye,
     color: 'text-secondary',
     glowClass: 'shadow-glow-blue',
-    features: ['AI-Assisted Workflows', 'Custom Pipeline Development', 'Automation Solutions', 'Cloud Rendering', 'Real-time Collaboration', 'Asset Management Systems'],
+    features: ['Shot planning', 'Camera blocking', 'Action choreography', 'VFX shot design', 'Director communication', 'Budget forecasting'],
+  },
+  {
+    id: 'ai',
+    name: 'AI-Enhanced Workflow',
+    description: 'Controlled AI usage integrated into production pipelines — not random automation.',
+    icon: Cpu,
+    color: 'text-accent',
+    glowClass: 'shadow-glow-green',
+    features: ['AI-assisted roto', 'Automated QC checks', 'Smart batch processing', 'Pipeline automation', 'Version control', 'Asset tracking systems'],
   },
 ];
 
@@ -52,13 +70,13 @@ const ServicesSection = () => {
   return (
     <SectionWrapper id="services" variant="gradient" withDivider>
       <SectionHeading
-        title="Our Expertise"
-        subtitle="From concept to final render, we deliver world-class visual storytelling"
-        badge="What We Do"
+        title="Our Departments"
+        subtitle="Structured execution across every VFX discipline — no vague deliverables"
+        badge="What We Execute"
         align="center"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {services.map((service, index) => {
           const Icon = service.icon;
           const isHovered = hoveredIndex === index;
@@ -70,7 +88,7 @@ const ServicesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ 
-                delay: index * 0.1, 
+                delay: index * 0.08, 
                 duration: 0.5,
                 type: 'spring',
                 stiffness: 100,
@@ -79,7 +97,6 @@ const ServicesSection = () => {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <Card className={`group relative h-full overflow-hidden rounded-2xl border-border/30 bg-card/50 backdrop-blur-sm transition-all duration-500 hover:border-secondary/40 hover:-translate-y-2 ${isHovered ? service.glowClass : ''}`}>
-                {/* Gradient overlay on hover */}
                 <motion.div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
@@ -87,25 +104,25 @@ const ServicesSection = () => {
                   }}
                 />
 
-                <CardHeader className="relative z-10 pb-4">
-                  <div className="flex items-start justify-between mb-4">
+                <CardHeader className="relative z-10 pb-3">
+                  <div className="flex items-start mb-3">
                     <motion.div
-                      className={`p-3.5 rounded-2xl bg-muted/50 ${service.color}`}
+                      className={`p-3 rounded-2xl bg-muted/50 ${service.color}`}
                       animate={isHovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
                       transition={{ type: 'spring', stiffness: 400 }}
                     >
-                      <Icon className="w-7 h-7" />
+                      <Icon className="w-6 h-6" />
                     </motion.div>
                   </div>
                   
-                  <CardTitle className="text-xl md:text-2xl font-display group-hover:text-secondary transition-colors">
+                  <CardTitle className="text-lg md:text-xl font-display group-hover:text-secondary transition-colors">
                     {service.name}
                   </CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">{service.description}</p>
                 </CardHeader>
 
                 <CardContent className="relative z-10 pt-0">
-                  {/* Features grid */}
-                  <div className="grid grid-cols-2 gap-2 mb-6">
+                  <div className="space-y-1.5 mb-4">
                     {service.features.map((feature, idx) => (
                       <motion.div
                         key={idx}
@@ -123,9 +140,9 @@ const ServicesSection = () => {
                   <Link to={`/services#${service.id}`}>
                     <Button 
                       variant="ghost" 
-                      className="group/btn w-full justify-between hover:bg-muted/50 rounded-xl"
+                      className="group/btn w-full justify-between hover:bg-muted/50 rounded-xl text-sm"
                     >
-                      <span>Learn More</span>
+                      <span>View Details</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-2" />
                     </Button>
                   </Link>
@@ -137,7 +154,7 @@ const ServicesSection = () => {
       </div>
 
       <motion.div
-        className="text-center mt-16"
+        className="text-center mt-12"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -145,7 +162,7 @@ const ServicesSection = () => {
       >
         <Link to="/services">
           <Button size="lg" className="gradient-button group text-base px-10 rounded-full">
-            <span>Explore All Services</span>
+            <span>Full Service Breakdown</span>
             <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
           </Button>
         </Link>

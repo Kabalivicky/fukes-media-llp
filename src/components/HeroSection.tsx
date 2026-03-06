@@ -1,15 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { useState, useRef } from 'react';
-import { Play, ArrowRight, ChevronDown } from 'lucide-react';
+import { useRef } from 'react';
+import { ArrowRight, ChevronDown, FileText, Calculator } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTheme } from '@/components/ui/theme-provider';
-import VisualGenerator from './AI/VisualGenerator';
 import logoBlack from '@/assets/logo-black.png';
 import logoWhite from '@/assets/logo-white.png';
 
 const HeroSection = () => {
-  const [showAIDemo, setShowAIDemo] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const { theme } = useTheme();
   
@@ -32,43 +30,43 @@ const HeroSection = () => {
       aria-labelledby="hero-heading"
       role="banner"
     >
-      {/* Gemini-style atmospheric background */}
+      {/* Dark matte background */}
       <div className="absolute inset-0 bg-background" aria-hidden="true" />
       
-      {/* RGB Gradient Orbs - Gemini inspired */}
+      {/* Subtle RGB line accents */}
       <motion.div 
-        className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full opacity-30 blur-[100px]"
+        className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full opacity-20 blur-[120px]"
         style={{ 
           y: y1,
-          background: 'radial-gradient(circle, hsl(354 87% 50% / 0.6), transparent 70%)'
+          background: 'radial-gradient(circle, hsl(354 87% 50% / 0.4), transparent 70%)'
         }}
-        animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.35, 0.2] }}
+        animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.25, 0.15] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         aria-hidden="true"
       />
       <motion.div 
-        className="absolute top-1/4 -right-32 w-[450px] h-[450px] rounded-full opacity-30 blur-[100px]"
+        className="absolute top-1/4 -right-32 w-[450px] h-[450px] rounded-full opacity-20 blur-[120px]"
         style={{ 
           y: y2,
-          background: 'radial-gradient(circle, hsl(200 100% 45% / 0.6), transparent 70%)'
+          background: 'radial-gradient(circle, hsl(200 100% 45% / 0.4), transparent 70%)'
         }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.4, 0.25] }}
+        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.3, 0.2] }}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
         aria-hidden="true"
       />
       <motion.div 
-        className="absolute bottom-1/4 left-1/4 w-[350px] h-[350px] rounded-full opacity-25 blur-[100px]"
+        className="absolute bottom-1/4 left-1/4 w-[350px] h-[350px] rounded-full opacity-15 blur-[120px]"
         style={{ 
-          background: 'radial-gradient(circle, hsl(150 100% 40% / 0.5), transparent 70%)'
+          background: 'radial-gradient(circle, hsl(150 100% 40% / 0.3), transparent 70%)'
         }}
-        animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.3, 0.15] }}
+        animate={{ scale: [1, 1.08, 1], opacity: [0.1, 0.2, 0.1] }}
         transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
         aria-hidden="true"
       />
 
-      {/* Subtle dot grid - Google Design style */}
+      {/* Geometric dot grid */}
       <div 
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage: 'radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)',
           backgroundSize: '32px 32px'
@@ -81,140 +79,103 @@ const HeroSection = () => {
         className="container relative z-10 px-4 mx-auto w-full pt-24 pb-8" 
         style={{ opacity, scale }}
       >
-        <div className="text-center space-y-10 max-w-5xl mx-auto w-full">
+        <div className="text-center space-y-8 max-w-5xl mx-auto w-full">
           
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-border/50 bg-card/60 backdrop-blur-xl shadow-material"
-          >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
-            </span>
-            <span className="text-sm text-muted-foreground font-medium">End-to-End Visual Production Studio</span>
-          </motion.div>
-
-          {/* Logo - replacing text */}
+          {/* Logo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.8, type: 'spring', stiffness: 100 }}
+            transition={{ delay: 0.2, duration: 0.8, type: 'spring', stiffness: 100 }}
             className="flex justify-center"
           >
-            <motion.img
+            <img
               src={logoSrc}
-              alt="Fuke's Media"
-              className="h-32 sm:h-40 md:h-48 lg:h-56 xl:h-64 w-auto object-contain"
-              id="hero-heading"
-              animate={{
-                filter: [
-                  'drop-shadow(0 0 20px hsl(354 87% 50% / 0.15))',
-                  'drop-shadow(0 0 30px hsl(200 100% 45% / 0.2))',
-                  'drop-shadow(0 0 25px hsl(150 100% 40% / 0.15))',
-                  'drop-shadow(0 0 20px hsl(354 87% 50% / 0.15))',
-                ]
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              alt="Fuke's Media LLP"
+              className="h-20 sm:h-24 md:h-28 w-auto object-contain"
             />
           </motion.div>
 
-          {/* Tagline */}
-          <motion.p 
-            className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 font-body"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-          >
-            Expert VFX & CGI at the Core — From graphic design and video editing to advanced VFX and CGI, we craft complete visual experiences for film, brand, television, and digital.
-          </motion.p>
-
-          {/* Stats Row - Google Material style */}
-          <motion.div 
-            className="grid grid-cols-3 max-w-2xl mx-auto gap-6"
+          {/* Headline — sharp, geometric, high contrast */}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
+            transition={{ delay: 0.4, duration: 0.7 }}
+          >
+            <h1 id="hero-heading" className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
+              Production-Ready VFX.
+              <br />
+              <span className="gradient-text">No Pipeline Chaos.</span>
+              <br />
+              <span className="text-muted-foreground/80">No Budget Surprises.</span>
+            </h1>
+          </motion.div>
+
+          {/* Subtext */}
+          <motion.p 
+            className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 font-body"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+          >
+            We build disciplined VFX systems for films, OTT, advertising, and television — with transparent costing, structured delivery, and zero production drama.
+          </motion.p>
+
+          {/* Stats Row */}
+          <motion.div 
+            className="grid grid-cols-3 max-w-xl mx-auto gap-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
           >
             {[
-              { value: '500+', label: 'Projects Completed' },
-              { value: '200+', label: 'Happy Clients' },
-              { value: '5+', label: 'Years of Excellence' },
+              { value: '500+', label: 'Shots Delivered' },
+              { value: '50+', label: 'Productions' },
+              { value: '5+', label: 'Years' },
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                className="text-center p-4 rounded-2xl bg-card/40 backdrop-blur-sm border border-border/30"
-                whileHover={{ y: -4, boxShadow: '0 20px 40px -15px hsl(var(--foreground) / 0.1)' }}
+                className="text-center p-3 rounded-2xl bg-card/40 backdrop-blur-sm border border-border/30"
+                whileHover={{ y: -2 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
-                <div className="text-2xl sm:text-3xl font-display font-bold gradient-text">{stat.value}</div>
-                <div className="text-xs sm:text-sm text-muted-foreground mt-1">{stat.label}</div>
+                <div className="text-xl sm:text-2xl font-display font-bold gradient-text">{stat.value}</div>
+                <div className="text-xs text-muted-foreground mt-0.5">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* CTA Buttons - Gemini style */}
+          {/* CTA Buttons — Producer language */}
           <motion.nav 
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4 pt-4"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4 pt-2"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
+            transition={{ delay: 1.1, duration: 0.6 }}
             aria-label="Get started actions"
           >
-            <Link to="/portfolio">
+            <Link to="/contact">
               <Button 
                 size="lg" 
                 className="gradient-button group text-base px-8 py-6 rounded-full shadow-glow-blue w-full sm:w-auto"
               >
-                <span className="flex items-center gap-2">
-                  View Portfolio
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </span>
+                <FileText className="w-4 h-4 mr-2" />
+                Request Project Breakdown
+                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
 
-            <Link to="/contact">
+            <Link to="/pricing">
               <Button 
                 size="lg" 
                 variant="outline" 
                 className="group text-base px-8 py-6 rounded-full border-2 w-full sm:w-auto hover:bg-card/80"
               >
-                Start a Project
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                <Calculator className="w-4 h-4 mr-2" />
+                Get Shot-Level Estimate
               </Button>
             </Link>
-
-            <Button 
-              size="lg" 
-              variant="ghost" 
-              className="group text-base px-6 py-4 rounded-full w-full sm:w-auto" 
-              onClick={() => setShowAIDemo(!showAIDemo)}
-              aria-expanded={showAIDemo}
-              aria-controls="ai-demo-section"
-            >
-              <Play className="w-4 h-4 mr-2 transition-transform group-hover:scale-110" />
-              {showAIDemo ? 'Hide Demo' : 'Try AI Demo'}
-            </Button>
           </motion.nav>
         </div>
       </motion.div>
-
-      {/* AI Demo Section */}
-      {showAIDemo && (
-        <motion.div 
-          id="ai-demo-section"
-          className="container relative z-10 px-4 py-8 w-full max-w-6xl mx-auto"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          role="region"
-          aria-label="AI Visual Generator Demo"
-        >
-          <VisualGenerator />
-        </motion.div>
-      )}
 
       {/* Scroll indicator */}
       <motion.div

@@ -1,16 +1,18 @@
 import { useRef, lazy, Suspense } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, FileText, Shield, Clock, Crosshair, AlertTriangle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
 import ContactSection from '@/components/ContactSection';
 import SEOHelmet from '@/components/SEOHelmet';
 import SectionHeading from '@/components/SectionHeading';
+import SectionWrapper from '@/components/SectionWrapper';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import useScrollSync from '@/hooks/useScrollSync';
 import ScrollReveal from '@/components/ScrollReveal';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
 const PricingCalculator = lazy(() => import('@/components/PricingCalculator'));
 const PortfolioSection = lazy(() => import('@/components/PortfolioSection'));
@@ -24,6 +26,20 @@ const SectionLoader = ({ text = "Loading..." }: { text?: string }) => (
     </div>
   </div>
 );
+
+const processSteps = [
+  { step: '01', icon: FileText, title: 'Script & Shot Breakdown', description: 'We break cost per shot, not per vague assumption.' },
+  { step: '02', icon: Crosshair, title: 'Pipeline Mapping', description: 'Department allocation, version control, asset flow clarity.' },
+  { step: '03', icon: Clock, title: 'Milestone Delivery', description: 'Fixed review cycles. Structured revisions.' },
+  { step: '04', icon: Shield, title: 'Final Integration', description: 'Color pipeline integrity, render verification, delivery compliance.' },
+];
+
+const painPoints = [
+  'Why cheap VFX always costs more',
+  'Why 80% of revisions happen before shot planning',
+  'Why flashy reels hide pipeline weaknesses',
+  'Why unclear briefs destroy budgets',
+];
 
 const Home = () => {
   useScrollSync({ offset: 80 });
@@ -41,10 +57,9 @@ const Home = () => {
     "name": "Fuke's Media LLP",
     "url": "https://fukesmedia.com",
     "logo": "/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png",
-    "description": "End-to-End Visual Production Studio — Expert VFX & CGI, Creative Services, Digital Intermediate, and Tech Innovation",
+    "description": "Production-ready VFX studio with disciplined pipeline execution, transparent per-shot costing, and structured delivery.",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Kathriguppe IV Phase, Banashankari",
       "addressLocality": "Bengaluru",
       "addressRegion": "Karnataka",
       "postalCode": "560070",
@@ -52,20 +67,14 @@ const Home = () => {
     },
     "telephone": "+916362281003",
     "email": "info@fukesmedia.com",
-    "sameAs": [
-      "https://www.instagram.com/fukes_media/",
-      "https://www.linkedin.com/company/fukesmedia/",
-      "https://x.com/FukesMedia",
-      "https://www.youtube.com/@FukesMedia"
-    ]
   };
 
   return (
     <>
       <SEOHelmet 
-        title="Fuke's Media LLP — End-to-End Visual Production Studio" 
-        description="Expert VFX & CGI at the Core. From graphic design and video editing to advanced VFX and CGI — we craft complete visual experiences for film, brand, television, and digital." 
-        keywords="VFX studio, CGI, visual effects, color grading, DI, motion graphics, 3D animation, post production, Fuke's Media" 
+        title="Fuke's Media LLP — Production-Ready VFX. No Pipeline Chaos." 
+        description="Disciplined VFX systems for films, OTT, advertising, and television. Transparent per-shot costing, structured delivery, zero production drama." 
+        keywords="VFX studio India, production VFX, per-shot costing, disciplined pipeline, post production Bengaluru, transparent VFX pricing" 
         canonical="https://fukesmedia.com" 
         structuredData={structuredData} 
       />
@@ -76,6 +85,83 @@ const Home = () => {
           <ErrorBoundary>
             <HeroSection />
           </ErrorBoundary>
+
+          {/* Pain Point Statement */}
+          <ErrorBoundary>
+            <ScrollReveal animation="fadeUp" duration={0.7}>
+              <SectionWrapper variant="dark">
+                <div className="max-w-4xl mx-auto text-center">
+                  <motion.div
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-red/20 bg-brand-red/5 mb-8"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                  >
+                    <AlertTriangle className="w-4 h-4 text-brand-red" />
+                    <span className="text-sm font-medium text-brand-red">Industry Reality Check</span>
+                  </motion.div>
+                  
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {painPoints.map((point, i) => (
+                      <motion.div
+                        key={i}
+                        className="p-4 rounded-2xl bg-surface-elevated/50 border border-border/30 text-left"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.1 }}
+                      >
+                        <p className="text-muted-foreground text-sm">{point}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                  
+                  <motion.p
+                    className="text-lg text-muted-foreground mt-8"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    We exist because these problems shouldn't.
+                  </motion.p>
+                </div>
+              </SectionWrapper>
+            </ScrollReveal>
+          </ErrorBoundary>
+
+          {/* Process Section — The Differentiator */}
+          <ErrorBoundary>
+            <ScrollReveal animation="fadeUp" duration={0.7}>
+              <SectionWrapper variant="gradient" withDivider>
+                <SectionHeading 
+                  title="Our Discipline" 
+                  subtitle="Four steps. No chaos. No surprises." 
+                  badge="Process"
+                />
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                  {processSteps.map((step, index) => (
+                    <motion.div
+                      key={step.step}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Card className="h-full border-border/30 bg-surface-elevated/50 backdrop-blur-sm rounded-2xl hover:-translate-y-1 transition-transform">
+                        <CardContent className="p-6">
+                          <div className="font-display text-3xl font-bold gradient-text mb-3">{step.step}</div>
+                          <step.icon className="w-5 h-5 text-brand-red mb-2" />
+                          <h3 className="text-lg font-display font-bold mb-2">{step.title}</h3>
+                          <p className="text-sm text-muted-foreground">{step.description}</p>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </SectionWrapper>
+            </ScrollReveal>
+          </ErrorBoundary>
           
           <div id="services" ref={el => sectionsRef.current.services = el}>
             <ErrorBoundary>
@@ -84,6 +170,50 @@ const Home = () => {
               </ScrollReveal>
             </ErrorBoundary>
           </div>
+
+          {/* Pricing Philosophy */}
+          <ErrorBoundary>
+            <ScrollReveal animation="fadeUp" duration={0.7}>
+              <SectionWrapper variant="dark" withDivider>
+                <div className="max-w-3xl mx-auto text-center">
+                  <SectionHeading 
+                    title="Pricing Philosophy" 
+                    subtitle="We do not quote randomly." 
+                    badge="Transparency"
+                  />
+                  <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                    {[
+                      'Per-frame costing available',
+                      'Shot complexity matrix',
+                      'Transparent revision limits',
+                      'No hidden billing',
+                    ].map((item, i) => (
+                      <motion.div
+                        key={i}
+                        className="flex items-center gap-3 p-4 rounded-2xl bg-surface-elevated/50 border border-border/30"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.1 }}
+                      >
+                        <Shield className="w-4 h-4 text-brand-green flex-shrink-0" />
+                        <span className="text-sm font-medium">{item}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground text-sm italic mb-6">
+                    "If a producer wants cheap and chaotic, we're not the right studio."
+                  </p>
+                  <Link to="/pricing">
+                    <Button size="lg" className="gradient-button rounded-full px-10 text-base">
+                      Get Shot-Level Estimate
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+                </div>
+              </SectionWrapper>
+            </ScrollReveal>
+          </ErrorBoundary>
           
           <div id="portfolio" ref={el => sectionsRef.current.portfolio = el}>
             <ErrorBoundary>
@@ -95,26 +225,26 @@ const Home = () => {
             </ErrorBoundary>
           </div>
 
-          {/* CTA Section */}
+          {/* CTA */}
           <ErrorBoundary>
             <ScrollReveal animation="fadeUp" duration={0.7}>
               <section className="section-padding relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/[0.02] to-transparent pointer-events-none" />
                 <div className="container mx-auto px-4 relative z-10">
                   <SectionHeading 
-                    title="Ready to Create Something Extraordinary?" 
-                    subtitle="Let's collaborate to bring your vision to life with cutting-edge VFX and post-production"
+                    title="Ready for Predictable VFX?" 
+                    subtitle="Get a shot-level breakdown with transparent costing. No vague assumptions."
                   />
                   <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10">
                     <Link to="/contact">
                       <Button size="lg" className="gradient-button rounded-full px-10 text-base">
-                        Get in Touch
+                        Request Project Breakdown
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
                     </Link>
                     <Link to="/pricing">
                       <Button size="lg" variant="outline" className="rounded-full px-10 text-base">
-                        View Pricing
+                        Shot-Level Calculator
                       </Button>
                     </Link>
                   </div>

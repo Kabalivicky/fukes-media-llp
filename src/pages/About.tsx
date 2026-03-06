@@ -5,7 +5,7 @@ import SectionHeading from '@/components/SectionHeading';
 import SEOHelmet from '@/components/SEOHelmet';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, Zap, Globe, Award, Users, Lightbulb, Target, Heart, ArrowRight } from 'lucide-react';
+import { Zap, Target, Shield, Clock, ArrowRight, Crosshair } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -20,25 +20,25 @@ const About = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 60]);
 
   const values = [
-    { icon: Lightbulb, title: 'Innovation First', description: 'Pioneering AI-driven workflows that redefine what\'s possible in visual effects.', gradient: 'from-brand-red to-brand-blue' },
-    { icon: Target, title: 'Precision Excellence', description: 'Meticulous attention to every frame, every pixel, every detail.', gradient: 'from-brand-blue to-brand-green' },
-    { icon: Users, title: 'Global Collaboration', description: 'A distributed network of world-class talent working seamlessly across borders.', gradient: 'from-brand-green to-brand-red' },
-    { icon: Heart, title: 'Client Partnership', description: 'Your vision is our mission. We succeed when you succeed.', gradient: 'from-brand-red to-brand-green' },
+    { icon: Target, title: 'Pipeline Discipline', description: 'Department allocation, version control, asset flow clarity — not creative chaos.', gradient: 'from-brand-red to-brand-blue' },
+    { icon: Shield, title: 'Cost Transparency', description: 'Per-shot costing. Transparent revision limits. No hidden billing. Ever.', gradient: 'from-brand-blue to-brand-green' },
+    { icon: Clock, title: 'Predictable Delivery', description: 'Fixed review cycles. Milestone-based handoffs. Structured revisions.', gradient: 'from-brand-green to-brand-red' },
+    { icon: Crosshair, title: 'Execution Focus', description: 'We don\'t chase trends. We build execution systems that deliver under pressure.', gradient: 'from-brand-red to-brand-green' },
   ];
 
   const milestones = [
-    { year: '2020', event: 'Founded in Bengaluru', description: 'Started with a vision to democratize VFX' },
-    { year: '2021', event: 'AI Integration', description: 'Launched AI-assisted production pipeline' },
-    { year: '2022', event: 'Global Expansion', description: 'Expanded client base internationally' },
-    { year: '2023', event: '100+ Projects', description: 'Delivered over 100 feature films & shows' },
-    { year: '2024', event: 'Industry Recognition', description: 'Multiple international awards & partnerships' },
+    { year: '2020', event: 'Founded in Bengaluru', description: 'Started as a production-focused VFX unit' },
+    { year: '2022', event: 'Pipeline Maturity', description: 'Structured shot-level costing & milestone delivery' },
+    { year: '2023', event: '50+ Productions', description: 'Films, OTT, television, and advertising' },
+    { year: '2024', event: 'AI Pipeline Integration', description: 'AI-assisted roto, previs, and QC workflows' },
+    { year: '2025', event: 'LLP Registration', description: 'Fuke\'s Media LLP — structured for scale' },
   ];
 
   const stats = [
-    { value: '500+', label: 'Projects Delivered' },
-    { value: '50+', label: 'Global Clients' },
-    { value: '15+', label: 'Industry Awards' },
-    { value: '98%', label: 'Client Satisfaction' },
+    { value: '500+', label: 'Shots Delivered' },
+    { value: '50+', label: 'Productions' },
+    { value: '5+', label: 'Years' },
+    { value: '0', label: 'Hidden Costs' },
   ];
 
   const structuredData = {
@@ -46,38 +46,42 @@ const About = () => {
     "@type": "Organization",
     "name": "Fuke's Media LLP",
     "url": "https://fukesmedia.com",
-    "description": "AI-driven VFX studio revolutionizing post-production",
+    "description": "Production-ready VFX studio with disciplined pipeline execution and transparent costing",
     "foundingDate": "2020",
-    "founder": { "@type": "Person", "name": "Vikram Arjun" }
+    "founder": [
+      { "@type": "Person", "name": "Vikram A." },
+      { "@type": "Person", "name": "Arjun" },
+      { "@type": "Person", "name": "Harshith" },
+      { "@type": "Person", "name": "Sai Prasad" },
+      { "@type": "Person", "name": "Vignesh" },
+    ]
   };
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-foreground overflow-hidden">
       <SEOHelmet
-        title="About Us | Fuke's Media - AI-Driven VFX & Creative Studio"
-        description="Learn about Fuke's Media, an AI-driven VFX studio revolutionizing post-production in the film and entertainment industry."
-        keywords="VFX studio, visual effects company, AI VFX, creative studio, film production"
+        title="About Fuke's Media LLP — Production-Discipline VFX Studio"
+        description="Fuke's Media LLP is a Bengaluru-based VFX studio built on pipeline discipline, transparent costing, and structured delivery for films, OTT, and advertising."
+        keywords="VFX studio Bengaluru, production VFX, transparent VFX costing, disciplined pipeline, post production India"
         canonical="https://fukesmedia.com/about"
         structuredData={structuredData}
       />
 
       {/* Hero */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
-        {/* RGB Orbs */}
-        <motion.div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-brand-red/15 blur-[100px]" style={{ y: y1 }} />
-        <motion.div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] rounded-full bg-brand-blue/15 blur-[100px]" style={{ y: y2 }} />
-        <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-brand-green/10 blur-[80px]" animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 6, repeat: Infinity }} />
+        <motion.div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-brand-red/10 blur-[120px]" style={{ y: y1 }} />
+        <motion.div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] rounded-full bg-brand-blue/10 blur-[120px]" style={{ y: y2 }} />
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <Badge className="mb-6 px-5 py-2.5 bg-surface-elevated border-border/50 text-foreground rounded-full">
-              <Sparkles className="w-4 h-4 mr-2 text-brand-red" />
-              Pioneering AI-Driven VFX
+              <Zap className="w-4 h-4 mr-2 text-brand-red" />
+              Production Discipline, Not Showreels
             </Badge>
           </motion.div>
 
           <motion.h1
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
+            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1]"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
@@ -92,48 +96,56 @@ const About = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            Revolutionizing visual effects through the seamless fusion of artificial intelligence and artistic mastery
+            A Bengaluru-based VFX and post-production studio founded by five partners driven by production discipline, not showreels.
           </motion.p>
         </div>
       </section>
 
-      {/* Vision & Mission */}
+      {/* Origin */}
       <SectionWrapper variant="gradient" withDivider>
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div className="space-y-8" initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <SectionHeading title="Our Vision" badge="The Future" align="left" size="lg" />
+          <motion.div className="space-y-6" initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <SectionHeading title="We Build Execution Systems" badge="Our Story" align="left" size="lg" />
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Fuke's Media is pioneering the integration of artificial intelligence with traditional VFX techniques 
-              to revolutionize post-production in the film and entertainment industry. We combine cutting-edge 
-              technology with artistic excellence to deliver unparalleled visual experiences.
+              Started in 2020. Structured as an LLP in 2025. From day one, we focused on the parts of VFX that 
+              producers actually care about — cost predictability, pipeline discipline, and on-time delivery.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Our vision is to make Hollywood-quality VFX accessible to productions of all sizes, democratizing 
-              visual effects while maintaining the highest standards of quality and creativity.
+              We don't chase trends. We don't sell "creative storytelling." We build VFX execution systems 
+              for Indian film producers, ad agencies, OTT platforms, television studios, and indie directors 
+              who need certainty under pressure.
             </p>
+            <div className="flex flex-wrap gap-2 pt-2">
+              {['Rotoscopy & Paint', 'Matchmove', '3D Compositing', 'Matte Painting', 'Previs', 'AI Pipelines'].map((tag) => (
+                <Badge key={tag} variant="secondary" className="bg-surface-elevated rounded-full px-4 py-1.5 text-sm">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}>
             <Card className="relative overflow-hidden border-border/30 bg-surface-elevated/50 backdrop-blur-xl rounded-3xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-red/5 via-brand-blue/5 to-brand-green/5" />
-              <CardContent className="p-8 relative">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 rounded-2xl bg-gradient-to-br from-brand-blue to-brand-green">
-                    <Zap className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-display font-bold">Our Mission</h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  To democratize high-quality VFX by leveraging AI-powered tools, a distributed global talent 
-                  network, and innovative pricing models. We're committed to pushing the boundaries of what's 
-                  possible while making cutting-edge visual effects accessible to all.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {['AI-Powered', 'Global Network', 'Transparent Pricing'].map((tag) => (
-                    <Badge key={tag} variant="secondary" className="bg-surface-elevated rounded-full px-4 py-1.5">
-                      {tag}
-                    </Badge>
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-red/5 via-transparent to-brand-green/5" />
+              <CardContent className="p-8 relative space-y-6">
+                <h3 className="text-2xl font-display font-bold">What We're Not</h3>
+                <ul className="space-y-3 text-muted-foreground">
+                  {[
+                    'We\'re not a "creative storytelling studio"',
+                    'We don\'t quote randomly',
+                    'We don\'t hide costs in revision loops',
+                    'We don\'t promise cheap and deliver chaos',
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-red mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
                   ))}
+                </ul>
+                <div className="pt-2 border-t border-border/30">
+                  <p className="text-sm text-muted-foreground italic">
+                    "If a producer wants cheap and chaotic, we're not the right studio."
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -164,7 +176,7 @@ const About = () => {
 
       {/* Values */}
       <SectionWrapper withDivider>
-        <SectionHeading title="Our Values" subtitle="The principles that guide everything we do" badge="Core Values" />
+        <SectionHeading title="Our Operating Principles" subtitle="What drives every shot we deliver" badge="Discipline" />
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {values.map((value, index) => (
             <motion.div
@@ -190,7 +202,7 @@ const About = () => {
 
       {/* Journey Timeline */}
       <SectionWrapper variant="gradient" withDivider>
-        <SectionHeading title="Our Journey" subtitle="From a small studio to a global VFX powerhouse" badge="Timeline" />
+        <SectionHeading title="Our Journey" subtitle="From a small studio to a structured production unit" badge="Timeline" />
         <div className="max-w-4xl mx-auto relative">
           <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-red via-brand-blue to-brand-green" />
           {milestones.map((milestone, index) => (
@@ -221,16 +233,6 @@ const About = () => {
       {/* CTA */}
       <SectionWrapper variant="dark">
         <div className="text-center max-w-3xl mx-auto">
-          <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border/30 bg-surface-elevated/50 mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <Award className="w-4 h-4 text-brand-red" />
-            <span className="text-sm font-medium">Award-Winning Studio</span>
-          </motion.div>
-
           <motion.h2
             className="font-display text-4xl md:text-5xl font-bold mb-6"
             initial={{ opacity: 0, y: 20 }}
@@ -238,7 +240,7 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            Ready to Create <span className="gradient-text">Something Extraordinary</span>?
+            Ready for <span className="gradient-text">Predictable VFX</span>?
           </motion.h2>
 
           <motion.p
@@ -248,8 +250,7 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            Join the growing list of filmmakers and studios who trust Fuke's Media 
-            for their most ambitious visual effects projects.
+            Get a shot-level breakdown with transparent costing. No vague assumptions.
           </motion.p>
 
           <motion.div
@@ -261,12 +262,12 @@ const About = () => {
           >
             <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-brand-red to-brand-blue hover:opacity-90 text-white text-lg px-8 shadow-lg">
               <Link to="/contact">
-                Start Your Project
+                Request Project Breakdown
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="rounded-full text-lg px-8 border-border/50">
-              <Link to="/portfolio">View Our Work</Link>
+              <Link to="/pricing">Shot-Level Estimate</Link>
             </Button>
           </motion.div>
         </div>
