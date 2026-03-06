@@ -82,8 +82,8 @@ const PortfolioSection = () => {
               onMouseLeave={() => setHoveredId(null)}
             >
               <Card className="group relative overflow-hidden border-border/30 bg-surface-elevated/30 backdrop-blur-sm h-full rounded-3xl hover:shadow-2xl hover:shadow-brand-red/5 transition-all duration-500 hover:-translate-y-1">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
-                  <OptimizedImage src={project.image} alt={project.title} placeholder="shimmer" aspectRatio="4/3" hoverScale={hoveredId === project.id ? 1.08 : 1} />
+                <div className="relative aspect-[2/3] overflow-hidden rounded-t-3xl">
+                  <OptimizedImage src={project.image} alt={project.title} placeholder="shimmer" aspectRatio="2/3" hoverScale={hoveredId === project.id ? 1.08 : 1} />
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"
                     initial={{ opacity: 0.3 }}
