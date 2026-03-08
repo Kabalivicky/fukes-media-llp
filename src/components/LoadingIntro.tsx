@@ -199,23 +199,27 @@ const LoadingIntro = () => {
             />
 
             {/* The circular logo image */}
-            <motion.img
-              src={logoCircle}
-              alt="Fuke's Media"
-              className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 object-contain relative z-10"
+            <motion.div
+              className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full overflow-hidden relative z-10"
               style={{
-                filter: `drop-shadow(0 0 40px ${brandColors.red}60) drop-shadow(0 0 60px ${brandColors.blue}40) drop-shadow(0 0 80px ${brandColors.green}30)`,
+                boxShadow: `0 0 40px ${brandColors.red}60, 0 0 60px ${brandColors.blue}40, 0 0 80px ${brandColors.green}30`,
               }}
               animate={{
-                filter: [
-                  `drop-shadow(0 0 30px ${brandColors.red}60) drop-shadow(0 0 50px ${brandColors.blue}30)`,
-                  `drop-shadow(0 0 30px ${brandColors.blue}60) drop-shadow(0 0 50px ${brandColors.green}30)`,
-                  `drop-shadow(0 0 30px ${brandColors.green}60) drop-shadow(0 0 50px ${brandColors.red}30)`,
-                  `drop-shadow(0 0 30px ${brandColors.red}60) drop-shadow(0 0 50px ${brandColors.blue}30)`,
+                boxShadow: [
+                  `0 0 30px ${brandColors.red}60, 0 0 50px ${brandColors.blue}30`,
+                  `0 0 30px ${brandColors.blue}60, 0 0 50px ${brandColors.green}30`,
+                  `0 0 30px ${brandColors.green}60, 0 0 50px ${brandColors.red}30`,
+                  `0 0 30px ${brandColors.red}60, 0 0 50px ${brandColors.blue}30`,
                 ],
               }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            />
+            >
+              <img
+                src={logoCircle}
+                alt="Fuke's Media"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
 
             {/* Tagline */}
             <motion.p
