@@ -1,6 +1,6 @@
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Film, Code, Palette } from 'lucide-react';
+import { Film, Code, Palette, Scissors, SunMedium, Globe, Video } from 'lucide-react';
 import {
   NavigationMenuContent,
   NavigationMenuItem,
@@ -39,37 +39,24 @@ const ServicesDropdown = () => {
         </NavigationMenuTrigger>
       </div>
       <NavigationMenuContent>
-        <ul className="grid w-[500px] gap-3 p-6 md:grid-cols-2 lg:w-[600px]">
-          <ListItem 
-            href="/services" 
-            title="VFX Services" 
-            icon={<Film className="mr-2 h-4 w-4" />}
-          >
-            Industry-leading visual effects for film, television, and digital media
+        <ul className="grid w-[600px] gap-3 p-6 md:grid-cols-2 lg:w-[700px]">
+          <ListItem href="/services#roto" title="CGI & VFX" icon={<Scissors className="mr-2 h-4 w-4" />}>
+            Rotoscopy, compositing, matchmove, matte painting, FX & simulations
           </ListItem>
-          
-          <ListItem 
-            href="/services" 
-            title="AI Integration" 
-            icon={<Code className="mr-2 h-4 w-4" />}
-          >
-            Cutting-edge AI solutions for content creation and automation
+          <ListItem href="/services#concept-art" title="Creative Services" icon={<Palette className="mr-2 h-4 w-4" />}>
+            Concept art, storyboarding, motion graphics, art direction
           </ListItem>
-          
-          <ListItem 
-            href="/services" 
-            title="Production Support" 
-            icon={<Film className="mr-2 h-4 w-4" />}
-          >
-            Comprehensive production services from pre to post
+          <ListItem href="/services#film-editing" title="Editing & Post" icon={<Video className="mr-2 h-4 w-4" />}>
+            Film editing, showreels, promos, sound design, voiceover
           </ListItem>
-          
-          <ListItem 
-            href="/services" 
-            title="Creative Direction" 
-            icon={<Palette className="mr-2 h-4 w-4" />}
-          >
-            Expert creative guidance to bring your vision to life
+          <ListItem href="/services#color-grading" title="Digital Intermediate" icon={<SunMedium className="mr-2 h-4 w-4" />}>
+            Color grading, conforming, mastering, HDR/SDR deliverables
+          </ListItem>
+          <ListItem href="/services#ai" title="AI & Innovation" icon={<Code className="mr-2 h-4 w-4" />}>
+            AI workflows, virtual production, cloud pipelines
+          </ListItem>
+          <ListItem href="/services#virtual-production" title="Virtual Production" icon={<Globe className="mr-2 h-4 w-4" />}>
+            LED walls, real-time rendering, in-camera VFX
           </ListItem>
         </ul>
       </NavigationMenuContent>
