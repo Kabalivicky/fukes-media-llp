@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Scissors, Camera, Layers, Mountain, Eye, Cpu, Film, Video, Music, PenTool, SunMedium, Globe, Wand2, Cloud, Clapperboard } from 'lucide-react';
+import { ArrowRight, Scissors, Camera, Layers, Mountain, Eye, Cpu, Film, Video, Music, PenTool, SunMedium, Globe, Wand2, Cloud, Clapperboard, Crown, Megaphone, Instagram, Smartphone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SectionHeading from './SectionHeading';
 import SectionWrapper from './SectionWrapper';
