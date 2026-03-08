@@ -100,9 +100,9 @@ const ContactForm = () => {
 
   return (
     <SectionWrapper withDivider>
-      <div className="grid lg:grid-cols-5 gap-12">
+      <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
         {/* Stats & Quick Actions */}
-        <aside className="lg:col-span-2 space-y-8" aria-label="Why choose us">
+        <aside className="lg:col-span-2 space-y-6 lg:sticky lg:top-24" aria-label="Why choose us">
           <SectionHeading
             title="Why Choose Us?"
             badge="Stats"
@@ -110,7 +110,7 @@ const ContactForm = () => {
             size="md"
           />
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-4">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -120,7 +120,7 @@ const ContactForm = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="font-display text-3xl font-bold text-primary mb-1">
+                <div className="font-display text-2xl font-bold text-primary mb-1">
                   {stat.value}
                 </div>
                 <p className="text-xs text-muted-foreground">{stat.label}</p>
@@ -130,16 +130,16 @@ const ContactForm = () => {
 
           {/* Priority CTA Card */}
           <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <Zap className="w-6 h-6 text-primary" />
-                <h3 className="font-display font-bold text-lg">Quick Response</h3>
+            <CardContent className="p-5">
+              <div className="flex items-center gap-3 mb-3">
+                <Zap className="w-5 h-5 text-primary" />
+                <h3 className="font-display font-bold text-base">Quick Response</h3>
               </div>
               <p className="text-muted-foreground text-sm mb-4">
                 For urgent projects, use our priority contact line. We guarantee a response within 2 hours during business hours.
               </p>
-              <div className="flex flex-col gap-3">
-                <Button variant="cta" size="lg" className="w-full" asChild>
+              <div className="flex flex-col gap-2">
+                <Button variant="cta" size="default" className="w-full" asChild>
                   <a href="tel:+916362281003">
                     <PhoneCall className="w-4 h-4 mr-2" />
                     Call Now — Free Consultation
