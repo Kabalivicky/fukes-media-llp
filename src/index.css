@@ -301,6 +301,25 @@
     transform-style: preserve-3d;
   }
 
+  .shadow-glow-red {
+    box-shadow: 0 10px 40px -10px hsl(var(--primary) / 0.3);
+  }
+
+  .shadow-glow-blue {
+    box-shadow: 0 10px 40px -10px hsl(var(--secondary) / 0.3);
+  }
+
+  .shadow-glow-green {
+    box-shadow: 0 10px 40px -10px hsl(var(--accent) / 0.3);
+  }
+
+  .shadow-depth {
+    box-shadow: 
+      0 2px 4px hsl(var(--foreground) / 0.04),
+      0 8px 16px hsl(var(--foreground) / 0.06),
+      0 24px 48px hsl(var(--foreground) / 0.08);
+  }
+
   /* ============ INTERACTIVE EFFECTS ============ */
 
   .hover-lift {
