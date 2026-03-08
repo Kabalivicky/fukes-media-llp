@@ -4,7 +4,7 @@ import SectionHeading from '@/components/SectionHeading';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Check, Scissors, Camera, Layers, Mountain, Eye, Cpu, FileText, Shield, Clock, Crosshair, Palette, Film, Tv, Wand2, MonitorPlay, Sparkles, Video, Music, Mic, PenTool, Clapperboard, SunMedium, Zap, Globe, Cloud, Server, Box } from 'lucide-react';
+import { ArrowRight, Check, Scissors, Camera, Layers, Mountain, Eye, Cpu, FileText, Shield, Clock, Crosshair, Palette, Film, Tv, Wand2, MonitorPlay, Sparkles, Video, Music, Mic, PenTool, Clapperboard, SunMedium, Zap, Globe, Cloud, Server, Box, Megaphone, Share2, Instagram, Smartphone, Target, Bookmark, LayoutGrid, Type, Crown, Brush, Aperture, Radio } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEOHelmet from '@/components/SEOHelmet';
 
