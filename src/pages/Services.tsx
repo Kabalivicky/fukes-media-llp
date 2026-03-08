@@ -4,7 +4,7 @@ import SectionHeading from '@/components/SectionHeading';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Check, Scissors, Camera, Layers, Mountain, Eye, Cpu, FileText, Shield, Clock, Crosshair, Palette, Film, Tv, Wand2, MonitorPlay, Sparkles, Video, Music, Mic, PenTool, Clapperboard, SunMedium, Zap, Globe, Cloud, Server, Box } from 'lucide-react';
+import { ArrowRight, Check, Scissors, Camera, Layers, Mountain, Eye, Cpu, FileText, Shield, Clock, Crosshair, Palette, Film, Tv, Wand2, MonitorPlay, Sparkles, Video, Music, Mic, PenTool, Clapperboard, SunMedium, Zap, Globe, Cloud, Server, Box, Megaphone, Share2, Instagram, Smartphone, Target, Bookmark, LayoutGrid, Type, Crown, Brush, Aperture, Radio } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEOHelmet from '@/components/SEOHelmet';
 
@@ -61,6 +61,36 @@ const Services = () => {
         { id: "virtual-production", title: "Virtual Production", description: "LED walls, real-time rendering, and in-camera VFX.", icon: Globe, features: ["LED volume setup", "Real-time rendering", "In-camera VFX", "Unreal Engine integration", "Virtual scouting", "Techvis & stage planning"], gradient: "from-brand-red to-brand-blue" },
         { id: "cloud-pipeline", title: "Cloud Pipeline & Infra", description: "Scalable cloud rendering, storage, and remote collaboration.", icon: Cloud, features: ["Cloud rendering farms", "Remote artist setup", "Secure file transfer", "Collaborative review tools", "Scalable infrastructure", "Pipeline consulting"], gradient: "from-brand-blue to-brand-green" },
         { id: "pipeline-dev", title: "Pipeline Development", description: "Custom tools, automation scripts, and studio pipeline design.", icon: Server, features: ["Custom tool development", "Shotgrid integration", "Automation scripts", "Render management", "Asset management", "Studio pipeline design"], gradient: "from-brand-green to-brand-red" },
+      ],
+    },
+    {
+      category: "Branding & Identity",
+      description: "Build a visual identity that commands recognition and trust",
+      services: [
+        { id: "brand-strategy", title: "Brand Strategy & Identity", description: "Core brand positioning, voice, and visual identity systems.", icon: Crown, features: ["Brand positioning", "Mission & vision crafting", "Brand voice guidelines", "Visual identity system", "Brand book creation", "Competitive analysis"], gradient: "from-brand-red to-brand-blue" },
+        { id: "logo-design", title: "Logo & Mark Design", description: "Distinctive logos, wordmarks, and brand marks that stand out.", icon: Brush, features: ["Logo design & variations", "Wordmark & monogram", "Icon & symbol design", "Color palette definition", "Typography selection", "Usage guidelines"], gradient: "from-brand-blue to-brand-green" },
+        { id: "brand-collateral", title: "Brand Collateral", description: "Business cards, letterheads, presentations, and brand materials.", icon: LayoutGrid, features: ["Business card design", "Letterhead & stationery", "Presentation templates", "Brand merchandise", "Packaging design", "Print-ready assets"], gradient: "from-brand-green to-brand-red" },
+        { id: "brand-guidelines", title: "Brand Guidelines & Toolkit", description: "Comprehensive style guides for consistent brand application.", icon: Type, features: ["Style guide document", "Color & typography specs", "Do's and don'ts", "Asset library", "Template systems", "Multi-platform adaptation"], gradient: "from-brand-red to-brand-green" },
+      ],
+    },
+    {
+      category: "Promotions & Advertising",
+      description: "High-impact promotional content that drives engagement and conversions",
+      services: [
+        { id: "ad-films", title: "Ad Films & Commercials", description: "Concept-to-delivery ad production for TV, digital, and cinema.", icon: Megaphone, features: ["TV commercials", "Digital ad films", "Product demos", "Explainer videos", "Testimonial videos", "Cinema ads"], gradient: "from-brand-blue to-brand-red" },
+        { id: "campaign-creative", title: "Campaign Creatives", description: "Visual assets for ad campaigns across all platforms.", icon: Target, features: ["Banner ad design", "Display creatives", "Email templates", "Landing page design", "Print ads", "OOH & billboard design"], gradient: "from-brand-green to-brand-blue" },
+        { id: "event-promo", title: "Event & Launch Promos", description: "Teasers, countdowns, launch videos, and event coverage.", icon: Radio, features: ["Launch teaser videos", "Countdown animations", "Event highlight reels", "Invitation videos", "Live event graphics", "Post-event recaps"], gradient: "from-brand-red to-brand-green" },
+        { id: "brand-films", title: "Brand Films & Documentaries", description: "Long-form storytelling that builds brand equity and trust.", icon: Aperture, features: ["Brand story films", "Corporate documentaries", "Founder stories", "Behind-the-scenes", "Culture films", "CSR & impact videos"], gradient: "from-brand-blue to-brand-green" },
+      ],
+    },
+    {
+      category: "Digital & Social Media",
+      description: "Content creation and strategy for every digital platform",
+      services: [
+        { id: "social-content", title: "Social Media Content", description: "Scroll-stopping content for Instagram, YouTube, LinkedIn, and more.", icon: Instagram, features: ["Instagram Reels & Stories", "YouTube Shorts", "LinkedIn video content", "Twitter/X visual posts", "TikTok content", "Platform-specific formats"], gradient: "from-brand-red to-brand-blue" },
+        { id: "social-strategy", title: "Content Strategy & Calendar", description: "Data-driven content planning, scheduling, and performance tracking.", icon: Share2, features: ["Content calendar planning", "Platform strategy", "Hashtag research", "Posting schedules", "Engagement tactics", "Analytics & reporting"], gradient: "from-brand-blue to-brand-green" },
+        { id: "reel-production", title: "Reel & Short-Form Production", description: "High-quality short-form video production optimized for virality.", icon: Smartphone, features: ["Trending reel formats", "Product showcases", "Tutorial & how-to reels", "Transition edits", "Music-synced edits", "Batch reel production"], gradient: "from-brand-green to-brand-red" },
+        { id: "thumbnail-design", title: "Thumbnails & Graphics", description: "Click-worthy thumbnails, carousels, and social media graphics.", icon: Bookmark, features: ["YouTube thumbnails", "Carousel posts", "Infographics", "Quote cards", "Story templates", "Highlight covers"], gradient: "from-brand-red to-brand-green" },
       ],
     },
   ];

@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Scissors, Camera, Layers, Mountain, Eye, Cpu, Film, Video, Music, PenTool, SunMedium, Globe, Wand2, Cloud, Clapperboard } from 'lucide-react';
+import { ArrowRight, Scissors, Camera, Layers, Mountain, Eye, Cpu, Film, Video, Music, PenTool, SunMedium, Globe, Wand2, Cloud, Clapperboard, Crown, Megaphone, Instagram, Smartphone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SectionHeading from './SectionHeading';
 import SectionWrapper from './SectionWrapper';
@@ -23,9 +23,13 @@ const services = [
   { id: 'ai', name: 'AI-Enhanced Workflow', description: 'Controlled AI in production pipelines.', icon: Cpu, color: 'text-primary', category: 'Tech' },
   { id: 'virtual-production', name: 'Virtual Production', description: 'LED walls, real-time rendering, in-camera VFX.', icon: Globe, color: 'text-secondary', category: 'Tech' },
   { id: 'cloud-pipeline', name: 'Cloud Pipeline', description: 'Scalable rendering, remote collaboration.', icon: Cloud, color: 'text-accent', category: 'Tech' },
+  { id: 'brand-strategy', name: 'Branding & Identity', description: 'Logo design, brand guides, visual identity systems.', icon: Crown, color: 'text-primary', category: 'Branding' },
+  { id: 'ad-films', name: 'Ad Films & Promos', description: 'Commercials, teasers, launch videos, brand films.', icon: Megaphone, color: 'text-secondary', category: 'Promos' },
+  { id: 'social-content', name: 'Social Media Content', description: 'Reels, Shorts, thumbnails, carousels & strategy.', icon: Instagram, color: 'text-accent', category: 'Digital' },
+  { id: 'reel-production', name: 'Short-Form Production', description: 'Trending reels, product showcases, batch edits.', icon: Smartphone, color: 'text-primary', category: 'Digital' },
 ];
 
-const categories = ['All', 'CGI & VFX', 'Creative', 'Post', 'DI', 'Tech'];
+const categories = ['All', 'CGI & VFX', 'Creative', 'Post', 'DI', 'Tech', 'Branding', 'Promos', 'Digital'];
 
 const Tilt3DCard = ({ children, index }: { children: React.ReactNode; index: number }) => {
   const [transform, setTransform] = useState({ rotateX: 0, rotateY: 0, scale: 1 });
