@@ -167,7 +167,7 @@ const Home = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 }}
                 >
-                  We exist because these problems shouldn't.
+                  We exist so you don't need five vendors for one project.
                 </motion.p>
               </div>
             </SectionWrapper>
