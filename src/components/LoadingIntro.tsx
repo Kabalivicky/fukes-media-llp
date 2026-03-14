@@ -97,8 +97,8 @@ const LoadingIntro = () => {
           {/* Lens flare */}
           <LensFlare phase={phase} />
 
-          {/* Logo section */}
-          <LogoReveal phase={phase} />
+          {/* Logo section — click to enter */}
+          <LogoReveal phase={phase} onEnter={handleEnter} />
 
           {/* Wipe transition */}
           {phase === 'wipe' && <WipeTransition />}
