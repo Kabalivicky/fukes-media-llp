@@ -337,7 +337,7 @@ const WipeTransition = () => (
   <>
     <motion.div className="absolute rounded-full" style={{
       zIndex: 60,
-      background: `conic-gradient(from 0deg, ${BRAND.red}, ${BRAND.blue}, ${BRAND.green}, ${BRAND.red})`,
+      background: `radial-gradient(circle at 30% 30%, ${BRAND.red}, transparent 50%), radial-gradient(circle at 70% 30%, ${BRAND.blue}, transparent 50%), radial-gradient(circle at 50% 70%, ${BRAND.green}, transparent 50%)`,
     }}
       initial={{ width: 0, height: 0, opacity: 1 }}
       animate={{ width: '300vmax', height: '300vmax', opacity: [1, 1, 0.8] }}
