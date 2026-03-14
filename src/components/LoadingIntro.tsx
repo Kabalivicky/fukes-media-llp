@@ -247,7 +247,7 @@ const LensFlare = ({ phase }: { phase: string }) => (
   </>
 );
 
-const LogoReveal = ({ phase }: { phase: string }) => (
+const LogoReveal = ({ phase, onEnter }: { phase: string; onEnter: () => void }) => (
   <motion.div
     className="relative flex flex-col items-center"
     style={{ zIndex: 10 }}
@@ -268,14 +268,19 @@ const LogoReveal = ({ phase }: { phase: string }) => (
       transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
     />
 
-    {/* Circular logo — only the circle part visible */}
-    <motion.div
+    {/* Circular logo — clickable to enter */}
+    <motion.button
+      onClick={phase === 'waiting' ? onEnter : undefined}
       className="relative overflow-hidden rounded-full"
       style={{
         width: 'clamp(16rem, 25vw, 20rem)',
         height: 'clamp(16rem, 25vw, 20rem)',
         zIndex: 10,
+        cursor: phase === 'waiting' ? 'pointer' : 'default',
         boxShadow: `0 0 40px ${BRAND.red}60, 0 0 60px ${BRAND.blue}40, 0 0 80px ${BRAND.green}30`,
+        border: 'none',
+        padding: 0,
+        background: 'none',
       }}
       animate={{
         boxShadow: [
@@ -286,6 +291,12 @@ const LogoReveal = ({ phase }: { phase: string }) => (
         ],
       }}
       transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      whileHover={phase === 'waiting' ? {
+        scale: 1.08,
+        boxShadow: `0 0 60px ${BRAND.red}80, 0 0 90px ${BRAND.blue}60, 0 0 120px ${BRAND.green}50`,
+      } : {}}
+      whileTap={phase === 'waiting' ? { scale: 0.95 } : {}}
+      aria-label="Enter site"
     >
       <img
         src={logoCircle}
@@ -293,7 +304,7 @@ const LogoReveal = ({ phase }: { phase: string }) => (
         className="w-full h-full object-cover"
         style={{ display: 'block' }}
       />
-    </motion.div>
+    </motion.button>
 
     {/* Tagline */}
     <motion.p className="mt-6 text-xs md:text-sm text-white/40 tracking-[0.5em] uppercase"
@@ -301,7 +312,7 @@ const LogoReveal = ({ phase }: { phase: string }) => (
       animate={{ opacity: phase === 'waiting' || phase === 'reveal' ? 1 : 0 }}
       transition={{ duration: 0.5, delay: 0.7 }}
     >
-      End-to-End Visual Production
+      {phase === 'waiting' ? 'Click the logo to enter' : 'End-to-End Visual Production'}
     </motion.p>
   </motion.div>
 );
