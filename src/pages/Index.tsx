@@ -177,9 +177,9 @@ const Home = () => {
           <ErrorBoundary>
             <SectionWrapper variant="gradient" withDivider>
               <SectionHeading 
-                title="Our Discipline" 
-                subtitle="Four steps. No chaos. No surprises." 
-                badge="Process"
+                title="How We Work" 
+                subtitle="From raw footage to final delivery — every discipline under one roof." 
+                badge="Full-Service Pipeline"
               />
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
                 {processSteps.map((step, index) => (
