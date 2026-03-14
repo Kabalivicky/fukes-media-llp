@@ -141,7 +141,7 @@ const Home = () => {
                   transition={{ type: 'spring', stiffness: 100 }}
                 >
                   <AlertTriangle className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium text-primary">Industry Reality Check</span>
+                   <span className="text-sm font-medium text-primary">The Problem With Fragmented Production</span>
                 </motion.div>
                 
                 <div className="grid sm:grid-cols-2 gap-4">
