@@ -106,7 +106,7 @@ const Home = () => {
     "name": "Fuke's Media LLP",
     "url": "https://fukesmedia.com",
     "logo": "/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png",
-    "description": "Production-ready VFX studio with disciplined pipeline execution, transparent per-shot costing, and structured delivery.",
+    "description": "Full-service post-production, VFX, CGI, editing, design, branding, and social media content studio. Everything visual, one studio.",
     "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressRegion": "Karnataka", "postalCode": "560070", "addressCountry": "IN" },
     "telephone": "+916362281003",
     "email": "info@fukesmedia.com",
