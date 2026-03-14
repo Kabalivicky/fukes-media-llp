@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play } from 'lucide-react';
+
 import logoCircle from '@/assets/logo-circle-rgb.png';
 
 type Phase = 'flicker' | 'blackout' | 'flare' | 'reveal' | 'waiting' | 'wipe' | 'done';
@@ -97,16 +97,13 @@ const LoadingIntro = () => {
           {/* Lens flare */}
           <LensFlare phase={phase} />
 
-          {/* Logo section */}
-          <LogoReveal phase={phase} />
+          {/* Logo section — click to enter */}
+          <LogoReveal phase={phase} onEnter={handleEnter} />
 
           {/* Wipe transition */}
           {phase === 'wipe' && <WipeTransition />}
 
-          {/* Enter button */}
-          <AnimatePresence>
-            {phase === 'waiting' && <EnterButton onEnter={handleEnter} />}
-          </AnimatePresence>
+          {/* No separate enter button — logo circle handles entry */}
 
           {/* Loading bar */}
           <motion.div
@@ -250,7 +247,7 @@ const LensFlare = ({ phase }: { phase: string }) => (
   </>
 );
 
-const LogoReveal = ({ phase }: { phase: string }) => (
+const LogoReveal = ({ phase, onEnter }: { phase: string; onEnter: () => void }) => (
   <motion.div
     className="relative flex flex-col items-center"
     style={{ zIndex: 10 }}
@@ -271,14 +268,19 @@ const LogoReveal = ({ phase }: { phase: string }) => (
       transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
     />
 
-    {/* Circular logo — only the circle part visible */}
-    <motion.div
+    {/* Circular logo — clickable to enter */}
+    <motion.button
+      onClick={phase === 'waiting' ? onEnter : undefined}
       className="relative overflow-hidden rounded-full"
       style={{
         width: 'clamp(16rem, 25vw, 20rem)',
         height: 'clamp(16rem, 25vw, 20rem)',
         zIndex: 10,
+        cursor: phase === 'waiting' ? 'pointer' : 'default',
         boxShadow: `0 0 40px ${BRAND.red}60, 0 0 60px ${BRAND.blue}40, 0 0 80px ${BRAND.green}30`,
+        border: 'none',
+        padding: 0,
+        background: 'none',
       }}
       animate={{
         boxShadow: [
@@ -289,6 +291,12 @@ const LogoReveal = ({ phase }: { phase: string }) => (
         ],
       }}
       transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      whileHover={phase === 'waiting' ? {
+        scale: 1.08,
+        boxShadow: `0 0 60px ${BRAND.red}80, 0 0 90px ${BRAND.blue}60, 0 0 120px ${BRAND.green}50`,
+      } : {}}
+      whileTap={phase === 'waiting' ? { scale: 0.95 } : {}}
+      aria-label="Enter site"
     >
       <img
         src={logoCircle}
@@ -296,7 +304,7 @@ const LogoReveal = ({ phase }: { phase: string }) => (
         className="w-full h-full object-cover"
         style={{ display: 'block' }}
       />
-    </motion.div>
+    </motion.button>
 
     {/* Tagline */}
     <motion.p className="mt-6 text-xs md:text-sm text-white/40 tracking-[0.5em] uppercase"
@@ -304,53 +312,11 @@ const LogoReveal = ({ phase }: { phase: string }) => (
       animate={{ opacity: phase === 'waiting' || phase === 'reveal' ? 1 : 0 }}
       transition={{ duration: 0.5, delay: 0.7 }}
     >
-      End-to-End Visual Production
+      {phase === 'waiting' ? 'Click the logo to enter' : 'End-to-End Visual Production'}
     </motion.p>
   </motion.div>
 );
 
-const EnterButton = ({ onEnter }: { onEnter: () => void }) => (
-  <motion.div
-    className="absolute flex flex-col items-center"
-    style={{ bottom: '12%', zIndex: 50 }}
-    initial={{ opacity: 0, y: 30, scale: 0.9 }}
-    animate={{ opacity: 1, y: 0, scale: 1 }}
-    exit={{ opacity: 0, y: -20, scale: 1.1 }}
-    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-  >
-    <motion.button
-      onClick={onEnter}
-      className="group relative flex items-center gap-3 px-10 py-4 rounded-full overflow-hidden transition-all duration-300"
-      style={{
-        background: `linear-gradient(135deg, ${BRAND.red}30, ${BRAND.blue}30, ${BRAND.green}30)`,
-        border: '1px solid rgba(255,255,255,0.2)',
-        backdropFilter: 'blur(10px)',
-      }}
-      whileHover={{
-        scale: 1.05,
-        boxShadow: `0 0 40px ${BRAND.red}40, 0 0 60px ${BRAND.blue}30, 0 0 80px ${BRAND.green}20`,
-      }}
-      whileTap={{ scale: 0.98 }}
-    >
-      <motion.div className="absolute inset-0 rounded-full" style={{
-        background: `conic-gradient(from 0deg, ${BRAND.red}40, ${BRAND.blue}40, ${BRAND.green}40, transparent)`,
-        mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-        maskComposite: 'xor', WebkitMaskComposite: 'xor', padding: 2,
-      }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-      />
-      <Play className="w-5 h-5 text-white fill-white relative" style={{ zIndex: 10 }} />
-      <span className="text-white text-sm md:text-base font-medium tracking-[0.2em] uppercase relative" style={{ zIndex: 10 }}>
-        Enter Site
-      </span>
-    </motion.button>
-    <motion.p className="mt-4 text-white/30 text-xs tracking-widest uppercase"
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-      Click to explore
-    </motion.p>
-  </motion.div>
-);
 
 const WipeTransition = () => (
   <>
