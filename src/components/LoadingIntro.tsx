@@ -103,10 +103,7 @@ const LoadingIntro = () => {
           {/* Wipe transition */}
           {phase === 'wipe' && <WipeTransition />}
 
-          {/* Enter button */}
-          <AnimatePresence>
-            {phase === 'waiting' && <EnterButton onEnter={handleEnter} />}
-          </AnimatePresence>
+          {/* No separate enter button — logo circle handles entry */}
 
           {/* Loading bar */}
           <motion.div
