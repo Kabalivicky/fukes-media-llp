@@ -28,17 +28,17 @@ const SectionLoader = ({ text = "Loading..." }: { text?: string }) => (
 );
 
 const processSteps = [
-  { step: '01', icon: FileText, title: 'Script & Shot Breakdown', description: 'We break cost per shot, not per vague assumption.' },
-  { step: '02', icon: Crosshair, title: 'Pipeline Mapping', description: 'Department allocation, version control, asset flow clarity.' },
-  { step: '03', icon: Clock, title: 'Milestone Delivery', description: 'Fixed review cycles. Structured revisions.' },
-  { step: '04', icon: Shield, title: 'Final Integration', description: 'Color pipeline integrity, render verification, delivery compliance.' },
+  { step: '01', icon: FileText, title: 'Brief & Scope', description: 'We map every deliverable — VFX, edit, design, color, sound — upfront.' },
+  { step: '02', icon: Crosshair, title: 'Creative & Production', description: 'CGI, compositing, branding, motion graphics — all under one roof.' },
+  { step: '03', icon: Clock, title: 'Post & Polish', description: 'Editing, color grading, sound design, DI — seamless finish.' },
+  { step: '04', icon: Shield, title: 'Deliver & Deploy', description: 'Final masters, social cuts, reels, and platform-ready assets.' },
 ];
 
 const painPoints = [
-  'Why cheap VFX always costs more',
-  'Why 80% of revisions happen before shot planning',
-  'Why flashy reels hide pipeline weaknesses',
-  'Why unclear briefs destroy budgets',
+  'VFX, editing, and design scattered across vendors',
+  'No single studio that handles everything end-to-end',
+  'Inconsistent quality when outsourcing to multiple teams',
+  'Social media content treated as an afterthought',
 ];
 
 // 3D Tilt card for process steps
