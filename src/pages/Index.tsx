@@ -115,9 +115,9 @@ const Home = () => {
   return (
     <>
       <SEOHelmet 
-        title="Fuke's Media LLP — Production-Ready VFX. No Pipeline Chaos." 
-        description="Disciplined VFX systems for films, OTT, advertising, and television. Transparent per-shot costing, structured delivery, zero production drama." 
-        keywords="VFX studio India, production VFX, per-shot costing, disciplined pipeline, post production Bengaluru, transparent VFX pricing" 
+        title="Fuke's Media LLP — VFX. Post. Design. Everything Visual. One Studio." 
+        description="Full-service post-production & creative studio — CGI, compositing, editing, color grading, motion graphics, branding, sound design, and social media content." 
+        keywords="VFX studio India, post production, CGI, video editing, color grading, motion graphics, branding, social media content, sound design, Bengaluru" 
         canonical="https://fukesmedia.com" 
         structuredData={structuredData} 
       />
