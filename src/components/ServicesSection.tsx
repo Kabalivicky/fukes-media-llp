@@ -75,9 +75,9 @@ const ServicesSection = () => {
   return (
     <SectionWrapper id="services" variant="gradient" withDivider>
       <SectionHeading
-        title="Our Departments"
-        subtitle="Structured execution across every discipline — VFX, editing, color, sound, and beyond"
-        badge="What We Execute"
+        title="Everything Under One Roof"
+        subtitle="VFX, CGI, editing, color, sound, motion graphics, branding, social content — we do it all"
+        badge="Full-Service Studio"
         align="center"
       />
 
