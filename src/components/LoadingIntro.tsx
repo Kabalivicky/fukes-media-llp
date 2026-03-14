@@ -258,15 +258,30 @@ const LogoReveal = ({ phase, onEnter }: { phase: string; onEnter: () => void }) 
     }}
     transition={{ duration: 1, delay: phase === 'reveal' ? 0.2 : 0, ease: [0.16, 1, 0.3, 1] }}
   >
-    {/* RGB glow behind logo */}
-    <motion.div className="absolute rounded-full" style={{
-      width: 340, height: 340,
-      background: `conic-gradient(from 0deg, ${BRAND.red}, ${BRAND.red}CC 30deg, ${BRAND.blue}80 90deg, ${BRAND.blue} 120deg, ${BRAND.blue}CC 150deg, ${BRAND.green}80 210deg, ${BRAND.green} 240deg, ${BRAND.green}CC 270deg, ${BRAND.red}80 330deg, ${BRAND.red})`,
-      filter: 'blur(40px)', opacity: 0.4,
-    }}
-      animate={{ rotate: 360 }}
-      transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-    />
+    {/* RGB glow behind logo — seamless circle with no join lines */}
+    <div className="absolute" style={{ width: 400, height: 400 }}>
+      <motion.div className="absolute inset-0 rounded-full" style={{
+        background: `radial-gradient(circle at 30% 20%, ${BRAND.red}, transparent 70%)`,
+        filter: 'blur(50px)', opacity: 0.5,
+      }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+      />
+      <motion.div className="absolute inset-0 rounded-full" style={{
+        background: `radial-gradient(circle at 70% 80%, ${BRAND.blue}, transparent 70%)`,
+        filter: 'blur(50px)', opacity: 0.5,
+      }}
+        animate={{ rotate: -360 }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+      />
+      <motion.div className="absolute inset-0 rounded-full" style={{
+        background: `radial-gradient(circle at 50% 90%, ${BRAND.green}, transparent 70%)`,
+        filter: 'blur(50px)', opacity: 0.5,
+      }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+      />
+    </div>
 
     {/* Circular logo — clickable to enter */}
     <motion.button
