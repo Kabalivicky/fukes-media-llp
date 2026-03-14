@@ -263,8 +263,8 @@ const Home = () => {
                   transition={{ type: 'spring', stiffness: 60 }}
                 >
                   <SectionHeading 
-                    title="Ready for Predictable VFX?" 
-                    subtitle="Get a shot-level breakdown with transparent costing. No vague assumptions."
+                    title="One Studio. Everything Covered." 
+                    subtitle="VFX, editing, design, branding, social content — stop juggling vendors."
                   />
                 </motion.div>
                 <motion.div 
