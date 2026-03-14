@@ -204,9 +204,9 @@ const HeroSection = () => {
             style={{ transformStyle: 'preserve-3d', translateZ: '30px' }}
           >
             {[
-              { value: '500+', label: 'Shots Delivered' },
+              { value: '30+', label: 'Services' },
               { value: '50+', label: 'Productions' },
-              { value: '5+', label: 'Years' },
+              { value: '100%', label: 'In-House' },
             ].map((stat, i) => (
               <motion.div
                 key={i}
