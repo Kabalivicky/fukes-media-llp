@@ -163,7 +163,7 @@ const HeroSection = () => {
                 whileHover={{ translateZ: 20, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
-                Production-Ready VFX.
+                VFX. Post. Design.
               </motion.span>
               <br />
               <motion.span 
@@ -171,7 +171,7 @@ const HeroSection = () => {
                 whileHover={{ translateZ: 30, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
-                No Pipeline Chaos.
+                Everything Visual.
               </motion.span>
               <br />
               <motion.span 
@@ -179,7 +179,7 @@ const HeroSection = () => {
                 whileHover={{ translateZ: 20, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
-                No Budget Surprises.
+                One Studio.
               </motion.span>
             </h1>
           </motion.div>
@@ -192,7 +192,7 @@ const HeroSection = () => {
             transition={{ delay: 0.7, duration: 0.6 }}
             style={{ translateZ: '20px' }}
           >
-            We build disciplined VFX systems for films, OTT, advertising, and television — with transparent costing, structured delivery, and zero production drama.
+            We handle everything — CGI, compositing, editing, color grading, motion graphics, branding, sound design, and social media content. From raw footage to final delivery.
           </motion.p>
 
           {/* 3D Stats Row */}
@@ -204,9 +204,9 @@ const HeroSection = () => {
             style={{ transformStyle: 'preserve-3d', translateZ: '30px' }}
           >
             {[
-              { value: '500+', label: 'Shots Delivered' },
+              { value: '30+', label: 'Services' },
               { value: '50+', label: 'Productions' },
-              { value: '5+', label: 'Years' },
+              { value: '100%', label: 'In-House' },
             ].map((stat, i) => (
               <motion.div
                 key={i}

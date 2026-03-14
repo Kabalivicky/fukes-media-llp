@@ -28,17 +28,17 @@ const SectionLoader = ({ text = "Loading..." }: { text?: string }) => (
 );
 
 const processSteps = [
-  { step: '01', icon: FileText, title: 'Script & Shot Breakdown', description: 'We break cost per shot, not per vague assumption.' },
-  { step: '02', icon: Crosshair, title: 'Pipeline Mapping', description: 'Department allocation, version control, asset flow clarity.' },
-  { step: '03', icon: Clock, title: 'Milestone Delivery', description: 'Fixed review cycles. Structured revisions.' },
-  { step: '04', icon: Shield, title: 'Final Integration', description: 'Color pipeline integrity, render verification, delivery compliance.' },
+  { step: '01', icon: FileText, title: 'Brief & Scope', description: 'We map every deliverable — VFX, edit, design, color, sound — upfront.' },
+  { step: '02', icon: Crosshair, title: 'Creative & Production', description: 'CGI, compositing, branding, motion graphics — all under one roof.' },
+  { step: '03', icon: Clock, title: 'Post & Polish', description: 'Editing, color grading, sound design, DI — seamless finish.' },
+  { step: '04', icon: Shield, title: 'Deliver & Deploy', description: 'Final masters, social cuts, reels, and platform-ready assets.' },
 ];
 
 const painPoints = [
-  'Why cheap VFX always costs more',
-  'Why 80% of revisions happen before shot planning',
-  'Why flashy reels hide pipeline weaknesses',
-  'Why unclear briefs destroy budgets',
+  'VFX, editing, and design scattered across vendors',
+  'No single studio that handles everything end-to-end',
+  'Inconsistent quality when outsourcing to multiple teams',
+  'Social media content treated as an afterthought',
 ];
 
 // 3D Tilt card for process steps
@@ -106,7 +106,7 @@ const Home = () => {
     "name": "Fuke's Media LLP",
     "url": "https://fukesmedia.com",
     "logo": "/lovable-uploads/86a9e886-0aee-4aab-b7cb-2e2fdebdd2cc.png",
-    "description": "Production-ready VFX studio with disciplined pipeline execution, transparent per-shot costing, and structured delivery.",
+    "description": "Full-service post-production, VFX, CGI, editing, design, branding, and social media content studio. Everything visual, one studio.",
     "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressRegion": "Karnataka", "postalCode": "560070", "addressCountry": "IN" },
     "telephone": "+916362281003",
     "email": "info@fukesmedia.com",
@@ -115,9 +115,9 @@ const Home = () => {
   return (
     <>
       <SEOHelmet 
-        title="Fuke's Media LLP — Production-Ready VFX. No Pipeline Chaos." 
-        description="Disciplined VFX systems for films, OTT, advertising, and television. Transparent per-shot costing, structured delivery, zero production drama." 
-        keywords="VFX studio India, production VFX, per-shot costing, disciplined pipeline, post production Bengaluru, transparent VFX pricing" 
+        title="Fuke's Media LLP — VFX. Post. Design. Everything Visual. One Studio." 
+        description="Full-service post-production & creative studio — CGI, compositing, editing, color grading, motion graphics, branding, sound design, and social media content." 
+        keywords="VFX studio India, post production, CGI, video editing, color grading, motion graphics, branding, social media content, sound design, Bengaluru" 
         canonical="https://fukesmedia.com" 
         structuredData={structuredData} 
       />
@@ -141,7 +141,7 @@ const Home = () => {
                   transition={{ type: 'spring', stiffness: 100 }}
                 >
                   <AlertTriangle className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium text-primary">Industry Reality Check</span>
+                   <span className="text-sm font-medium text-primary">The Problem With Fragmented Production</span>
                 </motion.div>
                 
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -167,7 +167,7 @@ const Home = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 }}
                 >
-                  We exist because these problems shouldn't.
+                  We exist so you don't need five vendors for one project.
                 </motion.p>
               </div>
             </SectionWrapper>
@@ -177,9 +177,9 @@ const Home = () => {
           <ErrorBoundary>
             <SectionWrapper variant="gradient" withDivider>
               <SectionHeading 
-                title="Our Discipline" 
-                subtitle="Four steps. No chaos. No surprises." 
-                badge="Process"
+                title="How We Work" 
+                subtitle="From raw footage to final delivery — every discipline under one roof." 
+                badge="Full-Service Pipeline"
               />
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
                 {processSteps.map((step, index) => (
@@ -263,8 +263,8 @@ const Home = () => {
                   transition={{ type: 'spring', stiffness: 60 }}
                 >
                   <SectionHeading 
-                    title="Ready for Predictable VFX?" 
-                    subtitle="Get a shot-level breakdown with transparent costing. No vague assumptions."
+                    title="One Studio. Everything Covered." 
+                    subtitle="VFX, editing, design, branding, social content — stop juggling vendors."
                   />
                 </motion.div>
                 <motion.div 
