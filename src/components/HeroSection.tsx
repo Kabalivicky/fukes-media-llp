@@ -163,7 +163,7 @@ const HeroSection = () => {
                 whileHover={{ translateZ: 20, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
-                Production-Ready VFX.
+                VFX. Post. Design.
               </motion.span>
               <br />
               <motion.span 
@@ -171,7 +171,7 @@ const HeroSection = () => {
                 whileHover={{ translateZ: 30, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
-                No Pipeline Chaos.
+                Everything Visual.
               </motion.span>
               <br />
               <motion.span 
@@ -179,7 +179,7 @@ const HeroSection = () => {
                 whileHover={{ translateZ: 20, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
-                No Budget Surprises.
+                One Studio.
               </motion.span>
             </h1>
           </motion.div>
