@@ -317,48 +317,6 @@ const LogoReveal = ({ phase, onEnter }: { phase: string; onEnter: () => void }) 
   </motion.div>
 );
 
-const EnterButton = ({ onEnter }: { onEnter: () => void }) => (
-  <motion.div
-    className="absolute flex flex-col items-center"
-    style={{ bottom: '12%', zIndex: 50 }}
-    initial={{ opacity: 0, y: 30, scale: 0.9 }}
-    animate={{ opacity: 1, y: 0, scale: 1 }}
-    exit={{ opacity: 0, y: -20, scale: 1.1 }}
-    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-  >
-    <motion.button
-      onClick={onEnter}
-      className="group relative flex items-center gap-3 px-10 py-4 rounded-full overflow-hidden transition-all duration-300"
-      style={{
-        background: `linear-gradient(135deg, ${BRAND.red}30, ${BRAND.blue}30, ${BRAND.green}30)`,
-        border: '1px solid rgba(255,255,255,0.2)',
-        backdropFilter: 'blur(10px)',
-      }}
-      whileHover={{
-        scale: 1.05,
-        boxShadow: `0 0 40px ${BRAND.red}40, 0 0 60px ${BRAND.blue}30, 0 0 80px ${BRAND.green}20`,
-      }}
-      whileTap={{ scale: 0.98 }}
-    >
-      <motion.div className="absolute inset-0 rounded-full" style={{
-        background: `conic-gradient(from 0deg, ${BRAND.red}40, ${BRAND.blue}40, ${BRAND.green}40, transparent)`,
-        mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-        maskComposite: 'xor', WebkitMaskComposite: 'xor', padding: 2,
-      }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-      />
-      <Play className="w-5 h-5 text-white fill-white relative" style={{ zIndex: 10 }} />
-      <span className="text-white text-sm md:text-base font-medium tracking-[0.2em] uppercase relative" style={{ zIndex: 10 }}>
-        Enter Site
-      </span>
-    </motion.button>
-    <motion.p className="mt-4 text-white/30 text-xs tracking-widest uppercase"
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-      Click to explore
-    </motion.p>
-  </motion.div>
-);
 
 const WipeTransition = () => (
   <>
