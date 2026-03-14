@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play } from 'lucide-react';
+
 import logoCircle from '@/assets/logo-circle-rgb.png';
 
 type Phase = 'flicker' | 'blackout' | 'flare' | 'reveal' | 'waiting' | 'wipe' | 'done';
