@@ -261,7 +261,7 @@ const LogoReveal = ({ phase, onEnter }: { phase: string; onEnter: () => void }) 
     {/* RGB glow behind logo */}
     <motion.div className="absolute rounded-full" style={{
       width: 340, height: 340,
-      background: `conic-gradient(from 0deg, ${BRAND.red}, ${BRAND.blue}, ${BRAND.green}, ${BRAND.red})`,
+      background: `conic-gradient(from 0deg, ${BRAND.red}, ${BRAND.red}CC 30deg, ${BRAND.blue}80 90deg, ${BRAND.blue} 120deg, ${BRAND.blue}CC 150deg, ${BRAND.green}80 210deg, ${BRAND.green} 240deg, ${BRAND.green}CC 270deg, ${BRAND.red}80 330deg, ${BRAND.red})`,
       filter: 'blur(40px)', opacity: 0.4,
     }}
       animate={{ rotate: 360 }}
