@@ -258,28 +258,28 @@ const LogoReveal = ({ phase, onEnter }: { phase: string; onEnter: () => void }) 
     }}
     transition={{ duration: 1, delay: phase === 'reveal' ? 0.2 : 0, ease: [0.16, 1, 0.3, 1] }}
   >
-    {/* RGB glow behind logo — seamless circle with no join lines */}
-    <div className="absolute" style={{ width: 400, height: 400 }}>
+    {/* RGB glow behind logo — seamless circle, pulsing intensity */}
+    <div className="absolute" style={{ width: 420, height: 420 }}>
       <motion.div className="absolute inset-0 rounded-full" style={{
-        background: `radial-gradient(circle at 30% 20%, ${BRAND.red}, transparent 70%)`,
-        filter: 'blur(50px)', opacity: 0.5,
+        background: `radial-gradient(circle at 30% 20%, ${BRAND.red}, ${BRAND.red}80 30%, transparent 70%)`,
+        filter: 'blur(60px)',
       }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+        animate={{ rotate: 360, opacity: [0.4, 0.7, 0.4], scale: [0.95, 1.08, 0.95] }}
+        transition={{ rotate: { duration: 6, repeat: Infinity, ease: 'linear' }, opacity: { duration: 3, repeat: Infinity, ease: 'easeInOut' }, scale: { duration: 3, repeat: Infinity, ease: 'easeInOut' } }}
       />
       <motion.div className="absolute inset-0 rounded-full" style={{
-        background: `radial-gradient(circle at 70% 80%, ${BRAND.blue}, transparent 70%)`,
-        filter: 'blur(50px)', opacity: 0.5,
+        background: `radial-gradient(circle at 70% 75%, ${BRAND.blue}, ${BRAND.blue}80 30%, transparent 70%)`,
+        filter: 'blur(60px)',
       }}
-        animate={{ rotate: -360 }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+        animate={{ rotate: -360, opacity: [0.4, 0.7, 0.4], scale: [1.05, 0.92, 1.05] }}
+        transition={{ rotate: { duration: 8, repeat: Infinity, ease: 'linear' }, opacity: { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }, scale: { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 } }}
       />
       <motion.div className="absolute inset-0 rounded-full" style={{
-        background: `radial-gradient(circle at 50% 90%, ${BRAND.green}, transparent 70%)`,
-        filter: 'blur(50px)', opacity: 0.5,
+        background: `radial-gradient(circle at 50% 85%, ${BRAND.green}, ${BRAND.green}80 30%, transparent 70%)`,
+        filter: 'blur(60px)',
       }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+        animate={{ rotate: 360, opacity: [0.35, 0.65, 0.35], scale: [0.98, 1.1, 0.98] }}
+        transition={{ rotate: { duration: 10, repeat: Infinity, ease: 'linear' }, opacity: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }, scale: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 } }}
       />
     </div>
 
@@ -299,13 +299,14 @@ const LogoReveal = ({ phase, onEnter }: { phase: string; onEnter: () => void }) 
       }}
       animate={{
         boxShadow: [
-          `0 0 30px ${BRAND.red}60, 0 0 50px ${BRAND.blue}30`,
-          `0 0 30px ${BRAND.blue}60, 0 0 50px ${BRAND.green}30`,
-          `0 0 30px ${BRAND.green}60, 0 0 50px ${BRAND.red}30`,
-          `0 0 30px ${BRAND.red}60, 0 0 50px ${BRAND.blue}30`,
+          `0 0 30px ${BRAND.red}60, 0 0 50px ${BRAND.blue}30, 0 0 80px ${BRAND.green}20`,
+          `0 0 50px ${BRAND.blue}70, 0 0 70px ${BRAND.green}40, 0 0 100px ${BRAND.red}25`,
+          `0 0 40px ${BRAND.green}60, 0 0 60px ${BRAND.red}35, 0 0 90px ${BRAND.blue}20`,
+          `0 0 30px ${BRAND.red}60, 0 0 50px ${BRAND.blue}30, 0 0 80px ${BRAND.green}20`,
         ],
+        scale: [1, 1.02, 1, 0.98, 1],
       }}
-      transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
       whileHover={phase === 'waiting' ? {
         scale: 1.08,
         boxShadow: `0 0 60px ${BRAND.red}80, 0 0 90px ${BRAND.blue}60, 0 0 120px ${BRAND.green}50`,
