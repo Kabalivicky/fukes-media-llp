@@ -74,7 +74,10 @@ const VisualGenerator = () => {
       }
     } catch (err: any) {
       console.error('Image generation error:', err);
-      const errorMessage = err?.message || 'Failed to generate images. Please try again.';
+      let errorMessage = err?.message || 'Failed to generate images. Please try again.';
+      if (errorMessage.includes('Authentication required') || errorMessage.includes('Invalid or expired session')) {
+        errorMessage = 'Please sign in to use the Visual Generator.';
+      }
       setError(errorMessage);
       toast({
         title: "Generation Failed",

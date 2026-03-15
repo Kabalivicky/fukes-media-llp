@@ -87,7 +87,10 @@ const VideoGenerator = () => {
       }
     } catch (err: any) {
       console.error('Video generation error:', err);
-      const errorMessage = err.message || 'Failed to generate video';
+      let errorMessage = err.message || 'Failed to generate video';
+      if (errorMessage.includes('Authentication required') || errorMessage.includes('Invalid or expired session')) {
+        errorMessage = 'Please sign in to use the Video Generator.';
+      }
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
