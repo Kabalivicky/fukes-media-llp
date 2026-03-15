@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router-dom';
 import SectionHeading from '@/components/SectionHeading';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -154,9 +155,11 @@ const CareersSection = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button variant="outline" className="w-full">
-                Learn More About Working With Us
-              </Button>
+              <Link to="/careers" className="w-full">
+                <Button variant="outline" className="w-full">
+                  Learn More About Working With Us <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
             </CardFooter>
           </Card>
         </div>
@@ -212,9 +215,11 @@ const CareersSection = () => {
                         </div>
                       </CardContent>
                       <CardFooter>
-                        <Button variant="default" className="w-full">
-                          Apply Now <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
+                        <Link to="/careers" className="w-full">
+                          <Button variant="default" className="w-full">
+                            Apply Now <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </Link>
                       </CardFooter>
                     </Card>
                   ))}
@@ -224,9 +229,11 @@ const CareersSection = () => {
           </Tabs>
           
           <div className="mt-10 text-center">
-            <Button variant="outline" size="lg">
-              View All Open Positions <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            <Link to="/careers">
+              <Button variant="outline" size="lg">
+                View All Open Positions <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
