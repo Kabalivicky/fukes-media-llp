@@ -229,9 +229,11 @@ const CareersSection = () => {
           </Tabs>
           
           <div className="mt-10 text-center">
-            <Button variant="outline" size="lg">
-              View All Open Positions <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            <Link to="/careers">
+              <Button variant="outline" size="lg">
+                View All Open Positions <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
