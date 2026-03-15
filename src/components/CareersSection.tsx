@@ -154,9 +154,11 @@ const CareersSection = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button variant="outline" className="w-full">
-                Learn More About Working With Us
-              </Button>
+              <Link to="/careers" className="w-full">
+                <Button variant="outline" className="w-full">
+                  Learn More About Working With Us <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
             </CardFooter>
           </Card>
         </div>
