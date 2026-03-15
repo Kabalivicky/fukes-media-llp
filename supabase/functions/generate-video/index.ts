@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 const MAX_PROMPT_LENGTH = 1000;
@@ -17,7 +17,6 @@ serve(async (req) => {
   }
 
   try {
-    // Authenticate user
     const authHeader = req.headers.get('Authorization');
     if (!authHeader?.startsWith('Bearer ')) {
       return new Response(JSON.stringify({ error: 'Authentication required' }), {
@@ -31,9 +30,8 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const token = authHeader.replace('Bearer ', '');
-    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
-    if (claimsError || !claimsData?.claims) {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
       return new Response(JSON.stringify({ error: 'Invalid or expired session' }), {
         status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
@@ -41,7 +39,6 @@ serve(async (req) => {
 
     const { prompt, style, aspectRatio = '16:9', duration = 5 } = await req.json();
 
-    // Input validation
     if (!prompt || typeof prompt !== 'string') {
       return new Response(JSON.stringify({ error: 'Prompt is required and must be a string' }), {
         status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -76,7 +73,7 @@ serve(async (req) => {
       });
     }
 
-    console.log(`Generating video for user ${claimsData.claims.sub}`);
+    console.log(`Generating video for user ${user.id}`);
 
     const stylePrompts: Record<string, string> = {
       cinematic: 'cinematic quality, dramatic lighting, film grain, professional cinematography, movie-like',
@@ -102,10 +99,11 @@ serve(async (req) => {
     });
 
     if (!response.ok) {
-      console.error('Video generation error:', response.status);
+      const errorText = await response.text();
+      console.error('Video generation error:', response.status, errorText);
       if (response.status === 429 || response.status === 402) {
         return new Response(
-          JSON.stringify({ error: 'Usage limit reached. Please try again later.', success: false }),
+          JSON.stringify({ error: response.status === 429 ? 'Rate limit reached. Please try again later.' : 'Usage credits exhausted. Please add credits in your Lovable workspace settings.', success: false }),
           { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -150,6 +148,8 @@ serve(async (req) => {
             .getPublicUrl(fileName);
           finalVideoUrl = publicUrl;
         }
+      } else {
+        await videoResponse.text();
       }
     } catch (uploadError) {
       console.log('Storage upload skipped, using original URL');
