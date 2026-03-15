@@ -513,6 +513,24 @@
     }
   }
 
+  /* ============ SMOOTH GLOBAL TRANSITIONS ============ */
+
+  * {
+    scroll-behavior: smooth;
+  }
+
+  a, button, input, textarea, select {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  img {
+    @apply transition-opacity duration-300 ease-out;
+  }
+
+  section {
+    @apply transition-all duration-500 ease-out;
+  }
+
   /* Kill switch */
   .no-animations *,
   .no-animations *::before,

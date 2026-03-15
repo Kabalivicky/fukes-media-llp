@@ -299,13 +299,14 @@ const LogoReveal = ({ phase, onEnter }: { phase: string; onEnter: () => void }) 
       }}
       animate={{
         boxShadow: [
-          `0 0 30px ${BRAND.red}60, 0 0 50px ${BRAND.blue}30`,
-          `0 0 30px ${BRAND.blue}60, 0 0 50px ${BRAND.green}30`,
-          `0 0 30px ${BRAND.green}60, 0 0 50px ${BRAND.red}30`,
-          `0 0 30px ${BRAND.red}60, 0 0 50px ${BRAND.blue}30`,
+          `0 0 30px ${BRAND.red}60, 0 0 50px ${BRAND.blue}30, 0 0 80px ${BRAND.green}20`,
+          `0 0 50px ${BRAND.blue}70, 0 0 70px ${BRAND.green}40, 0 0 100px ${BRAND.red}25`,
+          `0 0 40px ${BRAND.green}60, 0 0 60px ${BRAND.red}35, 0 0 90px ${BRAND.blue}20`,
+          `0 0 30px ${BRAND.red}60, 0 0 50px ${BRAND.blue}30, 0 0 80px ${BRAND.green}20`,
         ],
+        scale: [1, 1.02, 1, 0.98, 1],
       }}
-      transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
       whileHover={phase === 'waiting' ? {
         scale: 1.08,
         boxShadow: `0 0 60px ${BRAND.red}80, 0 0 90px ${BRAND.blue}60, 0 0 120px ${BRAND.green}50`,
