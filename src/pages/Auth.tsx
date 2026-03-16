@@ -101,10 +101,10 @@ const Auth = () => {
   return (
     <>
       <Helmet>
-        <title>Authentication - Fukes Media | Sign In or Create Account</title>
+        <title>Authentication - Fuke's Media | Sign In or Create Account</title>
         <meta 
           name="description" 
-          content="Sign in to your Fukes Media account or create a new account to access our VFX services, pricing tools, and freelancer portal." 
+          content="Sign in to your Fuke's Media account or create a new account to access our VFX services, pricing tools, and freelancer portal." 
         />
       </Helmet>
 

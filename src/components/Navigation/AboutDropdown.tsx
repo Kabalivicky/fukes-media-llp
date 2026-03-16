@@ -69,10 +69,9 @@ const AboutDropdown = () => {
           </ListItem>
           
           <ListItem 
-            href="/#investors" 
+            href="/about" 
             title="Investors" 
             icon={<Zap className="mr-2 h-4 w-4" />}
-            onClick={(e) => handleAnchorClick(e, '/#investors', currentPath)}
           >
             Learn about our investment partners and funding initiatives
           </ListItem>

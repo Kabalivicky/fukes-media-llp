@@ -554,7 +554,7 @@ const PricingCalculator = ({ enhanced = false }: PricingCalculatorProps) => {
                       <DynamicPrice priceUSD={calculatedPrice} showCode={true} />
                     </div>
                     <div className="mt-2 text-sm text-muted-foreground">
-                      For {frames} frames ({framesDuration.toFixed(1)} seconds) across {shots} shots
+                      For {frames} frames ({Number(framesDuration.toFixed(2))} seconds) across {shots} shots
                     </div>
                     {enhanced && estimatedDeliveryDate && (
                       <div className="mt-2 flex items-center justify-center gap-2 text-sm">
