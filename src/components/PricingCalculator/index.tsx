@@ -415,7 +415,7 @@ const PricingCalculator = ({ enhanced = false }: PricingCalculatorProps) => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="duration">Duration (seconds)</Label>
-                    <Input id="duration" type="number" value={framesDuration} onChange={(e) => handleDurationChange(e.target.value)} min={0} step={0.01} />
+                    <Input id="duration" type="number" value={Number(framesDuration.toFixed(2))} onChange={(e) => handleDurationChange(e.target.value)} min={0} step={0.01} />
                     <div className="text-xs text-muted-foreground">At {fps} frames per second</div>
                   </div>
                   <div className="space-y-2">
