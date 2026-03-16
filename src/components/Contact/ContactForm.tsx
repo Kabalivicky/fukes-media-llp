@@ -7,10 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Send, Zap, Globe, ArrowRight, PhoneCall } from 'lucide-react';
+import { Send, Zap, Globe, ArrowRight, PhoneCall, AlertCircle } from 'lucide-react';
 import SectionWrapper from '@/components/SectionWrapper';
 import SectionHeading from '@/components/SectionHeading';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const projectTypes = [
   'VFX for Film/TV',
@@ -50,6 +51,13 @@ const stats = [
   { value: '500+', label: 'Projects Delivered' },
 ];
 
+interface FormErrors {
+  name?: string;
+  email?: string;
+  projectType?: string;
+  message?: string;
+}
+
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -63,39 +71,123 @@ const ContactForm = () => {
     urgentProject: false,
     newsletter: false,
   });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const { toast } = useToast();
 
   const handleInputChange = (field: string) => (value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleBlur = (field: string) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    validateField(field);
+  };
+
+  const validateField = (field: string): string | undefined => {
+    switch (field) {
+      case 'name':
+        if (!formData.name.trim()) return 'Full name is required';
+        if (formData.name.trim().length < 2) return 'Name must be at least 2 characters';
+        if (formData.name.trim().length > 100) return 'Name must be less than 100 characters';
+        return undefined;
+      case 'email':
+        if (!formData.email.trim()) return 'Email address is required';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) return 'Please enter a valid email address';
+        return undefined;
+      case 'projectType':
+        if (!formData.projectType) return 'Please select a project type';
+        return undefined;
+      case 'message':
+        if (!formData.message.trim()) return 'Project description is required';
+        if (formData.message.trim().length < 10) return 'Please provide more detail (at least 10 characters)';
+        if (formData.message.trim().length > 2000) return 'Message must be less than 2000 characters';
+        return undefined;
+      default:
+        return undefined;
+    }
+  };
+
+  const validateAll = (): boolean => {
+    const newErrors: FormErrors = {};
+    const fields = ['name', 'email', 'projectType', 'message'];
+    fields.forEach((field) => {
+      const error = validateField(field);
+      if (error) newErrors[field as keyof FormErrors] = error;
+    });
+    setErrors(newErrors);
+    setTouched({ name: true, email: true, projectType: true, message: true });
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateAll()) {
+      toast({
+        title: 'Please fix the errors below',
+        description: 'Some required fields are missing or invalid.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      const { error } = await supabase.from('contact_submissions').insert({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        company: formData.company.trim() || null,
+        phone: formData.phone.trim() || null,
+        inquiry_type: formData.projectType,
+        message: `Budget: ${formData.budget || 'Not specified'}\nTimeline: ${formData.timeline || 'Not specified'}\nUrgent: ${formData.urgentProject ? 'Yes' : 'No'}\n\n${formData.message.trim()}`,
+      });
 
-    toast({
-      title: 'Message Sent Successfully!',
-      description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-      duration: 5000,
-    });
+      if (error) throw error;
 
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      phone: '',
-      projectType: '',
-      budget: '',
-      timeline: '',
-      message: '',
-      urgentProject: false,
-      newsletter: false,
-    });
+      setSubmitSuccess(true);
+      toast({
+        title: 'Message Sent Successfully!',
+        description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+        duration: 5000,
+      });
 
-    setIsSubmitting(false);
+      setFormData({
+        name: '', email: '', company: '', phone: '',
+        projectType: '', budget: '', timeline: '', message: '',
+        urgentProject: false, newsletter: false,
+      });
+      setErrors({});
+      setTouched({});
+      
+      setTimeout(() => setSubmitSuccess(false), 5000);
+    } catch (error: any) {
+      console.error('Contact form error:', error);
+      toast({
+        title: 'Submission Failed',
+        description: 'There was a problem sending your message. Please try again or email us directly at info@fukesmedia.com.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const FieldError = ({ field }: { field: keyof FormErrors }) => {
+    if (!touched[field] || !errors[field]) return null;
+    return (
+      <p className="text-destructive text-sm flex items-center gap-1 mt-1">
+        <AlertCircle className="h-3 w-3" />
+        {errors[field]}
+      </p>
+    );
   };
 
   return (
@@ -103,12 +195,7 @@ const ContactForm = () => {
       <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
         {/* Stats & Quick Actions */}
         <aside className="lg:col-span-2 space-y-6 lg:sticky lg:top-24" aria-label="Why choose us">
-          <SectionHeading
-            title="Why Choose Us?"
-            badge="Stats"
-            align="left"
-            size="md"
-          />
+          <SectionHeading title="Why Choose Us?" badge="Stats" align="left" size="md" />
 
           <div className="grid grid-cols-2 gap-4">
             {stats.map((stat, index) => (
@@ -120,15 +207,12 @@ const ContactForm = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="font-display text-2xl font-bold text-primary mb-1">
-                  {stat.value}
-                </div>
+                <div className="font-display text-2xl font-bold text-primary mb-1">{stat.value}</div>
                 <p className="text-xs text-muted-foreground">{stat.label}</p>
               </motion.div>
             ))}
           </div>
 
-          {/* Priority CTA Card */}
           <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
             <CardContent className="p-5">
               <div className="flex items-center gap-3 mb-3">
@@ -145,9 +229,11 @@ const ContactForm = () => {
                     Call Now — Free Consultation
                   </a>
                 </Button>
-                <Button variant="outline" size="sm" className="w-full">
-                  <Globe className="w-4 h-4 mr-2" />
-                  Schedule a Call
+                <Button variant="outline" size="sm" className="w-full" asChild>
+                  <a href="mailto:info@fukesmedia.com">
+                    <Globe className="w-4 h-4 mr-2" />
+                    Email Us Directly
+                  </a>
                 </Button>
               </div>
             </CardContent>
@@ -164,8 +250,12 @@ const ContactForm = () => {
               </p>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6" aria-label="Project inquiry form">
-                {/* Basic Information */}
+              {submitSuccess && (
+                <div className="mb-6 p-4 bg-primary/10 border border-primary/20 rounded-lg text-primary text-sm">
+                  ✓ Your message has been sent successfully! We'll be in touch within 24 hours.
+                </div>
+              )}
+              <form onSubmit={handleSubmit} className="space-y-6" aria-label="Project inquiry form" noValidate>
                 <fieldset className="space-y-4">
                   <legend className="sr-only">Your Information</legend>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -175,10 +265,12 @@ const ContactForm = () => {
                         id="name"
                         value={formData.name}
                         onChange={(e) => handleInputChange('name')(e.target.value)}
+                        onBlur={() => handleBlur('name')}
                         placeholder="Your full name"
-                        required
-                        className="bg-background/50"
+                        className={`bg-background/50 ${touched.name && errors.name ? 'border-destructive' : ''}`}
+                        aria-invalid={touched.name && !!errors.name}
                       />
+                      <FieldError field="name" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address *</Label>
@@ -187,10 +279,12 @@ const ContactForm = () => {
                         type="email"
                         value={formData.email}
                         onChange={(e) => handleInputChange('email')(e.target.value)}
+                        onBlur={() => handleBlur('email')}
                         placeholder="your@email.com"
-                        required
-                        className="bg-background/50"
+                        className={`bg-background/50 ${touched.email && errors.email ? 'border-destructive' : ''}`}
+                        aria-invalid={touched.email && !!errors.email}
                       />
+                      <FieldError field="email" />
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -218,24 +312,22 @@ const ContactForm = () => {
                   </div>
                 </fieldset>
 
-                {/* Project Details */}
                 <fieldset className="space-y-4">
                   <legend className="sr-only">Project Details</legend>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="projectType">Project Type *</Label>
-                      <Select value={formData.projectType} onValueChange={handleInputChange('projectType')}>
-                        <SelectTrigger className="bg-background/50">
+                      <Select value={formData.projectType} onValueChange={(v) => { handleInputChange('projectType')(v); setTouched(p => ({...p, projectType: true})); }}>
+                        <SelectTrigger className={`bg-background/50 ${touched.projectType && errors.projectType ? 'border-destructive' : ''}`}>
                           <SelectValue placeholder="Select project type" />
                         </SelectTrigger>
                         <SelectContent>
                           {projectTypes.map((type) => (
-                            <SelectItem key={type} value={type}>
-                              {type}
-                            </SelectItem>
+                            <SelectItem key={type} value={type}>{type}</SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
+                      <FieldError field="projectType" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="budget">Budget Range</Label>
@@ -245,9 +337,7 @@ const ContactForm = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {budgetRanges.map((range) => (
-                            <SelectItem key={range} value={range}>
-                              {range}
-                            </SelectItem>
+                            <SelectItem key={range} value={range}>{range}</SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
@@ -260,9 +350,7 @@ const ContactForm = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {timelines.map((tl) => (
-                            <SelectItem key={tl} value={tl}>
-                              {tl}
-                            </SelectItem>
+                            <SelectItem key={tl} value={tl}>{tl}</SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
@@ -270,56 +358,38 @@ const ContactForm = () => {
                   </div>
                 </fieldset>
 
-                {/* Project Description */}
                 <div className="space-y-2">
                   <Label htmlFor="message">Project Description *</Label>
                   <Textarea
                     id="message"
                     value={formData.message}
                     onChange={(e) => handleInputChange('message')(e.target.value)}
+                    onBlur={() => handleBlur('message')}
                     placeholder="Tell us about your project vision, specific requirements, reference materials, and any special considerations..."
                     rows={5}
-                    required
-                    className="bg-background/50"
+                    className={`bg-background/50 ${touched.message && errors.message ? 'border-destructive' : ''}`}
+                    aria-invalid={touched.message && !!errors.message}
                   />
+                  <FieldError field="message" />
+                  <p className="text-xs text-muted-foreground text-right">{formData.message.length}/2000</p>
                 </div>
 
-                {/* Checkboxes */}
                 <div className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="urgent"
-                      checked={formData.urgentProject}
-                      onCheckedChange={handleInputChange('urgentProject')}
-                    />
-                    <Label htmlFor="urgent" className="text-sm">
-                      This is an urgent project (Rush delivery needed)
-                    </Label>
+                    <Checkbox id="urgent" checked={formData.urgentProject} onCheckedChange={handleInputChange('urgentProject')} />
+                    <Label htmlFor="urgent" className="text-sm">This is an urgent project (Rush delivery needed)</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="newsletter"
-                      checked={formData.newsletter}
-                      onCheckedChange={handleInputChange('newsletter')}
-                    />
-                    <Label htmlFor="newsletter" className="text-sm">
-                      Subscribe to our newsletter for industry insights and updates
-                    </Label>
+                    <Checkbox id="newsletter" checked={formData.newsletter} onCheckedChange={handleInputChange('newsletter')} />
+                    <Label htmlFor="newsletter" className="text-sm">Subscribe to our newsletter for industry insights and updates</Label>
                   </div>
                 </div>
 
-                {/* Submit CTA */}
                 <Button
                   type="submit"
                   variant="cta"
                   size="lg"
-                  disabled={
-                    isSubmitting ||
-                    !formData.name ||
-                    !formData.email ||
-                    !formData.projectType ||
-                    !formData.message
-                  }
+                  disabled={isSubmitting}
                   className="w-full font-semibold text-base group"
                 >
                   {isSubmitting ? (

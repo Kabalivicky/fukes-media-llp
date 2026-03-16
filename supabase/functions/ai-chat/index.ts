@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 const MAX_MESSAGES = 20;
@@ -20,10 +20,9 @@ serve(async (req) => {
   }
 
   try {
-    // Authenticate user
     const authHeader = req.headers.get('Authorization');
     if (!authHeader?.startsWith('Bearer ')) {
-      return new Response(JSON.stringify({ error: 'Authentication required' }), {
+      return new Response(JSON.stringify({ error: 'Authentication required. Please sign in to use the AI Assistant.' }), {
         status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
@@ -34,17 +33,15 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const token = authHeader.replace('Bearer ', '');
-    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
-    if (claimsError || !claimsData?.claims) {
-      return new Response(JSON.stringify({ error: 'Invalid or expired session' }), {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      return new Response(JSON.stringify({ error: 'Invalid or expired session. Please sign in again.' }), {
         status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
 
     const { messages } = await req.json() as { messages: Message[] };
     
-    // Input validation
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: 'Messages array is required' }), {
         status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -57,7 +54,6 @@ serve(async (req) => {
       });
     }
 
-    // Validate and sanitize each message
     const validRoles = ['user', 'assistant', 'system'];
     for (const msg of messages) {
       if (!msg.role || !validRoles.includes(msg.role)) {
@@ -97,8 +93,7 @@ Your expertise includes:
 - Industry best practices and standards
 
 About Fuke's Media:
-- Award-winning VFX and post-production studio
-- Worked on major Hollywood films and independent productions
+- Award-winning VFX and post-production studio based in Bengaluru, India
 - Specializes in high-end VFX, AI-driven creative solutions, and production support
 - Offers services in VFX, color grading, motion graphics, and virtual production
 
@@ -120,7 +115,20 @@ Be helpful, professional, and concise. When discussing pricing, encourage users 
     });
 
     if (!response.ok) {
-      console.error('AI API error:', response.status);
+      const status = response.status;
+      console.error('AI API error:', status);
+      
+      if (status === 429) {
+        return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please wait a moment and try again.' }), {
+          status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      if (status === 402) {
+        return new Response(JSON.stringify({ error: 'AI service credits exhausted. Please try again later.' }), {
+          status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
       return new Response(
         JSON.stringify({ error: 'Unable to process your request. Please try again later.' }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

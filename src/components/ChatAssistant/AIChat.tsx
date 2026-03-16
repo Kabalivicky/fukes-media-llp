@@ -123,11 +123,18 @@ const AIChat = () => {
       };
       
       setMessages(prev => [...prev, aiMessage]);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching AI response:', error);
+      const errorMsg = error?.message || '';
+      let description = "We're having trouble connecting to our AI system. Please try again later.";
+      if (errorMsg.includes('Authentication') || errorMsg.includes('session')) {
+        description = 'Please sign in to use the AI Assistant.';
+      } else if (errorMsg.includes('Rate limit') || errorMsg.includes('429')) {
+        description = 'Too many requests. Please wait a moment and try again.';
+      }
       toast({
         title: "Communication Error",
-        description: "We're having trouble connecting to our AI system. Please try again later.",
+        description,
         variant: "destructive"
       });
     } finally {

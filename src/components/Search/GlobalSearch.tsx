@@ -69,7 +69,7 @@ export const GlobalSearch = () => {
         const { data: artists } = await supabase
           .from('profiles_public')
           .select('user_id, display_name, title, location')
-          .or(`display_name.ilike.${searchTerm},title.ilike.${searchTerm},skills.cs.{${debouncedQuery}}`)
+          .or(`display_name.ilike.%${debouncedQuery}%,title.ilike.%${debouncedQuery}%`)
           .limit(5);
 
         artists?.forEach((a) => {
@@ -87,7 +87,7 @@ export const GlobalSearch = () => {
           .from('jobs')
           .select('id, title, location, company_id')
           .eq('is_active', true)
-          .or(`title.ilike.${searchTerm},description.ilike.${searchTerm}`)
+          .or(`title.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`)
           .limit(5);
 
         jobs?.forEach((j) => {
@@ -104,7 +104,7 @@ export const GlobalSearch = () => {
         const { data: companies } = await supabase
           .from('companies')
           .select('id, name, slug, location')
-          .or(`name.ilike.${searchTerm},description.ilike.${searchTerm}`)
+          .or(`name.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`)
           .limit(5);
 
         companies?.forEach((c) => {
@@ -122,7 +122,7 @@ export const GlobalSearch = () => {
           .from('resources')
           .select('id, name, slug, short_description')
           .eq('is_approved', true)
-          .or(`name.ilike.${searchTerm},description.ilike.${searchTerm}`)
+          .or(`name.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`)
           .limit(5);
 
         resources?.forEach((r) => {

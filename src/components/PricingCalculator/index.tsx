@@ -415,7 +415,7 @@ const PricingCalculator = ({ enhanced = false }: PricingCalculatorProps) => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="duration">Duration (seconds)</Label>
-                    <Input id="duration" type="number" value={framesDuration} onChange={(e) => handleDurationChange(e.target.value)} min={0} step={0.01} />
+                    <Input id="duration" type="number" value={Number(framesDuration.toFixed(2))} onChange={(e) => handleDurationChange(e.target.value)} min={0} step={0.01} />
                     <div className="text-xs text-muted-foreground">At {fps} frames per second</div>
                   </div>
                   <div className="space-y-2">
@@ -554,7 +554,7 @@ const PricingCalculator = ({ enhanced = false }: PricingCalculatorProps) => {
                       <DynamicPrice priceUSD={calculatedPrice} showCode={true} />
                     </div>
                     <div className="mt-2 text-sm text-muted-foreground">
-                      For {frames} frames ({framesDuration.toFixed(1)} seconds) across {shots} shots
+                      For {frames} frames ({Number(framesDuration.toFixed(2))} seconds) across {shots} shots
                     </div>
                     {enhanced && estimatedDeliveryDate && (
                       <div className="mt-2 flex items-center justify-center gap-2 text-sm">
