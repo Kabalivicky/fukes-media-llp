@@ -251,7 +251,7 @@ const ContactForm = () => {
             </CardHeader>
             <CardContent>
               {submitSuccess && (
-                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-700 dark:text-green-400 text-sm">
+                <div className="mb-6 p-4 bg-primary/10 border border-primary/20 rounded-lg text-primary text-sm">
                   ✓ Your message has been sent successfully! We'll be in touch within 24 hours.
                 </div>
               )}
