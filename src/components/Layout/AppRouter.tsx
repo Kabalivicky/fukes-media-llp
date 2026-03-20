@@ -71,6 +71,8 @@ const HelpCenterCategory = lazy(() => import('@/pages/HelpCenterCategory'));
 const ProductionGuidelines = lazy(() => import('@/pages/ProductionGuidelines'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const News = lazy(() => import('@/pages/News'));
+const BlogPost = lazy(() => import('@/pages/BlogPost'));
+const LiveNews = lazy(() => import('@/pages/LiveNews'));
 const ChatAssistant = lazy(() => import('@/pages/ChatAssistant'));
 const AITools = lazy(() => import('@/pages/AITools'));
 const VideoConverter = lazy(() => import('@/pages/tools/VideoConverter'));
@@ -126,6 +128,8 @@ const AppRouter = () => {
         <Route path="/help-center/:category" element={<MainLayout><HelpCenterCategory /></MainLayout>} />
         <Route path="/production-guidelines" element={<MainLayout><ProductionGuidelines /></MainLayout>} />
         <Route path="/news" element={<MainLayout><News /></MainLayout>} />
+        <Route path="/blog/:slug" element={<MainLayout><BlogPost /></MainLayout>} />
+        <Route path="/news/live" element={<MainLayout><LiveNews /></MainLayout>} />
         <Route path="/chat-assistant" element={<MainLayout><ChatAssistant /></MainLayout>} />
         <Route path="/ai-tools" element={<MainLayout><AITools /></MainLayout>} />
         <Route path="/tools/video-converter" element={<MainLayout><VideoConverter /></MainLayout>} />
