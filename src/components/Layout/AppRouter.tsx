@@ -71,6 +71,8 @@ const HelpCenterCategory = lazy(() => import('@/pages/HelpCenterCategory'));
 const ProductionGuidelines = lazy(() => import('@/pages/ProductionGuidelines'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const News = lazy(() => import('@/pages/News'));
+const BlogPost = lazy(() => import('@/pages/BlogPost'));
+const LiveNews = lazy(() => import('@/pages/LiveNews'));
 const ChatAssistant = lazy(() => import('@/pages/ChatAssistant'));
 const AITools = lazy(() => import('@/pages/AITools'));
 const VideoConverter = lazy(() => import('@/pages/tools/VideoConverter'));
