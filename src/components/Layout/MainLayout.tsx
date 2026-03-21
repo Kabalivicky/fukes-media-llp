@@ -23,7 +23,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       <PageLoadingBar />
       <LightweightBackground />
       <DynamicHeader />
-      <main className="flex-1 pt-16 w-full relative z-10" id="main-content">
+      <main className="flex-1 pt-[94px] w-full relative z-10" id="main-content">
         <AnimatePresence mode="wait">
           <PageTransition key={location.pathname}>
             <div className="w-full max-w-none">
