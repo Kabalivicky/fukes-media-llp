@@ -41,7 +41,7 @@ const DynamicHeader = () => {
   };
 
   return (
-    <motion.header className="fixed top-0 left-0 right-0 z-50" role="banner">
+    <motion.header className="fixed top-[30px] left-0 right-0 z-50" role="banner">
       <motion.div 
         className="absolute inset-0 border-b border-border/10"
         style={{ backgroundColor: bgColor, backdropFilter, boxShadow }}
