@@ -8,6 +8,7 @@ import LightweightBackground from '@/components/LightweightBackground';
 import PageTransition from '@/components/PageTransition';
 import PageLoadingBar from '@/components/PageLoadingBar';
 import ScrollPercentageIndicator from '@/components/ScrollPercentageIndicator';
+import NewsTicker from '@/components/NewsTicker';
 
 interface MainLayoutProps {
   children?: React.ReactNode;
