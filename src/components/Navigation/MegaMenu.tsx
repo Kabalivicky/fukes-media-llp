@@ -3,7 +3,7 @@ import {
   NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
-import { Home, Palette, Users } from 'lucide-react';
+import { Home, Palette, Users, Newspaper } from 'lucide-react';
 import { handleAnchorClick, isLinkActive } from '@/utils/navigationData';
 import AboutDropdown from './AboutDropdown';
 import ServicesDropdown from './ServicesDropdown';
@@ -42,6 +42,14 @@ const MegaMenu = () => {
             onClick={() => handleNavigation('/portfolio')}
           >
             <Palette className="mr-2 h-4 w-4" />Portfolio
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink 
+            className={cn(navigationMenuTriggerStyle(), "cursor-pointer rounded-full", isLinkActive(currentPath, '/news') ? "text-brand-red font-medium" : "")}
+            onClick={() => handleNavigation('/news')}
+          >
+            <Newspaper className="mr-2 h-4 w-4" />News
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>

@@ -19,6 +19,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <div className="min-h-screen flex flex-col w-full relative">
+      <NewsTicker />
       <PageLoadingBar />
       <LightweightBackground />
       <DynamicHeader />
