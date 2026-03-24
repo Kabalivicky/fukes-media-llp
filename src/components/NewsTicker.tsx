@@ -39,14 +39,14 @@ const NewsTicker = () => {
     return () => clearInterval(timerRef.current);
   }, []);
 
-  const doubled = [...headlines, ...headlines];
+  const tripled = [...headlines, ...headlines, ...headlines];
 
   return (
     <div className="bg-primary text-primary-foreground text-xs py-1.5 overflow-hidden relative z-[60]">
       <div className="flex items-center">
         <Link
           to="/news/live"
-          className="flex-shrink-0 flex items-center gap-1.5 px-3 font-semibold border-r border-primary-foreground/20 hover:underline"
+          className="flex-shrink-0 flex items-center gap-1.5 px-3 font-semibold border-r border-primary-foreground/20 hover:underline z-10 bg-primary"
         >
           <Newspaper className="h-3 w-3" />
           <span className="relative flex items-center gap-1">
@@ -57,9 +57,12 @@ const NewsTicker = () => {
             LIVE
           </span>
         </Link>
-        <div className="overflow-hidden flex-1">
-          <div className="flex ticker-scroll whitespace-nowrap">
-            {doubled.map((h, i) => (
+        <div className="overflow-hidden flex-1 relative">
+          <div
+            className="flex whitespace-nowrap ticker-scroll"
+            style={{ width: 'max-content' }}
+          >
+            {tripled.map((h, i) => (
               <span key={`${i}-${h.slice(0, 10)}`} className="mx-6 inline-block">
                 {h}
                 <span className="mx-6 text-primary-foreground/40">•</span>
