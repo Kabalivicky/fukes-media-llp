@@ -42,7 +42,7 @@ const NewsTicker = () => {
   const tripled = [...headlines, ...headlines, ...headlines];
 
   return (
-    <div className="bg-primary text-primary-foreground text-xs py-1.5 overflow-hidden relative z-[60]">
+    <div className="bg-primary text-primary-foreground text-xs py-1.5 overflow-hidden fixed top-0 left-0 right-0 z-[60]">
       <div className="flex items-center">
         <Link
           to="/news/live"
