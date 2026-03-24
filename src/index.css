@@ -542,12 +542,14 @@
 
 /* Live news ticker - seamless infinite scroll */
 @keyframes ticker-scroll {
-  0% { transform: translateX(0); }
+  0% { transform: translateX(0%); }
   100% { transform: translateX(-33.333%); }
 }
 
 .ticker-scroll {
-  animation: ticker-scroll 40s linear infinite;
+  display: inline-flex;
+  animation: ticker-scroll 60s linear infinite;
+  will-change: transform;
 }
 
 .ticker-scroll:hover {
