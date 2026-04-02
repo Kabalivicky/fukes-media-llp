@@ -9,9 +9,13 @@ import { Progress } from '@/components/ui/progress';
 import { Upload, Download, FileImage, Settings, X, Image, CheckCircle, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import SEOHelmet from '@/components/SEOHelmet';
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
 // Formats the browser can read natively via <img> or Canvas
 const BROWSER_READABLE = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'svg', 'ico', 'avif'];
+// Formats decodable via Three.js loaders
+const THREEJS_DECODABLE = ['exr', 'hdr'];
 // Formats the browser can write via canvas.toBlob / toDataURL
 const BROWSER_WRITABLE: Record<string, string> = {
   jpg: 'image/jpeg',
@@ -174,6 +178,97 @@ const ImageConverter = () => {
     });
   };
 
+  const decodeEXRorHDR = (file: File, ext: string): Promise<{ data: Float32Array; width: number; height: number }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const buffer = reader.result as ArrayBuffer;
+          if (ext === 'exr') {
+            const loader = new EXRLoader();
+            const result = loader.parse(buffer);
+            if (!result || !result.data || !result.width || !result.height) {
+              reject(new Error('Failed to parse EXR'));
+              return;
+            }
+            // EXR data is Float16 or Float32 — convert to Float32
+            const floatData = result.data instanceof Float32Array
+              ? result.data
+              : new Float32Array(result.data);
+            resolve({ data: floatData, width: result.width, height: result.height });
+          } else {
+            // HDR / RGBE
+            const loader = new RGBELoader();
+            const result = loader.parse(buffer);
+            if (!result || !result.data || !result.width || !result.height) {
+              reject(new Error('Failed to parse HDR'));
+              return;
+            }
+            const floatData = result.data instanceof Float32Array
+              ? result.data
+              : new Float32Array(result.data);
+            resolve({ data: floatData, width: result.width, height: result.height });
+          }
+        } catch (e) {
+          reject(e);
+        }
+      };
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.readAsArrayBuffer(file);
+    });
+  };
+
+  const floatDataToCanvas = (
+    data: Float32Array,
+    srcW: number,
+    srcH: number,
+    resizeW?: number,
+    resizeH?: number,
+  ): HTMLCanvasElement => {
+    // Create source canvas with HDR data tone-mapped to 8-bit
+    const srcCanvas = document.createElement('canvas');
+    srcCanvas.width = srcW;
+    srcCanvas.height = srcH;
+    const ctx = srcCanvas.getContext('2d')!;
+    const imageData = ctx.createImageData(srcW, srcH);
+    const channels = data.length / (srcW * srcH);
+
+    for (let i = 0; i < srcW * srcH; i++) {
+      const si = i * channels;
+      // Simple Reinhard tone mapping + gamma correction
+      const r = data[si] || 0;
+      const g = data[si + 1] || 0;
+      const b = data[si + 2] || 0;
+      const tonemapAndGamma = (v: number) => Math.min(255, Math.max(0, Math.pow(v / (1 + v), 1 / 2.2) * 255));
+      imageData.data[i * 4] = tonemapAndGamma(r);
+      imageData.data[i * 4 + 1] = tonemapAndGamma(g);
+      imageData.data[i * 4 + 2] = tonemapAndGamma(b);
+      imageData.data[i * 4 + 3] = 255;
+    }
+    ctx.putImageData(imageData, 0, 0);
+
+    // Resize if needed
+    if (resizeW || resizeH) {
+      const outCanvas = document.createElement('canvas');
+      outCanvas.width = resizeW || srcW;
+      outCanvas.height = resizeH || srcH;
+      const outCtx = outCanvas.getContext('2d')!;
+      outCtx.drawImage(srcCanvas, 0, 0, outCanvas.width, outCanvas.height);
+      return outCanvas;
+    }
+    return srcCanvas;
+  };
+
+  const canvasToBlobAsync = (canvas: HTMLCanvasElement, mime: string, quality: number): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(
+        (blob) => blob ? resolve(blob) : reject(new Error('Canvas toBlob failed')),
+        mime,
+        quality / 100,
+      );
+    });
+  };
+
   const handleConvert = async () => {
     if (selectedFiles.length === 0 || !outputFormat) {
       toast({ title: "Missing information", description: "Please select images and output format", variant: "destructive" });
@@ -190,28 +285,47 @@ const ImageConverter = () => {
     const warns: string[] = [];
     const outMime = BROWSER_WRITABLE[outputFormat];
     const canWrite = !!outMime;
+    const effectiveOutMime = outMime || 'image/png';
+    const effectiveExt = canWrite ? outputFormat : 'png';
 
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
       const ext = getFileExtension(file.name);
       const canRead = BROWSER_READABLE.includes(ext);
+      const canDecodeViaThree = THREEJS_DECODABLE.includes(ext);
       setProgress(Math.round(((i) / selectedFiles.length) * 100));
 
       const baseName = file.name.replace(/\.[^.]+$/, '');
-      const outName = `${baseName}.${outputFormat}`;
 
-      if (canRead && canWrite) {
+      if (canDecodeViaThree) {
+        // Decode EXR/HDR via Three.js, tone-map, then convert
+        try {
+          const resizeW = resize && width ? parseInt(width) : undefined;
+          const resizeH = resize && height ? parseInt(height) : undefined;
+          const decoded = await decodeEXRorHDR(file, ext);
+          const canvas = floatDataToCanvas(decoded.data, decoded.width, decoded.height, resizeW, resizeH);
+          const blob = await canvasToBlobAsync(canvas, effectiveOutMime, quality[0]);
+          const url = URL.createObjectURL(blob);
+          const outName = `${baseName}.${effectiveExt}`;
+          results.push({ name: outName, url, size: blob.size });
+          if (!canWrite) {
+            warns.push(`${file.name}: "${outputFormat.toUpperCase()}" output not supported by browsers. Converted to PNG instead.`);
+          }
+        } catch (e) {
+          warns.push(`${file.name}: failed to decode ${ext.toUpperCase()} — ${e instanceof Error ? e.message : 'unknown error'}`);
+        }
+      } else if (canRead && canWrite) {
         try {
           const resizeW = resize && width ? parseInt(width) : undefined;
           const resizeH = resize && height ? parseInt(height) : undefined;
           const blob = await convertImageViaCanvas(file, outMime, quality[0], resizeW, resizeH);
           const url = URL.createObjectURL(blob);
+          const outName = `${baseName}.${outputFormat}`;
           results.push({ name: outName, url, size: blob.size });
         } catch {
           warns.push(`${file.name}: conversion failed`);
         }
       } else if (canRead && !canWrite) {
-        // Can read but output format not natively supported — render to PNG as fallback
         try {
           const resizeW = resize && width ? parseInt(width) : undefined;
           const resizeH = resize && height ? parseInt(height) : undefined;
@@ -219,13 +333,12 @@ const ImageConverter = () => {
           const url = URL.createObjectURL(blob);
           const fallbackName = `${baseName}_converted.png`;
           results.push({ name: fallbackName, url, size: blob.size });
-          warns.push(`${file.name}: "${outputFormat.toUpperCase()}" output is not natively supported by browsers. Converted to PNG instead.`);
+          warns.push(`${file.name}: "${outputFormat.toUpperCase()}" output not supported by browsers. Converted to PNG instead.`);
         } catch {
           warns.push(`${file.name}: conversion failed`);
         }
       } else {
-        // Cannot read the input format (EXR, PSD, RAW, etc.)
-        warns.push(`${file.name}: "${ext.toUpperCase()}" input format requires a specialised decoder not available in browsers. For professional formats like EXR, PSD, RAW, CR2, etc., please use desktop software such as Adobe Photoshop, DaVinci Resolve, or ImageMagick.`);
+        warns.push(`${file.name}: "${ext.toUpperCase()}" input format requires a specialised decoder. For PSD, RAW, CR2, etc., please use desktop software such as Adobe Photoshop or ImageMagick.`);
       }
     }
 
