@@ -6,9 +6,32 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
-import { Upload, Download, FileImage, Settings, X, Image, CheckCircle } from 'lucide-react';
+import { Upload, Download, FileImage, Settings, X, Image, CheckCircle, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import SEOHelmet from '@/components/SEOHelmet';
+
+// Formats the browser can read natively via <img> or Canvas
+const BROWSER_READABLE = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'svg', 'ico', 'avif'];
+// Formats the browser can write via canvas.toBlob / toDataURL
+const BROWSER_WRITABLE: Record<string, string> = {
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  webp: 'image/webp',
+};
+
+const ALL_EXTENSIONS = [
+  '.jpg', '.jpeg', '.png', '.webp', '.gif', '.bmp', '.tiff', '.tif',
+  '.svg', '.ico', '.heic', '.heif', '.avif', '.jxl', '.psd', '.ai',
+  '.eps', '.raw', '.cr2', '.nef', '.arw', '.dng', '.jp2', '.pcx',
+  '.tga', '.exr', '.hdr',
+];
+
+interface ConvertedFile {
+  name: string;
+  url: string;
+  size: number;
+}
 
 const ImageConverter = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -22,6 +45,8 @@ const ImageConverter = () => {
   const [dragActive, setDragActive] = useState(false);
   const [conversionComplete, setConversionComplete] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [convertedFiles, setConvertedFiles] = useState<ConvertedFile[]>([]);
+  const [warnings, setWarnings] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -52,6 +77,8 @@ const ImageConverter = () => {
     { value: 'hdr', label: 'HDR (High Dynamic Range)' },
   ];
 
+  const getFileExtension = (name: string) => name.split('.').pop()?.toLowerCase() || '';
+
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -62,94 +89,177 @@ const ImageConverter = () => {
     }
   }, []);
 
+  const addFiles = (files: File[]) => {
+    if (files.length > 0) {
+      setSelectedFiles(prev => [...prev, ...files]);
+      setConversionComplete(false);
+      setConvertedFiles([]);
+      setWarnings([]);
+
+      if (files[0]) {
+        const ext = getFileExtension(files[0].name);
+        if (BROWSER_READABLE.includes(ext)) {
+          const reader = new FileReader();
+          reader.onload = (e) => setPreviewUrl(e.target?.result as string);
+          reader.readAsDataURL(files[0]);
+        } else {
+          setPreviewUrl(null);
+        }
+      }
+
+      toast({
+        title: "Files added",
+        description: `${files.length} file(s) added for conversion`,
+      });
+    }
+  };
+
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const droppedFiles = Array.from(e.dataTransfer.files).filter(
-        file => file.type.startsWith('image/')
-      );
-      
-      if (droppedFiles.length > 0) {
-        setSelectedFiles(prev => [...prev, ...droppedFiles]);
-        setConversionComplete(false);
-        
-        // Create preview for first image
-        if (droppedFiles[0]) {
-          const reader = new FileReader();
-          reader.onload = (e) => setPreviewUrl(e.target?.result as string);
-          reader.readAsDataURL(droppedFiles[0]);
-        }
-        
-        toast({
-          title: "Images added",
-          description: `${droppedFiles.length} image(s) added for conversion`,
-        });
-      }
+      addFiles(Array.from(e.dataTransfer.files));
     }
   }, [toast]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      const newFiles = Array.from(files);
-      setSelectedFiles(prev => [...prev, ...newFiles]);
-      setConversionComplete(false);
-      
-      // Create preview for first image
-      if (newFiles[0]) {
-        const reader = new FileReader();
-        reader.onload = (e) => setPreviewUrl(e.target?.result as string);
-        reader.readAsDataURL(newFiles[0]);
-      }
-      
-      toast({
-        title: "Images selected",
-        description: `${newFiles.length} image(s) selected for conversion`,
-      });
+      addFiles(Array.from(files));
     }
   };
 
   const removeFile = (index: number) => {
     setSelectedFiles(prev => {
       const newFiles = prev.filter((_, i) => i !== index);
-      if (newFiles.length === 0) {
-        setPreviewUrl(null);
-      }
+      if (newFiles.length === 0) setPreviewUrl(null);
       return newFiles;
     });
     setConversionComplete(false);
+    setConvertedFiles([]);
+  };
+
+  const convertImageViaCanvas = (
+    file: File,
+    outMime: string,
+    q: number,
+    resizeW?: number,
+    resizeH?: number,
+  ): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new window.Image();
+      img.onload = () => {
+        const w = resizeW || img.naturalWidth;
+        const h = resizeH || img.naturalHeight;
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Canvas not supported')); return; }
+        ctx.drawImage(img, 0, 0, w, h);
+        canvas.toBlob(
+          (blob) => {
+            URL.revokeObjectURL(url);
+            if (blob) resolve(blob);
+            else reject(new Error('Conversion failed'));
+          },
+          outMime,
+          q / 100,
+        );
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not load image')); };
+      img.src = url;
+    });
   };
 
   const handleConvert = async () => {
     if (selectedFiles.length === 0 || !outputFormat) {
-      toast({
-        title: "Missing information",
-        description: "Please select images and output format",
-        variant: "destructive",
-      });
+      toast({ title: "Missing information", description: "Please select images and output format", variant: "destructive" });
       return;
     }
 
     setIsConverting(true);
     setProgress(0);
     setConversionComplete(false);
+    setConvertedFiles([]);
+    setWarnings([]);
 
-    // Simulate conversion with progress
-    for (let i = 0; i <= 100; i += 5) {
-      setProgress(i);
-      await new Promise(resolve => setTimeout(resolve, 80));
+    const results: ConvertedFile[] = [];
+    const warns: string[] = [];
+    const outMime = BROWSER_WRITABLE[outputFormat];
+    const canWrite = !!outMime;
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      const ext = getFileExtension(file.name);
+      const canRead = BROWSER_READABLE.includes(ext);
+      setProgress(Math.round(((i) / selectedFiles.length) * 100));
+
+      const baseName = file.name.replace(/\.[^.]+$/, '');
+      const outName = `${baseName}.${outputFormat}`;
+
+      if (canRead && canWrite) {
+        try {
+          const resizeW = resize && width ? parseInt(width) : undefined;
+          const resizeH = resize && height ? parseInt(height) : undefined;
+          const blob = await convertImageViaCanvas(file, outMime, quality[0], resizeW, resizeH);
+          const url = URL.createObjectURL(blob);
+          results.push({ name: outName, url, size: blob.size });
+        } catch {
+          warns.push(`${file.name}: conversion failed`);
+        }
+      } else if (canRead && !canWrite) {
+        // Can read but output format not natively supported — render to PNG as fallback
+        try {
+          const resizeW = resize && width ? parseInt(width) : undefined;
+          const resizeH = resize && height ? parseInt(height) : undefined;
+          const blob = await convertImageViaCanvas(file, 'image/png', quality[0], resizeW, resizeH);
+          const url = URL.createObjectURL(blob);
+          const fallbackName = `${baseName}_converted.png`;
+          results.push({ name: fallbackName, url, size: blob.size });
+          warns.push(`${file.name}: "${outputFormat.toUpperCase()}" output is not natively supported by browsers. Converted to PNG instead.`);
+        } catch {
+          warns.push(`${file.name}: conversion failed`);
+        }
+      } else {
+        // Cannot read the input format (EXR, PSD, RAW, etc.)
+        warns.push(`${file.name}: "${ext.toUpperCase()}" input format requires a specialised decoder not available in browsers. For professional formats like EXR, PSD, RAW, CR2, etc., please use desktop software such as Adobe Photoshop, DaVinci Resolve, or ImageMagick.`);
+      }
     }
 
+    setProgress(100);
+    setConvertedFiles(results);
+    setWarnings(warns);
     setConversionComplete(true);
-    toast({
-      title: "Conversion completed",
-      description: `${selectedFiles.length} image(s) converted to ${outputFormat.toUpperCase()}`,
-    });
-
     setIsConverting(false);
+
+    if (results.length > 0) {
+      toast({
+        title: "Conversion completed",
+        description: `${results.length} image(s) converted successfully`,
+      });
+    } else if (warns.length > 0) {
+      toast({
+        title: "Conversion issues",
+        description: "Some files could not be converted — see details below",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const downloadFile = (file: ConvertedFile) => {
+    const a = document.createElement('a');
+    a.href = file.url;
+    a.download = file.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const downloadAll = () => {
+    convertedFiles.forEach((f) => downloadFile(f));
   };
 
   const formatFileSize = (bytes: number) => {
@@ -162,11 +272,11 @@ const ImageConverter = () => {
 
   return (
     <>
-      <SEOHelmet 
+      <SEOHelmet
         title="Image Converter - Fuke's Media"
         description="Convert and optimize images between different formats with quality control"
       />
-      
+
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
@@ -185,13 +295,13 @@ const ImageConverter = () => {
                 Upload Image Files
               </CardTitle>
               <CardDescription>
-                Drag and drop images or click to select files for conversion
+                Drag and drop images or click to select files for conversion. Supports 24+ formats including EXR, PSD, RAW.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Drag and Drop Zone */}
               <div
-                className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
                   dragActive ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
                 }`}
                 onDragEnter={handleDrag}
@@ -204,16 +314,16 @@ const ImageConverter = () => {
                   ref={fileInputRef}
                   type="file"
                   multiple
-                  accept="image/*"
+                  accept={ALL_EXTENSIONS.join(',')}
                   onChange={handleFileSelect}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  className="hidden"
                 />
-                
+
                 {previewUrl ? (
                   <div className="space-y-4">
-                    <img 
-                      src={previewUrl} 
-                      alt="Preview" 
+                    <img
+                      src={previewUrl}
+                      alt="Preview"
                       className="max-h-40 mx-auto rounded-lg object-contain"
                     />
                     <p className="text-sm text-muted-foreground">
@@ -225,7 +335,7 @@ const ImageConverter = () => {
                     <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                     <p className="text-lg font-medium">Drop images here or click to browse</p>
                     <p className="text-sm text-muted-foreground mt-2">
-                      Supports JPEG, PNG, WebP, GIF, BMP, TIFF and 20+ more formats
+                      Supports JPEG, PNG, WebP, GIF, BMP, TIFF, EXR, PSD, RAW and 20+ more formats
                     </p>
                   </>
                 )}
@@ -246,10 +356,7 @@ const ImageConverter = () => {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            removeFile(index);
-                          }}
+                          onClick={(e) => { e.stopPropagation(); removeFile(index); }}
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -270,13 +377,41 @@ const ImageConverter = () => {
                 </div>
               )}
 
+              {/* Warnings */}
+              {warnings.length > 0 && !isConverting && (
+                <div className="space-y-2">
+                  {warnings.map((w, i) => (
+                    <div key={i} className="flex items-start gap-2 p-3 bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                      <AlertTriangle className="w-4 h-4 text-yellow-600 dark:text-yellow-400 mt-0.5 shrink-0" />
+                      <span className="text-sm text-yellow-800 dark:text-yellow-200">{w}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {/* Success Message */}
-              {conversionComplete && !isConverting && (
-                <div className="flex items-center gap-2 p-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg">
-                  <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
-                  <span className="text-green-800 dark:text-green-200 font-medium">
-                    Conversion completed! Your images are ready to download.
-                  </span>
+              {conversionComplete && !isConverting && convertedFiles.length > 0 && (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 p-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg">
+                    <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                    <span className="text-green-800 dark:text-green-200 font-medium">
+                      {convertedFiles.length} image(s) converted! Click to download.
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                    {convertedFiles.map((f, i) => (
+                      <div key={i} className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                        <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate">{f.name}</p>
+                          <p className="text-xs text-muted-foreground">{formatFileSize(f.size)}</p>
+                        </div>
+                        <Button size="sm" variant="outline" onClick={() => downloadFile(f)}>
+                          <Download className="h-4 w-4 mr-1" /> Download
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
@@ -312,8 +447,8 @@ const ImageConverter = () => {
 
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     id="resize-checkbox"
                     checked={resize}
                     onChange={(e) => setResize(e.target.checked)}
@@ -326,28 +461,18 @@ const ImageConverter = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>Width (px)</Label>
-                      <Input
-                        type="number"
-                        value={width}
-                        onChange={(e) => setWidth(e.target.value)}
-                        placeholder="e.g. 1920"
-                      />
+                      <Input type="number" value={width} onChange={(e) => setWidth(e.target.value)} placeholder="e.g. 1920" />
                     </div>
                     <div className="space-y-2">
                       <Label>Height (px)</Label>
-                      <Input
-                        type="number"
-                        value={height}
-                        onChange={(e) => setHeight(e.target.value)}
-                        placeholder="e.g. 1080"
-                      />
+                      <Input type="number" value={height} onChange={(e) => setHeight(e.target.value)} placeholder="e.g. 1080" />
                     </div>
                   </div>
                 )}
               </div>
 
               <div className="flex gap-4">
-                <Button 
+                <Button
                   onClick={handleConvert}
                   disabled={selectedFiles.length === 0 || !outputFormat || isConverting}
                   className="flex-1"
@@ -355,7 +480,7 @@ const ImageConverter = () => {
                   <Settings className="mr-2 h-4 w-4" />
                   {isConverting ? 'Converting...' : 'Convert Images'}
                 </Button>
-                <Button variant="outline" disabled={!conversionComplete}>
+                <Button variant="outline" disabled={convertedFiles.length === 0} onClick={downloadAll}>
                   <Download className="mr-2 h-4 w-4" />
                   Download All
                 </Button>
@@ -365,34 +490,26 @@ const ImageConverter = () => {
 
           <div className="grid md:grid-cols-3 gap-6">
             <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">24+ Image Formats</CardTitle>
-              </CardHeader>
+              <CardHeader><CardTitle className="text-lg">24+ Image Formats</CardTitle></CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  Support for JPEG, PNG, WebP, GIF, RAW, HDR and many professional formats
+                  Upload JPEG, PNG, WebP, GIF, RAW, EXR, PSD and many professional formats
                 </p>
               </CardContent>
             </Card>
-
             <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Quality Control</CardTitle>
-              </CardHeader>
+              <CardHeader><CardTitle className="text-lg">Real Conversion</CardTitle></CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  Fine-tune compression quality to balance file size and image clarity
+                  Actual browser-based conversion with quality control — download real converted files
                 </p>
               </CardContent>
             </Card>
-
             <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Resize & Optimize</CardTitle>
-              </CardHeader>
+              <CardHeader><CardTitle className="text-lg">Resize & Optimize</CardTitle></CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  Resize images to specific dimensions while maintaining aspect ratio
+                  Resize images to specific dimensions while converting formats
                 </p>
               </CardContent>
             </Card>
