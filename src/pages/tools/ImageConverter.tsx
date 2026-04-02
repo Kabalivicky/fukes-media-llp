@@ -9,9 +9,13 @@ import { Progress } from '@/components/ui/progress';
 import { Upload, Download, FileImage, Settings, X, Image, CheckCircle, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import SEOHelmet from '@/components/SEOHelmet';
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
 // Formats the browser can read natively via <img> or Canvas
 const BROWSER_READABLE = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'svg', 'ico', 'avif'];
+// Formats decodable via Three.js loaders
+const THREEJS_DECODABLE = ['exr', 'hdr'];
 // Formats the browser can write via canvas.toBlob / toDataURL
 const BROWSER_WRITABLE: Record<string, string> = {
   jpg: 'image/jpeg',
