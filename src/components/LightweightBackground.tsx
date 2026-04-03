@@ -1,9 +1,5 @@
 import { useTheme } from '@/components/ui/theme-provider';
 
-/**
- * A lightweight CSS-only background that performs well on all devices.
- * Replaces heavy WebGL/Canvas backgrounds for better performance.
- */
 const LightweightBackground = () => {
   const { theme } = useTheme();
   
@@ -23,24 +19,31 @@ const LightweightBackground = () => {
       <div 
         className="absolute inset-0 opacity-[0.02]"
         style={{
-          backgroundImage: theme === 'dark'
-            ? 'linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)'
-            : 'linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)',
           backgroundSize: '60px 60px'
         }}
       />
       
-      {/* Accent glow spots - pure CSS, no animation */}
+      {/* RGB ambient orbs - subtle, slow-drifting */}
       <div 
-        className="absolute top-1/4 -right-20 w-96 h-96 rounded-full blur-3xl"
+        className="absolute top-[15%] right-[10%] w-[500px] h-[500px] rounded-full blur-[120px]"
         style={{
-          background: 'hsl(var(--primary) / 0.08)'
+          background: 'hsl(354 87% 50% / 0.08)',
+          animation: 'rgb-orb-drift-1 20s ease-in-out infinite',
         }}
       />
       <div 
-        className="absolute top-2/3 -left-20 w-80 h-80 rounded-full blur-3xl"
+        className="absolute top-[55%] left-[5%] w-[450px] h-[450px] rounded-full blur-[120px]"
         style={{
-          background: 'hsl(var(--secondary) / 0.06)'
+          background: 'hsl(200 100% 45% / 0.06)',
+          animation: 'rgb-orb-drift-2 25s ease-in-out infinite',
+        }}
+      />
+      <div 
+        className="absolute top-[75%] right-[20%] w-[400px] h-[400px] rounded-full blur-[120px]"
+        style={{
+          background: 'hsl(150 100% 40% / 0.05)',
+          animation: 'rgb-orb-drift-3 22s ease-in-out infinite',
         }}
       />
     </div>
