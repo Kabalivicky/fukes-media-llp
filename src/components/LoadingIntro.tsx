@@ -283,6 +283,22 @@ const LogoReveal = ({ phase, onEnter }: { phase: string; onEnter: () => void }) 
       />
     </div>
 
+    {/* Spinning RGB border ring */}
+    <motion.div
+      className="absolute rounded-full"
+      style={{
+        width: 'calc(clamp(16rem, 25vw, 20rem) + 16px)',
+        height: 'calc(clamp(16rem, 25vw, 20rem) + 16px)',
+        zIndex: 9,
+        background: `conic-gradient(from 0deg, ${BRAND.red}, ${BRAND.blue}, ${BRAND.green}, ${BRAND.red})`,
+        filter: 'blur(2px)',
+      }}
+      animate={{ rotate: 360 }}
+      transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+    >
+      <div className="absolute inset-[3px] rounded-full bg-black" />
+    </motion.div>
+
     {/* Circular logo — clickable to enter */}
     <motion.button
       onClick={phase === 'waiting' ? onEnter : undefined}
