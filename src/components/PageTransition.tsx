@@ -6,32 +6,29 @@ interface PageTransitionProps {
   className?: string;
 }
 
+// Use only GPU-accelerated properties (transform, opacity) — no filter:blur
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 30,
-    scale: 0.98,
-    filter: 'blur(4px)',
+    y: 20,
+    scale: 0.99,
   },
   animate: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: 'blur(0px)',
   },
   exit: {
     opacity: 0,
-    y: -20,
-    scale: 1.02,
-    filter: 'blur(4px)',
+    y: -10,
+    scale: 1.01,
   },
 };
 
 const pageTransition = {
-  type: "spring",
-  stiffness: 100,
-  damping: 20,
-  mass: 0.8,
+  type: "tween",
+  duration: 0.35,
+  ease: [0.25, 0.1, 0.25, 1], // smooth cubic-bezier
 };
 
 const PageTransition = ({ children, className = '' }: PageTransitionProps) => {
@@ -43,6 +40,7 @@ const PageTransition = ({ children, className = '' }: PageTransitionProps) => {
       variants={pageVariants}
       transition={pageTransition}
       className={className}
+      style={{ willChange: 'transform, opacity' }}
     >
       {children}
     </motion.div>

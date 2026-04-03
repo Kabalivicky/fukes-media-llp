@@ -24,26 +24,32 @@ const LightweightBackground = () => {
         }}
       />
       
-      {/* RGB ambient orbs - subtle, slow-drifting */}
+      {/* RGB ambient orbs - GPU-accelerated with CSS animations */}
       <div 
-        className="absolute top-[15%] right-[10%] w-[500px] h-[500px] rounded-full blur-[120px]"
+        className="absolute top-[15%] right-[10%] w-[400px] h-[400px] md:w-[500px] md:h-[500px] rounded-full"
         style={{
-          background: 'hsl(354 87% 50% / 0.08)',
+          background: 'hsl(354 87% 50% / 0.06)',
+          filter: 'blur(100px)',
           animation: 'rgb-orb-drift-1 20s ease-in-out infinite',
+          willChange: 'transform',
         }}
       />
       <div 
-        className="absolute top-[55%] left-[5%] w-[450px] h-[450px] rounded-full blur-[120px]"
+        className="absolute top-[55%] left-[5%] w-[350px] h-[350px] md:w-[450px] md:h-[450px] rounded-full"
         style={{
-          background: 'hsl(200 100% 45% / 0.06)',
+          background: 'hsl(200 100% 45% / 0.05)',
+          filter: 'blur(100px)',
           animation: 'rgb-orb-drift-2 25s ease-in-out infinite',
+          willChange: 'transform',
         }}
       />
       <div 
-        className="absolute top-[75%] right-[20%] w-[400px] h-[400px] rounded-full blur-[120px]"
+        className="absolute top-[75%] right-[20%] w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full"
         style={{
-          background: 'hsl(150 100% 40% / 0.05)',
+          background: 'hsl(150 100% 40% / 0.04)',
+          filter: 'blur(100px)',
           animation: 'rgb-orb-drift-3 22s ease-in-out infinite',
+          willChange: 'transform',
         }}
       />
     </div>

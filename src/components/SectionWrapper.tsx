@@ -21,7 +21,7 @@ const SectionWrapper = ({
   fullHeight = false,
 }: SectionWrapperProps) => {
   const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const variants = {
     default: 'bg-background',
@@ -40,9 +40,10 @@ const SectionWrapper = ({
         fullHeight && 'min-h-screen flex items-center',
         className
       )}
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-      transition={{ duration: 0.6 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+      style={{ willChange: isInView ? 'auto' : 'transform, opacity' }}
     >
       {withDivider && (
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
