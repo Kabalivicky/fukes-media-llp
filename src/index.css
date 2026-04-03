@@ -107,7 +107,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Custom scrollbar - Material style */
+  /* Custom scrollbar - RGB gradient */
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -117,11 +117,13 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/20 rounded-full;
+    background: linear-gradient(180deg, #C8102E, #0077B6, #00A651);
+    border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/40;
+    background: linear-gradient(180deg, #C8102E, #0077B6, #00A651);
+    filter: brightness(1.2);
   }
 
   ::selection {
