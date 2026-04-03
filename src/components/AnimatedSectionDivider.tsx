@@ -228,6 +228,20 @@ const AnimatedSectionDivider = ({
     </svg>
   );
 
+  const renderRgbLine = () => (
+    <div className="w-full py-4 flex items-center justify-center">
+      <div className="w-full max-w-5xl mx-auto">
+        <motion.div 
+          className="rgb-line-animated rounded-full"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={isInView ? { scaleX: 1, opacity: 1 } : {}}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          style={{ transformOrigin: 'center' }}
+        />
+      </div>
+    </div>
+  );
+
   const renderDivider = () => {
     switch (variant) {
       case 'wave': return renderWave();
@@ -235,6 +249,7 @@ const AnimatedSectionDivider = ({
       case 'diagonal': return renderDiagonal();
       case 'dots': return renderDots();
       case 'hexagon': return renderHexagon();
+      case 'rgb-line': return renderRgbLine();
       default: return renderWave();
     }
   };
