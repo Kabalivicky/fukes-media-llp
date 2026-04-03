@@ -21,7 +21,8 @@ const AnimatedSectionDivider = ({
     primary: 'text-primary/20',
     secondary: 'text-secondary/30',
     accent: 'text-accent/25',
-    muted: 'text-muted/40'
+    muted: 'text-muted/40',
+    rgb: ''
   };
 
   const renderWave = () => (
