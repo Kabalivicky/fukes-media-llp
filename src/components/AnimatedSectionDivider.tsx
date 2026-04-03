@@ -2,10 +2,10 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
 interface AnimatedSectionDividerProps {
-  variant?: 'wave' | 'geometric' | 'diagonal' | 'dots' | 'hexagon';
+  variant?: 'wave' | 'geometric' | 'diagonal' | 'dots' | 'hexagon' | 'rgb-line';
   className?: string;
   inverted?: boolean;
-  color?: 'primary' | 'secondary' | 'accent' | 'muted';
+  color?: 'primary' | 'secondary' | 'accent' | 'muted' | 'rgb';
 }
 
 const AnimatedSectionDivider = ({ 
