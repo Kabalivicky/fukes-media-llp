@@ -31,75 +31,73 @@ const getAnimationVariants = (
   animation: AnimationType, 
   duration: number
 ): Variants => {
-  const baseTransition = {
-    duration,
-    ease: [0.25, 0.1, 0.25, 1] // Custom cubic-bezier for smooth feel
-  };
+  // Smoother easing curve
+  const ease = [0.25, 0.1, 0.25, 1] as const;
+  const baseTransition = { duration, ease };
 
   const variants: Record<AnimationType, Variants> = {
     fadeUp: {
-      hidden: { opacity: 0, y: 60 },
+      hidden: { opacity: 0, y: 40 },
       visible: { opacity: 1, y: 0, transition: baseTransition }
     },
     fadeDown: {
-      hidden: { opacity: 0, y: -60 },
+      hidden: { opacity: 0, y: -40 },
       visible: { opacity: 1, y: 0, transition: baseTransition }
     },
     fadeLeft: {
-      hidden: { opacity: 0, x: -80 },
+      hidden: { opacity: 0, x: -50 },
       visible: { opacity: 1, x: 0, transition: baseTransition }
     },
     fadeRight: {
-      hidden: { opacity: 0, x: 80 },
+      hidden: { opacity: 0, x: 50 },
       visible: { opacity: 1, x: 0, transition: baseTransition }
     },
     zoomIn: {
-      hidden: { opacity: 0, scale: 0.8 },
+      hidden: { opacity: 0, scale: 0.9 },
       visible: { opacity: 1, scale: 1, transition: baseTransition }
     },
     zoomOut: {
-      hidden: { opacity: 0, scale: 1.2 },
+      hidden: { opacity: 0, scale: 1.1 },
       visible: { opacity: 1, scale: 1, transition: baseTransition }
     },
     flipX: {
-      hidden: { opacity: 0, rotateX: 90 },
+      hidden: { opacity: 0, rotateX: 60 },
       visible: { opacity: 1, rotateX: 0, transition: { ...baseTransition, duration: duration * 1.2 } }
     },
     flipY: {
-      hidden: { opacity: 0, rotateY: 90 },
+      hidden: { opacity: 0, rotateY: 60 },
       visible: { opacity: 1, rotateY: 0, transition: { ...baseTransition, duration: duration * 1.2 } }
     },
     rotate: {
-      hidden: { opacity: 0, rotate: -15, scale: 0.9 },
+      hidden: { opacity: 0, rotate: -10, scale: 0.95 },
       visible: { opacity: 1, rotate: 0, scale: 1, transition: baseTransition }
     },
+    // Use opacity-only instead of filter:blur for performance
     blur: {
-      hidden: { opacity: 0, filter: 'blur(20px)' },
-      visible: { opacity: 1, filter: 'blur(0px)', transition: baseTransition }
+      hidden: { opacity: 0, scale: 0.97 },
+      visible: { opacity: 1, scale: 1, transition: baseTransition }
     },
     slideUp: {
-      hidden: { opacity: 0, y: 100, scale: 0.95 },
+      hidden: { opacity: 0, y: 60 },
       visible: { 
         opacity: 1, 
         y: 0, 
-        scale: 1,
         transition: { 
-          ...baseTransition, 
           type: 'spring', 
-          stiffness: 100,
-          damping: 15 
+          stiffness: 80,
+          damping: 18 
         } 
       }
     },
     bounceIn: {
-      hidden: { opacity: 0, scale: 0.3 },
+      hidden: { opacity: 0, scale: 0.5 },
       visible: { 
         opacity: 1, 
         scale: 1,
         transition: { 
           type: 'spring', 
-          stiffness: 400, 
-          damping: 10 
+          stiffness: 300, 
+          damping: 15 
         } 
       }
     },
@@ -116,22 +114,21 @@ const ScrollReveal = ({
   children,
   animation = 'fadeUp',
   delay = 0,
-  duration = 0.6,
+  duration = 0.5,
   className = '',
   once = true,
-  threshold = 0.2,
-  staggerChildren = 0.1
+  threshold = 0.15,
+  staggerChildren = 0.08
 }: ScrollRevealProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { 
     once, 
     amount: threshold,
-    margin: "-50px 0px"
+    margin: "-30px 0px"
   });
 
   const variants = getAnimationVariants(animation, duration);
 
-  // Add delay to the transition
   const variantsWithDelay: Variants = {
     hidden: variants.hidden,
     visible: {
@@ -151,13 +148,13 @@ const ScrollReveal = ({
       animate={isInView ? 'visible' : 'hidden'}
       variants={variantsWithDelay}
       className={className}
+      style={{ willChange: isInView ? 'auto' : 'transform, opacity' }}
     >
       {children}
     </motion.div>
   );
 };
 
-// Child component for stagger animations
 export const ScrollRevealItem = ({
   children,
   className = ''
@@ -166,11 +163,11 @@ export const ScrollRevealItem = ({
   className?: string;
 }) => {
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+      transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
     }
   };
 
