@@ -72,7 +72,7 @@ const AudioToolsTab = () => {
       const mimeMap: Record<string, string> = {
         mp3: 'audio/mpeg', wav: 'audio/wav', aac: 'audio/aac', ogg: 'audio/ogg',
       };
-      const blob = new Blob([data], { type: mimeMap[outputFormat] || 'application/octet-stream' });
+      const blob = new Blob([new Uint8Array((data as Uint8Array).buffer)], { type: mimeMap[outputFormat] || 'application/octet-stream' });
       const url = URL.createObjectURL(blob);
       setOutputUrl(url);
       setOutputSize(blob.size);

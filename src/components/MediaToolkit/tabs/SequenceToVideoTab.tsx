@@ -107,7 +107,7 @@ const SequenceToVideoTab = () => {
       await ff.exec(cmd);
 
       const data = await ff.readFile(outFile);
-      const blob = new Blob([data], { type: outputFormat === 'mp4' ? 'video/mp4' : 'video/webm' });
+      const blob = new Blob([new Uint8Array((data as Uint8Array).buffer)], { type: outputFormat === 'mp4' ? 'video/mp4' : 'video/webm' });
       const url = URL.createObjectURL(blob);
       setOutputUrl(url);
       setProgress(100);

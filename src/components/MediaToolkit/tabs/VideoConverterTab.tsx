@@ -92,7 +92,7 @@ const VideoConverterTab = () => {
 
       const data = await ff.readFile(outputName);
       const mimeMap: Record<string, string> = { mp4: 'video/mp4', webm: 'video/webm', gif: 'image/gif' };
-      const blob = new Blob([data], { type: mimeMap[outputFormat] || 'application/octet-stream' });
+      const blob = new Blob([new Uint8Array((data as Uint8Array).buffer)], { type: mimeMap[outputFormat] || 'application/octet-stream' });
       const url = URL.createObjectURL(blob);
       setOutputUrl(url);
       setOutputSize(blob.size);
