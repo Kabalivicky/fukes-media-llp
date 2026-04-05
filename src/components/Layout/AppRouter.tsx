@@ -108,6 +108,7 @@ const ArtistProfile = lazy(() => import('@/pages/ArtistProfile'));
 const CompanyProfile = lazy(() => import('@/pages/CompanyProfile'));
 const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'));
 const Analytics = lazy(() => import('@/pages/Analytics'));
+const MediaToolkit = lazy(() => import('@/pages/MediaToolkit'));
 
 const AppRouter = () => {
   return (
@@ -162,6 +163,7 @@ const AppRouter = () => {
         <Route path="/company/:slug" element={<MainLayout><CompanyProfile /></MainLayout>} />
         <Route path="/admin" element={<MainLayout><AdminDashboard /></MainLayout>} />
         <Route path="/analytics" element={<MainLayout><Analytics /></MainLayout>} />
+        <Route path="/tools/media-toolkit" element={<MainLayout><MediaToolkit /></MainLayout>} />
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
       </Routes>
     </Suspense>
