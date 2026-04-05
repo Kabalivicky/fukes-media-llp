@@ -163,6 +163,7 @@ const AppRouter = () => {
         <Route path="/company/:slug" element={<MainLayout><CompanyProfile /></MainLayout>} />
         <Route path="/admin" element={<MainLayout><AdminDashboard /></MainLayout>} />
         <Route path="/analytics" element={<MainLayout><Analytics /></MainLayout>} />
+        <Route path="/tools/media-toolkit" element={<MainLayout><MediaToolkit /></MainLayout>} />
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
       </Routes>
     </Suspense>
