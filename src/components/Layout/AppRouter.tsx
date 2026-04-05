@@ -108,6 +108,7 @@ const ArtistProfile = lazy(() => import('@/pages/ArtistProfile'));
 const CompanyProfile = lazy(() => import('@/pages/CompanyProfile'));
 const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'));
 const Analytics = lazy(() => import('@/pages/Analytics'));
+const MediaToolkit = lazy(() => import('@/pages/MediaToolkit'));
 
 const AppRouter = () => {
   return (
