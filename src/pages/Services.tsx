@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '@/components/SectionWrapper';
 import SectionHeading from '@/components/SectionHeading';
@@ -438,8 +439,8 @@ const processSteps = [
   { step: "04", title: "Final Integration", description: "Color pipeline integrity, render verification, delivery compliance. Every pixel checked before it leaves our studio.", icon: Shield },
 ];
 
-const ServiceCard = ({ service, index }: { service: ServiceDetail; index: number }) => {
-  const [expanded, setExpanded] = useState(false);
+const ServiceCard = ({ service, index, autoExpand }: { service: ServiceDetail; index: number; autoExpand?: boolean }) => {
+  const [expanded, setExpanded] = useState(autoExpand || false);
 
   return (
     <motion.div
@@ -576,7 +577,21 @@ const ServiceCard = ({ service, index }: { service: ServiceDetail; index: number
 };
 
 const Services = () => {
+  const location = useLocation();
   const totalServices = serviceCategories.reduce((acc, cat) => acc + cat.services.length, 0);
+  const targetId = location.hash?.replace('#', '');
+
+  useEffect(() => {
+    if (targetId) {
+      const timeout = setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 600);
+      return () => clearTimeout(timeout);
+    }
+  }, [targetId]);
 
   const structuredData = {
     "@context": "https://schema.org", "@type": "Service", "serviceType": "VFX & Post-Production Services",
@@ -639,7 +654,7 @@ const Services = () => {
           />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {cat.services.map((service, index) => (
-              <ServiceCard key={service.id} service={service} index={index} />
+              <ServiceCard key={service.id} service={service} index={index} autoExpand={service.id === targetId} />
             ))}
           </div>
         </SectionWrapper>
