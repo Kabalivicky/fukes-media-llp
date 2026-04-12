@@ -446,10 +446,11 @@ const ServiceCard = ({ service, index, autoExpand }: { service: ServiceDetail; i
     <motion.div
       key={service.id}
       id={service.id}
-      initial={{ opacity: 0, y: 30 }}
+      initial={autoExpand ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.06 }}
+      transition={{ delay: autoExpand ? 0 : index * 0.06 }}
+      className={autoExpand ? 'ring-2 ring-primary/50 rounded-2xl' : ''}
     >
       <Card className="group hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1 border-border/30 bg-card/50 backdrop-blur-sm rounded-2xl overflow-hidden h-full flex flex-col">
         <div className={`h-1 w-full bg-gradient-to-r ${service.gradient}`} />
@@ -582,14 +583,20 @@ const Services = () => {
   const targetId = location.hash?.replace('#', '');
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (targetId) {
-      const timeout = setTimeout(() => {
+      const tryScroll = (attempts = 0) => {
         const el = document.getElementById(targetId);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else if (attempts < 10) {
+          setTimeout(() => tryScroll(attempts + 1), 200);
         }
-      }, 600);
-      return () => clearTimeout(timeout);
+      };
+      setTimeout(() => tryScroll(), 300);
     }
   }, [targetId]);
 
